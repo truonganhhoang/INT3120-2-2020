@@ -1,6 +1,15 @@
-# word_up_application
+# Group: 15
+# Project Name: Word Up Application
+A new Flutter project about learning English, help users improve their current English vocabulary.
 
-A new Flutter project about learning English.
+# Members:
+- Nguyễn Huy Trường MSSV: 18021345
+- Trịnh Xuân Trình MSSV: 18021310
+
+# Application Details
+
+- Origion: [Word Up](https://play.google.com/store/apps/developer?id=Geeks+Ltd)
+- Description: WordUp is more than a Vocabulary builder app. It is the easiest way to learn English words and understand them deeply, with entertaining examples from movies, songs, famous quotes and more. It is unlike any vocabulary builder app you've seen before!
 
 ## Getting Started
 
