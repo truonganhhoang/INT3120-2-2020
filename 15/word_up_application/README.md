@@ -7,6 +7,7 @@ A new Flutter project about learning English, help users improve their current E
 # Members:
 - Nguyễn Huy Trường MSSV: 18021345
 - Trịnh Xuân Trình MSSV: 18021310
+- Nguyễn Anh Tuấn MSSV: 18021376
 
 # Application Details
 
