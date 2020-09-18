@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 
 void main() {
   runApp(MyApp());
@@ -115,3 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+=======
+import 'homePage.dart';
+void main() {
+  runApp(
+      new MaterialApp(home:new homePage())
+  );
+}
+>>>>>>> trungkien
