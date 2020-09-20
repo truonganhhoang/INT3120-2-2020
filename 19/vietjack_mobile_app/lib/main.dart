@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'homePage.dart';
 import 'TimKiem.dart';
-import 'OnThi.dart';
+import 'ThiOnline.dart';
 import 'homePage.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class VietJackNavigationBar extends StatefulWidget {
 
 class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
   int _currentIndex = 0;
-  List<Widget> _children = [homePage(), TimKiem(), OnThi()];
+  List<Widget> _children = [homePage(), TimKiem(), ThiOnline()];
 
   void onTappedBar(int index) {
     setState(() {
