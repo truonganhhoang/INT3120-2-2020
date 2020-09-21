@@ -14,8 +14,8 @@ class VietJackNavigationBar extends StatefulWidget {
 }
 
 class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
+  bool _isThiOnlineRun = true;
   int _currentIndex = 0;
-  List<Widget> _children = [homePage(), TimKiem(), ThiOnline()];
 
   void onTappedBar(int index) {
     setState(() {
@@ -25,6 +25,7 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _children = [homePage(), TimKiem(), ThiOnline()];
     return new Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
