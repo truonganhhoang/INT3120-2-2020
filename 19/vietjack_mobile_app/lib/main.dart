@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'homePage.dart';
-<<<<<<< HEAD
-
-void main() {
-  runApp(new MaterialApp(home: new homePage()));
-=======
 import 'TimKiem.dart';
 import 'ThiOnline.dart';
 import 'homePage.dart';
@@ -48,5 +43,4 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
       ),
     );
   }
->>>>>>> quanghuy
 }
