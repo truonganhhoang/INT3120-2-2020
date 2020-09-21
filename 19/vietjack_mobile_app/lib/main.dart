@@ -14,18 +14,25 @@ class VietJackNavigationBar extends StatefulWidget {
 }
 
 class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
-  bool _isThiOnlineRun = true;
+  int _isThiOnlineFirstRun = 0;
   int _currentIndex = 0;
 
   void onTappedBar(int index) {
     setState(() {
       _currentIndex = index;
     });
+    if (index == 2) {
+      _isThiOnlineFirstRun++;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _children = [homePage(), TimKiem(), ThiOnline()];
+    List<Widget> _children = [
+      homePage(),
+      TimKiem(),
+      ThiOnline(_isThiOnlineFirstRun)
+    ];
     return new Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:vietjack_mobile_app/common/Header.dart';
 import 'package:vietjack_mobile_app/Header.dart';
 
 import 'homePage.dart';
 
 class ThiOnline extends StatefulWidget {
-  bool firstRun;
+  int firstRun;
+  ThiOnline(firstRun);
   @override
   _OnThiState createState() => _OnThiState();
 }
 
 class _OnThiState extends State<ThiOnline> {
+  bool _isShowingModal = true;
   bool _showAppbar = false;
   ScrollController _scrollBottomController = new ScrollController();
 
@@ -19,6 +20,33 @@ class _OnThiState extends State<ThiOnline> {
   void initState() {
     super.initState();
     myScroll();
+    if (_isShowingModal && widget.firstRun <= 1) {
+      Future.delayed(Duration(seconds: 1)).then((_) {
+        _onButtonPress();
+      });
+    }
+  }
+
+  void _onButtonPress() {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.0),
+                topRight: Radius.circular(40.0))),
+        builder: (context) {
+          return Container(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.access_alarm),
+                  title: Text('Testing'),
+                )
+              ],
+            ),
+          );
+        });
   }
 
   void myScroll() async {
@@ -66,6 +94,7 @@ class _OnThiState extends State<ThiOnline> {
           width: width,
           height: height,
         ),
+        RaisedButton(child: Text('Open route'), onPressed: _onButtonPress),
         containterContent(),
         containterContent(),
         containterContent(),
