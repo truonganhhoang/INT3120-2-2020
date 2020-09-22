@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1021416664291",
+    "firebase_url": "https://vietjack-c52ea.firebaseio.com",
+    "project_id": "vietjack-c52ea",
+    "storage_bucket": "vietjack-c52ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021416664291:android:920e9118289abdac09e9d6",
+        "android_client_info": {
+          "package_name": "com.example.vietjack_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021416664291-7u1pk9prau4mibsec6uvdh7jovu8sneq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9fYDUamOIIr9rOihSoKB0hIs8-SxDQUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021416664291-7u1pk9prau4mibsec6uvdh7jovu8sneq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
