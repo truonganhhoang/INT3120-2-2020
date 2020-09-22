@@ -10,7 +10,6 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-  bool firstRun = true;
   double left = 0, right = 0;
   @override
   Widget build(BuildContext context) {
@@ -23,8 +22,8 @@ class _HeaderState extends State<Header> {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: firstRun
-            ? <Widget>[
+        children:
+            <Widget>[
                 new AnimatedContainer(
                   duration: Duration(seconds: 2),
                   color: Colors.red,
@@ -38,18 +37,6 @@ class _HeaderState extends State<Header> {
                   height: 200,
                 ),
               ]
-            : <Widget>[
-                new Container(
-                  color: Colors.red,
-                  width: left,
-                  height: 200,
-                ),
-                new Container(
-                  color: Colors.blue,
-                  width: right,
-                  height: 200,
-                )
-              ],
       ),
     );
   }
