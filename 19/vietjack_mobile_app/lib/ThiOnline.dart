@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:vietjack_mobile_app/Header.dart';
 
-import 'homePage.dart';
-
+// ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
   int firstRun;
-  ThiOnline(firstRun);
+  ThiOnline(firstRun) {
+    this.firstRun = firstRun;
+  }
   @override
-  _OnThiState createState() => _OnThiState();
+  _OnThiState createState() => _OnThiState(firstRun);
 }
 
 class _OnThiState extends State<ThiOnline> {
+  int firstRun;
+  _OnThiState(firstRun) {
+    this.firstRun = firstRun;
+  }
   bool _isShowingModal = true;
   bool _showAppbar = false;
   ScrollController _scrollBottomController = new ScrollController();
@@ -20,7 +25,7 @@ class _OnThiState extends State<ThiOnline> {
   void initState() {
     super.initState();
     myScroll();
-    if (_isShowingModal && widget.firstRun <= 1) {
+    if (_isShowingModal && this.firstRun <= 1) {
       Future.delayed(Duration(seconds: 1)).then((_) {
         _onButtonPress();
       });
@@ -37,14 +42,8 @@ class _OnThiState extends State<ThiOnline> {
                 topRight: Radius.circular(40.0))),
         builder: (context) {
           return Container(
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.access_alarm),
-                  title: Text('Testing'),
-                )
-              ],
-            ),
+            height: 400,
+            child: Row(children: <Widget>[]),
           );
         });
   }
