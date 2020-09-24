@@ -43,7 +43,13 @@ class _OnThiState extends State<ThiOnline> {
         builder: (context) {
           return Container(
             height: 400,
-            child: Row(children: <Widget>[]),
+            child: Row(children: <Widget>[
+              Expanded(
+                child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                    child: Text("Chon mon", style: TextStyle(fontSize: 20))),
+              )
+            ]),
           );
         });
   }
@@ -120,8 +126,6 @@ class _OnThiState extends State<ThiOnline> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print(width);
-    print(height);
     return new Scaffold(
       appBar: _showAppbar
           ? AppBar(
