@@ -7,8 +7,8 @@
 ![](RackMultipart20200925-4-a545qp_html_14e8ec1002630d73.png)
 
 ## **Nhóm số 33:
- - Hoàng Dương Hào - 18020460**
- - Trần Quang Minh - 18020895**
+ - Hoàng Dương Hào - 18020460
+ - Trần Quang Minh - 18020895
 
 _Ứng dụng của nhóm mô phỏng và kế thừa dựa trên ứng dụng_ [_Học Kanji N4 N5_](https://play.google.com/store/apps/details?id=com.porolingo.kanji45) _trên Google Play Store. Nhà phát triển:_ **PORO NIHONGO** _._
 
