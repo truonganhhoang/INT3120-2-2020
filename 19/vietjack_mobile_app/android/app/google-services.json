@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1021416664291-8l9i1s43560u4v535q194ert7jkj68tj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vietjack_mobile_app",
+            "certificate_hash": "cc884b8bdab02fe7f5f174ce6a38c06935a07957"
+          }
+        },
+        {
           "client_id": "1021416664291-7u1pk9prau4mibsec6uvdh7jovu8sneq.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 class Header extends StatefulWidget {
   double width;
   double height;
-
-  Header({Key key, this.width, this.height}) : super(key: key);
-
+  String userName;
+  Header({Key key, this.width, this.height, this.userName}) : super(key: key);
   @override
   _HeaderState createState() => _HeaderState();
 }
@@ -44,7 +43,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin{
               height: 200,
               child: Center(
                 child: new Text(
-                  "Kiên Đẹp Trai",
+                  widget.userName,
                   style: new TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'GoodDog',
