@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'homePage.dart';
 import 'TimKiem.dart';
 import 'ThiOnline.dart';
@@ -12,8 +13,8 @@ void main() {
 
 //////////
 class VietJackNavigationBar extends StatefulWidget {
-  User user;
-  VietJackNavigationBar({Key key, this.user}) : super(key:key);
+  /*User user;
+  VietJackNavigationBar({Key key, this.user}) : super(key:key);*/
   @override
   _VietJackNavigationBarState createState() => _VietJackNavigationBarState();
 }
@@ -33,7 +34,7 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _children = [
-      homePage(userName: widget.user.displayName),
+      homePage(userName: FirebaseAuth.instance.currentUser.displayName),
       TimKiem(),
       ThiOnline(_isThiOnlineFirstRun)
     ];
