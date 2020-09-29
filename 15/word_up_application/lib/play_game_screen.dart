@@ -11,7 +11,7 @@ class _PlayGameScreenState extends State<PlayGameScreen>{
     return Scaffold(
       body:
       Center(
-        child: Text('Play Game',style: TextStyle(fontSize: 30),),
+        child: Text(' Game',style: TextStyle(fontSize: 30),),
       ),
       backgroundColor: Colors.greenAccent,
     );

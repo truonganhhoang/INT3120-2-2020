@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:word_up_application/favorite_words_screen.dart';
+import 'package:word_up_application/home/account_page.dart';
+import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/play_game_screen.dart';
 import 'package:word_up_application/search_word_screen.dart';
-import 'package:word_up_application/study_home_screen.dart';
+import 'package:word_up_application/study_home_screen/study_home_screen.dart';
 
-import 'chat_screen.dart';
+import '../chat_screen/chat_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home>{
   int _currentTab = 0;
   String _screenTitle = 'Learning';
-  
+
   final List<Widget> screens = [
     StudyHomeScreen(),
     FavoriteWordsScreen(),
@@ -30,20 +31,21 @@ class _HomeState extends State<Home>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         centerTitle: true,
         title: new Text(_screenTitle),
-        leading: GestureDetector(
-          onTap: (){print('Ontap');},
-          child: Icon(Icons.menu),
-        ),
+
         actions: <Widget>[
           MaterialButton(
+            minWidth: 50,
             child: Icon(Icons.person, color: Colors.white,),
             onPressed: (){print('TapPerson');},
           ),
         ],
       ),
+
+      drawer: AccountPage(),
 
       body: PageStorage(
         child: _currentScreen,
@@ -85,6 +87,7 @@ class _HomeState extends State<Home>{
 
   BottomAppBar createBottomAppBar(){
     return BottomAppBar(
+        color: Colors.white,
         shape: CircularNotchedRectangle(),
         clipBehavior: Clip.antiAlias,
         notchMargin: 5.0,
@@ -187,6 +190,9 @@ class _HomeState extends State<Home>{
                     ),
                     //Chat icon
                     MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          ),
                       minWidth: MediaQuery
                           .of(context)
                           .size

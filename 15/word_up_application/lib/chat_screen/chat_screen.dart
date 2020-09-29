@@ -10,7 +10,7 @@ class _ChatScreenState extends State<ChatScreen>{
   // ignore: missing_return
   Widget build(BuildContext context) {
     return Scaffold(
-
+      body: Text('MMM'),
     );
   }
 }
