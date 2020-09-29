@@ -14,6 +14,19 @@ class ThiOnline extends StatefulWidget {
 
 class _OnThiState extends State<ThiOnline> {
   int firstRun;
+  final List<String> subjectArray = [
+    'Ngữ văn',
+    'Toán',
+    'Vật lí',
+    'Hóa học',
+    'Sinh học',
+    'Địa lí',
+    'Tiếng Anh',
+    'Lịch sử',
+    'Tin học',
+    'Giáo dục công dân',
+    'Công nghệ'
+  ];
   _OnThiState(firstRun) {
     this.firstRun = firstRun;
   }
@@ -42,15 +55,26 @@ class _OnThiState extends State<ThiOnline> {
                 topRight: Radius.circular(40.0))),
         builder: (context) {
           return Container(
-            height: 400,
-            child: Row(children: <Widget>[
-              Expanded(
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-                    child: Text("Chon mon", style: TextStyle(fontSize: 20))),
-              )
-            ]),
-          );
+              height: 800,
+              child: GridView.count(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 5,
+                  childAspectRatio: (150 / 175),
+                  padding: const EdgeInsets.all(20),
+                  mainAxisSpacing: 20,
+                  children: List.generate(subjectArray.length, (index) {
+                    return FlatButton(
+                        onPressed: null,
+                        padding: EdgeInsets.all(10.0),
+                        child: Expanded(
+                          child: Column(children: <Widget>[
+                            Icon(Icons.home),
+                            Text(subjectArray[index],
+                                style: TextStyle(fontSize: 11),
+                                textAlign: TextAlign.center)
+                          ]),
+                        ));
+                  })));
         });
   }
 
