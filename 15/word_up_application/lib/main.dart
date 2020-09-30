@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home/home.dart';
+import 'learn_a_word_screen/learn_a_word_screen.dart';
+import 'learn_a_word_screen/word.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,6 +10,19 @@ void main() {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
+  Word word = Word(
+    id: 1,
+    word: 'Modern',
+    type:'adj',
+    definition: 'Designed and made using the most recent ideas and methods',
+    mean: 'Hiện đại',
+    example1: '- modern technology/education/art/transport.',
+    example2: '- We\'re in the very modern-looking building opposite the station.',
+    pathSoundUK: 'pathSoundUK',pathSoundUS: 'pathSoundUS',
+    pronounUS: '/ˈmɒd.ən/',pronounUK: '/ˈmɒd.ən/',
+    pathImage: 'assets/images/download.jpg',
+    example: 'This house is more modern than that house',
+  );
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -28,7 +43,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: LearnAWord(word: word,),
     );
   }
 }
