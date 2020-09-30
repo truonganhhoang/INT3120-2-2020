@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
-class ShowExamples extends StatefulWidget{
+class ShowExamples extends StatefulWidget {
   final List<String> listExamples;
 
   ShowExamples({
     @required this.listExamples,
-  }): assert(listExamples != null);
+  }) : assert(listExamples != null);
   @override
   State<StatefulWidget> createState() => _ShowExamplesState();
 }
 
-class _ShowExamplesState extends State<ShowExamples> with SingleTickerProviderStateMixin{
+class _ShowExamplesState extends State<ShowExamples>
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation _animation;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
@@ -26,6 +28,7 @@ class _ShowExamplesState extends State<ShowExamples> with SingleTickerProviderSt
       end: 1.0,
     ).animate(_controller);
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -38,7 +41,10 @@ class _ShowExamplesState extends State<ShowExamples> with SingleTickerProviderSt
     _controller.forward(from: 0);
     return FadeTransition(
       opacity: _animation,
-      child: Text(widget.listExamples[0], style: TextStyle(fontSize: 20),),
+      child: Text(
+        widget.listExamples[0],
+        style: TextStyle(fontSize: 20),
+      ),
     );
   }
 }

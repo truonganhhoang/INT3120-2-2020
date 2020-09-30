@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:word_up_application/learn_a_word_screen/learn_a_word_screen.dart';
 import 'package:word_up_application/study_home_screen/test_question_screen.dart';
 import 'package:word_up_application/word.dart';
 
@@ -84,7 +85,11 @@ class _WordBoxState extends State<WordBox> {
                     ),
                     MaterialButton(
                       height: 50,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => LearnAWord()),
+                        );
+                      },
                       color: Colors.red,
                       minWidth: 40,
                       shape: RoundedRectangleBorder(

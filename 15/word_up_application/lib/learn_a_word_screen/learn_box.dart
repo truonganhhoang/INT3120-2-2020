@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'word.dart';
+import 'package:word_up_application/word.dart';
 
 class LearnBox extends StatelessWidget {
   final Word word;
@@ -115,7 +115,7 @@ class LearnBox extends StatelessWidget {
                     margin: EdgeInsets.only(top: 20),
                     width: 250,
                     height: 120,
-                    child: Image(image: AssetImage(word.pathImage)),
+                   // child: Image(image: AssetImage(word.pathImage)),
                   )
                 ],
               )

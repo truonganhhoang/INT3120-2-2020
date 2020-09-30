@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
 import 'learn_box.dart';
-import 'word.dart';
+import 'package:word_up_application/word.dart';
 
 class LearnAWord extends StatelessWidget{
-  Word word;
+  Word word = Word(
+    id: 1,
+    word: 'Modern',
+    type:'adj',
+    definition: 'Designed and made using the most recent ideas and methods',
+    mean: 'Hiện đại',
+    example1: '- modern technology/education/art/transport.',
+    example2: '- We\'re in the very modern-looking building opposite the station.',
+    pathSoundUK: 'pathSoundUK',pathSoundUS: 'pathSoundUS',
+    pronounUS: '/ˈmɒd.ən/',pronounUK: '/ˈmɒd.ən/',
+    pathImage: 'assets/images/download.jpg',
+    example: 'This house is more modern than that house',
+  );
+  /*
+  final Word word
   LearnAWord({
     @required this.word,
-  });
+  }):assert(word != null);
+  */
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: new Text('Learning'),
-          leading: GestureDetector(
-            onTap: (){print('Ontap');},
-            child: Icon(Icons.arrow_back),
-          ),
+
           actions: <Widget>[
             MaterialButton(
               child: Icon(Icons.share, color: Colors.white,),
-              onPressed: (){print('TapPerson');},
+              onPressed: (){print('Share');},
             ),
           ],
         ),

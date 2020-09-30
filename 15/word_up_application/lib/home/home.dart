@@ -5,6 +5,7 @@ import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/play_game_screen.dart';
 import 'package:word_up_application/search_word_screen.dart';
 import 'package:word_up_application/study_home_screen/study_home_screen.dart';
+import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
 
 import '../chat_screen/chat_screen.dart';
 
@@ -13,7 +14,7 @@ class Home extends StatefulWidget {
   State<StatefulWidget> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home>{
+class _HomeState extends State<Home> {
   int _currentTab = 0;
   String _screenTitle = 'Learning';
 
@@ -27,7 +28,6 @@ class _HomeState extends State<Home>{
   Widget _currentScreen = StudyHomeScreen();
   final PageStorageBucket _bucket = PageStorageBucket();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,35 +35,41 @@ class _HomeState extends State<Home>{
       appBar: AppBar(
         centerTitle: true,
         title: new Text(_screenTitle),
-
         actions: <Widget>[
           MaterialButton(
             minWidth: 50,
-            child: Icon(Icons.person, color: Colors.white,),
-            onPressed: (){print('TapPerson');},
+            child: Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              print('TapPerson');
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => UserProfileScreen(),
+              ));
+             
+            },
           ),
         ],
       ),
-
       drawer: AccountPage(),
-
       body: PageStorage(
         child: _currentScreen,
         bucket: _bucket,
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         child: FloatingActionButton(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ImageIcon(AssetImage('assets/sprites/LookUpIcon.png'),
-                color: Colors.white,),
+              ImageIcon(
+                AssetImage('assets/sprites/LookUpIcon.png'),
+                color: Colors.white,
+              ),
               Text('Search'),
             ],
           ),
-
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => SearchWordScreen()),
@@ -79,23 +85,21 @@ class _HomeState extends State<Home>{
     );
   }
 
-  void onTabTapped(int index){
+  void onTabTapped(int index) {
     setState(() {
       _currentTab = index;
     });
   }
 
-  BottomAppBar createBottomAppBar(){
+  BottomAppBar createBottomAppBar() {
     return BottomAppBar(
         color: Colors.white,
         shape: CircularNotchedRectangle(),
         clipBehavior: Clip.antiAlias,
         notchMargin: 5.0,
-
         child: Container(
           height: 70,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               // left tab bar icons
               children: <Widget>[
@@ -104,10 +108,7 @@ class _HomeState extends State<Home>{
                   children: <Widget>[
                     // Study Icon
                     MaterialButton(
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen = StudyHomeScreen();
@@ -118,20 +119,24 @@ class _HomeState extends State<Home>{
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.book,
-                            color: _currentTab == 0 ? Colors.blue : Colors
-                                .grey,),
-                          Text('Study', style: TextStyle(color: _currentTab ==
-                              0 ? Colors.blue : Colors.grey,),),
-                        ],),
+                          Icon(
+                            Icons.book,
+                            color: _currentTab == 0 ? Colors.blue : Colors.grey,
+                          ),
+                          Text(
+                            'Study',
+                            style: TextStyle(
+                              color:
+                                  _currentTab == 0 ? Colors.blue : Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
 
                     // Play Icon
                     MaterialButton(
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen = PlayGameScreen();
@@ -142,12 +147,19 @@ class _HomeState extends State<Home>{
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.videogame_asset,
-                            color: _currentTab == 1 ? Colors.blue : Colors
-                                .grey,),
-                          Text('Play', style: TextStyle(color: _currentTab ==
-                              1 ? Colors.blue : Colors.grey,),),
-                        ],),
+                          Icon(
+                            Icons.videogame_asset,
+                            color: _currentTab == 1 ? Colors.blue : Colors.grey,
+                          ),
+                          Text(
+                            'Play',
+                            style: TextStyle(
+                              color:
+                                  _currentTab == 1 ? Colors.blue : Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -158,10 +170,7 @@ class _HomeState extends State<Home>{
                   children: <Widget>[
                     // Favorite icon
                     MaterialButton(
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen =
@@ -175,14 +184,13 @@ class _HomeState extends State<Home>{
                         children: <Widget>[
                           Icon(
                             Icons.favorite,
-                            color: _currentTab == 2 ? Colors.blue : Colors
-                                .grey,
+                            color: _currentTab == 2 ? Colors.blue : Colors.grey,
                           ),
                           Text(
                             'Favorite',
                             style: TextStyle(
-                              color: _currentTab == 2 ? Colors.blue : Colors
-                                  .grey,
+                              color:
+                                  _currentTab == 2 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -191,12 +199,9 @@ class _HomeState extends State<Home>{
                     //Chat icon
                     MaterialButton(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          ),
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen =
@@ -210,14 +215,13 @@ class _HomeState extends State<Home>{
                         children: <Widget>[
                           Icon(
                             Icons.chat,
-                            color: _currentTab == 3 ? Colors.blue : Colors
-                                .grey,
+                            color: _currentTab == 3 ? Colors.blue : Colors.grey,
                           ),
                           Text(
                             'Chat',
                             style: TextStyle(
-                              color: _currentTab == 3 ? Colors.blue : Colors
-                                  .grey,
+                              color:
+                                  _currentTab == 3 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -225,9 +229,7 @@ class _HomeState extends State<Home>{
                     ),
                   ],
                 )
-              ]
-          ),
-        )
-    );
+              ]),
+        ));
   }
 }
