@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home/home.dart';
 import 'learn_a_word_screen/learn_a_word_screen.dart';
+import 'user_profile_screen/user_profile_screen.dart';
 import 'word.dart';
 
 void main() {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: UserProfileScreen(),
     );
   }
 }
