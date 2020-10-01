@@ -3,6 +3,7 @@ import 'home/home.dart';
 import 'learn_a_word_screen/learn_a_word_screen.dart';
 import 'user_profile_screen/user_profile_screen.dart';
 import 'word.dart';
+import 'favorite_screen/favorite_words_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: UserProfileScreen(),
+      home: Home(),
     );
   }
 }
