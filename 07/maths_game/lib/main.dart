@@ -65,7 +65,7 @@ class MainScreen extends StatelessWidget {
               onTap: () {
                 StoreRedirect.redirect(androidAppId: "com.GamesForKids.Mathgames.MultiplicationTables");
               },
-              child: Image.asset("images/app_list.png",scale: 1.1,alignment: Alignment.topLeft,),
+              child: Image.asset("images/app_list.png",scale: 1,alignment: Alignment.topLeft,),
             ),
             InkWell(
               onTap: () {
