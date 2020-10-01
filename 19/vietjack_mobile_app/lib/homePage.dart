@@ -9,8 +9,6 @@ import 'LoginPage.dart';
 class homePage extends StatefulWidget {
   String userName = "name";
 
-  homePage({Key key, this.userName}) : super(key: key);
-
   @override
   _homePageState createState() => _homePageState();
 }
@@ -25,7 +23,7 @@ class _homePageState extends State<homePage> {
         title: new Text("Home Page"),
         centerTitle: true,
       ),
-      body: new Header(width: width, height: height, userName: widget.userName),
+      body: new Header(width: width, height: height),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
           googleSignOut();

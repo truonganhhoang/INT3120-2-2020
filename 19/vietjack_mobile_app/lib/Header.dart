@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'Auth.dart';
 class Header extends StatefulWidget {
   double width;
   double height;
   String userName;
-  Header({Key key, this.width, this.height, this.userName}) : super(key: key);
+  Header({Key key, this.width, this.height}) : super(key: key);
   @override
   _HeaderState createState() => _HeaderState();
 }
@@ -19,8 +19,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     left = widget.width / 2;
-    animationController =
-        new AnimationController(vsync: this, duration: Duration(seconds: 1));
+    animationController = new AnimationController(vsync: this, duration: Duration(seconds: 1));
     animationController.forward();
     animationController.addListener(() {
       setState(() {
@@ -43,7 +42,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                 height: 200,
                 child: Center(
                   child: new Text(
-                    widget.userName != null ? widget.userName : " ",
+                    auth.currentUser.displayName,
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: 'GoodDog',
@@ -53,11 +52,13 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                 )),
           ),
           new Container(
-            color: Colors.blue,
             width: right,
             height: 200,
-            child: new Image(
-                image: AssetImage('assets/idea.jpg'), fit: BoxFit.fitHeight),
+            child: new Opacity(
+              opacity: myOpacity,
+              child: new Image(
+                  image: AssetImage('assets/idea.jpg'), fit: BoxFit.fitHeight),
+            ),
           ),
         ]);
   }
