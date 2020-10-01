@@ -1,1 +1,0 @@
-https://www.udemy.com/course/ultimate-react-native-with-firebase/
