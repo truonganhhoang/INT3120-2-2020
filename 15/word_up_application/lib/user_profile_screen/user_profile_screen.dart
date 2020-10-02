@@ -68,9 +68,9 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                 ),
                 Container(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 15, bottom: 20),
+                    padding: EdgeInsets.only(top: 15, bottom: 20, left: 20, right: 20),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           height: 50,
