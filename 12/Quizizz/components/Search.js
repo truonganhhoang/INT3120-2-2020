@@ -44,7 +44,6 @@ export default class Search extends Component {
                 <Text style={{ fontSize: 13 }}>Filter</Text>
               </TouchableOpacity>
             </View>
-            <TaskBar />
           </View>
         </TouchableWithoutFeedback>
       </SafeAreaView>

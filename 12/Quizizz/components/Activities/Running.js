@@ -1,9 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {Component} from 'react';
-import {View, Platform, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, Platform, StyleSheet, Text, TouchableOpacity, FlatList} from 'react-native';
 import Header from '../Header';
 import Quiz from '../Quiz';
-import { FlatList } from 'react-native-gesture-handler';
 import StatusTab from './statusTab';
 
 const dataList = [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}]
