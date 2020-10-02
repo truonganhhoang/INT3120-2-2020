@@ -54,6 +54,11 @@ flutter:
     - assets/grammarButton.png
     - assets/satan.gif
     - assets/satan.png
+    - assets/GrammarTitle.png
+    - assets/GrammarSelection.png
+    - assets/GrammarSelection2.png
+    - assets/PlayGameButton.png
+    - assets/back.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
