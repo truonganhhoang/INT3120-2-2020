@@ -1,3 +1,4 @@
+import 'package:bucha_app/TuDIen/TuDien1.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,18 +14,21 @@ class HomePage extends StatefulWidget {
 }
 
 class OptionButton extends StatelessWidget {
-  final String link_image;
+  final int colorBackgorund;
   final String textButton;
 
-  OptionButton({this.link_image, this.textButton});
+  OptionButton({this.colorBackgorund, this.textButton});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300.0,
+        width: 150.0,
+        margin: const EdgeInsets.only(top: 20.0),
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(link_image))),
+            color: Color(colorBackgorund),
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: FlatButton(
+          onPressed: () {},
           child: Text(
             textButton,
             style: TextStyle(
@@ -39,37 +43,29 @@ class OptionButton extends StatelessWidget {
 }
 
 class SmailOntionButton extends StatelessWidget {
-  final String image_location;
+  final int imageBackground;
   final String image_caption;
+  final String link_scene;
 
-  SmailOntionButton({this.image_location, this.image_caption});
+  SmailOntionButton(
+      {this.imageBackground, this.image_caption, this.link_scene});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(0.5),
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          width: 100.0,
-          margin: const EdgeInsets.only(
-              top: 40.0, left:0.5, right:0.5),
-          child: ListTile(
-            title: Image.asset(image_location,
-              width: 100.0,
-              height: 80.0),
-            subtitle:Container(
-              alignment: Alignment.topCenter,
-              child: Text(image_caption,
-                style: TextStyle(
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),),
-            ),
-          ),
-        ),
-      ),
+    return Column(
+      children: [
+        Container(
+            width: 50.0,
+            height: 50.0,
+            margin: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+            decoration: BoxDecoration(
+                color: Color(imageBackground),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+        Container(
+          margin: const EdgeInsets.only(top: 10.0),
+          child: Text(image_caption),
+        )
+      ],
     );
   }
 }
@@ -81,44 +77,68 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/background.jpg"), fit: BoxFit.fill)),
+        decoration: BoxDecoration(color: Color(0xff3fe7f1)),
         child: new Column(
           children: <Widget>[
             new Padding(padding: const EdgeInsets.only(top: 200)),
-            OptionButton(
-              link_image: "assets/buttonRed.png",
-              textButton: "Trường Học",
-            ),
-            new Padding(padding: const EdgeInsets.only(top: 25.0)),
-            OptionButton(
-              link_image: "assets/buttonBlue.png",
-              textButton: "Nâng Cao",
+            Container(
+                width: 200.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                    color: Color(0xff41D4E6),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(0x41D4E6),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  child: FlatButton(
+                    child: Text("Từ Vựng",style: TextStyle(
+                      fontSize: 16.0,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),),
+
+                  ),
+                )),
+            Container(
+              width: 200.0,
+              height: 200.0,
+              decoration: BoxDecoration(
+                  color: Color(0xff668EA7),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              child: Column(
+                children: <Widget>[
+
+                  OptionButton(
+                    colorBackgorund: 0xffC822DA,
+                    textButton: "Trường Học",
+                  ),
+
+                  OptionButton(
+                    colorBackgorund: 0xffFC6E64,
+                    textButton: "Nâng Cao",
+                  ),
+                ],
+              ),
             ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SmailOntionButton(
-                  image_location: "assets/dictionaryButton.png",
+                  imageBackground: 0xff7D75B0,
                   image_caption: "Từ Điển",
                 ),
                 SmailOntionButton(
-                  image_location: "assets/sampleSentencesButton.png",
+                  imageBackground: 0xffF1B73C,
                   image_caption: "Mẫu Câu",
                 ),
                 SmailOntionButton(
-                  image_location: "assets/grammarButton.png",
+                  imageBackground: 0xffFF3D00,
                   image_caption: "Ngữ Pháp",
                 )
               ],
-            ),
-            Container(
-              width: 80,
-              height: 140,
-              margin: const EdgeInsets.only(top: 50.0,right: 100.0),
-              child: Image.asset('assets/satan.png'),
             ),
           ],
         ),
