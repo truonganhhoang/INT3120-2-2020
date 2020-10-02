@@ -13,8 +13,11 @@ class _UserProfileScreen extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.close),
-        title: Text('My Acount'),
+        leading: IconButton(
+          icon: Icon(Icons.close,),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text('My Account'),
         centerTitle: true,
       ),
       body: Stack(

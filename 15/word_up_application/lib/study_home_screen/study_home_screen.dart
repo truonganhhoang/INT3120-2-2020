@@ -16,9 +16,21 @@ class _StudyHomeScreenState extends State<StudyHomeScreen>{
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body:
-      Padding(
-        padding: EdgeInsets.only(bottom: 100),
+      Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.0, -1.0),
+            end: Alignment(0.0, 0.9999999999999998),
+            stops: [0.0, 0.5104166865348816, 1.0],
+            colors: [
+              Color.fromARGB(255, 52, 206, 255),
+              Color.fromARGB(255, 138, 206, 255),
+              Color.fromARGB(255, 243, 254, 255)
+            ],
+          ),
+        ),
         child: Container(
+          padding: EdgeInsets.only(bottom: 100),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,23 +55,6 @@ class _StudyHomeScreenState extends State<StudyHomeScreen>{
                   WordBox(word: new Word(
                       id: 4, word: 'Confidence', pronounUK: '/ˈkɒn.fɪ.dəns/')),
                 ],
-                /*
-                items: <Widget>[
-                  Container(
-                    width: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
-                    child: Text('Signify'),
-                  ),
-                  Container(
-                    width: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
-                    child: Text('Dog'),
-                  ),
-                ],*/
               ),
               Padding(
                 padding: EdgeInsets.only(top: 50),

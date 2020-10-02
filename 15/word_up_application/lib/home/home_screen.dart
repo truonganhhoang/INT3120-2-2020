@@ -11,12 +11,14 @@ import '../chat_screen/chat_screen.dart';
 
 class Home extends StatefulWidget {
   @override
+  Home(Key key):super(key : key);
   State<StatefulWidget> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   int _currentTab = 0;
   String _screenTitle = 'Learning';
+  final String iconLookUpPath = 'assets/sprites/LookUpIcon.png';
 
   final List<Widget> screens = [
     StudyHomeScreen(),
@@ -27,6 +29,18 @@ class _HomeState extends State<Home> {
 
   Widget _currentScreen = StudyHomeScreen();
   final PageStorageBucket _bucket = PageStorageBucket();
+
+  void openSearchScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => SearchWordScreen()),
+    );
+  }
+
+  void openProfileUserScreen() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => UserProfileScreen(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +57,17 @@ class _HomeState extends State<Home> {
               color: Colors.white,
             ),
             onPressed: () {
-              print('TapPerson');
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => UserProfileScreen(),
-              ));
-             
+              openProfileUserScreen();
             },
           ),
         ],
       ),
       drawer: AccountPage(),
-      body: PageStorage(
-        child: _currentScreen,
-        bucket: _bucket,
+      body: Container(
+        child: PageStorage(
+          child: _currentScreen,
+          bucket: _bucket,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
@@ -64,16 +76,14 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ImageIcon(
-                AssetImage('assets/sprites/LookUpIcon.png'),
+                AssetImage(iconLookUpPath),
                 color: Colors.white,
               ),
               Text('Search'),
             ],
           ),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => SearchWordScreen()),
-            );
+            openSearchScreen();
           },
           tooltip: 'Look up',
           elevation: 2.0,
@@ -100,7 +110,6 @@ class _HomeState extends State<Home> {
         child: Container(
           height: 70,
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
               // left tab bar icons
               children: <Widget>[
                 Row(
@@ -108,7 +117,10 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     // Study Icon
                     MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width / 5,
+                      minWidth: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen = StudyHomeScreen();
@@ -127,7 +139,7 @@ class _HomeState extends State<Home> {
                             'Study',
                             style: TextStyle(
                               color:
-                                  _currentTab == 0 ? Colors.blue : Colors.grey,
+                              _currentTab == 0 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -136,7 +148,10 @@ class _HomeState extends State<Home> {
 
                     // Play Icon
                     MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width / 5,
+                      minWidth: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen = PlayGameScreen();
@@ -155,7 +170,7 @@ class _HomeState extends State<Home> {
                             'Play',
                             style: TextStyle(
                               color:
-                                  _currentTab == 1 ? Colors.blue : Colors.grey,
+                              _currentTab == 1 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -170,7 +185,10 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     // Favorite icon
                     MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width / 5,
+                      minWidth: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen =
@@ -190,7 +208,7 @@ class _HomeState extends State<Home> {
                             'Favorite',
                             style: TextStyle(
                               color:
-                                  _currentTab == 2 ? Colors.blue : Colors.grey,
+                              _currentTab == 2 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -201,7 +219,10 @@ class _HomeState extends State<Home> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                       ),
-                      minWidth: MediaQuery.of(context).size.width / 5,
+                      minWidth: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 5,
                       onPressed: () {
                         setState(() {
                           _currentScreen =
@@ -221,7 +242,7 @@ class _HomeState extends State<Home> {
                             'Chat',
                             style: TextStyle(
                               color:
-                                  _currentTab == 3 ? Colors.blue : Colors.grey,
+                              _currentTab == 3 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],

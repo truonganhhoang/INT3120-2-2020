@@ -23,7 +23,7 @@ class _BoxWord extends State<BoxWord>{
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Icon(Icons.volume_up, size: 50, color: Colors.grey,),
           Column(

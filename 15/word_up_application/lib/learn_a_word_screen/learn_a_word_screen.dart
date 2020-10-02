@@ -3,7 +3,7 @@ import 'learn_box.dart';
 import 'package:word_up_application/word.dart';
 
 class LearnAWord extends StatelessWidget{
-  Word word = Word(
+  final Word word = Word(
     id: 1,
     word: 'Modern',
     type:'adj',
