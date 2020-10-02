@@ -138,25 +138,9 @@ class _GrammarPageState extends State<GrammarPage> {
                 ),
               ),
             ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SmailOntionButton(
-                  image_location: "assets/back.png",
-                  width: 50.0,
-                  height: 50.0,
-                ),
-                SmailOntionButton(
-                  image_location: "assets/PlayGameButton.png",
-                  width: 200.0,
-                  height: 50.0,
-                ),
-              ],
-            ),
+
           ],
         ),
-
       ),
     );
   }
