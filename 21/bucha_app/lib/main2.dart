@@ -38,31 +38,21 @@ class OptionButton extends StatelessWidget {
   }
 }
 
-class SmailOntionButton extends StatelessWidget {
+class MainButton extends StatelessWidget {
   final String image_location;
   final double width;
   final double height;
 
-  SmailOntionButton({this.image_location, this.width, this.height});
+  MainButton({this.image_location, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(0.5),
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          width: this.width,
-          margin: const EdgeInsets.only(
-              top: 40.0, left:0.5, right:0.5),
-          child: ListTile(
-            title: Image.asset(image_location,
-                width: this.width,
-                height: this.height),
-          ),
-        ),
-      ),
-    );
+    return Container(
+        width: this.width,
+        height: this.height,
+        decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(image_location), fit: BoxFit.fill)),
+        );
   }
 }
 
@@ -138,7 +128,25 @@ class _GrammarPageState extends State<GrammarPage> {
                 ),
               ),
             ),
-
+            Container(
+              width: 330.0,
+              height: 50.0,
+              child: new Row(
+                children: [
+                  MainButton(
+                    image_location: "assets/back.png",
+                    width: 30.0,
+                    height: 30.0,
+                  ),
+                  new Padding( padding: EdgeInsets.only(left:80.0)),
+                  MainButton(
+                    image_location: "assets/PlayGameButton.png",
+                    width: 120.0,
+                    height: 50.0,
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
