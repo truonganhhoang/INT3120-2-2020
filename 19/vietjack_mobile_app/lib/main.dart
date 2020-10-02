@@ -10,12 +10,9 @@ import 'LoginPage.dart';
 void main() {
   runApp(new MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme:ThemeData(
-        primarySwatch: Colors.purple,
-        buttonColor: Colors.yellow
-      ),
-      home: new LoginPage())
-  );
+      theme:
+          ThemeData(primarySwatch: Colors.purple, buttonColor: Colors.yellow),
+      home: new LoginPage()));
 }
 
 //////////
@@ -44,7 +41,8 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
     List<Widget> _children = [
       homePage(),
       TimKiem(),
-      ThiOnline(_isThiOnlineFirstRun)
+      ThiOnline(_isThiOnlineFirstRun),
+      homePage()
     ];
     return new Scaffold(
       body: _children[_currentIndex],
@@ -59,7 +57,9 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
             title: new Text("Tìm kiếm"),
           ),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.book), title: new Text("Thi Online"))
+              icon: new Icon(Icons.book), title: new Text("Thi Online")),
+          BottomNavigationBarItem(
+              icon: new Icon(Icons.home), title: new Text("Tài khoản"))
         ],
       ),
     );

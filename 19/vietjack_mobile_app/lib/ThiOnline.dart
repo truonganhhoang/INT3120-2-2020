@@ -123,7 +123,6 @@ class _OnThiState extends State<ThiOnline> {
           width: width,
           height: height,
         ),
-        RaisedButton(child: Text('Open route'), onPressed: _onButtonPress),
         containterContent(),
         containterContent(),
         containterContent(),
