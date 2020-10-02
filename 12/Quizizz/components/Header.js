@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, Dimensions, Text, TouchableOpacity, Image} from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons'
 const screen = Dimensions.get('window');
 
 export default class Header extends Component{
@@ -11,8 +11,7 @@ export default class Header extends Component{
                 <Text style={styles.nameTab}>{nameTab}</Text>
                 <TouchableOpacity style={styles.menu}>
                     <View style={styles.menuButton}>
-                        <Image source={require('../images/menu-button.png')}
-                                            style={{width: 20, height: 20}}></Image>
+                        <Icon name="ios-menu" size={20} />
                     </View>
                 </TouchableOpacity>
             </View>
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
         width: screen.width,
         height: 66,
         flexDirection: 'row',
-        position: "relative"
+        position: "fixed"
     },
     nameTab: {
         fontSize: 30,

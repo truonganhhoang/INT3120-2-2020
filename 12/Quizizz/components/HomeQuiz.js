@@ -82,7 +82,6 @@ export default class HomeQuiz extends Component {
                     </View>
                 </ScrollView>
             </TouchableWithoutFeedback>
-            <TaskBar/>
         </SafeAreaView>
         );
     }
