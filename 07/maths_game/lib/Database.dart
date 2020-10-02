@@ -10,9 +10,15 @@ void main() async {
   final Future<Database> database = openDatabase(
     join(await getDatabasesPath(), 'maths_game_database.db'),
     onCreate: (db, version) {
-      db.execute( "CREATE TABLE minus(id INTEGER PRIMARY KEY, number1 integer, number2 INTEGER,result INTEGER)",);
-      db.execute("CREATE TABLE duplicate(id INTEGER PRIMARY KEY, number1 integer, number2 INTEGER,result INTEGER)",);
-      db.execute( "CREATE TABLE divide(id INTEGER PRIMARY KEY, number1 integer, number2 INTEGER,result INTEGER)",);
+      db.execute(
+        "CREATE TABLE minus(id INTEGER PRIMARY KEY, number1 integer, number2 INTEGER,result INTEGER)",
+      );
+      db.execute(
+        "CREATE TABLE duplicate(id INTEGER PRIMARY KEY, number1 integer, number2 INTEGER,result INTEGER)",
+      );
+      db.execute(
+        "CREATE TABLE divide(id INTEGER PRIMARY KEY, number1 integer, number2 INTEGER,result INTEGER)",
+      );
       return db.execute(
         "CREATE TABLE plus(id INTEGER PRIMARY KEY, number1 integer, number2 INTEGER,result INTEGER)",
       );
@@ -59,7 +65,6 @@ void main() async {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
-
 
   Future<List<Plus>> plus() async {
     final Database db = await database;
@@ -118,7 +123,6 @@ void main() async {
 
   // Delete Fido from the database.
   // await deletePlus(fido.id);
-
 }
 
 class Plus {
@@ -212,4 +216,3 @@ class Divide {
     return 'Divide{id: $id, number1: $number1, number2: $number2, result: $result}';
   }
 }
-

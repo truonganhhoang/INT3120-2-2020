@@ -40,10 +40,9 @@ class _TimeScreen extends State<TimeScreen> {
       Navigator.of(context).pop();
     }
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) =>
-            GameModeScreen(widget.calculation)
-    ));
+        builder: (BuildContext context) => GameModeScreen(widget.calculation)));
   }
+
   // Back function
   void _navigateToResultScreen(BuildContext context) {
     if (Navigator.of(context).canPop()) {
@@ -51,8 +50,7 @@ class _TimeScreen extends State<TimeScreen> {
     }
     Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) =>
-        new ResultScreen(widget.calculation,trueAnswer)
-    ));
+            new ResultScreen(widget.calculation, trueAnswer)));
   }
 
   _TimeScreen(String cal) {
@@ -71,7 +69,7 @@ class _TimeScreen extends State<TimeScreen> {
   }
   //constructor
 
-  int nextQuestion () {
+  int nextQuestion() {
     Timer _timer = Timer(Duration(seconds: 1), () {
       number1 = random.nextInt(20) + 1;
       number2 = random.nextInt(20) + 1;
@@ -79,7 +77,7 @@ class _TimeScreen extends State<TimeScreen> {
     });
   }
 
-  checkAnswer(int playerAnswer,int result) {
+  checkAnswer(int playerAnswer, int result) {
     setState(() {
       if (result == playerAnswer)
         trueAnswer++;
@@ -101,23 +99,19 @@ class _TimeScreen extends State<TimeScreen> {
       calculateIcon = " - ";
     else if (widget.calculation == 'duplicate')
       calculateIcon = " x ";
-    else if (widget.calculation == 'divide')
-      calculateIcon = " : ";
+    else if (widget.calculation == 'divide') calculateIcon = " : ";
 
     String question = "none";
     if (calculation == "plus") {
       result = (number1 + number2).toString();
       // right answer
-    }
-    else if (calculation == "minus") {
+    } else if (calculation == "minus") {
       result = (number1 - number2).toString();
       // right answer
-    }
-    else if (calculation == "duplicate") {
+    } else if (calculation == "duplicate") {
       result = (number1 * number2).toString();
       // right answer
-    }
-    else if (calculation == "divide") {
+    } else if (calculation == "divide") {
       number1 = duplicateTime * number2;
       result = (number1 ~/ number2).toString();
       // right answer
@@ -138,7 +132,10 @@ class _TimeScreen extends State<TimeScreen> {
                 InkWell(
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: Image.asset("images/back_image.png", scale: 1.7,),
+                    child: Image.asset(
+                      "images/back_image.png",
+                      scale: 1.7,
+                    ),
                   ),
                   onTap: () {
                     _navigateBack(context);
@@ -156,11 +153,9 @@ class _TimeScreen extends State<TimeScreen> {
                     ),
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
-                              "images/Number of Right Answer.png"),
-                          fit: BoxFit.cover,
-                        )
-                    ),
+                      image: AssetImage("images/Number of Right Answer.png"),
+                      fit: BoxFit.cover,
+                    )),
                   ),
                 ),
                 Align(
@@ -175,11 +170,9 @@ class _TimeScreen extends State<TimeScreen> {
                     ),
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
-                              "images/timer_theme.png"),
-                          fit: BoxFit.cover,
-                        )
-                    ),
+                      image: AssetImage("images/timer_theme.png"),
+                      fit: BoxFit.cover,
+                    )),
                   ),
                 ),
               ],
@@ -187,31 +180,37 @@ class _TimeScreen extends State<TimeScreen> {
             Stack(
               children: [
                 Align(
-                  alignment: Alignment(-2,0.3),
+                  alignment: Alignment(-2, 0.3),
                   child: Container(
-                    child: Image.asset("images/female_teacher_2.png",scale: 1.1,),
+                    child: Image.asset(
+                      "images/female_teacher_2.png",
+                      scale: 1.1,
+                    ),
                   ),
                 ),
                 Align(
                   alignment: Alignment(0, -1),
-                  child: Text(question, style: TextStyle(fontSize: 36),),
+                  child: Text(
+                    question,
+                    style: TextStyle(fontSize: 36),
+                  ),
                 ),
                 Align(
-                  alignment: Alignment(0.7,-1.3),
+                  alignment: Alignment(0.7, -1.3),
                   child: Container(
                     width: 85,
                     height: 75,
                     child: TextField(
-                      controller: myController,
-                      focusNode: playerAnswer,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 36),
-                      decoration: InputDecoration(border: OutlineInputBorder()),
-                      onSubmitted: (String str) {
-                        checkAnswer(int.parse(str),int.parse(result));
-                        myController.clear();
-                      }
-                    ),
+                        controller: myController,
+                        focusNode: playerAnswer,
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(fontSize: 36),
+                        decoration:
+                            InputDecoration(border: OutlineInputBorder()),
+                        onSubmitted: (String str) {
+                          checkAnswer(int.parse(str), int.parse(result));
+                          myController.clear();
+                        }),
                   ),
                 ),
               ],
@@ -226,10 +225,9 @@ class _TimeScreen extends State<TimeScreen> {
         ),
         decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/class_background_2.jpg"),
-              fit: BoxFit.cover,
-            )
-        ),
+          image: AssetImage("images/class_background_2.jpg"),
+          fit: BoxFit.cover,
+        )),
       ),
     );
   }

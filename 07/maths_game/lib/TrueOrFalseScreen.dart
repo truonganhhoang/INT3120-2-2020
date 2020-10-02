@@ -15,11 +15,9 @@ class TrueOrFalseScreen extends StatefulWidget {
   TrueOrFalseScreen(this.calculation);
 
   _TrueOrFalseScreen createState() => _TrueOrFalseScreen(calculation);
-
 }
 
 class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
-
   /* getRandomCalculation(int number1,int number2) {
     getData(number1,number2,calculation).then((val) => setState(() {
       map = val;
@@ -46,23 +44,23 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
   List<Map> map = new List<Map>();
   // list of random calculation - in this mode length = 1 */
 
-  String resultImage,resultText;
+  String resultImage, resultText;
   MaterialColor resultTextColor;
   String calculation;
   int numberOfQuestion = 0;
   int number1;
   int number2;
-  int trueAnswer =0;
-  int falseAnswer =0;
+  int trueAnswer = 0;
+  int falseAnswer = 0;
   var random = new Random();
 
   void _navigateBack(BuildContext context) {
     if (Navigator.of(context).canPop()) {
       Navigator.of(context).pop();
     }
-    Navigator.of(context).push(MaterialPageRoute (
-        builder: (BuildContext context) => new GameModeScreen(widget.calculation)
-    ));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) =>
+            new GameModeScreen(widget.calculation)));
   }
   // Back function
 
@@ -72,11 +70,10 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
     }
     Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) =>
-        new ResultScreen(widget.calculation,trueAnswer - falseAnswer)
-    ));
+            new ResultScreen(widget.calculation, trueAnswer - falseAnswer)));
   }
 
-  _TrueOrFalseScreen(String cal){
+  _TrueOrFalseScreen(String cal) {
     this.calculation = cal;
     number1 = random.nextInt(10) + 1;
     number2 = random.nextInt(10) + 1;
@@ -86,25 +83,38 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
 
   void checkAnswer(String result, String choice) {
     setState(() {
-      if ((((number1 + number2 ).toString() == result)  || ((number1 - number2 ).toString() == result) || ((number1 * number2 ).toString() == result) || ((number1 ~/ number2 ).toString() == result)) && choice == "true") {
+      if ((((number1 + number2).toString() == result) ||
+              ((number1 - number2).toString() == result) ||
+              ((number1 * number2).toString() == result) ||
+              ((number1 ~/ number2).toString() == result)) &&
+          choice == "true") {
         trueAnswer++;
         resultImage = "images/smile_face.png";
         resultText = "Correct!";
         resultTextColor = Colors.green;
-      }
-      else if ((((number1 + number2 ).toString() == result)  || ((number1 - number2 ).toString() == result) || ((number1 * number2 ).toString() == result) || ((number1 ~/ number2 ).toString() == result)) && choice == "false") {
+      } else if ((((number1 + number2).toString() == result) ||
+              ((number1 - number2).toString() == result) ||
+              ((number1 * number2).toString() == result) ||
+              ((number1 ~/ number2).toString() == result)) &&
+          choice == "false") {
         falseAnswer++;
         resultImage = "images/cry_face.png";
         resultText = "Wrong!";
         resultTextColor = Colors.red;
-      }
-      else if ((((number1 + number2 ).toString() != result) || ((number1 - number2 ).toString() != result) || ((number1 * number2 ).toString() != result) || ((number1 ~/ number2 ).toString() != result)) && (choice == "false")) {
+      } else if ((((number1 + number2).toString() != result) ||
+              ((number1 - number2).toString() != result) ||
+              ((number1 * number2).toString() != result) ||
+              ((number1 ~/ number2).toString() != result)) &&
+          (choice == "false")) {
         trueAnswer++;
         resultImage = "images/smile_face.png";
         resultText = "Correct!";
         resultTextColor = Colors.green;
-      }
-      else if ((((number1 + number2 ).toString() != result) || ((number1 - number2 ).toString() != result) || ((number1 * number2 ).toString() != result) || ((number1 ~/ number2 ).toString() != result)) && choice == "true") {
+      } else if ((((number1 + number2).toString() != result) ||
+              ((number1 - number2).toString() != result) ||
+              ((number1 * number2).toString() != result) ||
+              ((number1 ~/ number2).toString() != result)) &&
+          choice == "true") {
         falseAnswer++;
         resultImage = "images/cry_face.png";
         resultText = "Wrong!";
@@ -117,16 +127,23 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
             return SimpleDialog(
               backgroundColor: Colors.transparent,
               children: [
-                Image.asset(resultImage,scale: 1.1,),
+                Image.asset(
+                  resultImage,
+                  scale: 1.1,
+                ),
                 Text(""),
-                Text(resultText, style: TextStyle(backgroundColor: resultTextColor,fontSize: 36),textAlign: TextAlign.center,)
+                Text(
+                  resultText,
+                  style:
+                      TextStyle(backgroundColor: resultTextColor, fontSize: 36),
+                  textAlign: TextAlign.center,
+                )
               ],
             );
-        }
-      );
+          });
 
       Timer _timer = Timer(Duration(seconds: 1), () {
-        Navigator.pop(context,true);
+        Navigator.pop(context, true);
       });
 
       number1 = random.nextInt(10) + 1;
@@ -138,12 +155,11 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
           _navigateToResultScreen(context);
         });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    String calculateIcon,result;
+    String calculateIcon, result;
     int test;
     test = random.nextInt(10);
 
@@ -153,132 +169,150 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
       calculateIcon = " - ";
     else if (widget.calculation == 'duplicate')
       calculateIcon = " x ";
-    else if (widget.calculation == 'divide')
-      calculateIcon = " : ";
+    else if (widget.calculation == 'divide') calculateIcon = " : ";
 
-    String question ="none";
+    String question = "none";
     if (calculation == "plus") {
       if (test % 2 == 0)
         result = (number1 + number2).toString();
-        // right answer
+      // right answer
       else
         result = (number1 + number2 + test).toString();
-        // wrong answer
-    }
-    else if (calculation == "minus"){
+      // wrong answer
+    } else if (calculation == "minus") {
       if (test % 2 == 0)
         result = (number1 - number2).toString();
-        // right answer
+      // right answer
       else
         result = (number1 - number2 + test).toString();
-        // wrong answer
-    }
-    else if (calculation == "duplicate") {
+      // wrong answer
+    } else if (calculation == "duplicate") {
       if (test % 2 == 0)
         result = (number1 * number2).toString();
-        // right answer
+      // right answer
       else
         result = (number1 * number2 + test).toString();
-        // wrong answer
-    }
-    else if (calculation == "divide") {
+      // wrong answer
+    } else if (calculation == "divide") {
       number1 = test * number2;
       if (test % 2 == 0)
         result = (number1 ~/ number2).toString();
-        // right answer
+      // right answer
       else
         result = (number1 ~/ number2 + test).toString();
-        // wrong answer
-        // ~/ is division return integer, / return double
+      // wrong answer
+      // ~/ is division return integer, / return double
     }
-    question = number1.toString() + calculateIcon + number2.toString() + " =  " + result;
+    question = number1.toString() +
+        calculateIcon +
+        number2.toString() +
+        " =  " +
+        result;
     //create question
 
-  return Scaffold(
+    return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: Container(
         child: GridView.count(
-            childAspectRatio: (2.5/1),
-            crossAxisCount: 1,
-            children: [
-              Stack(
-                children: [
-                  InkWell(
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Image.asset("images/back_image.png", scale: 1.7,),
+          childAspectRatio: (2.5 / 1),
+          crossAxisCount: 1,
+          children: [
+            Stack(
+              children: [
+                InkWell(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Image.asset(
+                      "images/back_image.png",
+                      scale: 1.7,
                     ),
-                    onTap: (){
-                      _navigateBack(context);
+                  ),
+                  onTap: () {
+                    _navigateBack(context);
+                  },
+                ),
+                Align(
+                  alignment: Alignment(0.1, 1.2),
+                  child: Wrap(
+                    spacing: 10,
+                    children: [
+                      Container(
+                        width: 140,
+                        height: 140,
+                        child: Align(
+                          alignment: Alignment(-0.5, 0),
+                          child: Text("  " + trueAnswer.toString(),
+                              style: TextStyle(fontSize: 70)),
+                        ),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image:
+                              AssetImage("images/Number of Right Answer.png"),
+                          fit: BoxFit.cover,
+                        )),
+                      ),
+                      Container(
+                        width: 140,
+                        height: 140,
+                        child: Align(
+                          alignment: Alignment(-0.5, 0),
+                          child: Text(
+                            "  " + falseAnswer.toString(),
+                            style: TextStyle(fontSize: 70),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image:
+                              AssetImage("images/Number of Wrong Answer.png"),
+                          fit: BoxFit.cover,
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment(0, 0),
+              child: Text(
+                question,
+                style: TextStyle(fontSize: 48),
+              ),
+            ),
+            GridView.count(
+              crossAxisCount: 2,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    child: Image.asset(
+                      "images/true-choice.png",
+                      scale: 1.3,
+                    ),
+                    onTap: () {
+                      checkAnswer(result, "true");
                     },
                   ),
-                  Align(
-                    alignment: Alignment(0.1,1.2),
-                    child: Wrap(
-                      spacing: 10,
-                      children: [
-                        Container(
-                          width: 140,
-                          height: 140,
-                          child: Align(
-                            alignment: Alignment(-0.5,0),
-                            child: Text("  " + trueAnswer.toString(),style: TextStyle(fontSize: 70)),
-                          ),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("images/Number of Right Answer.png"),
-                                fit: BoxFit.cover,
-                              )
-                          ),
-                        ),
-                        Container(
-                          width: 140,
-                          height: 140,
-                          child: Align(
-                            alignment: Alignment(-0.5,0),
-                            child: Text("  " + falseAnswer.toString(),style: TextStyle(fontSize: 70),),
-                          ),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("images/Number of Wrong Answer.png"),
-                                fit: BoxFit.cover,
-                              )
-                          ),
-                        ),
-                      ],
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: InkWell(
+                    child: Image.asset(
+                      "images/false-choice.png",
+                      scale: 1.3,
                     ),
+                    onTap: () {
+                      checkAnswer(result, "false");
+                    },
                   ),
-                ],
-              ),
-              Align(
-                alignment: Alignment(0,0),
-                child: Text(question, style: TextStyle(fontSize: 48),),
-              ),
-              GridView.count(
-                crossAxisCount: 2,
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkWell(
-                      child: Image.asset("images/true-choice.png",scale: 1.3,),
-                      onTap: (){
-                        checkAnswer(result,"true");
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: InkWell(
-                      child: Image.asset("images/false-choice.png",scale: 1.3,),
-                      onTap: (){
-                        checkAnswer(result,"false");
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Image.asset("images/thinking_boy.png",)
-            ],
+                ),
+              ],
+            ),
+            Image.asset(
+              "images/thinking_boy.png",
+            )
+          ],
         ),
       ),
     );

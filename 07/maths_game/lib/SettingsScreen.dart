@@ -5,31 +5,34 @@ import 'package:screen/screen.dart';
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text("Maths Game"),
       ),
       body: Container(
         child: SimpleDialog(
           backgroundColor: Colors.blueAccent,
-          contentPadding: EdgeInsets.symmetric(vertical: 30,horizontal: 0),
-          title: Text('Settings', textAlign: TextAlign.center,style: TextStyle(fontSize: 32),),
+          contentPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 0),
+          title: Text(
+            'Settings',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 32),
+          ),
           children: [
             Image.asset("images/Music line.png"),
             MyMusicSlider(),
             MyBrigtnessSlider(),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 100,horizontal: 0),
+              padding: EdgeInsets.symmetric(vertical: 100, horizontal: 0),
             ),
           ],
         ),
         //cú pháp dưới đây để cài đặt background cho Screen
         decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/settings_background.png"),
-              fit: BoxFit.fill,
-            )
-        ),
+          image: AssetImage("images/settings_background.png"),
+          fit: BoxFit.fill,
+        )),
       ),
     );
   }
@@ -43,7 +46,7 @@ class MyMusicSlider extends StatefulWidget {
 }
 
 class _MyMusicSlider extends State<MyMusicSlider> {
-  double _currentSliderValue ;
+  double _currentSliderValue;
   int maxSliderValue;
   AudioManager audioManager;
 
@@ -75,35 +78,36 @@ class _MyMusicSlider extends State<MyMusicSlider> {
   }
   //update Volume variable
 
-
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Column(
           children: [
-            Image.asset("images/music.png",alignment: Alignment.topCenter,scale: 1.3),
+            Image.asset("images/music.png",
+                alignment: Alignment.topCenter, scale: 1.3),
           ],
         ),
         Column(
           children: [
-            Text("Music",style: TextStyle(fontSize: 28)),
+            Text("Music", style: TextStyle(fontSize: 28)),
           ],
         ),
         (_currentSliderValue != null || maxSliderValue != null)
-           ? Slider(
-              activeColor: Colors.red,
-              inactiveColor: Colors.grey,
-              value: _currentSliderValue,
-              min: 0,
-              max: maxSliderValue / 1.0,
-              divisions: (maxSliderValue),
-              label: _currentSliderValue.round().toString(),
-              onChanged: (double value) {
-                setVol(value.toInt());
-                updateVolumes();
-              },
-            ) : Column()
+            ? Slider(
+                activeColor: Colors.red,
+                inactiveColor: Colors.grey,
+                value: _currentSliderValue,
+                min: 0,
+                max: maxSliderValue / 1.0,
+                divisions: (maxSliderValue),
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setVol(value.toInt());
+                  updateVolumes();
+                },
+              )
+            : Column()
       ],
     );
   }
@@ -129,8 +133,7 @@ class _MyBrightnessSlider extends State<MyBrigtnessSlider> {
   initPlatformState() async {
     //_isKeptOn = await Screen.isKeptOn;
     _brightness = await Screen.brightness;
-    setState((){
-    });
+    setState(() {});
   }
 
   @override
@@ -139,30 +142,31 @@ class _MyBrightnessSlider extends State<MyBrigtnessSlider> {
       children: [
         Column(
           children: [
-            Image.asset("images/brightness.png",alignment: Alignment.topCenter,scale: 1.4),
+            Image.asset("images/brightness.png",
+                alignment: Alignment.topCenter, scale: 1.4),
           ],
         ),
         Column(
           children: [
-            Text("Brightness",style: TextStyle(fontSize: 20)),
+            Text("Brightness", style: TextStyle(fontSize: 20)),
           ],
         ),
         (_brightness != null)
-        ? Slider(
-          value: _brightness,
-          activeColor: Colors.red,
-          inactiveColor: Colors.grey,
-          min: 0,
-          max: 1,
-          divisions: 10,
-          label: _brightness.toStringAsFixed(1),
-          onChanged: (double value) {
-              Screen.setBrightness(value);
-              initPlatformState();
-          },
-        ) : Column()
+            ? Slider(
+                value: _brightness,
+                activeColor: Colors.red,
+                inactiveColor: Colors.grey,
+                min: 0,
+                max: 1,
+                divisions: 10,
+                label: _brightness.toStringAsFixed(1),
+                onChanged: (double value) {
+                  Screen.setBrightness(value);
+                  initPlatformState();
+                },
+              )
+            : Column()
       ],
     );
   }
 }
-
