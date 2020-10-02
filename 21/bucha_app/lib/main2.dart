@@ -144,13 +144,13 @@ class _GrammarPageState extends State<GrammarPage> {
               children: <Widget>[
                 SmailOntionButton(
                   image_location: "assets/back.png",
-                  width: 30.0,
-                  height: 30.0,
+                  width: 50.0,
+                  height: 50.0,
                 ),
                 SmailOntionButton(
                   image_location: "assets/PlayGameButton.png",
                   width: 200.0,
-                  height: 30.0,
+                  height: 50.0,
                 ),
               ],
             ),
