@@ -8,7 +8,14 @@ import 'homePage.dart';
 import 'LoginPage.dart';
 
 void main() {
-  runApp(new MaterialApp(home: new LoginPage()));
+  runApp(new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme:ThemeData(
+        primarySwatch: Colors.purple,
+        buttonColor: Colors.yellow
+      ),
+      home: new LoginPage())
+  );
 }
 
 //////////
@@ -22,6 +29,7 @@ class VietJackNavigationBar extends StatefulWidget {
 class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
   int _isThiOnlineFirstRun = 0;
   int _currentIndex = 0;
+
   void onTappedBar(int index) {
     setState(() {
       _currentIndex = index;
@@ -34,7 +42,7 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _children = [
-      homePage(userName: FirebaseAuth.instance.currentUser.displayName),
+      homePage(),
       TimKiem(),
       ThiOnline(_isThiOnlineFirstRun)
     ];

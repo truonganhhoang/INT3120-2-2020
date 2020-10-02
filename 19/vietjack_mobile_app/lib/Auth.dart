@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
@@ -14,4 +15,6 @@ Future<User> signInWithUser() async{
 }
 void googleSignOut() async{
   await auth.signOut();
+  await googleSignIn.signOut();
+  print('logoutttttttttt');
 }
