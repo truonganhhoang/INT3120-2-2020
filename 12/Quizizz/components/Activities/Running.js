@@ -5,7 +5,7 @@ import Header from '../Header';
 import Quiz from '../Quiz';
 import StatusTab from './statusTab';
 
-const dataList = [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}]
+const dataList = [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}]
 
 export default class Running extends Component {
     constructor(props){
@@ -28,7 +28,7 @@ export default class Running extends Component {
                  <Header nameTab={this.state.nameTab}></Header>
                  <StatusTab></StatusTab>
                  <View>
-                    <FlatList
+                    <FlatList 
                         data={dataList}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => index.toString()}
@@ -49,6 +49,11 @@ const styles = StyleSheet.create({
     itemQuiz: {
         marginTop: 20,
         justifyContent: 'center',
-        flex: 1
+
+    },
+    rowWrapper: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal:5
     }
 })
