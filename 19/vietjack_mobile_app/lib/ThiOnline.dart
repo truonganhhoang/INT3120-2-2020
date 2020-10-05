@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:vietjack_mobile_app/Header.dart';
+import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
@@ -99,48 +100,16 @@ class _OnThiState extends State<ThiOnline> {
     super.dispose();
   }
 
-  Widget containterContent() {
-    return Container(
-      height: 50.0,
-      color: Colors.cyanAccent,
-      margin: EdgeInsets.all(8.0),
-      width: MediaQuery.of(context).size.width - 100,
-      child: Center(
-          child: Text(
-        'Item 1',
-        style: TextStyle(
-          fontSize: 14.0,
-        ),
-      )),
-    );
-  }
-
   Widget body(width, height) {
     return ListView(
       controller: _scrollBottomController,
+      // shrinkWrap: true,
       children: <Widget>[
         Header(
           width: width,
           height: height,
         ),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
-        containterContent(),
+        MyCustomCard(35)
       ],
     );
   }

@@ -11,10 +11,9 @@ void main() {
   runApp(new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-              primarySwatch: Colors.purple,
-              buttonColor: Colors.yellow,
-              scaffoldBackgroundColor: Colors.brown[50]
-          ),
+          primarySwatch: Colors.purple,
+          buttonColor: Colors.yellow,
+          scaffoldBackgroundColor: Colors.brown[50]),
       color: Colors.red,
       home: new LoginPage()));
 }
@@ -51,19 +50,27 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
     return new Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap: onTappedBar,
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-              icon: new Icon(Icons.home), title: new Text("Trang chủ")),
+              icon: new Icon(Icons.home),
+              title: new Text("Trang chủ",
+                  style: TextStyle(color: Colors.black.withOpacity(0.6)))),
           BottomNavigationBarItem(
             icon: new Icon(Icons.search),
-            title: new Text("Tìm kiếm"),
+            title: new Text("Tìm kiếm",
+                style: TextStyle(color: Colors.black.withOpacity(0.6))),
           ),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.book), title: new Text("Thi Online")),
+              icon: new Icon(Icons.book),
+              title: new Text("Thi Online",
+                  style: TextStyle(color: Colors.black.withOpacity(0.6)))),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.home), title: new Text("Tài khoản"))
+              icon: new Icon(Icons.home),
+              title: new Text("Tài khoản",
+                  style: TextStyle(color: Colors.black.withOpacity(0.6))))
         ],
       ),
     );

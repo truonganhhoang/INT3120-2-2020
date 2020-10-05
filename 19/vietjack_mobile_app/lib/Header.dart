@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Auth.dart';
+
 class Header extends StatefulWidget {
   double width;
   double height;
@@ -19,7 +20,8 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     left = widget.width / 2;
-    animationController = new AnimationController(vsync: this, duration: Duration(seconds: 1));
+    animationController =
+        new AnimationController(vsync: this, duration: Duration(seconds: 1));
     animationController.forward();
 
     animationController.addListener(() {
@@ -27,7 +29,6 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
         //left=widget.width * 0.5*animationController.value;
         myOpacity = animationController.value;
         right = widget.width * 0.5 * animationController.value;
-        print(animationController.value);
       });
     });
   }
