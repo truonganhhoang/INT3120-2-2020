@@ -25,8 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   Widget loginScene(){
     return new Scaffold(//login scene
-        appBar:
-        new AppBar(title: new Text("Login"), centerTitle: true),
+        appBar: new AppBar(title: new Text("Login"), centerTitle: true),
         body: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                       centered: true,
                       borderRadius: 20,
                       splashColor: Colors.purple,
-                      text: 'Dang nhap voi google'
+                      text: 'Đăng nhập với Google'
                     ),
                   ),
                 ),

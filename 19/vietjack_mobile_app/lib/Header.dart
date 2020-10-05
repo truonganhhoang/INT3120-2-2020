@@ -21,11 +21,13 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     left = widget.width / 2;
     animationController = new AnimationController(vsync: this, duration: Duration(seconds: 1));
     animationController.forward();
+
     animationController.addListener(() {
       setState(() {
         //left=widget.width * 0.5*animationController.value;
         myOpacity = animationController.value;
         right = widget.width * 0.5 * animationController.value;
+        print(animationController.value);
       });
     });
   }
@@ -46,7 +48,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: 'GoodDog',
-                        fontSize: 30,
+                        fontSize: 45,
                         color: Colors.pink[200]),
                   ),
                 )),
