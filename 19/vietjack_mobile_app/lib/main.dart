@@ -1,17 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'homePage.dart';
 import 'TimKiem.dart';
 import 'ThiOnline.dart';
 import 'homePage.dart';
 import 'LoginPage.dart';
+import 'UserInfoPage.dart';
 
 void main() {
   runApp(new MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme:
-          ThemeData(primarySwatch: Colors.purple, buttonColor: Colors.yellow),
+      theme: new ThemeData(
+              primarySwatch: Colors.purple,
+              buttonColor: Colors.yellow,
+              scaffoldBackgroundColor: Colors.brown[50]
+          ),
+      color: Colors.red,
       home: new LoginPage()));
 }
 
@@ -42,7 +46,7 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
       homePage(),
       TimKiem(),
       ThiOnline(_isThiOnlineFirstRun),
-      homePage()
+      UserInfoPage()
     ];
     return new Scaffold(
       body: _children[_currentIndex],
