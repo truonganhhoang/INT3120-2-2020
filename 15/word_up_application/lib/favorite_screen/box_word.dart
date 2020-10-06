@@ -15,7 +15,6 @@ class BoxWord extends StatefulWidget {
 class _BoxWord extends State<BoxWord>{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(

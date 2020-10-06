@@ -4,6 +4,7 @@ import 'package:word_up_application/home/account_page.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/play_game_screen.dart';
 import 'package:word_up_application/search_word_screen.dart';
+import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/study_home_screen.dart';
 import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
 
@@ -79,7 +80,7 @@ class _HomeState extends State<Home> {
                 AssetImage(iconLookUpPath),
                 color: Colors.white,
               ),
-              Text('Search'),
+              Text('Search', style: TextStyle(fontSize: 1.8 * SizeConfig.heightMultiplier),),
             ],
           ),
           onPressed: () {
@@ -138,6 +139,7 @@ class _HomeState extends State<Home> {
                           Text(
                             'Study',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
                               _currentTab == 0 ? Colors.blue : Colors.grey,
                             ),
@@ -169,6 +171,7 @@ class _HomeState extends State<Home> {
                           Text(
                             'Play',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
                               _currentTab == 1 ? Colors.blue : Colors.grey,
                             ),
@@ -207,6 +210,7 @@ class _HomeState extends State<Home> {
                           Text(
                             'Favorite',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
                               _currentTab == 2 ? Colors.blue : Colors.grey,
                             ),
@@ -241,6 +245,7 @@ class _HomeState extends State<Home> {
                           Text(
                             'Chat',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
                               _currentTab == 3 ? Colors.blue : Colors.grey,
                             ),

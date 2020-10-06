@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:word_up_application/size_config.dart';
 
 class ShowExamples extends StatefulWidget {
   final List<String> listExamples;
@@ -31,7 +32,6 @@ class _ShowExamplesState extends State<ShowExamples>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _controller.dispose();
     super.dispose();
   }
@@ -43,7 +43,10 @@ class _ShowExamplesState extends State<ShowExamples>
       opacity: _animation,
       child: Text(
         widget.listExamples[0],
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 2.5 * SizeConfig.heightMultiplier,
+            fontWeight: FontWeight.w300, fontStyle: FontStyle.italic,
+            color: Colors.black),
+        textAlign: TextAlign.center,
       ),
     );
   }
