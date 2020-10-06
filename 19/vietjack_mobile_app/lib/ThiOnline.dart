@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:vietjack_mobile_app/Header.dart';
@@ -6,14 +7,21 @@ import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
   int firstRun;
+  int weeksNumber;
+  final firestoreInstance = FirebaseFirestore.instance;
   ThiOnline(firstRun) {
     this.firstRun = firstRun;
+    firestoreInstance.collection("ThiOnline").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        print(result.data);
+      });
+    });
   }
   @override
-  _OnThiState createState() => _OnThiState(firstRun);
+  _ThiOnlineState createState() => _ThiOnlineState(firstRun);
 }
 
-class _OnThiState extends State<ThiOnline> {
+class _ThiOnlineState extends State<ThiOnline> {
   int firstRun;
   final List<String> subjectArray = [
     'Ngữ văn',
@@ -28,7 +36,7 @@ class _OnThiState extends State<ThiOnline> {
     'Giáo dục công dân',
     'Công nghệ'
   ];
-  _OnThiState(firstRun) {
+  _ThiOnlineState(firstRun) {
     this.firstRun = firstRun;
   }
   bool _isShowingModal = true;
