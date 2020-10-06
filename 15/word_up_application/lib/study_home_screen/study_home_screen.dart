@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/show_examples.dart';
 import '../word.dart';
@@ -20,18 +21,7 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
       //resizeToAvoidBottomInset: true,
       body:
       Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(0.0, -1.0),
-            end: Alignment(0.0, 0.9999999999999998),
-            stops: [0.0, 0.5104166865348816, 1.0],
-            colors: [
-              Color.fromARGB(255, 52, 206, 255),
-              Color.fromARGB(255, 138, 206, 255),
-              Color.fromARGB(255, 243, 254, 255)
-            ],
-          ),
-        ),
+        decoration: CommonComponents.background,
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

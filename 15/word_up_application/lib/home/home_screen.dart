@@ -80,7 +80,7 @@ class _HomeState extends State<Home> {
                 AssetImage(iconLookUpPath),
                 color: Colors.white,
               ),
-              Text('Search', style: TextStyle(fontSize: 1.8 * SizeConfig.heightMultiplier),),
+              Text('Search', style: TextStyle(fontSize: 15)),
             ],
           ),
           onPressed: () {

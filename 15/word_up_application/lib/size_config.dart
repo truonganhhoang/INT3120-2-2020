@@ -2,8 +2,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class SizeConfig {
-  static double _screenWidth;
-  static double _screenHeight;
+  static double screenWidth;
+  static double screenHeight;
   static double _blockSizeHorizontal = 0;
   static double _blockSizeVertical = 0;
 
@@ -14,20 +14,20 @@ class SizeConfig {
 
   void init(BoxConstraints constraints, Orientation orientation){
     if(orientation == Orientation.portrait){
-      _screenHeight = constraints.maxHeight;
-      _screenWidth = constraints.maxWidth;
+      screenHeight = constraints.maxHeight;
+      screenWidth = constraints.maxWidth;
     } else {
-      _screenWidth = constraints.maxHeight;
-      _screenHeight = constraints.maxWidth;
+      screenWidth = constraints.maxHeight;
+      screenHeight = constraints.maxWidth;
     }
 
-    _blockSizeHorizontal = _screenWidth / 100;
-    _blockSizeVertical = _screenHeight / 100;
+    _blockSizeHorizontal = screenWidth / 100;
+    _blockSizeVertical = screenHeight / 100;
 
     textMultiplier = _blockSizeVertical;
     heightMultiplier = _blockSizeVertical;
     widthMultiplier = _blockSizeHorizontal;
-    edgeRatio = _screenHeight / _screenWidth;
+    edgeRatio = screenHeight / screenWidth;
 
     print('width: ' + widthMultiplier.toString());
     print(heightMultiplier);
