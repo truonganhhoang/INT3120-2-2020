@@ -23,16 +23,57 @@ class _homePageState extends State<homePage> {
         title: new Text("Home Page"),
         centerTitle: true,
       ),
-      body: new Header(width: width, height: height),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          googleSignOut();
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-            return new LoginPage();
-          }));
-        },
-        child: new Text("Logout"),
-      ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          new SliverList(
+            delegate: new SliverChildListDelegate(
+              [
+                new Header(width: width,height: height,)
+              ]
+            ),
+          ),
+          new SliverPadding(
+            padding: EdgeInsets.only(top: 10),
+            sliver: SliverGrid.count(
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 4,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: const Text("He'd have you all unravel at the"),
+                  color: Colors.teal[100],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: const Text('Heed not the rabble'),
+                  color: Colors.teal[200],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: const Text('Sound of screams but the'),
+                  color: Colors.teal[300],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: const Text('Who scream'),
+                  color: Colors.teal[400],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: const Text('Revolution is coming...'),
+                  color: Colors.teal[500],
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  child: const Text('Revolution, they...'),
+                  color: Colors.teal[600],
+                ),
+              ],
+            ),
+          ),
+        ],
+      )
     );
   }
 }
