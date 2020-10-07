@@ -83,7 +83,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                 Container(
                   decoration: new BoxDecoration(
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-                      color: Colors.white
+                      color: Colors.white,
                   ),
                   child: new ListTile(
                     leading: Icon(Icons.history,color: Colors.grey,),
