@@ -1,9 +1,12 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:word_up_application/word.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+
 
 class LearnBox extends StatelessWidget {
   final Word word;
+  final assetsAudioPlayer = AssetsAudioPlayer();
   LearnBox({this.word});
   @override
   Widget build(BuildContext context) {
@@ -49,7 +52,7 @@ class LearnBox extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    width: 180,
+                    width: 183 ,
                     height: 30,
                     margin: EdgeInsets.only(top: 5),
                     padding: EdgeInsets.only(left: 48),
@@ -59,13 +62,27 @@ class LearnBox extends StatelessWidget {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(word.pronounUK,textAlign: TextAlign.center, style: TextStyle(color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,),
+                        Text(
+                          word.pronounUK,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
-                        Icon(Icons.volume_up,
-                          color: Colors.grey[600],),
+                        IconButton(
+                          onPressed: () => (
+                              assetsAudioPlayer.open(
+                                Audio(word.pathSoundUK),
+                              )
+                          ),
+                          color: Colors.blueGrey,
+                          //padding: EdgeInsets.all(10.0),
+                          icon: Icon(Icons.volume_up, color: Colors.blue, size: 20,),
+                        ),
                       ],),
                   ),
                   Container(
@@ -115,7 +132,7 @@ class LearnBox extends StatelessWidget {
                     margin: EdgeInsets.only(top: 20),
                     width: 250,
                     height: 120,
-                   // child: Image(image: AssetImage(word.pathImage)),
+                    child: Image(image: AssetImage(word.pathImage)),
                   )
                 ],
               )

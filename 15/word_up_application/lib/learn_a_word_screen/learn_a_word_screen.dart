@@ -11,9 +11,9 @@ class LearnAWord extends StatelessWidget{
     mean: 'Hiện đại',
     example1: '- modern technology/education/art/transport.',
     example2: '- We\'re in the very modern-looking building opposite the station.',
-    pathSoundUK: 'pathSoundUK',pathSoundUS: 'pathSoundUS',
+    pathSoundUK: 'assets/audios/modern_UK.mp3',pathSoundUS: 'pathSoundUS',
     pronounUS: '/ˈmɒd.ən/',pronounUK: '/ˈmɒd.ən/',
-    pathImage: 'assets/images/download.jpg',
+    pathImage: 'assets/images/modern.jpg',
     example: 'This house is more modern than that house',
   );
   /*
