@@ -23,16 +23,183 @@ class _homePageState extends State<homePage> {
         title: new Text("Home Page"),
         centerTitle: true,
       ),
-      body: new Header(width: width, height: height),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          googleSignOut();
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-            return new LoginPage();
-          }));
-        },
-        child: new Text("Logout"),
-      ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          new SliverList(
+            delegate: new SliverChildListDelegate(
+              [
+                new Header(width: width,height: height,)
+              ]
+            ),
+          ),
+          new SliverPadding(
+            padding: EdgeInsets.fromLTRB(10,30,10,0),
+            sliver: SliverGrid.count(
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 3,
+              children: <Widget>[
+                new GestureDetector(
+                  onTap: (){print("hoc");},
+                  child: new InkWell(
+                    child: new Container(
+                          decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Column(
+                          children: [
+                            new Expanded(
+                              flex: 6,
+                              child: new Container(
+                                margin: EdgeInsets.fromLTRB(7,7,7,0),
+                                child: new Image.network(
+                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
+                                ),
+                              ),
+                            ),
+                            new Expanded(
+                              flex: 4,
+                              child: new Container(
+                                margin: EdgeInsets.fromLTRB(7,0,7,7),
+                                child: Center(
+                                  child: new Text(
+                                      "Tự nhiên và xã hội",
+                                      textAlign: TextAlign.center,
+                                      style: new TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                        height: 1
+                                      ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white
+                  ),
+                  child: new Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      new Expanded(
+                        flex: 6,
+                        child: new Container(
+                          margin: EdgeInsets.fromLTRB(7,7,7,0),
+                          child: new Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
+                          ),
+                        ),
+                      ),
+                      new Expanded(
+                        flex: 4,
+                        child: new Container(
+                          margin: EdgeInsets.fromLTRB(7,0,7,7),
+                          child: Center(
+                            child: new Text(
+                              "Tự nhiên và xã hội",
+                              textAlign: TextAlign.center,
+                              style: new TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white
+                  ),
+                  child: new Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      new Expanded(
+                        flex: 6,
+                        child: new Container(
+                          margin: EdgeInsets.fromLTRB(7,7,7,0),
+                          child: new Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
+                          ),
+                        ),
+                      ),
+                      new Expanded(
+                        flex: 4,
+                        child: new Container(
+                          margin: EdgeInsets.fromLTRB(7,0,7,7),
+                          child: Center(
+                            child: new Text(
+                              "Tự nhiên và xã hội",
+                              textAlign: TextAlign.center,
+                              style: new TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white
+                  ),
+                  child: new Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      new Expanded(
+                        flex: 6,
+                        child: new Container(
+                          margin: EdgeInsets.fromLTRB(7,7,7,0),
+                          child: new Image.network(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
+                          ),
+                        ),
+                      ),
+                      new Expanded(
+                        flex: 4,
+                        child: new Container(
+                          margin: EdgeInsets.fromLTRB(7,0,7,7),
+                          child: Center(
+                            child: new Text(
+                              "Tự nhiên và xã hội",
+                              textAlign: TextAlign.center,
+                              style: new TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+        ],
+      )
     );
   }
 }

@@ -36,8 +36,8 @@ class _LoginPageState extends State<LoginPage> {
                   fit: BoxFit.fill,
                 ),
               ),
-              new Padding(
-                padding: EdgeInsets.only(top:100),
+              new Container(
+                padding: EdgeInsets.only(top:50),
                 child: new Center(
                   child: new Container(
                     width: 300,

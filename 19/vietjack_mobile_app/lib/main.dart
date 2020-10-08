@@ -70,7 +70,7 @@ class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
               title: new Text("Thi Online",
                   style: TextStyle(color: Colors.black.withOpacity(0.6)))),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
+              icon: new Icon(Icons.account_circle),
               title: new Text("Tài khoản",
                   style: TextStyle(color: Colors.black.withOpacity(0.6))))
         ],
