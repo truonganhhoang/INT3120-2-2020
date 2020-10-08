@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyCustomCard extends StatelessWidget {
-  MyCustomCard(this.weekNumber);
+  MyCustomCard({Key key, @required this.weekNumber}) : super(key: key);
 
   final int weekNumber;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      key: PageStorageKey('MyCustomCard'),
       shrinkWrap: true,
       physics: ScrollPhysics(),
       itemCount: this.weekNumber,

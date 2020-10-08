@@ -27,28 +27,30 @@ class VietJackNavigationBar extends StatefulWidget {
 }
 
 class _VietJackNavigationBarState extends State<VietJackNavigationBar> {
-  int _isThiOnlineFirstRun = 0;
   int _currentIndex = 0;
 
   void onTappedBar(int index) {
     setState(() {
       _currentIndex = index;
     });
-    if (index == 2) {
-      _isThiOnlineFirstRun++;
-    }
   }
+
+  final PageStorageBucket bucket = PageStorageBucket();
+
+  List<Widget> _children = [
+    homePage(),
+    TimKiem(),
+    ThiOnline(key: PageStorageKey('ThiOnline')),
+    UserInfoPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _children = [
-      homePage(),
-      TimKiem(),
-      ThiOnline(_isThiOnlineFirstRun),
-      UserInfoPage()
-    ];
     return new Scaffold(
-      body: _children[_currentIndex],
+      body: PageStorage(
+        child: _children[_currentIndex],
+        bucket: bucket,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: onTappedBar,

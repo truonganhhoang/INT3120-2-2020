@@ -17,7 +17,6 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     left = widget.width / 2;
     animationController =
@@ -31,6 +30,12 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
         right = widget.width * 0.5 * animationController.value;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override

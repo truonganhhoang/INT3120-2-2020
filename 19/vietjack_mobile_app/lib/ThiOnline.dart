@@ -6,23 +6,23 @@ import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
-  int firstRun;
+  static int firstRun = 0;
   int weeksNumber;
-  final firestoreInstance = FirebaseFirestore.instance;
-  ThiOnline(firstRun) {
-    this.firstRun = firstRun;
-    firestoreInstance.collection("ThiOnline").get().then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        print(result.data);
-      });
+  ThiOnline({Key key}) : super(key: key) {
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {});
     });
   }
   @override
-  _ThiOnlineState createState() => _ThiOnlineState(firstRun);
+  _ThiOnlineState createState() => _ThiOnlineState();
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
-  int firstRun;
+  int weeksNumber = 0;
+  String currentSubject = "Ngữ Văn";
   final List<String> subjectArray = [
     'Ngữ văn',
     'Toán',
@@ -36,9 +36,6 @@ class _ThiOnlineState extends State<ThiOnline> {
     'Giáo dục công dân',
     'Công nghệ'
   ];
-  _ThiOnlineState(firstRun) {
-    this.firstRun = firstRun;
-  }
   bool _isShowingModal = true;
   bool _showAppbar = false;
   ScrollController _scrollBottomController = new ScrollController();
@@ -46,15 +43,46 @@ class _ThiOnlineState extends State<ThiOnline> {
   @override
   void initState() {
     super.initState();
+    print(1);
     myScroll();
-    if (_isShowingModal && this.firstRun <= 1) {
+    if (_isShowingModal && ThiOnline.firstRun < 1) {
       Future.delayed(Duration(seconds: 1)).then((_) {
         _onButtonPress();
       });
     }
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(this.currentSubject)
+        .get()
+        .then((value) {
+      this.setState(() {
+        this.weeksNumber = value.data()["weeks"];
+      });
+    });
+  }
+
+  void _changeSubject(BuildContext context, String subject) async {
+    this.setState(() {
+      this.currentSubject = subject;
+      Navigator.pop(context);
+    });
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(this.currentSubject)
+        .get()
+        .then((value) {
+      this.setState(() {
+        this.weeksNumber = value.data()["weeks"];
+      });
+    });
   }
 
   void _onButtonPress() {
+    ThiOnline.firstRun++;
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.white,
@@ -73,15 +101,20 @@ class _ThiOnlineState extends State<ThiOnline> {
                   mainAxisSpacing: 20,
                   children: List.generate(subjectArray.length, (index) {
                     return FlatButton(
-                        onPressed: null,
+                        onPressed: () =>
+                            _changeSubject(context, subjectArray[index]),
                         padding: EdgeInsets.all(10.0),
-                        child: Expanded(
-                          child: Column(children: <Widget>[
-                            Icon(Icons.home),
-                            Text(subjectArray[index],
-                                style: TextStyle(fontSize: 11),
-                                textAlign: TextAlign.center)
-                          ]),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(children: <Widget>[
+                                Icon(Icons.home),
+                                Text(subjectArray[index],
+                                    style: TextStyle(fontSize: 11),
+                                    textAlign: TextAlign.center)
+                              ]),
+                            ),
+                          ],
                         ));
                   })));
         });
@@ -111,13 +144,13 @@ class _ThiOnlineState extends State<ThiOnline> {
   Widget body(width, height) {
     return ListView(
       controller: _scrollBottomController,
-      // shrinkWrap: true,
       children: <Widget>[
         Header(
           width: width,
           height: height,
         ),
-        MyCustomCard(35)
+        MyCustomCard(
+            key: PageStorageKey('MyCustomCard'), weekNumber: this.weeksNumber)
       ],
     );
   }
@@ -126,7 +159,7 @@ class _ThiOnlineState extends State<ThiOnline> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return new Scaffold(
+    return Scaffold(
       appBar: _showAppbar
           ? AppBar(
               backgroundColor: Colors.white,
