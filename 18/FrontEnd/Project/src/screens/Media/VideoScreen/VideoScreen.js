@@ -8,19 +8,19 @@ import ItemMedia from '../../../components/ItemMedia';
 const dataItemLeft = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
 const dataItemRight = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];
 
-const AudioScreen = () => {
+const VideoScreen = () => {
   const navigation = useNavigation();
 
   return (
     <Row>
       <Col style={styles.collums}>
         {dataItemLeft.map((item, index) => (
-          <ItemMedia label={`Audio Unit ${item}`} key={index} onClick={() => navigation.navigate('Audio Unit')} />
+        <ItemMedia label={`Video Unit ${item}`} key={index} onClick={() => navigation.navigate('Video Unit')} />
         ))}
       </Col>
       <Col style={styles.collums}>
         {dataItemRight.map((item, index) => (
-          <ItemMedia label={`Audio Unit ${item}`} key={index} onClick={() => navigation.navigate('Audio Unit')} />
+        <ItemMedia label={`Video Unit ${item}`} key={index} onClick={() => navigation.navigate('Video Unit')} />
         ))}
       </Col>
     </Row>
@@ -33,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AudioScreen;
+export default VideoScreen;

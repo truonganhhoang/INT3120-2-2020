@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#00CDDA',
     textAlign: 'left',
   },
   option: {

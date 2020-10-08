@@ -5,19 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import Home from '../screens/Home';
 import Media from '../screens/Media';
-
-function Test() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Media!</Text>
-    </View>
-  );
-}
+import Exam from '../screens/Exam';
 
 function Practice() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Media!</Text>
+      <Text>Màn luyện tập</Text>
     </View>
   );
 }
@@ -25,7 +18,7 @@ function Practice() {
 function Option() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Media!</Text>
+      <Text>Menu</Text>
     </View>
   );
 }
@@ -63,7 +56,7 @@ export default function BottomTabs() {
       >
         <Tab.Screen name="Trang chủ" component={Home} />
         <Tab.Screen name="Audio" component={Media} />
-        <Tab.Screen name="Kiểm tra" component={Test} />
+        <Tab.Screen name="Kiểm tra" component={Exam} />
         <Tab.Screen name="Luyện Tập" component={Practice} />
         <Tab.Screen name="Danh mục" component={Option} />
       </Tab.Navigator>

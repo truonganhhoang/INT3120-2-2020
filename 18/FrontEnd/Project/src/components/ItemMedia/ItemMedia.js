@@ -1,7 +1,6 @@
 import { Button } from 'native-base';
 import React from 'react';
 import {Dimensions, Text, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ItemMedia = ({icon, label, onClick, ...props}) => {
   return (

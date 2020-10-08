@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, Dimensions, ScrollView } from 'react-native';
-import { Container, Row, Col, Body, Tab, Tabs } from 'native-base';
+import { Container, Row, Col, Body, Tab, Tabs, TabHeading } from 'native-base';
 import HeaderMedia from '../../components/HeaderMedia';
 import AudioScreen from './AudioScreen';
+import VideoScreen from './VideoScreen';
 
 const Media = () => {
   return (
@@ -29,7 +30,7 @@ const Media = () => {
           heading="Video"
         >
           <ScrollView style={styles.content}>
-            <AudioScreen />
+            <VideoScreen />
           </ScrollView>
         </Tab>
       </Tabs>
