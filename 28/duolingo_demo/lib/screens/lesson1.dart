@@ -9,11 +9,17 @@ class Lesson1 extends StatefulWidget {
 
 class _Lesson1State extends State<Lesson1> {
   bool isTapped;
+  var numberTapped;
+  var isChecked = [false, false, false, false];
+  // luu vi tri gan nhat duoc Tap
+  var lastChecked;
 
   @override
   void initState() {
     super.initState();
     isTapped = false;
+    numberTapped = 0;
+    lastChecked = 0;
   }
 
   @override
@@ -74,16 +80,16 @@ class _Lesson1State extends State<Lesson1> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  answer('assets/images/coffee.PNG'),
-                  answer('assets/images/coffee.PNG'),
+                  answer('assets/images/coffee.PNG', 1),
+                  answer('assets/images/coffee.PNG', 2),
                 ],
               ),
               new Padding(padding: EdgeInsets.all(5.0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  answer('assets/images/coffee.PNG'),
-                  answer('assets/images/coffee.PNG'),
+                  answer('assets/images/coffee.PNG', 3),
+                  answer('assets/images/coffee.PNG', 4),
                 ],
               ),
               new Padding(padding: EdgeInsets.all(5.0)),
@@ -91,7 +97,12 @@ class _Lesson1State extends State<Lesson1> {
                 minWidth: 350.0,
                 color: isTapped ? Colors.green : Colors.grey,
                 height: 40.0,
-                onPressed: () {},
+                onPressed: () {
+                  if (numberTapped == 1)
+                    debugPrint("true");
+                  else
+                    debugPrint("wrong");
+                },
                 child: new Text(
                   'KIỂM TRA',
                   style: new TextStyle(fontSize: 20.0, color: Colors.white),
@@ -102,18 +113,24 @@ class _Lesson1State extends State<Lesson1> {
         ));
   }
 
-  Widget answer(String image) {
+  Widget answer(String image, var number) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          isTapped = !isTapped;
+          if (lastChecked != 0) {
+            isChecked[lastChecked - 1] = false;
+          }
+          isTapped = true;
+          numberTapped = number;
+          lastChecked = number;
+          isChecked[number - 1] = true;
         });
       },
       child: Container(
         height: 190,
         width: 140,
         decoration: new BoxDecoration(
-          color: isTapped ? Colors.blue : Colors.black,
+          color: isChecked[number - 1] ? Colors.blue : Colors.black,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Image.asset(image, height: 190),
