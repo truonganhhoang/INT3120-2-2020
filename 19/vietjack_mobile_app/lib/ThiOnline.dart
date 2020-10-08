@@ -7,7 +7,7 @@ import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
   static int firstRun = 0;
-  int weeksNumber;
+  static int weeksNumber = 0;
   ThiOnline({Key key}) : super(key: key) {
     FirebaseFirestore.instance
         .collection("ThiOnline")
@@ -21,8 +21,7 @@ class ThiOnline extends StatefulWidget {
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
-  int weeksNumber = 0;
-  String currentSubject = "Ngữ Văn";
+  static String currentSubject = "Ngữ Văn";
   final List<String> subjectArray = [
     'Ngữ văn',
     'Toán',
@@ -43,40 +42,41 @@ class _ThiOnlineState extends State<ThiOnline> {
   @override
   void initState() {
     super.initState();
-    print(1);
     myScroll();
     if (_isShowingModal && ThiOnline.firstRun < 1) {
       Future.delayed(Duration(seconds: 1)).then((_) {
         _onButtonPress();
       });
     }
-    FirebaseFirestore.instance
-        .collection("ThiOnline")
-        .doc("Class 12")
-        .collection("Subject")
-        .doc(this.currentSubject)
-        .get()
-        .then((value) {
-      this.setState(() {
-        this.weeksNumber = value.data()["weeks"];
+    if (ThiOnline.firstRun < 1) {
+      FirebaseFirestore.instance
+          .collection("ThiOnline")
+          .doc("Class 12")
+          .collection("Subject")
+          .doc(currentSubject)
+          .get()
+          .then((value) {
+        this.setState(() {
+          ThiOnline.weeksNumber = value.data()["weeks"];
+        });
       });
-    });
+    }
   }
 
   void _changeSubject(BuildContext context, String subject) async {
     this.setState(() {
-      this.currentSubject = subject;
+      currentSubject = subject;
       Navigator.pop(context);
     });
     FirebaseFirestore.instance
         .collection("ThiOnline")
         .doc("Class 12")
         .collection("Subject")
-        .doc(this.currentSubject)
+        .doc(currentSubject)
         .get()
         .then((value) {
       this.setState(() {
-        this.weeksNumber = value.data()["weeks"];
+        ThiOnline.weeksNumber = value.data()["weeks"];
       });
     });
   }
@@ -141,6 +141,22 @@ class _ThiOnlineState extends State<ThiOnline> {
     super.dispose();
   }
 
+  Widget containterContent() {
+    return Container(
+      height: 50.0,
+      color: Colors.cyanAccent,
+      margin: EdgeInsets.all(8.0),
+      width: MediaQuery.of(context).size.width - 100,
+      child: Center(
+          child: Text(
+        'Item 1',
+        style: TextStyle(
+          fontSize: 14.0,
+        ),
+      )),
+    );
+  }
+
   Widget body(width, height) {
     return ListView(
       controller: _scrollBottomController,
@@ -150,7 +166,8 @@ class _ThiOnlineState extends State<ThiOnline> {
           height: height,
         ),
         MyCustomCard(
-            key: PageStorageKey('MyCustomCard'), weekNumber: this.weeksNumber)
+            key: PageStorageKey('MyCustomCard'),
+            weekNumber: ThiOnline.weeksNumber),
       ],
     );
   }
@@ -160,18 +177,24 @@ class _ThiOnlineState extends State<ThiOnline> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: _showAppbar
-          ? AppBar(
-              backgroundColor: Colors.white,
-              centerTitle: true,
-              title:
-                  new Text("Thi Online", style: TextStyle(color: Colors.black)),
-            )
-          : PreferredSize(
-              child: Container(),
-              preferredSize: Size(0.0, 0.0),
-            ),
-      body: body(width, height),
-    );
+        appBar: _showAppbar
+            ? AppBar(
+                backgroundColor: Colors.white,
+                centerTitle: true,
+                title:
+                    Text("Thi Online", style: TextStyle(color: Colors.black)),
+              )
+            : PreferredSize(
+                child: Container(),
+                preferredSize: Size(0.0, 0.0),
+              ),
+        body: body(width, height),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _onButtonPress();
+          },
+          child: Icon(Icons.navigation),
+          backgroundColor: Colors.green,
+        ));
   }
 }
