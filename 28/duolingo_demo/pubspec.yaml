@@ -49,6 +49,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/multipleChoiceQuestion/lesson1-1/
+    - assets/images/threeChoiceQuestion/1/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

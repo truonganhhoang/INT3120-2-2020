@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'lesson1.dart';
+import 'lesson2.dart';
 
 class Levels extends StatefulWidget {
   @override
@@ -114,7 +115,9 @@ class _LevelsState extends State<Levels> {
     return GestureDetector(
         onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Lesson1()));
+              // EDIT: lesson1 -> lesson1
+              context,
+              MaterialPageRoute(builder: (context) => Lesson2()));
         },
         child: Column(
           children: <Widget>[
