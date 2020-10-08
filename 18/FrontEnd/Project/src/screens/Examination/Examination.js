@@ -5,16 +5,18 @@ import {
     Row, Col, Body, Tab, Tabs
 } from 'native-base';
 
-import HeaderMedia from 'components/HeaderMedia';
+import HeaderCommon from '../../components/HeaderCommon';
+import TestItem from '../../components/TestItem';
+
 const Examination = ({icon, label, onClick, ...props}) => {
     return (
-        <Container style={styles.body}>
-            <View style={styles.header}>
-                <HeaderMedia/>
+        <Container>
+            <View>
+                <HeaderCommon/>
             </View>
             <ScrollView>
                 <Row>
-                    
+                   <TestItem label={"Unit1"}/>
                 </Row>
                
             </ScrollView>

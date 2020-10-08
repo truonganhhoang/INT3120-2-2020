@@ -3,16 +3,18 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 const option = ["Việt-Anh", "Anh-Việt", "Âm thanh"];
 
-const TestItem = ({ icon, label, onClick, ...props }) => {
+const TestItem = ({label, onClick, ...props }) => {
   return (
     <View style={styles.item}>
-      <Row style={styles.rowTitle} label={"AudioUnit 1"}>
-
+      <Row style={styles.rowTitle}>
+        <Text>
+          {label}
+        </Text>
       </Row>
       <View>
         {option.forEach((item, index) => {
-          <Row style={styles.optionTest} label={item}>
-
+          <Row style={styles.optionTest}>
+            <Text>{item}</Text>
           </Row>
         })}
       </View>
@@ -27,14 +29,14 @@ const styles = StyleSheet.create({
   },
   item: {
     marginLeft: '20px',
-    width: screen.width*0.3
+    width: screen.width * 0.3
   },
   optionTest: {
-    borderRadius: "5px",
-    height: '20px',
+    borderRadius: 5,
+    height: 20,
     color: '#000',
-    backgroundColor: '#fff',
-    padding:'0 8px'
+    backgroundColor: '#fff'
+
 
   }
 })
