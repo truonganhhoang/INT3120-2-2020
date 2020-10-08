@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class Lesson1 extends StatefulWidget {
   @override
   _Lesson1State createState() => _Lesson1State();
 }
 
 class _Lesson1State extends State<Lesson1> {
+  bool isTapped;
+
+  @override
+  void initState() {
+    super.initState();
+    isTapped = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +23,12 @@ class _Lesson1State extends State<Lesson1> {
             backgroundColor: Colors.white,
             elevation: 2,
             title: Row(children: <Widget>[
-              Image.asset('assets/images/x_button.png', height: 25),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Home()));
+                  },
+                  child: Image.asset('assets/images/x_button.png', height: 25)),
               SizedBox(
                 width: 20,
               ),
@@ -74,7 +89,7 @@ class _Lesson1State extends State<Lesson1> {
               new Padding(padding: EdgeInsets.all(5.0)),
               MaterialButton(
                 minWidth: 350.0,
-                color: Colors.green,
+                color: isTapped ? Colors.green : Colors.grey,
                 height: 40.0,
                 onPressed: () {},
                 child: new Text(
@@ -88,14 +103,21 @@ class _Lesson1State extends State<Lesson1> {
   }
 
   Widget answer(String image) {
-    return Container(
-      height: 190,
-      width: 140,
-      decoration: new BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(10.0),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isTapped = !isTapped;
+        });
+      },
+      child: Container(
+        height: 190,
+        width: 140,
+        decoration: new BoxDecoration(
+          color: isTapped ? Colors.blue : Colors.black,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Image.asset(image, height: 190),
       ),
-      child: Image.asset(image, height: 190),
     );
   }
 }

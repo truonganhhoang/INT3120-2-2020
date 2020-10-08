@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'lesson1.dart';
+
 class Levels extends StatefulWidget {
   @override
   _LevelsState createState() => _LevelsState();
@@ -109,46 +111,51 @@ class _LevelsState extends State<Levels> {
   }
 
   Widget lesson(String image, String title, Color color) {
-    return Container(
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Lesson1()));
+        },
         child: Column(
-      children: <Widget>[
-        // biểu tượng bài học đầu
-        Stack(
-          alignment: Alignment.center,
           children: <Widget>[
-            // Transform.rotate(
-            //   angle: 0,
-            //   child: CircularProgressIndicator(
-            //     backgroundColor: Colors.grey[300],
-            //     valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow[600]),
-            //     value: .2,
-            //     strokeWidth: 45,
-            //   ),
-            // ),
-            CircleAvatar(
-              backgroundColor: Colors.grey[350],
-              radius: 40,
+            // biểu tượng bài học đầu
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                // Transform.rotate(
+                //   angle: 0,
+                //   child: CircularProgressIndicator(
+                //     backgroundColor: Colors.grey[300],
+                //     valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow[600]),
+                //     value: .2,
+                //     strokeWidth: 45,
+                //   ),
+                // ),
+                CircleAvatar(
+                  backgroundColor: Colors.grey[350],
+                  radius: 40,
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.grey[300],
+                  radius: 35,
+                ),
+                CircleAvatar(
+                  child: Image.asset(
+                    image,
+                    height: 50,
+                  ),
+                  radius: 30,
+                  backgroundColor: color,
+                )
+              ],
             ),
-            CircleAvatar(
-              backgroundColor: Colors.grey[300],
-              radius: 35,
+            SizedBox(
+              height: 10,
             ),
-            CircleAvatar(
-              child: Image.asset(
-                image,
-                height: 50,
-              ),
-              radius: 30,
-              backgroundColor: color,
-            )
+            Text(title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
           ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))
-      ],
-    ));
+        ));
   }
 
   Widget twoLesson(Widget lesson1, Widget lesson2) {
