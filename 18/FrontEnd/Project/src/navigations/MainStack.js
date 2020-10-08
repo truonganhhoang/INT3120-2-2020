@@ -1,73 +1,24 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from '../screens/Home';
-import Media from '../screens/Media';
+import BottomTabs from './BottomTabs';
 
-function Test() {
+const Stack = createStackNavigator();
+
+function AudioUnit() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Media!</Text>
+      <Text>Audio Unit!</Text>
     </View>
   );
 }
-
-function Practice() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Media!</Text>
-    </View>
-  );
-}
-
-function Option() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Media!</Text>
-    </View>
-  );
-}
-
-const Tab = createBottomTabNavigator();
 
 export default function MainStack() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            if (route.name === 'Trang chủ') {
-              iconName = 'home';
-            } else if (route.name === 'Audio') {
-              iconName = 'headphones';
-            } else if (route.name === 'Kiểm tra') {
-              iconName = 'file-alt';
-            } else if (route.name === 'Luyện Tập') {
-              iconName = 'book-open';
-            } else if (route.name === 'Danh mục') {
-              iconName = 'list';
-            }
-
-            // You can return any component that you like here!
-            return <Icon name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: '#00CDDA',
-          inactiveTintColor: 'gray',
-        }}
-      >
-        <Tab.Screen name="Trang chủ" component={Home} />
-        <Tab.Screen name="Audio" component={Media} />
-        <Tab.Screen name="Kiểm tra" component={Test} />
-        <Tab.Screen name="Luyện Tập" component={Practice} />
-        <Tab.Screen name="Danh mục" component={Option} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName={BottomTabs}>
+      <Stack.Screen name="Home" options={{ headerShown: false }} component={BottomTabs} />
+      <Stack.Screen name="Audio Unit" options={{ headerShown: false }} component={AudioUnit} />
+    </Stack.Navigator>
   );
 }
