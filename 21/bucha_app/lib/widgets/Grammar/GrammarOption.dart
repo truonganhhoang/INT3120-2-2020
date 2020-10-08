@@ -1,8 +1,8 @@
-import 'package:bucha_app/Grammar/Unit.dart';
-import 'package:bucha_app/Grammar/grammar.dart';
+import 'package:bucha_app/widgets/Grammar/Unit.dart';
+import 'package:bucha_app/widgets/Grammar/grammar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bucha_app/Grammar/GrammarUnit.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarUnit.dart';
 
 class GrammarOption extends StatelessWidget {
   final String name;

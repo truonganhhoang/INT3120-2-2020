@@ -1,7 +1,7 @@
-import 'package:bucha_app/Grammar/grammar.dart';
+import 'package:bucha_app/widgets/Grammar/grammar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bucha_app/Grammar/Unit.dart';
+import 'package:bucha_app/widgets/Grammar/Unit.dart';
 
 class GrammarUnit extends StatefulWidget {
   final String name;

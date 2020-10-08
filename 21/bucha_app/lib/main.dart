@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: dictionary(),
+    home: HomePage(),
   ));
 }
 
@@ -92,13 +92,15 @@ class _HomePageState extends State<HomePage> {
                       color: Color(0x41D4E6),
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: FlatButton(
-                    child: Text("Từ Vựng",style: TextStyle(
-                      fontSize: 16.0,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),),
-
+                    child: Text(
+                      "Từ Vựng",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 )),
             Container(
@@ -109,12 +111,10 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
               child: Column(
                 children: <Widget>[
-
                   OptionButton(
                     colorBackgorund: 0xffC822DA,
                     textButton: "Trường Học",
                   ),
-
                   OptionButton(
                     colorBackgorund: 0xffFC6E64,
                     textButton: "Nâng Cao",

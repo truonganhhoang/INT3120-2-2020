@@ -1,6 +1,6 @@
-import 'package:bucha_app/Grammar/Unit.dart';
+import 'package:bucha_app/widgets/Grammar/Unit.dart';
 import 'package:bucha_app/main.dart';
-import 'package:bucha_app/Grammar/GrammarOption.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarOption.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
