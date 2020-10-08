@@ -1,10 +1,11 @@
 import 'package:bucha_app/TuDIen/TuDien1.dart';
+import 'package:bucha_app/Grammar/grammar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: HomePage(),
+    home: GrammarPage(),
   ));
 }
 
