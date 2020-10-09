@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:word_up_application/home/account_page.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/play_game_screen.dart';
@@ -32,15 +33,11 @@ class _HomeState extends State<Home> {
   final PageStorageBucket _bucket = PageStorageBucket();
 
   void openSearchScreen() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => SearchWordScreen()),
-    );
+    Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: SearchWordScreen()));
   }
 
   void openProfileUserScreen() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => UserProfileScreen(),
-    ));
+    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: UserProfileScreen()));
   }
 
   @override

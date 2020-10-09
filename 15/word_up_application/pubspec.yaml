@@ -31,6 +31,7 @@ dependencies:
   rflutter_alert: ^1.1.0
   device_preview: ^0.4.8
   assets_audio_player: ^2.0.10
+  page_transition: "^1.1.7+2"
 
 dev_dependencies:
   flutter_test:
