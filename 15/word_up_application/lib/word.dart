@@ -30,5 +30,19 @@ class Word {
     this.pathImage,
     this.example,
   });
+
+  Word.map(dynamic obj){
+    this.id = obj['id'];
+    this.word = obj['word'];
+    this.pronounUK = obj['pronounUK'];
+  }
+
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    map['id'] = this.id;
+    map['word'] = this.word;
+    map['pronounUK'] = this.pronounUK;
+  }
+
 }
 

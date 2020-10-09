@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
                           _currentScreen =
                               FavoriteWordsScreen(); // if user taps on this dashboard tab will be active
                           _currentTab = 2;
-                          _screenTitle = 'Favorite words';
+                          _screenTitle = 'Favorite';
                         });
                       },
                       child: Column(
