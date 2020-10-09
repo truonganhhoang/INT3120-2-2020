@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/learn_a_word_screen/learn_a_word_screen.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/test_question_screen.dart';
@@ -40,17 +42,10 @@ class _WordBoxState extends State<WordBox> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              MaterialButton(
-                splashColor: Colors.transparent,
-                minWidth: 40,
-                onPressed: () {
-                  maskThisWordAsFavorite();
-                },
-                child: Icon(
-                  Icons.star,
-                  size: 30,
-                  color: Colors.black54,
-                ),
+              StarFavorite(
+                wordId: widget.word.id,
+                size: 25,
+                isFavorite: false,
               ),
               MaterialButton(
                 minWidth: 40,
@@ -69,7 +64,8 @@ class _WordBoxState extends State<WordBox> {
             padding: EdgeInsets.all(0),
             child: Text(
               widget.word.word,
-              style: TextStyle(color: Colors.black,
+              style: TextStyle(
+                  color: Colors.black,
                   fontSize: 4 * SizeConfig.heightMultiplier),
             ),
           ),
@@ -77,7 +73,8 @@ class _WordBoxState extends State<WordBox> {
             padding: EdgeInsets.all(0),
             child: Text(
               widget.word.pronounUK,
-              style: TextStyle(color: Colors.black45,
+              style: TextStyle(
+                  color: Colors.black45,
                   fontSize: 2.5 * SizeConfig.heightMultiplier),
             ),
           ),
@@ -98,63 +95,68 @@ class _WordBoxState extends State<WordBox> {
           ),
           Expanded(
               child: Container(
-                alignment: Alignment.bottomCenter,
-                margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    MaterialButton(
-                      elevation: 0,
-                      onPressed: () {
-                        userKnewThisWord();
-                      },
-                      color: Colors.green,
-                      height: 50,
-                      minWidth: 20,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        'I know',
-                        style: TextStyle(color: Colors.white, fontSize: 2 * SizeConfig.heightMultiplier),
-                      ),
-                    ),
-                    MaterialButton(
-                      elevation: 0,
-                      height: 50,
-                      onPressed: () {
-                        userWantToLearnThisWord();
-                      },
-                      color: Colors.red,
-                      minWidth: 20,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.red)),
-                      child: Text(
-                        'Learn',
-                        style: TextStyle(color: Colors.white, fontSize: 2 * SizeConfig.heightMultiplier),
-                      ),
-                    ),
-                    MaterialButton(
-                      elevation: 0,
-                      height: 50,
-                      onPressed: () {
-                        userWantToHaveATest();
-                      },
-                      color: Colors.orange,
-                      minWidth: 20,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.orange)),
-                      child: Text(
-                        'Test me',
-                        style: TextStyle(color: Colors.white, fontSize: 2 * SizeConfig.heightMultiplier),
-                      ),
-                    ),
-                  ],
+            alignment: Alignment.bottomCenter,
+            margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                MaterialButton(
+                  elevation: 0,
+                  onPressed: () {
+                    userKnewThisWord();
+                  },
+                  color: Colors.green,
+                  height: 50,
+                  minWidth: 20,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    'I know',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 2 * SizeConfig.heightMultiplier),
+                  ),
                 ),
-              )
-          ),
+                MaterialButton(
+                  elevation: 0,
+                  height: 50,
+                  onPressed: () {
+                    userWantToLearnThisWord();
+                  },
+                  color: Colors.red,
+                  minWidth: 20,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Colors.red)),
+                  child: Text(
+                    'Learn',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 2 * SizeConfig.heightMultiplier),
+                  ),
+                ),
+                MaterialButton(
+                  elevation: 0,
+                  height: 50,
+                  onPressed: () {
+                    userWantToHaveATest();
+                  },
+                  color: Colors.orange,
+                  minWidth: 20,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Colors.orange)),
+                  child: Text(
+                    'Test me',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 2 * SizeConfig.heightMultiplier),
+                  ),
+                ),
+              ],
+            ),
+          )),
         ],
       ),
     );
@@ -165,9 +167,8 @@ class _WordBoxState extends State<WordBox> {
   }
 
   void userWantToLearnThisWord() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => LearnAWord()),
-    );
+    Navigator.push(context,
+        PageTransition(type: PageTransitionType.fade, child: LearnAWord()));
   }
 
   void userWantToHaveATest() {
@@ -187,6 +188,7 @@ class _WordBoxState extends State<WordBox> {
       animationType: AnimationType.grow,
       isCloseButton: true,
       isOverlayTapDismiss: false,
+      overlayColor: Colors.black38,
       descStyle: TextStyle(fontWeight: FontWeight.bold),
       descTextAlign: TextAlign.start,
       animationDuration: Duration(milliseconds: 400),
@@ -199,76 +201,21 @@ class _WordBoxState extends State<WordBox> {
       backgroundColor: Colors.blue,
       titleStyle: TextStyle(
         color: Colors.white,
-        fontSize: 25,
+        fontSize: 3 * SizeConfig.heightMultiplier,
       ),
       alertAlignment: Alignment.center,
     );
 
     Alert(
-      closeIcon: Icon(Icons.close, color: Colors.white,),
-      type: AlertType.none,
-      style: alertStyle,
-      context: context,
-      title: widget.word.word + '...?',
-      content: Column(
-        children: <Widget>[
-          answerOption(1),
-          answerOption(2),
-          answerOption(3),
-          answerOption(4)
-        ],
-      ),
-      buttons: []
-    ).show();
-  }
-
-  Container answerOption(int index) {
-    return Container(
-        margin: EdgeInsets.only(top: 10.0),
-        padding: EdgeInsets.all(5),
-        decoration: BoxDecoration(
+        closeIcon: Icon(
+          Icons.close,
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
         ),
-        child: FlatButton(
-          padding: EdgeInsets.all(0),
-          onPressed: () {},
-          child: Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey,
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 15,
-                    ),
-                  ),
-                  child: Text(getStrWithIndex(index), style: TextStyle(color: Colors.black),),
-                ),
-              ),
-              Expanded(
-                  child: Text(
-                'I play'
-                'jjjjj'
-                'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj'
-                'jjjj soccer',
-                style: TextStyle(color: Colors.black),
-              ))
-            ],
-          ),
-        ));
-  }
-
-  String getStrWithIndex(int index){
-    switch(index){
-      case 1: return 'A';
-      case 2: return 'B';
-      case 3: return 'C';
-      case 4: return 'D';
-    }
-    return 'E';
+        type: AlertType.none,
+        style: alertStyle,
+        context: context,
+        title: widget.word.word + '...?',
+        content: TestQuestionScreen(widget.word),
+        buttons: []).show();
   }
 }

@@ -1,38 +1,41 @@
 import 'package:flutter/material.dart';
 import 'learn_box.dart';
 import 'package:word_up_application/word.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:word_up_application/size_config.dart';
 
-class LearnAWord extends StatelessWidget{
+class LearnAWord extends StatelessWidget {
   final Word word = Word(
     id: 1,
     word: 'Modern',
-    type:'adj',
+    type: 'adj',
     definition: 'Designed and made using the most recent ideas and methods',
     mean: 'Hiện đại',
     example1: '- modern technology/education/art/transport.',
     example2: '- We\'re in the very modern-looking building opposite the station.',
-    pathSoundUK: 'assets/audios/modern_UK.mp3',pathSoundUS: 'pathSoundUS',
-    pronounUS: '/ˈmɒd.ən/',pronounUK: '/ˈmɒd.ən/',
+    pathSoundUK: 'assets/audios/modern_UK.mp3',
+    pathSoundUS: 'pathSoundUS',
+    pronounUS: '/ˈmɒd.ən/',
+    pronounUK: '/ˈmɒd.ən/',
     pathImage: 'assets/images/modern.jpg',
     example: 'This house is more modern than that house',
   );
-  /*
-  final Word word
-  LearnAWord({
-    @required this.word,
-  }):assert(word != null);
-  */
+
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: new Text('Learning'),
-
           actions: <Widget>[
             MaterialButton(
-              child: Icon(Icons.share, color: Colors.white,),
-              onPressed: (){print('Share');},
+              child: Icon(
+                Icons.share,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                print('Share');
+              },
             ),
           ],
         ),
@@ -53,31 +56,52 @@ class LearnAWord extends StatelessWidget{
               ),
             ),
             new Container(
-              height: 470,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  LearnBox(word: word,),
-                  LearnBox(word: word,),
-                  LearnBox(word: word,),
-                ],),
+              margin: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+              child: CarouselSlider(
+                enableInfiniteScroll: false,
+                height: 65 * SizeConfig.heightMultiplier,
+                initialPage: 0,
+                onPageChanged: (index) {},
+                items: <Widget>[
+                  LearnBox(
+                    word: word,
+                  ),
+                  LearnBox(
+                    word: word,
+                  ),
+                  LearnBox(
+                    word: word,
+                  ),
+                ],
+              ),
             ),
-
             new Container(
-                margin: EdgeInsets.only(top:485),
-                padding: EdgeInsets.only(left: 20, right: 20),
+                margin: EdgeInsets.only(top: 70 * SizeConfig.heightMultiplier),
+                padding: EdgeInsets.only(
+                    left: 2.8 * SizeConfig.heightMultiplier,
+                    right: 2.8 * SizeConfig.heightMultiplier),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:[
-                        Text('Example',textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[500],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 22,),
+                      children: [
+                        Text(
+                          'Example',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontWeight: FontWeight.w500,
+                            fontSize: 2.8 * SizeConfig.textMultiplier,
+                          ),
                         ),
-                        Text('More', style: TextStyle(color: Colors.grey[500],
-                          fontWeight: FontWeight.w500,decoration: TextDecoration.underline,
-                          fontSize: 17,),
+                        Text(
+                          'More',
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                            fontSize: 2 * SizeConfig.textMultiplier,
+                          ),
                         ),
                       ],
                     ),
@@ -85,23 +109,27 @@ class LearnAWord extends StatelessWidget{
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top:10),
-                          width: 320,
+                          margin: EdgeInsets.only(top: 10),
+                          width: 32 * SizeConfig.heightMultiplier,
                           padding: EdgeInsets.only(bottom: 5),
-                          child: Text('"' + word.example +'"',textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[500],
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,)
-                          ),
+                          child: Text('"' + word.example + '"',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontWeight: FontWeight.w500,
+                                fontSize: 2 * SizeConfig.textMultiplier,
+                              )),
                         ),
                       ],
                     ),
-                    Icon(Icons.volume_up,
-                      color: Colors.blue[600], size: 30,),
+                    Icon(
+                      Icons.volume_up,
+                      color: Colors.blue[600],
+                      size: 3 * SizeConfig.heightMultiplier,
+                    ),
                   ],
-                )
-            ),
-          ],)
-    );
+                )),
+          ],
+        ));
   }
 }
-

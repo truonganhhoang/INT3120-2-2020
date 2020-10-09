@@ -7,7 +7,7 @@ class SizeConfig {
   static double _blockSizeHorizontal = 0;
   static double _blockSizeVertical = 0;
 
-  static double textMultiplier;
+  static double textMultiplier = 10;
   static double heightMultiplier = 10;
   static double widthMultiplier;
   static double edgeRatio;
