@@ -50,7 +50,11 @@ class SplashState extends State<SplashScreen> {
 
   route() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LevelChoose()));
+      context,
+      MaterialPageRoute(
+        builder: (context) => LevelChoose(),
+      ),
+    );
   }
 }
 
@@ -60,27 +64,31 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            backgroundColor: Color(0xff006465),
-            body: Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                  Container(
-                    height: 200.0,
+      child: Scaffold(
+        backgroundColor: Color(0xff006465),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 200.0,
+                width: 200.0,
+                child: Align(
+                  child: Image.asset(
+                    'assets/logo.png',
                     width: 200.0,
-                    child: Align(
-                      child: Image.asset(
-                        'assets/logo.png',
-                        width: 200.0,
-                        height: 200.0,
-                      ),
-                    ),
+                    height: 200.0,
                   ),
-                  CircularProgressIndicator(
-                    backgroundColor: Colors.white,
-                    strokeWidth: 1,
-                  )
-                ]))));
+                ),
+              ),
+              CircularProgressIndicator(
+                backgroundColor: Colors.white,
+                strokeWidth: 1,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -14,28 +14,31 @@ class _LevelChooseState extends State<LevelChoose> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: Color(0xff006465),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("SELECT YOUR LEVEL",
+      child: Scaffold(
+        backgroundColor: Color(0xff006465),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "SELECT YOUR LEVEL",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
-                    fontWeight: FontWeight.bold)),
-            SizedBox(height: 150),
-            LevelCard("BEGINNER 1"),
-            SizedBox(height: 25),
-            LevelCard("BEGINNER 2"),
-            SizedBox(height: 25),
-            LevelCard("PRE-INTERMEDIATE 1"),
-            SizedBox(height: 25),
-            LevelCard("PRE-INTERMEDIATE 2"),
-          ],
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 150),
+              LevelCard("BEGINNER 1"),
+              SizedBox(height: 25),
+              LevelCard("BEGINNER 2"),
+              SizedBox(height: 25),
+              LevelCard("PRE-INTERMEDIATE 1"),
+              SizedBox(height: 25),
+              LevelCard("PRE-INTERMEDIATE 2"),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }
