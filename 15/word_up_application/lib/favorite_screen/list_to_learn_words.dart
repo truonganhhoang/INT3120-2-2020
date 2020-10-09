@@ -17,50 +17,14 @@ class _ListToLearnWords extends State<ListToLearnWords>{
         Container(
           padding: EdgeInsets.all(10),
           child: Container(
-            height: displayHeight(context)*0.7,
+            height: 70 * SizeConfig.heightMultiplier,
             child: ListView(
               scrollDirection: Axis.vertical,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 2, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 3, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 4, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 5, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 6, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 7, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 8, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 8, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 8, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
               ],
             ),
           ),

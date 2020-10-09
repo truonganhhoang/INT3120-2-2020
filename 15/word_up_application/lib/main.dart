@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/selection_screen/selection_screen.dart';
 import 'package:word_up_application/size_config.dart';
 import 'home/home_screen.dart';
@@ -11,8 +12,7 @@ import 'word.dart';
 import 'favorite_screen/favorite_words_screen.dart';
 import 'package:device_preview/device_preview.dart';
 
-void main() {
-  //Set the fit size (fill in the screen size of the device in the design) If the design is based on the size of the iPhone6 ​​(iPhone6 ​​750*1334)
+void main(){
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
@@ -23,9 +23,10 @@ void main() {
 
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    DatabaseHelper.instance.databaseInit();
     return LayoutBuilder(
       builder: (context, constraints){
         return OrientationBuilder(

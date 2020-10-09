@@ -11,7 +11,7 @@ class DatabaseHelper {
   static final _databaseName = 'WordUpDB2020.db';
   static final _databaseVersion = 1;
   static final table = 'word';
-  static final columnId = 'id';
+  static final columnId = 'id_word';
   static final columnWord = 'word';
 
   // Contructor
@@ -21,20 +21,19 @@ class DatabaseHelper {
   static Database _database;
   Future<Database> get database async {
     if (_database != null) return _database;
-
     _database = await _initDatabase();
     return _database;
   }
-
+  void databaseInit() async{
+    _database = await instance.database;
+  }
   _initDatabase() async{
     var databasePath = await getDatabasesPath();
     String path = join(databasePath, _databaseName);
-
     // Checking existing
     var exists = await databaseExists(path);
     if (!exists) {
       // if not exists
-      print('Copy database start');
       try {
         await Directory(dirname(path)).create(recursive: true);
       } catch(_){}
@@ -60,7 +59,7 @@ class DatabaseHelper {
   }
 
   // Select all
-  Future<List<Map<String, dynamic>>> getAllWord() async{
+  Future<void> getAllWords() async{
     Database db = await instance.database;
     var result =  await db.query(table);
     return result.toList();
@@ -73,10 +72,12 @@ class DatabaseHelper {
   }
 
   // Get a row
-  Future<List<Map<String, dynamic>>> getAWord(int id) async {
-    Database db = await instance.database;
-    var result = await db.rawQuery('SELECT * FROM $table where $columnId = ?', [id]);
-    return result.toList();
+  Future<void> getAWordInfoWithId(int id) async {
+    if(_database != null)
+      {
+        var result = await _database.rawQuery('SELECT * FROM $table where $columnId = ?', [id]);
+        print(result.toList());
+      }
   }
   
   // Update

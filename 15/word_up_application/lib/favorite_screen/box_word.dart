@@ -13,23 +13,29 @@ class BoxWord extends StatefulWidget {
   State<StatefulWidget> createState() => _BoxWord();
 }
 
-class _BoxWord extends State<BoxWord>{
+class _BoxWord extends State<BoxWord> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      //padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(Icons.volume_up, size: 50, color: Colors.grey,),
+          Padding(
+              padding: EdgeInsets.all(5),
+              child: Icon(
+                Icons.volume_up, size: 5 * SizeConfig.heightMultiplier,
+                color: Colors.grey,)),
           Column(
             children: [
-              Text(widget.word.word, style: TextStyle(fontSize: 23, color: Colors.green),),
-              Text(widget.word.pronounUK, style: TextStyle(fontSize: 23),),
+              Text(widget.word.word,
+                style: TextStyle(fontSize: 23, color: Colors.green),),
+              Text(widget.word.pronounUK, style: TextStyle(fontSize: 20),),
             ],
           ),
           Icon(Icons.star, color: Colors.yellow, size: 30,)
