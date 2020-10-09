@@ -9,11 +9,17 @@ class Lesson2 extends StatefulWidget {
 
 class _Lesson2State extends State<Lesson2> {
   bool isTapped;
+  var numberTapped;
+  var isChecked = [false, false, false];
+  // luu vi tri gan nhat duoc Tap
+  var lastChecked;
 
   @override
   void initState() {
     super.initState();
     isTapped = false;
+    numberTapped = 0;
+    lastChecked = 0;
   }
 
   @override
@@ -102,11 +108,11 @@ class _Lesson2State extends State<Lesson2> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                answer(answer1),
+                answer(answer1, 1),
                 new Padding(padding: EdgeInsets.all(5.0)),
-                answer(answer2),
+                answer(answer2, 2),
                 new Padding(padding: EdgeInsets.all(5.0)),
-                answer(answer3),
+                answer(answer3, 3),
               ],
             ),
           ),
@@ -117,7 +123,12 @@ class _Lesson2State extends State<Lesson2> {
             minWidth: 350.0,
             color: isTapped ? Colors.green : Colors.grey,
             height: 40.0,
-            onPressed: () {},
+            onPressed: () {
+              if (numberTapped == 1)
+                debugPrint("true");
+              else
+                debugPrint("wrong");
+            },
             child: new Text(
               'KIỂM TRA',
               style: new TextStyle(fontSize: 20.0, color: Colors.white),
@@ -129,13 +140,25 @@ class _Lesson2State extends State<Lesson2> {
   }
 
   // tạo nội dung cho các ô đáp án, xử lý sự kiện khi ô được chọn
-  Widget answer(String answer) {
+  Widget answer(String answer, var number) {
     return GestureDetector(
+      // hàm xử lý sự kiện chọn ô
+      onTap: () {
+        setState(() {
+          if (lastChecked != 0) {
+            isChecked[lastChecked - 1] = false;
+          }
+          isTapped = true;
+          numberTapped = number;
+          lastChecked = number;
+          isChecked[number - 1] = true;
+        });
+      },
       child: Container(
         height: 50,
         width: 350,
         decoration: new BoxDecoration(
-          color: isTapped ? Colors.blue : Colors.white,
+          color: isChecked[number - 1] ? Colors.blue : Colors.white,
           borderRadius: BorderRadius.circular(20.0),
         ),
 
@@ -148,13 +171,6 @@ class _Lesson2State extends State<Lesson2> {
           ),
         ),
       ),
-
-      // hàm xử lý sự kiện chọn ô
-      onTap: () {
-        setState(() {
-          isTapped = !isTapped;
-        });
-      },
     );
   }
 }

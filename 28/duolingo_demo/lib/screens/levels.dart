@@ -117,7 +117,7 @@ class _LevelsState extends State<Levels> {
           Navigator.push(
               // EDIT: lesson1 -> lesson1
               context,
-              MaterialPageRoute(builder: (context) => Lesson2()));
+              MaterialPageRoute(builder: (context) => Lesson1()));
         },
         child: Column(
           children: <Widget>[

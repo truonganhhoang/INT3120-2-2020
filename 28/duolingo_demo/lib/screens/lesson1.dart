@@ -1,3 +1,4 @@
+import 'package:duolingo_demo/screens/lesson2.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
@@ -98,9 +99,13 @@ class _Lesson1State extends State<Lesson1> {
                 color: isTapped ? Colors.green : Colors.grey,
                 height: 40.0,
                 onPressed: () {
-                  if (numberTapped == 1)
+                  if (numberTapped == 1) {
                     debugPrint("true");
-                  else
+                    Navigator.push(
+                        // EDIT: lesson1 -> lesson1
+                        context,
+                        MaterialPageRoute(builder: (context) => Lesson2()));
+                  } else
                     debugPrint("wrong");
                 },
                 child: new Text(
