@@ -54,7 +54,7 @@ class MainScreen extends StatelessWidget {
         child: GridView.count(
           childAspectRatio: (1.6 / 1),
           crossAxisSpacing: 2,
-          mainAxisSpacing: 20,
+          mainAxisSpacing: 16,
           crossAxisCount: 2,
           // GridView này chia mỗi hàng làm 2 grid - chưa được 2 widget với tỉ lệ rộng/dài của mỗi Grid là 1.6/1
           // khoảng cách chiều dọc của 2 grid với nhau là 10, chiều ngang là 2
@@ -68,7 +68,7 @@ class MainScreen extends StatelessWidget {
               child: Image.asset(
                 "images/app_list.png",
                 scale: 1.3,
-                alignment: Alignment.topLeft,
+                alignment: Alignment(-0.9,-0.85),
               ),
             ),
             InkWell(
@@ -78,7 +78,7 @@ class MainScreen extends StatelessWidget {
               child: Image.asset(
                 "images/settings_icon.png",
                 scale: 1.4,
-                alignment: Alignment.topRight,
+                alignment: Alignment(0.9,-0.85),
               ),
               // Ảnh app_list được đặt trong một InkWell có hàm onTap(), khi Tap vào ảnh, sẽ gọi hàm _navigateToSettings
               // để chuyển sang màn hình Settings
@@ -87,28 +87,28 @@ class MainScreen extends StatelessWidget {
             Text(""),
             InkWell(
               child: Image.asset("images/plus_image.png",
-                  alignment: Alignment.topCenter),
+                  alignment: Alignment(0.5,-1)),
               onTap: () {
                 _navigateToGameModeScreen(context, "plus");
               },
             ),
             InkWell(
               child: Image.asset("images/minus_image.png",
-                  alignment: Alignment.topCenter),
+                  alignment: Alignment(-0.5,-1)),
               onTap: () {
                 _navigateToGameModeScreen(context, "minus");
               },
             ),
             InkWell(
               child: Image.asset("images/duplicate_image.png",
-                  alignment: Alignment.topCenter),
+                  alignment: Alignment(0.5,-0.8)),
               onTap: () {
                 _navigateToGameModeScreen(context, "duplicate");
               },
             ),
             InkWell(
               child: Image.asset("images/divide_image.png",
-                  alignment: Alignment.topCenter),
+                  alignment: Alignment(-0.5,-0.8)),
               onTap: () {
                 _navigateToGameModeScreen(context, "divide");
               },

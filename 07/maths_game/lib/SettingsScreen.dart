@@ -82,12 +82,12 @@ class _MyMusicSlider extends State<MyMusicSlider> {
         Column(
           children: [
             Image.asset("images/music.png",
-                alignment: Alignment.topCenter, scale: 1.3),
+                alignment: Alignment.topCenter, scale: 1.8),
           ],
         ),
         Column(
           children: [
-            Text("Music", style: TextStyle(fontSize: 28)),
+            Text("  Music         ", style: TextStyle(fontSize: 18)),
           ],
         ),
         (_currentSliderValue != null || maxSliderValue != null)
@@ -140,12 +140,12 @@ class _MyBrightnessSlider extends State<MyBrigtnessSlider> {
         Column(
           children: [
             Image.asset("images/brightness.png",
-                alignment: Alignment.topCenter, scale: 1.4),
+                alignment: Alignment(-0.5,1), scale: 1.5),
           ],
         ),
         Column(
           children: [
-            Text("Brightness", style: TextStyle(fontSize: 20)),
+            Text(" Brightness", style: TextStyle(fontSize: 18)),
           ],
         ),
         (_brightness != null)

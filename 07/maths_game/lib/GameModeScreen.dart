@@ -46,9 +46,6 @@ class GameModeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Maths game"),
-      ),
       backgroundColor: Colors.transparent,
       body: Container(
         child: Padding(
@@ -56,7 +53,7 @@ class GameModeScreen extends StatelessWidget {
           child: GridView.count(
             childAspectRatio: (1.7 / 1),
             crossAxisSpacing: 2,
-            mainAxisSpacing: 22,
+            mainAxisSpacing: 46,
             crossAxisCount: 2,
             // GridView này chia mỗi hàng làm 2 grid - chưa được 2 widget với tỉ lệ rộng/dài của mỗi Grid là 1.6/1
             // khoảng cách chiều dọc của 2 grid với nhau là 10, chiều ngang là 2
@@ -65,28 +62,28 @@ class GameModeScreen extends StatelessWidget {
               Text(""),
               InkWell(
                 child: Image.asset("images/Frame 19.png",
-                    alignment: Alignment.topCenter),
+                    alignment: Alignment(0.3,-0.5)),
                 onTap: () {
                   _navigateToKienThuc(context, calculation);
                 },
               ),
               InkWell(
                 child: Image.asset("images/Frame 20.png",
-                    alignment: Alignment.topCenter),
+                    alignment: Alignment(-0.3,-0.5)),
                 onTap: () {
                   _navigateToQuizScreen(context, calculation);
                 },
               ),
               InkWell(
                 child: Image.asset("images/Frame 21.png",
-                    alignment: Alignment.topCenter),
+                    alignment: Alignment(0.3,-1)),
                 onTap: () {
                   _navigateToTrueOrFalse(context, calculation);
                 },
               ),
               InkWell(
                 child: Image.asset("images/Frame 22.png",
-                    alignment: Alignment.topCenter),
+                    alignment: Alignment(-0.3,-1)),
                 onTap: () {
                   _navigateToTimeScreen(context, calculation);
                 },

@@ -24,13 +24,10 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Maths Game"),
-      ),
       body: Container(
         child: GridView.count(
           childAspectRatio: 4.4 / 1,
-          mainAxisSpacing: 30,
+          mainAxisSpacing: 40,
           crossAxisCount: 1,
           children: [
             Container(
