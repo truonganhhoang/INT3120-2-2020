@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:word_up_application/favorite_screen/size_helper.dart';
 
+import '../size_config.dart';
 import '../word.dart';
 import 'box_word.dart';
 
@@ -11,12 +13,11 @@ class ListToLearnWords extends StatefulWidget{
 class _ListToLearnWords extends State<ListToLearnWords>{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return(
-        Padding(
-          padding: EdgeInsets.only(top: 10, right: 10, left: 10),
+        Container(
+          padding: EdgeInsets.all(10),
           child: Container(
-            height: 522,
+            height: displayHeight(context)*0.7,
             child: ListView(
               scrollDirection: Axis.vertical,
               children: [
@@ -54,23 +55,11 @@ class _ListToLearnWords extends State<ListToLearnWords>{
                 ),
                 Padding(
                   padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 9, word: 'hello', pronounUK: '/heˈləʊ/'),),
+                  child: BoxWord(word: new Word(id: 8, word: 'hello', pronounUK: '/heˈləʊ/'),),
                 ),
                 Padding(
                   padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 10, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 11, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 12, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: BoxWord(word: new Word(id: 13, word: 'hello', pronounUK: '/heˈləʊ/'),),
+                  child: BoxWord(word: new Word(id: 8, word: 'hello', pronounUK: '/heˈləʊ/'),),
                 ),
               ],
             ),
