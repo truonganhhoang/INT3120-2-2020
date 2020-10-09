@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'home.dart';
-import 'lesson2-FalseResult.dart';
-import 'lesson2-TrueResult.dart';
 
-class Lesson2 extends StatefulWidget {
+class Lesson2_TrueResult extends StatefulWidget {
   @override
-  _Lesson2State createState() => _Lesson2State();
+  _Lesson2_TrueResultState createState() => _Lesson2_TrueResultState();
 }
 
-class _Lesson2State extends State<Lesson2> {
+class _Lesson2_TrueResultState extends State<Lesson2_TrueResult> {
   bool isTapped;
   var numberTapped;
   var isChecked = [false, false, false];
@@ -121,31 +118,59 @@ class _Lesson2State extends State<Lesson2> {
           ),
           new Padding(padding: EdgeInsets.all(30.0)),
 
-          // nút kiểm tra
-          MaterialButton(
-            minWidth: 350.0,
-            color: isTapped ? Colors.green : Colors.grey,
-            height: 40.0,
-            onPressed: () {
-              if (numberTapped == 1) {
-                debugPrint("true");
-                Navigator.push(
-                    // EDIT: lesson1 -> lesson1
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Lesson2_TrueResult()));
-              } else {
-                debugPrint("wrong");
-                Navigator.push(
-                    // EDIT: lesson1 -> lesson1
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Lesson2_FalseResult()));
-              }
-            },
-            child: new Text(
-              'KIỂM TRA',
-              style: new TextStyle(fontSize: 20.0, color: Colors.white),
+          // nut thong bao ket qua
+          Container(
+            width: 400,
+            height: 50,
+            //padding: EdgeInsets.all(2.0),
+            child: Stack(
+              children: <Widget>[
+                new Positioned(
+                    top: -40,
+                    child: Container(
+                      width: 420.0,
+                      height: 120.0,
+                      decoration: new BoxDecoration(
+                        color: Colors.lightGreenAccent[100],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'TUYỆT VỜI!',
+                          style: new TextStyle(
+                            color: Colors.lightGreenAccent[700],
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )),
+                Column(
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.all(1.0)),
+                    Center(
+                      child: MaterialButton(
+                        minWidth: 340.0,
+                        // color: isTapped ? Colors.green : Colors.grey,
+                        color: Colors.lightGreenAccent[700],
+                        height: 40.0,
+                        onPressed: () {
+                          Navigator.push(
+                              // EDIT: lesson1 -> lesson1
+                              context,
+                              MaterialPageRoute(builder: (context) => Home()));
+                        },
+                        child: new Text(
+                          'TIẾP TỤC',
+                          style: new TextStyle(
+                              fontSize: 20.0, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              overflow: Overflow.visible,
             ),
           ),
         ],

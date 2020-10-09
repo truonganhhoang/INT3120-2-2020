@@ -13,21 +13,24 @@ class _LevelsState extends State<Levels> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-           automaticallyImplyLeading: false,
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 2,
             title: Row(children: <Widget>[
+              SizedBox(
+                width: 15,
+              ),
               Image.asset('assets/images/america.png', height: 25),
               SizedBox(
-                width: 35,
+                width: 45,
               ),
               appBarItem('assets/images/crown.png', '0', Colors.grey),
               SizedBox(
-                width: 35,
+                width: 45,
               ),
               appBarItem('assets/images/streak.png', '0', Colors.grey),
               SizedBox(
-                width: 30,
+                width: 40,
               ),
               Image.asset('assets/images/heart.png', height: 30),
               // Row(

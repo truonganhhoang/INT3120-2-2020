@@ -29,7 +29,7 @@ class _Lesson1_FalseResultState extends State<Lesson1_FalseResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 2,
           title: Row(children: <Widget>[
@@ -65,36 +65,46 @@ class _Lesson1_FalseResultState extends State<Lesson1_FalseResult> {
             Image.asset('assets/images/heart.png', height: 30),
           ])),
       body: new Container(
+        margin: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
+            new Padding(padding: EdgeInsets.all(10.0)),
             Container(
-              margin: const EdgeInsets.all(10.0),
               alignment: Alignment.topLeft,
               height: 30,
               child: Text(
-                'Hình nào là "thức ăn"?',
+                'Hình nào là "Cà Phê"?',
                 style: new TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/coffee.PNG', 1),
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/bread.PNG', 2),
-                ],
-              ),
-              new Padding(padding: EdgeInsets.all(5.0)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/rice.PNG', 3),
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/cake.PNG', 4),
-                ],
-              ),
+            new Padding(padding: EdgeInsets.all(30.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/coffee.PNG',
+                    1),
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/bread.PNG',
+                    2),
+              ],
+            ),
             new Padding(padding: EdgeInsets.all(5.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/rice.PNG',
+                    3),
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/cake.PNG',
+                    4),
+              ],
+            ),
+            new Padding(padding: EdgeInsets.all(45.0)),
             Container(
               width: 400,
               height: 50,
@@ -146,23 +156,11 @@ class _Lesson1_FalseResultState extends State<Lesson1_FalseResult> {
                           color: Colors.red[600],
                           height: 40.0,
                           onPressed: () {
-                            if (numberTapped == 1) {
-                              debugPrint("true");
-                              Navigator.push(
-                                  // EDIT: lesson1 -> lesson1
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Lesson1_TrueResult()));
-                            } else {
-                              debugPrint("wrong");
-                              Navigator.push(
-                                  // EDIT: lesson1 -> lesson1
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Lesson1_FalseResult()));
-                            }
+                            Navigator.push(
+                                // EDIT: lesson1 -> lesson1
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Lesson2()));
                           },
                           child: new Text(
                             'TIẾP TỤC',

@@ -1,6 +1,5 @@
 import 'package:duolingo_demo/screens/lesson2.dart';
 import 'package:flutter/material.dart';
-import 'package:duolingo_demo/screens/lesson1-FalseResult.dart';
 import 'home.dart';
 
 // ignore: camel_case_types
@@ -29,7 +28,7 @@ class _Lesson1_TrueResultState extends State<Lesson1_TrueResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 2,
           title: Row(children: <Widget>[
@@ -65,36 +64,46 @@ class _Lesson1_TrueResultState extends State<Lesson1_TrueResult> {
             Image.asset('assets/images/heart.png', height: 30),
           ])),
       body: new Container(
+        margin: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
+            new Padding(padding: EdgeInsets.all(10.0)),
             Container(
-              margin: const EdgeInsets.all(10.0),
               alignment: Alignment.topLeft,
               height: 30,
               child: Text(
-                'Hình nào là "thức ăn"?',
+                'Hình nào là "Cà Phê"?',
                 style: new TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/coffee.PNG', 1),
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/bread.PNG', 2),
-                ],
-              ),
-              new Padding(padding: EdgeInsets.all(5.0)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/rice.PNG', 3),
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/cake.PNG', 4),
-                ],
-              ),
+            new Padding(padding: EdgeInsets.all(30.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/coffee.PNG',
+                    1),
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/bread.PNG',
+                    2),
+              ],
+            ),
             new Padding(padding: EdgeInsets.all(5.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/rice.PNG',
+                    3),
+                answer(
+                    'assets/images/multipleChoiceQuestion/lesson1-1/cake.PNG',
+                    4),
+              ],
+            ),
+            new Padding(padding: EdgeInsets.all(45.0)),
             Container(
               width: 400,
               height: 50,

@@ -68,6 +68,7 @@ class _Lesson1State extends State<Lesson1> {
           // alignment: Alignment.topCenter,
           child: Column(
             children: <Widget>[
+              new Padding(padding: EdgeInsets.all(10.0)),
               Container(
                 alignment: Alignment.topLeft,
                 height: 30,
@@ -79,23 +80,31 @@ class _Lesson1State extends State<Lesson1> {
                   ),
                 ),
               ),
-              new Padding(padding: EdgeInsets.all(5.0)),
+              new Padding(padding: EdgeInsets.all(30.0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/coffee.PNG', 1),
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/bread.PNG', 2),
+                  answer(
+                      'assets/images/multipleChoiceQuestion/lesson1-1/coffee.PNG',
+                      1),
+                  answer(
+                      'assets/images/multipleChoiceQuestion/lesson1-1/bread.PNG',
+                      2),
                 ],
               ),
               new Padding(padding: EdgeInsets.all(5.0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/rice.PNG', 3),
-                  answer('assets/images/multipleChoiceQuestion/lesson1-1/cake.PNG', 4),
+                  answer(
+                      'assets/images/multipleChoiceQuestion/lesson1-1/rice.PNG',
+                      3),
+                  answer(
+                      'assets/images/multipleChoiceQuestion/lesson1-1/cake.PNG',
+                      4),
                 ],
               ),
-              new Padding(padding: EdgeInsets.all(5.0)),
+              new Padding(padding: EdgeInsets.all(35.0)),
               MaterialButton(
                 minWidth: 350.0,
                 color: isTapped ? Colors.green : Colors.grey,
