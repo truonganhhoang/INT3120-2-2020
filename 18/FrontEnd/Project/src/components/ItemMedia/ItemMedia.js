@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
     flexDirection: 'column',
-    width: screen.width * 0.42,
+    width: screen.width * 0.45,
     height: 50,
     borderRadius: 15,
     backgroundColor: '#fff'

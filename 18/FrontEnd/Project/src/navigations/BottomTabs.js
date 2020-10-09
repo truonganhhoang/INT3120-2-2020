@@ -6,14 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Home from '../screens/Home';
 import Media from '../screens/Media';
 import Exam from '../screens/Exam';
-
-function Practice() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Màn luyện tập</Text>
-    </View>
-  );
-}
+import Practice from '../screens/Practice';
 
 function Option() {
   return (

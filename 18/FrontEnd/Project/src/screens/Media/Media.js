@@ -60,6 +60,9 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: screen.height * 0.27,
   },
+  content: {
+    marginLeft: -5,
+  },
   text_header: {
     color: '#00CDDA',
     fontSize: 18,

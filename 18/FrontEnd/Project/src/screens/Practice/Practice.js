@@ -1,28 +1,28 @@
 import React from 'react';
 import { View, StyleSheet, Text, Dimensions, ScrollView } from 'react-native';
 import {Container, Row, Col } from 'native-base';
-import ItemExam from '../../components/ItemExam';
-import HeaderMedia from '../../components/HeaderMedia';
+import ItemPractice from '../../components/ItemPractice';
+import HeaderPractice from '../../components/HeaderPractice';
 
 const data = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
 const data2 = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];
-const Exam = () => {
+const Practice = () => {
   return (
     <Container style={styles.body}>
       <View style={styles.header}>
-        <HeaderMedia></HeaderMedia>
+        <HeaderPractice label={'Luyện tập'}></HeaderPractice>
       </View>
 
       <ScrollView style={styles.content}>
         <Row>
           <Col style={styles.collums}>
           {data.map((item) => (
-            <ItemExam label={`Unit ${item}`} />
+            <ItemPractice label={`Unit ${item}`} />
           ))}
           </Col>
           <Col style={styles.collums}>
           {data2.map((item) => (
-            <ItemExam label={`Unit ${item}`} />
+            <ItemPractice label={`Unit ${item}`} />
           ))}
           </Col>
         </Row>
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Exam;
+export default Practice;
