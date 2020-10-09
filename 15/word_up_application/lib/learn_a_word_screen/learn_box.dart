@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:word_up_application/word.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:word_up_application/size_config.dart';
+import 'package:word_up_application/components/star_favorite.dart';
 
 class LearnBox extends StatelessWidget {
   final Word word;
@@ -39,11 +40,7 @@ class LearnBox extends StatelessWidget {
                             fontSize: 2.6 * SizeConfig.textMultiplier,
                           ),
                         ),
-                        Icon(
-                          Icons.star_border,
-                          color: Colors.black,
-                          size: 3.8 * SizeConfig.textMultiplier,
-                        ),
+                        StarFavorite(wordId: word.id,size: 3.2 * SizeConfig.heightMultiplier,isFavorite: false,)
                       ],
                     ),
                   ),
