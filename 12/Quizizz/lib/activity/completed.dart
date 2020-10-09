@@ -4,6 +4,6 @@ class Completed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Text("Quoc Manh");
+    return Text("Developing");
   }
 }
