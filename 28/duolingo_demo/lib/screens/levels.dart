@@ -13,6 +13,7 @@ class _LevelsState extends State<Levels> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+           automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 2,
             title: Row(children: <Widget>[

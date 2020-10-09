@@ -28,6 +28,7 @@ class _Lesson2State extends State<Lesson2> {
       // thanh trạng thái, chứ nút thoát ra trang chủ chọn bài học,
       // tiến độ làm bài và streak
       appBar: AppBar(
+         automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 2,
           title: Row(children: <Widget>[
