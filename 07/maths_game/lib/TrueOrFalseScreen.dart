@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,9 @@ import 'package:maths_game/GameModeScreen.dart';
 import 'dart:math';
 
 import 'package:maths_game/ResultScreen.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 class TrueOrFalseScreen extends StatefulWidget {
   String calculation;
@@ -18,13 +22,6 @@ class TrueOrFalseScreen extends StatefulWidget {
 }
 
 class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
-  /* getRandomCalculation(int number1,int number2) {
-    getData(number1,number2,calculation).then((val) => setState(() {
-      map = val;
-    }));
-  }
-  //Khi vừa khởi tạo _TrueOrFalseScreen gọi hàm GetRandomCalculation, đợi khi GetRandomCalculation
-  // chạy xong thì truyền kết quả của nó là val vào map và Setstate()
 
   getData(int number1,int number2,String calculation) async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -40,6 +37,14 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
     return res;
   }
   // Lấy dữ liệu với cột number1 có giá trị là number1, cột number2 có giá trị là number2 tại bảng calculation
+
+  /* getRandomCalculation(int number1,int number2) {
+    getData(number1,number2,calculation).then((val) => setState(() {
+      map = val;
+    }));
+  }
+  //Khi vừa khởi tạo _TrueOrFalseScreen gọi hàm GetRandomCalculation, đợi khi GetRandomCalculation
+  // chạy xong thì truyền kết quả của nó là val vào map và Setstate()
 
   List<Map> map = new List<Map>();
   // list of random calculation - in this mode length = 1 */
@@ -122,7 +127,7 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
       }
 
       showDialog(
-          context: context,
+          context: this.context,
           builder: (BuildContext context) {
             return SimpleDialog(
               backgroundColor: Colors.transparent,
@@ -143,7 +148,7 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
           });
 
       Timer _timer = Timer(Duration(seconds: 1), () {
-        Navigator.pop(context, true);
+        Navigator.pop(this.context, true);
       });
 
       number1 = random.nextInt(10) + 1;
@@ -152,7 +157,7 @@ class _TrueOrFalseScreen extends State<TrueOrFalseScreen> {
       numberOfQuestion++;
       if (numberOfQuestion == 20)
         Timer _timer = Timer(Duration(seconds: 2), () {
-          _navigateToResultScreen(context);
+          _navigateToResultScreen(this.context);
         });
     });
   }
