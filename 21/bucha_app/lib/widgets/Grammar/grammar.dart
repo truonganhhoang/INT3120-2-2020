@@ -454,8 +454,8 @@ class _GrammarPageState extends State<GrammarPage> {
         child: new Column(
           children: <Widget>[
             Container(
+              height: 650.0,
               margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              height: 550.0,
               decoration: BoxDecoration(
                   color: Colors.yellow[200],
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -490,7 +490,7 @@ class _GrammarPageState extends State<GrammarPage> {
                       margin:
                           EdgeInsets.only(right: 5.0, left: 5.0, bottom: 10.0, top: 10.0),
                       child: SizedBox(
-                        height: 450.0,
+                        height: 550.0,
                         child: listView,
                       ),
                     ),

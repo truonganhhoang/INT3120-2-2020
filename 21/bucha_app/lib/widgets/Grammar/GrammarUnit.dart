@@ -81,7 +81,7 @@ class _GrammarUnitState extends State<GrammarUnit> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              height: 550.0,
+              height: 650.0,
               decoration: BoxDecoration(
                   color: Colors.yellow[200],
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -114,7 +114,7 @@ class _GrammarUnitState extends State<GrammarUnit> {
                       ),
                     ),
                     new Container(
-                      height: 450.0,
+                      height: 550.0,
                       margin: EdgeInsets.only(
                           right: 5.0, left: 5.0, bottom: 10.0, top: 10.0),
                       decoration: BoxDecoration(
@@ -124,7 +124,6 @@ class _GrammarUnitState extends State<GrammarUnit> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            width: 320.0,
                             height: 50.0,
                             decoration: BoxDecoration(
                               color: widget.color,
@@ -145,7 +144,7 @@ class _GrammarUnitState extends State<GrammarUnit> {
                           ),
                           new Container(
                             child: SizedBox(
-                              height: 380.0,
+                              height: 480.0,
                               child: listView,
                             ),
                           ),
