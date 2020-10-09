@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import './order_teacher.dart';
-import './add_order_teacher.dart';
+
+import 'package/widget.dart';
+
+Color _color = Color(0xff00854c);
 
 void main() {
   runApp(MyApp());
@@ -11,42 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'EduBox',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primaryColor: Color(0xff00854c),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Danh sách yêu cầu gia sư'),
+      home: HomeInterface(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Danh sách yêu cầu gia sư'),
-      ),
-      body: OrderTeacher()
-    );
-  }
-}
+
+
+

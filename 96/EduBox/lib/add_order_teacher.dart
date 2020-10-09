@@ -1,17 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './order_teacher.dart';
-import './main.dart';
 
 class NewOrderTeacher extends StatelessWidget {
-
-  void backOrderTeacherScreen(BuildContext ctx) {
-    Navigator.of(ctx).push(MaterialPageRoute(
-      builder: (_) {
-        return MyHomePage();
-      },
-    ),);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +9,14 @@ class NewOrderTeacher extends StatelessWidget {
       appBar: AppBar(
         title: Text('Thêm mới yêu cầu'),
       ),
-      body: Column(children: <Widget>[
+      body: ListView(children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width * 0.9,
           padding: EdgeInsets.all(20),
           margin: EdgeInsets.only(
-              top: 30, bottom: MediaQuery.of(context).size.height * 1 / 4, left: 25),
+              top: 30,
+              bottom: MediaQuery.of(context).size.height * 1 / 4,
+              left: 25),
           decoration:
               new BoxDecoration(border: Border.all(color: Colors.green)),
           child: Column(
@@ -244,7 +236,7 @@ class NewOrderTeacher extends StatelessWidget {
               Row(
                 children: [
                   new InkWell(
-                    onTap: () => backOrderTeacherScreen(context),
+                    onTap: () => {},
                     child: new Container(
                         margin: EdgeInsets.only(left: 7, right: 45),
                         padding: const EdgeInsets.only(
