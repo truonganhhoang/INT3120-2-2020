@@ -1,5 +1,12 @@
+import 'package:bucha_app/widgets/options/OptionAdvance.dart';
 import 'package:flutter/material.dart';
+import 'package:bucha_app/widgets/dictionary/dictionary.dart';
 
+import 'widgets/Grammar/GrammarUnit.dart';
+import 'widgets/dictionary/dictionary.dart';
+import 'widgets/Grammar/grammar.dart';
+import 'widgets/dictionary/dictionary.dart';
+import 'widgets/options/OptionClass.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -13,18 +20,26 @@ class HomePage extends StatefulWidget {
 }
 
 class OptionButton extends StatelessWidget {
-  final String link_image;
+  final int colorBackgorund;
   final String textButton;
+  final StatefulWidget linkPage;
 
-  OptionButton({this.link_image, this.textButton});
+
+
+  OptionButton({this.colorBackgorund, this.textButton,this.linkPage});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300.0,
-        decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(link_image))),
-        child: FlatButton(
+        width: 150.0,
+        height: 50.0,
+        margin: const EdgeInsets.only(top: 20.0),
+        child: new RaisedButton(
+          onPressed: () {
+            Navigator.push(context, new MaterialPageRoute(
+                builder: (context) => linkPage
+            ));
+          },
           child: Text(
             textButton,
             style: TextStyle(
@@ -33,44 +48,47 @@ class OptionButton extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
+
           ),
+          shape: new RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+          color: Color(colorBackgorund),
         ));
   }
+
+
 }
 
 class SmailOntionButton extends StatelessWidget {
-  final String image_location;
+  final int imageBackground;
   final String image_caption;
+  final StatefulWidget linkPage;
 
-  SmailOntionButton({this.image_location, this.image_caption});
+  SmailOntionButton(
+      {this.imageBackground, this.image_caption,this.linkPage});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(0.5),
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          width: 100.0,
-          margin: const EdgeInsets.only(
-              top: 40.0, left:0.5, right:0.5),
-          child: ListTile(
-            title: Image.asset(image_location,
-              width: 100.0,
-              height: 80.0),
-            subtitle:Container(
-              alignment: Alignment.topCenter,
-              child: Text(image_caption,
-                style: TextStyle(
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return Column(
+      children: [
+        Container(
+          width: 50.0,
+          height: 50.0,
+          margin: const EdgeInsets.only(top: 20.0,left: 10.0 , right: 10.0),
+          child: RaisedButton(
+            onPressed: () {Navigator.push(context, new MaterialPageRoute(
+                builder: (context) => linkPage
+            ));},
+            shape: new RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            color: Color(imageBackground),
+          ),),
+        Container(
+          margin: const EdgeInsets.only(top: 10.0),
+          child: Text(image_caption),
+        )
+      ],
     );
   }
 }
@@ -82,48 +100,98 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/background.jpg"), fit: BoxFit.fill)),
+        decoration: BoxDecoration(color: Color(0xff3fe7f1)),
         child: new Column(
           children: <Widget>[
             new Padding(padding: const EdgeInsets.only(top: 200)),
-            OptionButton(
-              link_image: "assets/buttonRed.png",
-              textButton: "Trường Học",
+            Container(
+              width: 200.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                  color: Color(0xff41D4E6),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10.0),
+                      topLeft: Radius.circular(10.0))),
+              child: Container(
+                child: Center(
+                  child: Text("Từ Vựng", style: TextStyle(
+                    fontSize: 16.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),),
+                ),
+              ),
             ),
-            new Padding(padding: const EdgeInsets.only(top: 25.0)),
-            OptionButton(
-              link_image: "assets/buttonBlue.png",
-              textButton: "Nâng Cao",
+            Container(
+              width: 200.0,
+              height: 160.0,
+              decoration: BoxDecoration(
+                  color: Color(0xff668EA7),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.0),
+                      bottomRight: Radius.circular(10.0))),
+              child: Column(
+                children: <Widget>[
+                  OptionButton(
+                    colorBackgorund: 0xffC822DA,
+                    textButton: "Trường Học",
+                    linkPage: OptionClass(),
+
+                  ),
+                  OptionButton(
+                    colorBackgorund: 0xffFC6E64,
+                    textButton: "Nâng Cao",
+                    linkPage: OptionAdvance(),
+                  ),
+                ],
+              ),
             ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SmailOntionButton(
-                  image_location: "assets/dictionaryButton.png",
+                  imageBackground: 0xff7D75B0,
                   image_caption: "Từ Điển",
+                  linkPage: dictionary(),
                 ),
                 SmailOntionButton(
-                  image_location: "assets/sampleSentencesButton.png",
+                  imageBackground: 0xffF1B73C,
                   image_caption: "Mẫu Câu",
+                  linkPage: dictionary(),
                 ),
                 SmailOntionButton(
-                  image_location: "assets/grammarButton.png",
+                  imageBackground: 0xffFF3D00,
                   image_caption: "Ngữ Pháp",
+                  linkPage: GrammarPage(),
                 )
               ],
-            ),
-            Container(
-              width: 80,
-              height: 140,
-              margin: const EdgeInsets.only(top: 50.0,right: 100.0),
-              child: Image.asset('assets/satan.png'),
             ),
           ],
         ),
       ),
     );
   }
+
+  customDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext c) {
+          return Dialog(
+            child: new Container(
+              height: 450.0,
+              width: MediaQuery.of(context).size.width,
+              decoration: new BoxDecoration(
+                  color: Colors.red
+              ),
+            ),
+          );
+        }
+    );
+  }
+
+
 }
+
+

@@ -1,6 +1,6 @@
 # bucha_app
 
-A new Flutter project.
+INT3120-2-2020
 
 ## Getting Started
 
