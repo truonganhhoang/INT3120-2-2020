@@ -5,43 +5,41 @@ class Word {
   String word;
   String type;
   String definition;
-  String mean;
-  String pronounUK;
-  String pronounUS;
+  String meanCard;
+  String pronounceUK;
+  String pronounceUS;
   String pathSoundUK;
   String pathSoundUS;
-  String example1;
-  String example2;
-  String pathImage;
-  String example;
+  List<String> examples;
+  List<String> imagePaths;
+  List<String> quotes;
+  
+  bool isFavorite;
+  int reviewTimes;
 
   Word({
     @required this.id,
     @required this.word,
     this.type,
     this.definition,
-    this.mean,
+    this.meanCard,
     this.pathSoundUK,
     this.pathSoundUS,
-    this.example1,
-    this.example2,
-    this.pronounUK,
-    this.pronounUS,
-    this.pathImage,
-    this.example,
+    this.pronounceUK,
+    this.pronounceUS,
   });
 
   Word.map(dynamic obj){
     this.id = obj['id'];
     this.word = obj['word'];
-    this.pronounUK = obj['pronounUK'];
+    this.pronounceUK = obj['pronounUK'];
   }
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map['id'] = this.id;
     map['word'] = this.word;
-    map['pronounUK'] = this.pronounUK;
+    map['pronounUK'] = this.pronounceUK;
   }
 
 }

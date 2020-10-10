@@ -72,7 +72,7 @@ class _WordBoxState extends State<WordBox> {
           Padding(
             padding: EdgeInsets.all(0),
             child: Text(
-              widget.word.pronounUK,
+              widget.word.pronounceUK,
               style: TextStyle(
                   color: Colors.black45,
                   fontSize: 2.5 * SizeConfig.heightMultiplier),

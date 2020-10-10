@@ -41,15 +41,15 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
                   },
                   items: <Widget>[
                     WordBox(word: new Word(
-                        id: 1, word: 'Exile', pronounUK: '/ˈek.saɪl/')),
+                        id: 1, word: 'Exile', pronounceUK: '/ˈek.saɪl/')),
                     WordBox(word: new Word(
-                        id: 2, word: 'Refectory', pronounUK: '/rɪˈfek.tər.i/')),
+                        id: 2, word: 'Refectory', pronounceUK: '/rɪˈfek.tər.i/')),
                     WordBox(word: new Word(
-                        id: 3, word: 'Opinion', pronounUK: '/əˈpɪn.jən/')),
+                        id: 3, word: 'Opinion', pronounceUK: '/əˈpɪn.jən/')),
                     WordBox(word: new Word(
                         id: 4,
                         word: 'Confidence',
-                        pronounUK: '/ˈkɒn.fɪ.dəns/')),
+                        pronounceUK: '/ˈkɒn.fɪ.dəns/')),
                   ],
                 ),
               ),
