@@ -10,10 +10,10 @@ class ListToLearnWords extends StatefulWidget{
   State<StatefulWidget> createState() => _ListToLearnWords();
 }
 
-class _ListToLearnWords extends State<ListToLearnWords>{
+class _ListToLearnWords extends State<ListToLearnWords> {
   @override
   Widget build(BuildContext context) {
-    return(
+    return (
         Container(
           padding: EdgeInsets.all(10),
           child: Container(
@@ -21,10 +21,14 @@ class _ListToLearnWords extends State<ListToLearnWords>{
             child: ListView(
               scrollDirection: Axis.vertical,
               children: [
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(
+                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(
+                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(
+                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(
+                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
               ],
             ),
           ),

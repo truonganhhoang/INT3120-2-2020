@@ -60,15 +60,15 @@ class _ListKnewWords extends State<ListKnewWords> {
           scrollDirection: Axis.vertical,
           children: [
             BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounUK: '/ɡʊdˈbaɪ/'),),
+                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
             BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounUK: '/ɡʊdˈbaɪ/'),),
+                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
             BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounUK: '/ɡʊdˈbaɪ/'),),
+                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
             BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounUK: '/ɡʊdˈbaɪ/'),),
+                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
             BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounUK: '/ɡʊdˈbaɪ/'),),
+                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
           ],
         ),
       );
