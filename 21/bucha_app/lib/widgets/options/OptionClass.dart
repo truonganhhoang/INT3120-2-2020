@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -48,8 +49,8 @@ class _OptionClassState extends State<OptionClass> {
           children: <Widget>[
             new Padding(padding: const EdgeInsets.only(top: 150)),
             Container(
-              width: 300.0,
-              height: 70.0,
+              height: 50.0,
+              margin: const EdgeInsets.only(right: 20.0,left: 20.0),
               decoration: BoxDecoration(
                   color: Color(0xffCFBB24),
                   borderRadius: BorderRadius.only(
@@ -70,8 +71,9 @@ class _OptionClassState extends State<OptionClass> {
               ),
             ),
             Container(
-              width: 300.0,
-              height: 450.0,
+
+              margin:
+                  const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
               decoration: BoxDecoration(
                 color: Color(0xff9CF5FE),
                 borderRadius: BorderRadius.only(
@@ -80,77 +82,82 @@ class _OptionClassState extends State<OptionClass> {
               ),
               child: Container(
                 margin: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, bottom: 40.0),
+                    left: 20.0, right: 20.0, bottom: 20.0),
                 decoration: BoxDecoration(
                   color: Color(0xff0E2D6A),
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20.0),
                       bottomRight: Radius.circular(20.0)),
                 ),
-                child: new Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 20.0),
+                  child:
+                    Column(
                       children: [
-                        Class(
-                          name: "Lớp 1",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Class(
+                              name: "Lớp 1",
+                            ),
+                            Class(
+                              name: "Lớp 2",
+                            ),
+                          ],
                         ),
-                        Class(
-                          name: "Lớp 2",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Class(
+                              name: "Lớp 3",
+                            ),
+                            Class(
+                              name: "Lớp 4",
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Class(
+                              name: "Lớp 5",
+                            ),
+                            Class(
+                              name: "Lớp 6",
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Class(
+                              name: "Lớp 7",
+                            ),
+                            Class(
+                              name: "Lớp 8",
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Class(
+                              name: "Lớp 9",
+                            ),
+                            Class(
+                              name: "Lớp 10",
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Class(
-                          name: "Lớp 3",
-                        ),
-                        Class(
-                          name: "Lớp 4",
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Class(
-                          name: "Lớp 5",
-                        ),
-                        Class(
-                          name: "Lớp 6",
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Class(
-                          name: "Lớp 7",
-                        ),
-                        Class(
-                          name: "Lớp 8",
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Class(
-                          name: "Lớp 9",
-                        ),
-                        Class(
-                          name: "Lớp 10",
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+
+                )
               ),
             ),
             Container(
@@ -158,9 +165,10 @@ class _OptionClassState extends State<OptionClass> {
               height: 50.0,
               margin: const EdgeInsets.only(top: 20.0),
               child: RaisedButton(
-                onPressed: () {Navigator.push(context, new MaterialPageRoute(
-                    builder: (context) => HomePage()
-                ));},
+                onPressed: () {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => HomePage()));
+                },
                 shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
                 color: Colors.red,

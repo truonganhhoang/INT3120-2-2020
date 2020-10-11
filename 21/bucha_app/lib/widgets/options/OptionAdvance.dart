@@ -12,7 +12,7 @@ class Option extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 160.0,
+        width: 150.0,
         height: 60.0,
         margin: const EdgeInsets.only(top: 20.0,left: 5.0 , right: 5.0),
         child: new RaisedButton(
@@ -61,7 +61,7 @@ class _OptionAdvanceState extends State<OptionAdvance> {
           Container(
             margin: const EdgeInsets.only(
                 left: 20.0, right: 20.0),
-            height: 60.0,
+            height: 80.0,
             decoration: BoxDecoration(
                 color: Color(0xffF76C57),
                 borderRadius: BorderRadius.only(
