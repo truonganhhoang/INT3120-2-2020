@@ -29,7 +29,7 @@ class Setting extends StatelessWidget {
           ),
           UserSetting(
             size: size,
-            image: "assets/icons/settings.png",
+            image: "assets/icons/userSetting.png",
             title: "Setting",
             content: ["Music", "Sound"],
           )
