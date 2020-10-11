@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/setting.dart';
+import 'package:quiztest/setting/setting.dart';
 import 'home_page.dart';
 import 'search.dart';
 import 'activity/activity.dart';
@@ -123,4 +123,3 @@ Widget get _buildBottomNavigationBar {
     ),
   );
 }
-
