@@ -35,7 +35,7 @@ class _BoxWord extends State<BoxWord> {
             children: [
               Text(widget.word.word,
                 style: TextStyle(fontSize: 23, color: Colors.green),),
-              Text(widget.word.pronounUK, style: TextStyle(fontSize: 20),),
+              Text(widget.word.pronounceUK, style: TextStyle(fontSize: 20),),
             ],
           ),
           Icon(Icons.star, color: Colors.yellow, size: 30,)

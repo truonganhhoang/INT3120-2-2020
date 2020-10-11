@@ -10,15 +10,14 @@ class LearnAWord extends StatelessWidget {
     word: 'Modern',
     type: 'adj',
     definition: 'Designed and made using the most recent ideas and methods',
-    mean: 'Hiện đại',
-    example1: '- modern technology/education/art/transport.',
-    example2: '- We\'re in the very modern-looking building opposite the station.',
+    meanCard: 'Hiện đại',
+    examples: ['- modern technology/education/art/transport.','- We\'re in the very modern-looking building opposite the station.'],
     pathSoundUK: 'assets/audios/modern_UK.mp3',
     pathSoundUS: 'pathSoundUS',
-    pronounUS: '/ˈmɒd.ən/',
-    pronounUK: '/ˈmɒd.ən/',
-    pathImage: 'assets/images/modern.jpg',
-    example: 'This house is more modern than that house',
+    pronounceUS: '/ˈmɒd.ən/',
+    pronounceUK: '/ˈmɒd.ən/',
+    imagePaths: ['assets/images/modern.jpg'],
+    quotes: ['This house is more modern than that house'],
   );
 
   Widget build(BuildContext context) {
@@ -111,7 +110,7 @@ class LearnAWord extends StatelessWidget {
                           margin: EdgeInsets.only(top: 10),
                           width: 32 * SizeConfig.heightMultiplier,
                           padding: EdgeInsets.only(bottom: 5),
-                          child: Text('"' + word.example + '"',
+                          child: Text('"' + word.quotes[0] + '"',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey[500],

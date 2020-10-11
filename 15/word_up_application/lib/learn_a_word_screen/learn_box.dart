@@ -72,7 +72,7 @@ class LearnBox extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          word.pronounUK,
+                          word.pronounceUK,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
@@ -115,7 +115,7 @@ class LearnBox extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          word.example1,
+                          word.examples[0],
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.black,
@@ -124,7 +124,7 @@ class LearnBox extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          word.example2,
+                          word.examples[1],
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
@@ -147,7 +147,7 @@ class LearnBox extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          word.mean,
+                          word.meanCard,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -163,7 +163,7 @@ class LearnBox extends StatelessWidget {
                         EdgeInsets.only(top: 2.4 * SizeConfig.textMultiplier),
                     width: 27 * SizeConfig.heightMultiplier,
                     height: 14 * SizeConfig.heightMultiplier,
-                    child: Image(image: AssetImage(word.pathImage)),
+                    child: Image(image: AssetImage(word.imagePaths[0])),
                   )
                 ],
               )),

@@ -27,6 +27,9 @@ class Word {
     this.pathSoundUS,
     this.pronounceUK,
     this.pronounceUS,
+    this.examples,
+    this.imagePaths,
+    this.quotes,
   });
 
   Word.map(dynamic obj){
