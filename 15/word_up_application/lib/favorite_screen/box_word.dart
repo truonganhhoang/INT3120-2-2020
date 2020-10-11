@@ -6,8 +6,9 @@ import '../word.dart';
 
 class BoxWord extends StatefulWidget {
   final Word word;
+  final Color colorWordInBox;
 
-  const BoxWord({Key key, this.word}) : super(key: key);
+  const BoxWord({Key key, this.word, this.colorWordInBox}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _BoxWord();
@@ -27,18 +28,21 @@ class _BoxWord extends State<BoxWord> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.all(10),
               child: Icon(
-                Icons.volume_up, size: 5 * SizeConfig.heightMultiplier,
+                Icons.volume_up, size: 5*SizeConfig.heightMultiplier,
                 color: Colors.grey,)),
           Column(
             children: [
               Text(widget.word.word,
-                style: TextStyle(fontSize: 23, color: Colors.green),),
-              Text(widget.word.pronounceUK, style: TextStyle(fontSize: 20),),
+                style: TextStyle(fontSize: 4*SizeConfig.heightMultiplier, color: widget.colorWordInBox),),
+              Text(widget.word.pronounceUK, style: TextStyle(fontSize: 3*SizeConfig.heightMultiplier),),
             ],
           ),
-          Icon(Icons.star, color: Colors.yellow, size: 30,)
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Icon(Icons.star, color: Colors.yellow, size: 5*SizeConfig.heightMultiplier,),
+          )
         ],
       ),
     );

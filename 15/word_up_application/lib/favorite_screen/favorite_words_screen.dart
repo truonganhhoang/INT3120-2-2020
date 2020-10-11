@@ -5,7 +5,6 @@ import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/favorite_screen/box_word.dart';
 import 'package:word_up_application/favorite_screen/list_knew_words.dart';
 import 'package:word_up_application/favorite_screen/list_to_learn_words.dart';
-import 'package:word_up_application/favorite_screen/size_helper.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'dart:async';
 import '../size_config.dart';
@@ -19,12 +18,19 @@ class FavoriteWordsScreen extends StatefulWidget {
 
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
   int viewIndex = 0;
+  int colorIndex = 0;
 
   void _onChanged(int index) {
     setState(() {
       if (index == 0)
-        viewIndex = 0;
-      else viewIndex = 1;
+        {
+          viewIndex = 0;
+          colorIndex = 0;
+        }
+      else {
+        viewIndex = 1;
+        colorIndex = 1;
+      }
     });
   }
 
@@ -46,7 +52,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                     minHeight: 6*SizeConfig.heightMultiplier,
                     cornerRadius: 20,
                     activeBgColor: Colors.white,
-                    activeFgColor: Colors.green,
+                    activeFgColor: (colorIndex == 0) ? Colors.red[300] : Colors.green,
                     inactiveBgColor: Colors.grey[300],
                     inactiveFgColor: Colors.grey[600],
                     labels: ['To learn', 'Knew'],
@@ -58,7 +64,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                   ),
                 ),
               ),
-              viewIndex == 0 ? ListToLearnWords() : ListKnewWords(),
+              (viewIndex == 0) ? ListToLearnWords() : ListKnewWords(),
             ],
           ),
         )

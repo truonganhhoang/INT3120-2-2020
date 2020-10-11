@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:word_up_application/favorite_screen/size_helper.dart';
-
+import 'package:flutter/material.dart';
 import '../size_config.dart';
 import '../word.dart';
 import 'box_word.dart';
@@ -16,21 +15,20 @@ class _ListToLearnWords extends State<ListToLearnWords> {
     return (
         Container(
           padding: EdgeInsets.all(10),
-          child: Container(
-            height: 70 * SizeConfig.heightMultiplier,
-            child: ListView(
+          height: 72 * SizeConfig.heightMultiplier,
+          child: ListView(
               scrollDirection: Axis.vertical,
               children: [
-                BoxWord(word: new Word(
-                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
-                BoxWord(word: new Word(
-                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
-                BoxWord(word: new Word(
-                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
-                BoxWord(word: new Word(
-                    id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'),),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
               ],
-            ),
           ),
         )
     );

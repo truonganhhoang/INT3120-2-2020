@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:word_up_application/favorite_screen/size_helper.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/size_config.dart';
 
@@ -55,20 +54,20 @@ class _ListKnewWords extends State<ListKnewWords> {
         alignment: Alignment.topCenter,
         margin: EdgeInsets.only(bottom: 0),
         padding: EdgeInsets.all(10),
-        height: 70 * SizeConfig.heightMultiplier,
+        height: 72 * SizeConfig.heightMultiplier,
         child: ListView(
           scrollDirection: Axis.vertical,
           children: [
-            BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
-            BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
-            BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
-            BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
-            BoxWord(word: new Word(
-                id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'),),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
+            BoxWord(word: new Word(id: 1, word: 'goodbye', pronounceUK: '/ɡʊdˈbaɪ/'), colorWordInBox: Colors.green,),
           ],
         ),
       );

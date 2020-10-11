@@ -35,14 +35,14 @@ class Word {
   Word.map(dynamic obj){
     this.id = obj['id'];
     this.word = obj['word'];
-    this.pronounceUK = obj['pronounUK'];
+    this.pronounceUK = obj['pronounceUK'];
   }
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map['id'] = this.id;
     map['word'] = this.word;
-    map['pronounUK'] = this.pronounceUK;
+    map['pronounceUK'] = this.pronounceUK;
   }
 
 }
