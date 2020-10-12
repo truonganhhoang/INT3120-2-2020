@@ -4,7 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:word_up_application/home/account_page.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/play_game_screen.dart';
-import 'package:word_up_application/search_word_screen.dart';
+import 'package:word_up_application/search_screen/search_word_screen.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/study_home_screen.dart';
 import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
