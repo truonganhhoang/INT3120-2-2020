@@ -41,7 +41,6 @@ class _homePageState extends State<homePage> {
               children: <Widget>[
                 new GestureDetector(
                   onTap: (){print("hoc");},
-                  child: new InkWell(
                     child: new Container(
                           decoration: new BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -53,8 +52,10 @@ class _homePageState extends State<homePage> {
                               flex: 6,
                               child: new Container(
                                 margin: EdgeInsets.fromLTRB(7,7,7,0),
-                                child: new Image.network(
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
+                                child: new Image.asset(
+                                    //"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
+                                  "assets/tile000.png",
+                                  fit: BoxFit.fitHeight
                                 ),
                               ),
                             ),
@@ -67,8 +68,8 @@ class _homePageState extends State<homePage> {
                                       "Tự nhiên và xã hội",
                                       textAlign: TextAlign.center,
                                       style: new TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
                                         height: 1
                                       ),
                                   ),
@@ -78,7 +79,6 @@ class _homePageState extends State<homePage> {
                           ],
                       ),
                     ),
-                  ),
                 ),
                 Container(
                   decoration: new BoxDecoration(

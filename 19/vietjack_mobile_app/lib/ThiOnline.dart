@@ -21,7 +21,7 @@ class ThiOnline extends StatefulWidget {
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
-  static String currentSubject = "Ngữ Văn";
+  static String currentSubject = "Ngữ văn";
   final List<String> subjectArray = [
     'Ngữ văn',
     'Toán',

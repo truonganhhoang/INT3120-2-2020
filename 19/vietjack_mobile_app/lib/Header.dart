@@ -6,35 +6,41 @@ class Header extends StatefulWidget {
   double width;
   double height;
   String userName;
+  bool runAnimation = true;
   Header({Key key, this.width, this.height}) : super(key: key);
+  Heder(){
+  }
   @override
   _HeaderState createState() => _HeaderState();
 }
 
 class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   double left = 0, right = 0;
-  double myOpacity = 0;
+  double myOpacity =0;
   AnimationController animationController;
   @override
   void initState() {
     super.initState();
-    left = widget.width / 2;
-    animationController =
-        new AnimationController(vsync: this, duration: Duration(seconds: 1));
-    animationController.forward();
-
-    animationController.addListener(() {
-      setState(() {
-        //left=widget.width * 0.5*animationController.value;
-        myOpacity = animationController.value;
-        right = widget.width * 0.5 * animationController.value;
+    if(widget.runAnimation){
+      left = widget.width / 2;
+      animationController = new AnimationController(vsync: this, duration: Duration(seconds: 1));
+      animationController.forward();
+      animationController.addListener(() {
+        setState(() {
+          myOpacity = animationController.value;
+          right = widget.width * 0.5 * animationController.value;
+        });
       });
-    });
+    }else{
+      left =right= widget.width / 2;
+      myOpacity=0;
+    }
+
   }
 
   @override
   void dispose() {
-    animationController.dispose();
+    if(widget.runAnimation)animationController.dispose();
     super.dispose();
   }
 

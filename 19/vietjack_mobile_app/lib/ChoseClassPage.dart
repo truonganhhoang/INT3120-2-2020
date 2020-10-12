@@ -1,0 +1,350 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'Auth.dart';
+import 'main.dart';
+class ChoseClassPage extends StatefulWidget {
+  @override
+  _ChoseClassPageState createState() => _ChoseClassPageState();
+}
+
+class _ChoseClassPageState extends State<ChoseClassPage> {
+  String dropDownValue = "Lớp 1";
+  List<String> listClass = ["Lớp 1","Lớp 2","Lớp3"];
+  int groupRadio = 1;
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(title:new Text("Chose Class"),centerTitle: true,),
+      body: CustomScrollView(
+          slivers: <Widget>[
+            new SliverList(
+              delegate: new SliverChildListDelegate(
+                  [
+                    new CircleAvatar(
+                        radius: 55,
+                        backgroundColor: Colors.yellow,
+                        child: new CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(auth.currentUser.photoURL.toString()),
+                        )
+                    ),
+                  ]
+              ),
+            ),
+            new SliverPadding(
+              padding: EdgeInsets.fromLTRB(10,30,10,0),
+              sliver: SliverGrid.count(
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 3,
+                childAspectRatio: 2,
+                children: <Widget>[
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 1;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 1"),
+                          new Radio(
+                                value: 1,
+                                groupValue: groupRadio,
+                                onChanged:(T){print(T);}
+                              )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 2;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 2"),
+                          new Radio(
+                              value: 2,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 3;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 3"),
+                          new Radio(
+                              value: 3,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 4;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 4"),
+                          new Radio(
+                              value: 4,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 5;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 5"),
+                          new Radio(
+                              value: 5,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 6;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 6"),
+                          new Radio(
+                              value: 6,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 7;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 7"),
+                          new Radio(
+                              value: 7,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 8;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 8"),
+                          new Radio(
+                              value: 8,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 9;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 9"),
+                          new Radio(
+                              value: 9,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 10;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 10"),
+                          new Radio(
+                              value: 10,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 11;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 11"),
+                          new Radio(
+                              value: 11,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  new GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        this.groupRadio = 12;
+                      });
+                    },
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                      ),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          new Text("Lớp 12"),
+                          new Radio(
+                              value: 12,
+                              groupValue: groupRadio,
+                              onChanged:(T){print(T);}
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            new SliverPadding(
+              padding: EdgeInsets.only(top: 50),
+              sliver: new SliverList(delegate: new SliverChildListDelegate(
+                [
+                  new RaisedButton(
+                    onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){return new VietJackNavigationBar();}));
+                    }
+                  )
+                ]
+              )),
+            )
+          ],
+        )
+
+    );
+  }
+}
