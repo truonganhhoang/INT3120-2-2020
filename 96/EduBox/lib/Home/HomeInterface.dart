@@ -1,10 +1,9 @@
 import 'dart:ui';
 
-import 'package:EduBox/order_teacher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package/widget.dart';
+import '../package/widget.dart';
 
 Color _color = Color(0xff00854c);
 
@@ -48,7 +47,7 @@ class HomeInterface extends StatelessWidget {
     return Scaffold(
       appBar: appbar,
       drawer: HamburgerMenu(
-        name: 'Vu Quang Huy',
+        name: 'Vu Huy',
         email: 'halloffame2979@gmail.com',
       ),
       body: ListView(
@@ -78,26 +77,26 @@ class HomeInterface extends StatelessWidget {
             alignment: WrapAlignment.center,
             children: [
               Button(
-                name: 'Post new class',
+                name: 'Đăng bài',
                 icondata: Icons.class_,
                 navigatePage: NewOrderTeacher(),
               ),
               Button(
-                name: 'Near Request',
+                name: 'Yêu cầu gần đây',
                 icondata: Icons.near_me,
                 navigatePage: ClassList(),
               ),
               Button(
-                name: 'Map',
+                name: 'Bản đồ',
                 icondata: Icons.map,
               ),
               Button(
-                name: 'Your posts',
+                name: 'Bài đăng của bạn',
                 icondata: Icons.library_books,
                 navigatePage: OrderTeacher(),
               ),
               Button(
-                name: 'Schedule',
+                name: 'Lịch học',
                 icondata: Icons.schedule,
               ),
             ],
@@ -188,6 +187,7 @@ class HamburgerMenu extends StatelessWidget {
               child: Text(
                 name[0],
                 style: TextStyle(
+                  color: Colors.blue,
                   fontSize: 40,
                 ),
               ),

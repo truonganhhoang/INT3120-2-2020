@@ -1,9 +1,18 @@
-export 'package:EduBox/Button.dart';
-export 'package:EduBox/ClassBox.dart';
-export 'package:EduBox/ClassDetail.dart';
-export 'package:EduBox/ClassList.dart';
-export 'package:EduBox/FocusPopup.dart';
-export 'package:EduBox/HomeInterface.dart';
-export 'package:EduBox/PopUpMenu.dart';
-export 'package:EduBox/add_order_teacher.dart';
+import 'package:flutter/material.dart';
+
 export 'package:EduBox/order_teacher.dart';
+export 'package:flutter/material.dart';
+
+export '../Home/Button.dart';
+export '../Home/ClassBox.dart';
+export '../Home/ClassDetail.dart';
+export '../Home/ClassList.dart';
+export '../Home/FocusPopup.dart';
+export '../Home/HomeInterface.dart';
+export '../Home/PopUpMenu.dart';
+export '../NewPost/DropDownMenu.dart';
+export '../NewPost/InputBox.dart';
+export '../NewPost/LabelText.dart';
+export '../NewPost/NewOrder.dart';
+
+Color _color = Color(0xff00854c);
