@@ -29,8 +29,9 @@ class _BoxWord extends State<BoxWord> {
         children: [
           Padding(
               padding: EdgeInsets.all(10),
-              child: Icon(
-                Icons.volume_up, size: 5*SizeConfig.heightMultiplier,
+              child: ImageIcon(
+                AssetImage('assets/sprites/sound_play_icon.png'), 
+                size: 4*SizeConfig.heightMultiplier,
                 color: Colors.grey,)),
           Column(
             children: [
@@ -41,7 +42,11 @@ class _BoxWord extends State<BoxWord> {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Icon(Icons.star, color: Colors.yellow, size: 5*SizeConfig.heightMultiplier,),
+            child: ImageIcon(
+              AssetImage('assets/sprites/Favorite_Chosen.png'),
+              color: Colors.yellow,
+              size: 4*SizeConfig.heightMultiplier
+            ),
           )
         ],
       ),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:word_up_application/components/common_components.dart';
-import 'package:word_up_application/size_config.dart';
-import 'package:word_up_application/user_profile_screen/about_me_screen.dart';
 import 'package:word_up_application/user_profile_screen/my_learning_screen.dart';
 
-class UserProfileScreen extends StatefulWidget {
+import '../size_config.dart';
+import 'about_me_screen.dart';
+
+class UserScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _UserProfileScreen();
+  _UserScreenState createState() => _UserScreenState();
 }
 
-class _UserProfileScreen extends State<UserProfileScreen> {
+class _UserScreenState extends State<UserScreen> {
   @override
-  // ignore: missing_return
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
