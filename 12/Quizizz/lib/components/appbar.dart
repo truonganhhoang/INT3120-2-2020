@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/components/popupMenu.dart';
 
+const List<Map> choices = [
+  {"name": "Setting", "icon": "settings"},
+  {"name": "Log out", "icon": "logout"}
+];
+
 class CustomAppBar extends PreferredSize {
   final String namePage;
   final double height;
@@ -13,6 +18,7 @@ class CustomAppBar extends PreferredSize {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: AppBar(
         title: Text(
@@ -32,9 +38,40 @@ class CustomAppBar extends PreferredSize {
                 decoration: BoxDecoration(
                     color: Color.fromRGBO(235, 235, 235, 1),
                     shape: BoxShape.circle),
-                child: Image(
-                  image: AssetImage('assets/icons/menu.png'),
-                ),
+                child: PopupMenuButton<String>(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    onSelected: (String result) {
+                      print(result);
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return choices.map((choice) {
+                        return PopupMenuItem<String>(
+                          value: choice['name'],
+                          child: Center(
+                            child: Container(
+                              width: size.width * 0.3,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 15),
+                                    child: Image(
+                                      image: AssetImage(
+                                          'assets/icons/${choice['icon']}.png'),
+                                    ),
+                                  ),
+                                  Text(choice['name']),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList();
+                    }),
               ),
             ),
           ),
