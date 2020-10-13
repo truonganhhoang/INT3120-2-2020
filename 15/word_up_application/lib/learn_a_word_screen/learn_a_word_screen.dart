@@ -57,7 +57,7 @@ class LearnAWord extends StatelessWidget {
               margin: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
               child: CarouselSlider(
                 enableInfiniteScroll: false,
-                height: 65 * SizeConfig.heightMultiplier,
+                height: 66 * SizeConfig.heightMultiplier,
                 initialPage: 0,
                 onPageChanged: (index) {},
                 items: <Widget>[
@@ -74,7 +74,7 @@ class LearnAWord extends StatelessWidget {
               ),
             ),
             new Container(
-                margin: EdgeInsets.only(top: 70 * SizeConfig.heightMultiplier),
+                margin: EdgeInsets.only(top: 71 * SizeConfig.heightMultiplier),
                 padding: EdgeInsets.only(
                     left: 2.8 * SizeConfig.heightMultiplier,
                     right: 2.8 * SizeConfig.heightMultiplier),
