@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Auth.dart';
 import 'main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class ChoseClassPage extends StatefulWidget {
   @override
   _ChoseClassPageState createState() => _ChoseClassPageState();
@@ -11,6 +12,17 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
   String dropDownValue = "Lớp 1";
   List<String> listClass = ["Lớp 1","Lớp 2","Lớp3"];
   int groupRadio = 1;
+  CollectionReference user = FirebaseFirestore.instance.collection("Users");
+  Future addUser(){
+    return user.add({
+      "UserId" : auth.currentUser.uid,
+      "UserName": auth.currentUser.displayName,
+      "UserEmail": auth.currentUser.email,
+      "UserClass" : groupRadio
+    }).then((value) => {
+      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context){return new VietJackNavigationBar();}))
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -335,9 +347,7 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
               sliver: new SliverList(delegate: new SliverChildListDelegate(
                 [
                   new RaisedButton(
-                    onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){return new VietJackNavigationBar();}));
-                    }
+                    onPressed: this.addUser
                   )
                 ]
               )),
