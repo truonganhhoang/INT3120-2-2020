@@ -32,10 +32,6 @@ class _HomeState extends State<Home> {
   Widget _currentScreen = StudyHomeScreen();
   final PageStorageBucket _bucket = PageStorageBucket();
 
-  void openSearchScreen() {
-    Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: SearchWordScreen()));
-  }
-
   void openProfileUserScreen() {
     Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: UserProfileScreen()));
   }
@@ -85,7 +81,11 @@ class _HomeState extends State<Home> {
             ],
           ),
           onPressed: () {
-            openSearchScreen();
+            setState(() {
+              _currentScreen = SearchWordScreen();
+              _currentTab = 4;
+              _screenTitle = 'Search';
+            });
           },
           tooltip: 'Look up',
           elevation: 2.0,
