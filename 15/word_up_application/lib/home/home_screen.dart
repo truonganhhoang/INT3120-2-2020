@@ -40,6 +40,10 @@ class _HomeState extends State<Home> {
     Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: UserProfileScreen()));
   }
 
+  void openChatScreen() {
+    Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ChatScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,12 +229,13 @@ class _HomeState extends State<Home> {
                           .size
                           .width / 5,
                       onPressed: () {
-                        setState(() {
+                        /*setState(() {
                           _currentScreen =
                               ChatScreen(); // if user taps on this dashboard tab will be active
                           _currentTab = 3;
                           _screenTitle = 'Chat';
-                        });
+                        });*/
+                        openChatScreen();
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
