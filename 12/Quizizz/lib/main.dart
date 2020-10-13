@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/play_screen/end_quiz.dart';
 import 'package:quiztest/setting/setting.dart';
-import 'home_page.dart';
-import 'search.dart';
+import 'home/home_page.dart';
+import 'search/search.dart';
 import 'activity/activity.dart';
 
 void main() {

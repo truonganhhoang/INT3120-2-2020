@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
+import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class Category extends StatelessWidget {
   const Category(
@@ -7,7 +10,8 @@ class Category extends StatelessWidget {
       this.title,
       this.questionCount,
       this.imagePath,
-      this.press})
+      this.press,
+      this.percent})
       : super(key: key);
 
   final Size size;
@@ -15,13 +19,14 @@ class Category extends StatelessWidget {
   final int questionCount;
   final String imagePath;
   final Function press;
+  final double percent;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: press,
       child: Container(
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 10),
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -32,14 +37,14 @@ class Category extends StatelessWidget {
                   offset: Offset(0, 4),
                   color: Colors.black.withOpacity(0.25))
             ]),
-        width: size.width * 0.4,
+        width: size.width * 0.45,
         child: AspectRatio(
           aspectRatio: 1,
           child: Stack(
             children: [
               ClipPath(
                 child: Container(
-                  height: size.height * 0.14,
+                  height: size.height * 0.1,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(imagePath), fit: BoxFit.cover),
@@ -49,7 +54,7 @@ class Category extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 90,
+                top: 80,
                 left: 5,
                 child: Container(
                   decoration: BoxDecoration(
@@ -63,12 +68,27 @@ class Category extends StatelessWidget {
                 ),
               ),
               Positioned(
-                  top: 120,
-                  left: 10,
+                  top: 100,
+                  left: 5,
                   child: Text(
                     title,
                     style: TextStyle(color: Colors.black, fontSize: 18),
-                  ))
+                  )),
+              if (percent != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 140, left: 5, right: 5),
+                  child: ClipRRect(
+                    child: LinearPercentIndicator(
+                      animation: true,
+                      lineHeight: 20.0,
+                      animationDuration: 2500,
+                      percent: percent,
+                      center: Text("Accuracy"),
+                      linearStrokeCap: LinearStrokeCap.roundAll,
+                      progressColor: Colors.redAccent,
+                    ),
+                  ),
+                )
             ],
           ),
         ),

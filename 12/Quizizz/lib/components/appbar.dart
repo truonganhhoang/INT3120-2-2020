@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/components/popupMenu.dart';
 
 class CustomAppBar extends PreferredSize {
   final String namePage;
@@ -22,15 +23,18 @@ class CustomAppBar extends PreferredSize {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 10),
-            child: Container(
-              alignment: Alignment.center,
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(235, 235, 235, 1),
-                  shape: BoxShape.circle),
-              child: Image(
-                image: AssetImage('assets/icons/menu.png'),
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                alignment: Alignment.center,
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(235, 235, 235, 1),
+                    shape: BoxShape.circle),
+                child: Image(
+                  image: AssetImage('assets/icons/menu.png'),
+                ),
               ),
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/appbar.dart';
+import '../components/appbar.dart';
 
 class Search extends StatelessWidget {
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'category_card.dart';
 import 'package:quiztest/play_screen/quiz_game.dart';
 
 class PopUp extends StatelessWidget {
@@ -24,7 +23,12 @@ class PopUp extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Title(size: size, imagePath: "assets/images/solar.png", questionCount: 20, title: "Solar System",),
+            Title(
+              size: size,
+              imagePath: "assets/images/solar.png",
+              questionCount: 20,
+              title: "Solar System",
+            ),
             Buttons(size: size),
           ],
         ),
@@ -140,8 +144,7 @@ class Title extends StatelessWidget {
               height: size.height * 1 / 4,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(imagePath),
-                      fit: BoxFit.cover),
+                      image: AssetImage(imagePath), fit: BoxFit.cover),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10))),

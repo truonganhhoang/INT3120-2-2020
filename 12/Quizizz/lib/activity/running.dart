@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/components/appbar.dart';
 import 'package:quiztest/components/category_card.dart';
 
 class Running extends StatelessWidget {
@@ -27,7 +26,7 @@ class ListRunning extends StatelessWidget {
           shrinkWrap: true,
           // physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+              crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 5),
           itemCount: 4,
           itemBuilder: (context, index) => Category(
                 size: size,
@@ -38,4 +37,3 @@ class ListRunning extends StatelessWidget {
     );
   }
 }
-

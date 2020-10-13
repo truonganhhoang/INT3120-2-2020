@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/components/categories.dart';
-import 'components/appbar.dart';
-import 'components/category_card.dart';
+import '../components/appbar.dart';
+import '../components/category_card.dart';
 
 class HomePage extends StatelessWidget {
   @override
