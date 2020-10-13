@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:word_up_application/learn_a_word_screen/share_screen.dart';
+import 'package:page_transition/page_transition.dart';
 import 'learn_box.dart';
 import 'package:word_up_application/word.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:word_up_application/size_config.dart';
+import 'share_screen.dart';
 
 class LearnAWord extends StatelessWidget {
   final Word word = Word(
@@ -12,7 +15,10 @@ class LearnAWord extends StatelessWidget {
     type: 'adj',
     definition: 'Designed and made using the most recent ideas and methods',
     meanCard: 'Hiện đại',
-    examples: ['- modern technology/education/art/transport.','- We\'re in the very modern-looking building opposite the station.'],
+    examples: [
+      '- modern technology/education/art/transport.',
+      '- We\'re in the very modern-looking building opposite the station.'
+    ],
     pathSoundUK: 'assets/audios/modern_UK.mp3',
     pathSoundUS: 'pathSoundUS',
     pronounceUS: '/ˈmɒd.ən/',
@@ -33,7 +39,11 @@ class LearnAWord extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                print('Share');
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.bottomToTop,
+                        child: ShareScreen()));
               },
             ),
           ],
