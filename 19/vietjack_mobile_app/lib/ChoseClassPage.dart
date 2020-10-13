@@ -20,7 +20,8 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
       "UserEmail": auth.currentUser.email,
       "UserClass" : groupRadio
     }).then((value) => {
-      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context){return new VietJackNavigationBar();}))
+      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context){return new VietJackNavigationBar();})),
+      print(user.doc())
     });
   }
   @override
@@ -69,7 +70,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                                 value: 1,
                                 groupValue: groupRadio,
-                                onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                               )
                         ],
                       ),
@@ -93,7 +98,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 2,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -117,7 +126,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 3,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -141,7 +154,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 4,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -165,7 +182,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 5,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -189,7 +210,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 6,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -213,7 +238,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 7,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -237,7 +266,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 8,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -261,7 +294,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 9,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -285,7 +322,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 10,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -309,7 +350,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 11,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),
@@ -333,7 +378,11 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
                           new Radio(
                               value: 12,
                               groupValue: groupRadio,
-                              onChanged:(T){print(T);}
+                              onChanged:(T){
+                                setState(() {
+                                  groupRadio = T;
+                                });
+                              }
                           )
                         ],
                       ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
@@ -12,15 +13,21 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   User user;
-
   void signIn() {
     print("aaaaaaaaaaaa");
-    signInWithUser().then((user) {
+    signInWithUser().then((user) async{
       this.user = user;
-      print(user.displayName);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return new ChoseClassPage();
-      }));
+      QuerySnapshot test = await FirebaseFirestore.instance.collection("Users").where("UserId",isEqualTo: user.uid).get();
+      bool isFirstTimeSignIn = test.docs.length == 0;
+      if(isFirstTimeSignIn){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return new ChoseClassPage();
+        }));
+      }else{
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return new VietJackNavigationBar();
+        }));
+      }
     });
   }
   Widget loginScene(){
