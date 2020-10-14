@@ -13,7 +13,8 @@ void main() {
       theme: new ThemeData(
           primarySwatch: Colors.purple,
           buttonColor: Colors.yellow,
-          scaffoldBackgroundColor: Colors.brown[50]),
+          scaffoldBackgroundColor: Colors.brown[50],
+      ),
       color: Colors.red,
       home: new LoginPage()));
 }
