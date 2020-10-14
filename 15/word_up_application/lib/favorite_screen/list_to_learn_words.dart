@@ -14,8 +14,8 @@ class _ListToLearnWords extends State<ListToLearnWords> {
   Widget build(BuildContext context) {
     return (
         Container(
-          padding: EdgeInsets.only(right: 10, left: 10),
-          height: 78 * SizeConfig.heightMultiplier,
+          padding: EdgeInsets.all(10),
+          height: 72 * SizeConfig.heightMultiplier,
           child: ListView(
               scrollDirection: Axis.vertical,
               children: [

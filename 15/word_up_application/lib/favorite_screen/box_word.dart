@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/size_config.dart';
 
 import '../word.dart';
@@ -32,18 +31,22 @@ class _BoxWord extends State<BoxWord> {
               padding: EdgeInsets.all(10),
               child: ImageIcon(
                 AssetImage('assets/sprites/sound_play_icon.png'), 
-                size: 5*SizeConfig.heightMultiplier,
+                size: 4*SizeConfig.heightMultiplier,
                 color: Colors.grey,)),
           Column(
             children: [
               Text(widget.word.word,
-                style: TextStyle(fontSize: 3*SizeConfig.heightMultiplier, color: widget.colorWordInBox),),
-              Text(widget.word.pronounceUK, style: TextStyle(fontSize: 2.5*SizeConfig.heightMultiplier),),
+                style: TextStyle(fontSize: 4*SizeConfig.heightMultiplier, color: widget.colorWordInBox),),
+              Text(widget.word.pronounceUK, style: TextStyle(fontSize: 3*SizeConfig.heightMultiplier),),
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(5),
-            child: StarFavorite(wordId: null, size: 4*SizeConfig.heightMultiplier, isFavorite: true)
+            padding: EdgeInsets.all(10),
+            child: ImageIcon(
+              AssetImage('assets/sprites/Favorite_Chosen.png'),
+              color: Colors.yellow,
+              size: 4*SizeConfig.heightMultiplier
+            ),
           )
         ],
       ),
