@@ -15,13 +15,11 @@ class ClassBox extends StatelessWidget {
 
   const ClassBox({
     Key key,
-    this.name,
-    this.grade,
+    this.name = 'Lớp',
+    this.grade = '1',
     this.height = 400,
     this.width = 350,
-  })  : assert(name != null),
-        assert(grade != null),
-        super(key: key);
+  }) : super(key: key);
 
   void _navigateToApply(BuildContext context) {
     Navigator.of(context)
@@ -48,7 +46,7 @@ class ClassBox extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        '$name - Grade $grade',
+                        '$name - Lớp $grade',
                         style: TextStyle(
                           fontWeight: FontWeight.w300,
                           fontSize: 17,

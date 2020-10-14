@@ -17,13 +17,13 @@ BoxDecoration decoration = BoxDecoration(
 class Button extends StatelessWidget {
   final String name;
 
-  final IconData icondata;
+  final Widget icondata;
   final Widget navigatePage;
 
   const Button({
     Key key,
     this.name = 'Add later, be patient',
-    this.icondata = Icons.face,
+    this.icondata,
     this.navigatePage,
   }) : super(key: key);
 
@@ -39,11 +39,13 @@ class Button extends StatelessWidget {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => navigatePage != null
                   ? navigatePage
-                  : Scaffold(
-                      appBar: AppBar(
-                        title: Text(name),
+                  : SafeArea(
+                      child: Scaffold(
+                        appBar: AppBar(
+                          title: Text(name),
+                        ),
+                        body: Container(),
                       ),
-                      body: Container(),
                     )));
         },
         child: Column(
@@ -53,9 +55,8 @@ class Button extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(5),
                 decoration: decoration,
-                child: Icon(
-                  icondata,
-                  size: 55,
+                child: Container(
+                  child: icondata,
                 ),
               ),
             ),

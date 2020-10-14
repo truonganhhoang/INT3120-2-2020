@@ -27,8 +27,8 @@ class _DaysOfWeekState extends State<DaysOfWeek> {
                   });
                 },
                 child: Container(
-                  height: 37,
-                  width: 37,
+                  height: 40,
+                  width: 40,
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(horizontal: 1),
                   decoration: BoxDecoration(

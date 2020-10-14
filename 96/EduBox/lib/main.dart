@@ -3,8 +3,6 @@ import 'package:flutter/widgets.dart';
 
 import 'package/widget.dart';
 
-Color _color = Color(0xff00854c);
-
 void main() {
   runApp(MyApp());
 }
@@ -28,6 +26,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomeInterface(),
+      //Empty(),
     );
   }
 }

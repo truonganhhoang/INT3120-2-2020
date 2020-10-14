@@ -30,6 +30,13 @@
             </list>
           </value>
         </entry>
+        <entry key="clay_containers">
+          <value>
+            <list>
+              <option value="D:/flutter/.pub-cache/hosted/pub.dartlang.org/clay_containers-0.2.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="clock">
           <value>
             <list>
@@ -69,6 +76,13 @@
           <value>
             <list>
               <option value="D:/flutter/packages/flutter_test/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="intl">
+          <value>
+            <list>
+              <option value="D:/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1/lib" />
             </list>
           </value>
         </entry>
@@ -163,10 +177,12 @@
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.0.0/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.0.0/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.3/lib" />
+      <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/clay_containers-0.2.2/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.0.1/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.13/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-0.1.3/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.1.0/lib" />
+      <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.8/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.1.8/lib" />
       <root url="file://D:/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.7.0/lib" />

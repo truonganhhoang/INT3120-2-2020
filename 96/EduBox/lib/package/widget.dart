@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 export 'package:EduBox/order_teacher.dart';
 export 'package:flutter/material.dart';
 
@@ -15,4 +13,3 @@ export '../NewPost/InputBox.dart';
 export '../NewPost/LabelText.dart';
 export '../NewPost/NewOrder.dart';
 
-Color _color = Color(0xff00854c);

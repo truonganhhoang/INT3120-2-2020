@@ -6,15 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'ClassBox.dart';
 
 Color _color = Color(0xff00854c);
-var name = [
-  'English',
-  'Math',
-  'Literature',
-  'Chemistry',
-  'History',
-  'Biology',
-  'Math'
-];
+var name = ['Tiếng Anh', 'Toán', 'Văn', 'Hóa', 'Lý', 'Sinh', 'Tin'];
 var grade = ['9', '10', '11', '12', '9', '12', '9'];
 
 class ListOfClass {
@@ -36,20 +28,23 @@ class ClassList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: _color,
-        title: Text('All classes'),
-      ),
-      body: ListView(
-        children: List.generate(
-            name.length,
-            (i) => Center(
-                  child: ClassBox(
-                    name: name[i],
-                    grade: grade[i],
-                  ),
-                )),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: _color,
+          title: Text('All classes'),
+        ),
+        body: ListView(
+          children: List.generate(
+              name.length,
+                  (i) =>
+                  Center(
+                    child: ClassBox(
+                      name: name[i],
+                      grade: grade[i],
+                    ),
+                  )),
+        ),
       ),
     );
   }
