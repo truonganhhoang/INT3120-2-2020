@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/components/popupMenu.dart';
-import 'package:quiztest/play_screen/end_quiz.dart';
 import 'package:quiztest/setting/setting.dart';
 import 'home/home_page.dart';
 import 'search/search.dart';

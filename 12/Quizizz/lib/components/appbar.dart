@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/components/popupMenu.dart';
 
 const List<Map> choices = [
   {"name": "Setting", "icon": "settings"},

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
-import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'dart:math';
 
 class Category extends StatelessWidget {
   const Category(
@@ -83,7 +82,7 @@ class Category extends StatelessWidget {
                       lineHeight: 20.0,
                       animationDuration: 2500,
                       percent: percent,
-                      center: Text("Accuracy"),
+                      center: Text("${(percent * 100).round()}% accuracy"),
                       linearStrokeCap: LinearStrokeCap.roundAll,
                       progressColor: Colors.redAccent,
                     ),

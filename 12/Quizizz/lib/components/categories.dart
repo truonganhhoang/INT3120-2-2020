@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'category_card.dart';
 import 'alert_play.dart';
 
+const List<Map> quizs = [
+  {"imagePath": "solar", "title": "Solar system", "questionCount": 19},
+  {"imagePath": "solar", "title": "Solar system", "questionCount": 19},
+  {"imagePath": "solar", "title": "Solar system", "questionCount": 17},
+  {"imagePath": "solar", "title": "Solar system", "questionCount": 17},
+  {"imagePath": "solar", "title": "Solar system", "questionCount": 16}
+];
+
 class Categories extends StatelessWidget {
   const Categories({Key key, @required this.size, this.titleTopic})
       : super(key: key);
@@ -36,92 +44,32 @@ class ListCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return SizedBox(
+      height: size.width * 0.5,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: quizs.length,
         scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            Category(
-              size: size,
-              imagePath: 'assets/images/solar.png',
-              title: "Solar system",
-              questionCount: 19,
-              press: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => PopUp(
-                          title: "Solar system",
-                          questionCount: 12,
-                          imagePath: "assets/images/solar.png",
-                          size: size,
-                        ));
-              },
-            ),
-            Category(
-              size: size,
-              imagePath: 'assets/images/solar.png',
-              title: "Solar system",
-              questionCount: 19,
-              press: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => PopUp(
-                          title: "Solar system",
-                          questionCount: 12,
-                          imagePath: "assets/images/solar.png",
-                          size: size,
-                        ));
-              },
-            ),
-            Category(
-              size: size,
-              imagePath: 'assets/images/solar.png',
-              title: "Solar system",
-              questionCount: 19,
-              press: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => PopUp(
-                          title: "Solar system",
-                          questionCount: 12,
-                          imagePath: "assets/images/solar.png",
-                          size: size,
-                        ));
-              },
-            ),
-            Category(
-              size: size,
-              imagePath: 'assets/images/solar.png',
-              title: "Solar system",
-              questionCount: 19,
-              press: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => PopUp(
-                          title: "Solar system",
-                          questionCount: 12,
-                          imagePath: "assets/images/solar.png",
-                          size: size,
-                        ));
-              },
-            ),
-            Category(
-              size: size,
-              imagePath: 'assets/images/solar.png',
-              title: "Solar system",
-              questionCount: 19,
-              press: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => PopUp(
-                          title: "Solar system",
-                          questionCount: 12,
-                          imagePath: "assets/images/solar.png",
-                          size: size,
-                        ));
-              },
-            ),
-          ],
-        ));
+        itemBuilder: (BuildContext context, int index) {
+          return Category(
+            size: size,
+            imagePath: "assets/images/${quizs[index]['imagePath']}.png",
+            title: quizs[index]['title'],
+            questionCount: quizs[index]['questionCount'],
+            press: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => PopUp(
+                        title: "Solar system",
+                        questionCount: 12,
+                        imagePath: "assets/images/solar.png",
+                        size: size,
+                      ));
+            },
+          );
+        },
+      ),
+    );
   }
 }
 

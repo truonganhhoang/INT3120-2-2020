@@ -3,49 +3,29 @@ import 'package:quiztest/components/categories.dart';
 import '../components/appbar.dart';
 import '../components/category_card.dart';
 
+const List<String> listCategories = ["Science", "Math", "Biology"];
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: CustomAppBar(
-        namePage: "Home",
-        height: size.height,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            EnterCode(),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Categories(
-                    titleTopic: "Science",
-                    size: size,
-                  ),
-                  Categories(
-                    titleTopic: "Science",
-                    size: size,
-                  ),
-                  Categories(
-                    titleTopic: "Science",
-                    size: size,
-                  ),
-                  Categories(
-                    titleTopic: "Science",
-                    size: size,
-                  ),
-                  Categories(
-                    titleTopic: "Science",
-                    size: size,
-                  ),
-                ],
-              ),
-            )
-          ],
+        appBar: CustomAppBar(
+          namePage: "Home",
+          height: size.height,
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(children: [
+            EnterCode(),
+            Column(
+                children: listCategories
+                    .map((categories) => Categories(
+                          size: size,
+                          titleTopic: categories,
+                        ))
+                    .toList()),
+          ]),
+        ));
   }
 }
 
