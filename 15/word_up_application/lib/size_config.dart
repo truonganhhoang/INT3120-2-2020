@@ -12,8 +12,8 @@ class SizeConfig {
   static double widthMultiplier;
   static double edgeRatio;
 
-  void init(BoxConstraints constraints, Orientation orientation){
-    if(orientation == Orientation.portrait){
+  void init(BoxConstraints constraints, Orientation orientation) {
+    if (orientation == Orientation.portrait) {
       screenHeight = constraints.maxHeight;
       screenWidth = constraints.maxWidth;
     } else {
@@ -28,8 +28,5 @@ class SizeConfig {
     heightMultiplier = _blockSizeVertical;
     widthMultiplier = _blockSizeHorizontal;
     edgeRatio = screenHeight / screenWidth;
-
-    print('width: ' + widthMultiplier.toString());
-    print(heightMultiplier);
   }
 }

@@ -42,9 +42,7 @@ class _ShowExamplesState extends State<ShowExamples>
     _controller.forward(from: 0);
     return FadeTransition(
         opacity: _animation,
-
         child: Container(
-          height: 16 * SizeConfig.heightMultiplier,
           child: Swiper(
             index: 0,
             itemWidth: SizeConfig.screenWidth - 2 * 64,
@@ -54,9 +52,13 @@ class _ShowExamplesState extends State<ShowExamples>
               return Container(
                 child: Center(
                   child: Text(
-                    widget.listExamples[index], textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 2.5 * SizeConfig.heightMultiplier,
-                        color: Colors.black54, fontStyle: FontStyle.italic),),
+                    widget.listExamples[index],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 2.5 * SizeConfig.heightMultiplier,
+                        color: Colors.black54,
+                        fontStyle: FontStyle.italic),
+                  ),
                 ),
               );
             },
@@ -69,7 +71,7 @@ class _ShowExamplesState extends State<ShowExamples>
               ),
             ),
           ),
-        )
-    );
+          height: 16 * SizeConfig.heightMultiplier,
+        ));
   }
 }

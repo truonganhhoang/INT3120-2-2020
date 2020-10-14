@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/word.dart';
 
@@ -17,13 +16,13 @@ class _TestQuestionScreen extends State<TestQuestionScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-          children: <Widget>[
-            answerOption(1),
-            answerOption(2),
-            answerOption(3),
-            answerOption(4)
-          ],
-        ),
+        children: <Widget>[
+          answerOption(1),
+          answerOption(2),
+          answerOption(3),
+          answerOption(4)
+        ],
+      ),
     );
   }
 
@@ -68,7 +67,9 @@ class _TestQuestionScreen extends State<TestQuestionScreen> {
                   'jjjjj'
                   'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj'
                   'jjjj soccer',
-                  style: TextStyle(color: Colors.black, fontSize: 2 * SizeConfig.heightMultiplier),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 2 * SizeConfig.heightMultiplier),
                 ))
               ],
             ),
@@ -88,10 +89,9 @@ class _TestQuestionScreen extends State<TestQuestionScreen> {
   }
 
   void checkTheAnswer() {
-    setState(() {
-      
-    });
+    setState(() {});
   }
+
   String getStrWithIndex(int index) {
     switch (index) {
       case 1:
