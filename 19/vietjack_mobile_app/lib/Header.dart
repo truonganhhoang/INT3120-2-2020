@@ -7,8 +7,8 @@ class Header extends StatefulWidget {
   double height;
   String userName;
   bool runAnimation = true;
-  Header({Key key, this.width, this.height}) : super(key: key);
-  Heder(){
+  Header({Key key, this.width, this.height,bool rumanimation = true}) : super(key: key){
+    this.runAnimation = rumanimation;
   }
   @override
   _HeaderState createState() => _HeaderState();
@@ -33,16 +33,16 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
       });
     }else{
       left =right= widget.width / 2;
-      myOpacity=0;
+      myOpacity=1;
     }
 
   }
 
   @override
-  void dispose() {
-    if(widget.runAnimation)animationController.dispose();
-    super.dispose();
-  }
+  // void dispose() {
+  //   if(widget.runAnimation)animationController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
