@@ -1,13 +1,11 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import '../word.dart';
 
 class DatabaseHelper {
-
   static final _databaseName = 'WordUpDB2020.db';
   static final _databaseVersion = 1;
   static final table = 'word';
@@ -24,10 +22,13 @@ class DatabaseHelper {
     _database = await _initDatabase();
     return _database;
   }
-  void databaseInit() async{
+
+  Future<void> databaseInit() async {
+    print('open');
     _database = await instance.database;
   }
-  _initDatabase() async{
+
+  _initDatabase() async {
     var databasePath = await getDatabasesPath();
     String path = join(databasePath, _databaseName);
     // Checking existing
@@ -36,11 +37,12 @@ class DatabaseHelper {
       // if not exists
       try {
         await Directory(dirname(path)).create(recursive: true);
-      } catch(_){}
+      } catch (_) {}
 
       // copy
       ByteData data = await rootBundle.load(join("assets", _databaseName));
-      List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      List<int> bytes =
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
       // write
       await File(path).writeAsBytes(bytes, flush: true);
@@ -53,45 +55,62 @@ class DatabaseHelper {
   }
 
   // Insert
-  Future<int> insert(Map<String, dynamic> row) async{
-    Database db = await instance.database;
-    return await db.insert(table, row);
+  Future<int> insert(Map<String, dynamic> row) async {
+    if (_database != null) return await _database.insert(table, row);
+    return 0;
   }
 
   // Select all
-  Future<void> getAllWords() async{
+  Future<void> getAllWords() async {
     Database db = await instance.database;
-    var result =  await db.query(table);
-    return result.toList();
+    print('hello');
+    var result = await db.query(table);
+    print('hello1');
+    print(result.toList());
   }
 
   // RAM query
   Future<int> getCount() async {
-    Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(EMAIL) FROM $table'));
+    if (_database != null)
+      return Sqflite.firstIntValue(
+          await _database.rawQuery('SELECT COUNT(EMAIL) FROM $table'));
+    return 0;
   }
 
-  // Get a row
+  // Get a word
   Future<void> getAWordInfoWithId(int id) async {
-    if(_database != null)
-      {
-        var result = await _database.rawQuery('SELECT * FROM $table where $columnId = ?', [id]);
-        print(result.toList());
-      }
+    if (_database != null) {
+      var result = await _database
+          .rawQuery('SELECT * FROM $table where $columnId = ?', [id]);
+      print(result.toList());
+    }
   }
-  
+
+  // Get N Words
+  Future<void> getNWords(int numbersWords) async {
+    if (_database != null) {
+      print('Start Get');
+      var result = await _database
+          .rawQuery('SELECT * FROM $table limit ?', [numbersWords]);
+      print(result.toList());
+    }
+  }
+
   // Update
   Future<int> update(Map<String, dynamic> row) async {
-    Database db = await instance.database;
-    String id = row[columnId];
-    return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
+    if (_database != null) {
+      String id = row[columnId];
+      return await _database
+          .update(table, row, where: '$columnId = ?', whereArgs: [id]);
+    }
+    return 0;
   }
 
   // Delete
-  Future<int> delete(String email) async{
-    Database db = await instance.database;
-    return await db.delete(table, where: '$columnId = ?', whereArgs: [email]);
+  Future<int> delete(String email) async {
+    if (_database != null)
+      return await _database
+          .delete(table, where: '$columnId = ?', whereArgs: [email]);
+    return 0;
   }
-
 }
-
