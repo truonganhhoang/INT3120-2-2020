@@ -22,12 +22,10 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
 
   void _onChanged(int index) {
     setState(() {
-      if (index == 0)
-        {
-          viewIndex = 0;
-          colorIndex = 0;
-        }
-      else {
+      if (index == 0) {
+        viewIndex = 0;
+        colorIndex = 0;
+      } else {
         viewIndex = 1;
         colorIndex = 1;
       }
@@ -38,37 +36,45 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        //height: displayHeight(context) - MediaQuery.of(context).padding.top - kToolbarHeight - kBottomNavigationBarHeight,
-        decoration: CommonComponents.background,
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(top: 15),
-                child: Center(
-                  child: ToggleSwitch(
-                    initialLabelIndex: viewIndex,
-                    minWidth: 80*SizeConfig.widthMultiplier,
-                    minHeight: 6*SizeConfig.heightMultiplier,
-                    cornerRadius: 20,
-                    activeBgColor: Colors.white,
-                    activeFgColor: (colorIndex == 0) ? Colors.red[300] : Colors.green,
-                    inactiveBgColor: Colors.grey[300],
-                    inactiveFgColor: Colors.grey[600],
-                    labels: ['To learn', 'Knew'],
-                    icons: [FontAwesomeIcons.question, FontAwesomeIcons.check],
-                    onToggle: (index) {
-                      print('switched to: $index');
-                      _onChanged(index);
-                    },
+          decoration: CommonComponents.background,
+          child: Container(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+                    child: ToggleSwitch(
+                      initialLabelIndex: viewIndex,
+                      minWidth: 80 * SizeConfig.widthMultiplier,
+                      minHeight: 6 * SizeConfig.heightMultiplier,
+                      cornerRadius: 20,
+                      activeBgColor: Colors.white,
+                      activeFgColor:
+                          (colorIndex == 0) ? Colors.red[300] : Colors.green,
+                      inactiveBgColor: Colors.grey[300],
+                      inactiveFgColor: Colors.grey[600],
+                      labels: ['To learn', 'Knew'],
+                      icons: [
+                        FontAwesomeIcons.question,
+                        FontAwesomeIcons.check
+                      ],
+                      onToggle: (index) {
+                        print('switched to: $index');
+                        _onChanged(index);
+                      },
+                    ),
                   ),
                 ),
-              ),
-              (viewIndex == 0) ? ListToLearnWords() : ListKnewWords(),
-            ],
-          ),
-        )
-      ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child:
+                      (viewIndex == 0) ? ListToLearnWords() : ListKnewWords(),
+                )
+              ],
+            ),
+          )),
     );
   }
 }

@@ -12,10 +12,6 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: new Text('Search'),
-      ),
       body: Container(
         alignment: Alignment.topCenter,
         padding: EdgeInsets.only(top: 2*SizeConfig.heightMultiplier),
