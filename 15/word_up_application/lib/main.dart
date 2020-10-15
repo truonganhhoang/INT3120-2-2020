@@ -13,12 +13,14 @@ import 'word.dart';
 import 'favorite_screen/favorite_words_screen.dart';
 import 'package:device_preview/device_preview.dart';
 
+bool isTestResponsiveMode = false;
+
 void main(){
   runApp(
-    DevicePreview(
+    (isTestResponsiveMode) ? DevicePreview(
       enabled: !kReleaseMode,
       builder: (context) => MyApp(),
-    ),
+    ) : MyApp(),
   );
 }
 
@@ -31,20 +33,36 @@ class MyApp extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints){
         return OrientationBuilder(
-          builder: (context, orientation){
+          builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
-            return MaterialApp(
-              locale: DevicePreview.of(context).locale,
-              builder: DevicePreview.appBuilder,
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-              ),
-              home: Home(key),
-            );
-          },
+            if (isTestResponsiveMode) { // this is device package
+              return MaterialApp(
+                locale: (isTestResponsiveMode) ? DevicePreview
+                    .of(context)
+                    .locale : Locale(null),
+                builder: (isTestResponsiveMode) ? DevicePreview.appBuilder : build(
+                    context),
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                home: Home(key),
+              );
+            }
+            else { // default app
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                home: Home(key),
+              );
+            }
+          }
         );
       },
     );
