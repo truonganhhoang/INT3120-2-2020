@@ -13,7 +13,7 @@ class Word {
   List<String> examples;
   List<String> imagePaths;
   List<String> quotes;
-  
+
   bool isFavorite;
   int reviewTimes;
 
@@ -32,10 +32,11 @@ class Word {
     this.quotes,
   });
 
-  Word.map(dynamic obj){
+  Word.map(dynamic obj) {
     this.id = obj['id'];
     this.word = obj['word'];
     this.pronounceUK = obj['pronounceUK'];
+    this.pronounceUS = obj['pronounceUS'];
   }
 
   Map<String, dynamic> toMap() {
@@ -44,6 +45,4 @@ class Word {
     map['word'] = this.word;
     map['pronounceUK'] = this.pronounceUK;
   }
-
 }
-
