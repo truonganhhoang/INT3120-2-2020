@@ -1,16 +1,18 @@
 import 'package:bucha_app/widgets/options/OptionAdvance.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/widgets/dictionary/dictionary.dart';
-
-import 'widgets/Grammar/GrammarUnit.dart';
 import 'widgets/dictionary/dictionary.dart';
-import 'widgets/Grammar/grammar.dart';
-import 'widgets/dictionary/dictionary.dart';
+import 'widgets/Grammar/GrammarPage.dart';
 import 'widgets/options/OptionClass.dart';
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: HomePage(),
+    home: GrammarPage(),
   ));
 }
 
@@ -154,12 +156,12 @@ class _HomePageState extends State<HomePage> {
                 SmailOntionButton(
                   imageBackground: 0xff7D75B0,
                   image_caption: "Từ Điển",
-                  linkPage: dictionary(),
+                  linkPage: Dictionary(),
                 ),
                 SmailOntionButton(
                   imageBackground: 0xffF1B73C,
                   image_caption: "Mẫu Câu",
-                  linkPage: dictionary(),
+                  linkPage: Dictionary(),
                 ),
                 SmailOntionButton(
                   imageBackground: 0xffFF3D00,

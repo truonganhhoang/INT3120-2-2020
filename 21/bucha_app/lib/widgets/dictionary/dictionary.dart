@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bucha_app/main.dart';
 
 // 3DDAFD  0A1A52  27AE60  41A4A1  668EA7  CFBB24
 class Dictionary extends StatefulWidget {
@@ -86,7 +87,6 @@ class _DictionaryState extends State<Dictionary> {
                               bottomLeft: Radius.circular(5.0),
                             ),
                           ),
-                          child: Icon(Icons.search_sharp),
                         ),
                         Container(
                           height: 40,

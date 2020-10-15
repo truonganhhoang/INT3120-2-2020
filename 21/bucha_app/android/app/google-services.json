@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "79595406097",
+    "firebase_url": "https://bucha-mobile.firebaseio.com",
+    "project_id": "bucha-mobile",
+    "storage_bucket": "bucha-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79595406097:android:30cd210ab5e3f1022842b0",
+        "android_client_info": {
+          "package_name": "com.example.bucha_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79595406097-rtr0gt4ecl1kkahh9h94licj9hno839o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bucha_app",
+            "certificate_hash": "ae9a338665d439cddce7440ea0f23acc0e180469"
+          }
+        },
+        {
+          "client_id": "79595406097-pe7md9cb4ke9fdr8entp2tcqlom6ta9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj2cOzuY9P4L0ipgWBU09Bd_kgX2Bc_TQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79595406097-pe7md9cb4ke9fdr8entp2tcqlom6ta9m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
