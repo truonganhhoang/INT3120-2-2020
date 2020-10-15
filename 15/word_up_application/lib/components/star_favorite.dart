@@ -33,7 +33,6 @@ class _StarFavoriteStage extends State<StarFavorite> {
   }
 
   @override
-  // ignore: missing_return
   Widget build(BuildContext context) {
     return Container(
       child: MaterialButton(
