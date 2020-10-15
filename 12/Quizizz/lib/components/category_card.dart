@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:math';
 
+import 'alert_play.dart';
+
 class Category extends StatelessWidget {
   const Category(
       {Key key,
@@ -9,7 +11,6 @@ class Category extends StatelessWidget {
       this.title,
       this.questionCount,
       this.imagePath,
-      this.press,
       this.percent})
       : super(key: key);
 
@@ -17,13 +18,21 @@ class Category extends StatelessWidget {
   final String title;
   final int questionCount;
   final String imagePath;
-  final Function press;
   final double percent;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: press,
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) => PopUp(
+                  title: "Solar system",
+                  questionCount: 12,
+                  imagePath: "assets/images/solar.png",
+                  size: size,
+                ));
+      },
       child: Container(
         margin: EdgeInsets.only(top: 10, bottom: 10, left: 10),
         decoration: BoxDecoration(

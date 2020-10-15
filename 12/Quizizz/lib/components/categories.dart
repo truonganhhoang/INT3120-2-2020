@@ -82,16 +82,6 @@ class ListCategory extends StatelessWidget {
             title: quizs[index]['title'],
             questionCount: quizs[index]['questionCount'],
             percent: quizs[index]['percent'],
-            press: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => PopUp(
-                        title: "Solar system",
-                        questionCount: 12,
-                        imagePath: "assets/images/solar.png",
-                        size: size,
-                      ));
-            },
           );
         },
       ),
