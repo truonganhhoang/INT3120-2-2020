@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bucha_app/main.dart';
 
+import '../../main.dart';
+
+// 3DDAFD  0A1A52  27AE60  41A4A1  668EA7  CFBB24
 class Dictionary extends StatefulWidget {
   static String tag = 'contactlist-page';
 
@@ -59,8 +61,10 @@ class _DictionaryState extends State<Dictionary> {
                 0xff41A4A1), // 3DDAFD  0A1A52  27AE60  41A4A1  668EA7  CFBB24
             child: Stack(children: [
               Container(
+                  width: 350,
                   margin: EdgeInsets.only(
-                      top: 20.0, left: 20.0, right: 20.0, bottom: 80.0),
+                      top: 20.0, left: 20.0, right: 20.0, bottom: 80.0
+                  ),
                   decoration: BoxDecoration(
                     color: Color(0xff0A1A52),
                     border: Border.all(color: Color(0xff27AE60), width: 20.0),
