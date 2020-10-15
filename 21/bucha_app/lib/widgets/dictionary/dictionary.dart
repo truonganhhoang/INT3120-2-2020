@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/main.dart';
 
-// 3DDAFD  0A1A52  27AE60  41A4A1  668EA7  CFBB24
 class Dictionary extends StatefulWidget {
   static String tag = 'contactlist-page';
 
@@ -60,16 +59,67 @@ class _DictionaryState extends State<Dictionary> {
                 0xff41A4A1), // 3DDAFD  0A1A52  27AE60  41A4A1  668EA7  CFBB24
             child: Stack(children: [
               Container(
-                margin: EdgeInsets.only(
-                    top: 20.0, left: 20.0, right: 20.0, bottom: 80.0),
-                decoration: BoxDecoration(
-                  color: Color(0xff0A1A52),
-                  border: Border.all(color: Color(0xff27AE60), width: 20.0),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30.0),
+                  margin: EdgeInsets.only(
+                      top: 20.0, left: 20.0, right: 20.0, bottom: 80.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xff0A1A52),
+                    border: Border.all(color: Color(0xff27AE60), width: 20.0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30.0),
+                    ),
                   ),
-                ),
-              ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: 60.0, left: 10.0, right: 10.0),
+                    child: Column(
+                      children: [
+                        Offstage(
+                          offstage: result1 == "" ? true : false,
+                          child: Container(
+                            height: 150,
+                            width: 310,
+                            decoration: BoxDecoration(
+                              color: Color(0xff154673),
+                              border:
+                                  Border.all(width: 10, color: Colors.amber),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                            ),
+                            child: Center(
+                                child: Text(
+                              '$result1'.toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.amber,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic),
+                            )),
+                          ),
+                        ),
+                        Offstage(
+                          offstage: result2 == "" ? true : false,
+                          child: Container(
+                            height: 285,
+                            width: 310,
+                            margin: EdgeInsets.only(top: 10.0),
+                            decoration: BoxDecoration(
+                              color: Color(0xff154673),
+                              // border: Border.all(width: 10,color: Colors.amber),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '$result2',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 24),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
               Column(
                 children: <Widget>[
                   Padding(
@@ -87,10 +137,14 @@ class _DictionaryState extends State<Dictionary> {
                               bottomLeft: Radius.circular(5.0),
                             ),
                           ),
+                          child: Icon(
+                            Icons.search,
+                            size: 30,
+                          ),
                         ),
                         Container(
                           height: 40,
-                          width: 270,
+                          width: 250,
                           decoration: BoxDecoration(
                             color: Color(0xff668EA7),
                             borderRadius: BorderRadius.only(
@@ -122,41 +176,6 @@ class _DictionaryState extends State<Dictionary> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  Offstage(
-                    offstage: result1 == "" ? true : false,
-                    child: Container(
-                      height: 150,
-                      width: 310,
-                      decoration: BoxDecoration(
-                        color: Color(0xff154673),
-                        border: Border.all(width: 10, color: Colors.amber),
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      ),
-                      child: Center(
-                          child: Text(
-                        '$result1'.toUpperCase(),
-                        style: TextStyle(
-                            color: Colors.amber,
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic),
-                      )),
-                    ),
-                  ),
-                  Offstage(
-                    offstage: result2 == "" ? true : false,
-                    child: Container(
-                      height: 285,
-                      width: 310,
-                      margin: EdgeInsets.only(top: 10.0),
-                      decoration: BoxDecoration(
-                        color: Color(0xff154673),
-                        // border: Border.all(width: 10,color: Colors.amber),
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      ),
-                      child: Center(child: Text('$result2',style: TextStyle(color: Colors.white, fontSize: 24),),),
                     ),
                   ),
                   Expanded(
@@ -199,11 +218,15 @@ class _DictionaryState extends State<Dictionary> {
                                         onTap: () {
                                           // filter = "";
                                           searchController.text = "";
-                                          result1 = '${vocabulary[index].English}';
-                                          result2 = '${vocabulary[index].VietNamese}';
-                                          FocusScopeNode currentFocus = FocusScope.of(context);
+                                          result1 =
+                                              '${vocabulary[index].English}';
+                                          result2 =
+                                              '${vocabulary[index].VietNamese}';
+                                          FocusScopeNode currentFocus =
+                                              FocusScope.of(context);
                                           if (!currentFocus.hasPrimaryFocus &&
-                                              currentFocus.focusedChild != null) {
+                                              currentFocus.focusedChild !=
+                                                  null) {
                                             currentFocus.focusedChild.unfocus();
                                           }
                                         }
@@ -248,20 +271,65 @@ class _DictionaryState extends State<Dictionary> {
                                             onTap: () {
                                               // filter = "";
                                               searchController.text = "";
-                                              result2 = '${vocabulary[index].English}';
-                                              result1 = '${vocabulary[index].VietNamese}';
-                                              FocusScopeNode currentFocus = FocusScope.of(context);
-                                              if (!currentFocus.hasPrimaryFocus &&
-                                                  currentFocus.focusedChild != null) {
-                                                currentFocus.focusedChild.unfocus();
+                                              result2 =
+                                                  '${vocabulary[index].English}';
+                                              result1 =
+                                                  '${vocabulary[index].VietNamese}';
+                                              FocusScopeNode currentFocus =
+                                                  FocusScope.of(context);
+                                              if (!currentFocus
+                                                      .hasPrimaryFocus &&
+                                                  currentFocus.focusedChild !=
+                                                      null) {
+                                                currentFocus.focusedChild
+                                                    .unfocus();
                                               }
                                             }),
-
                                       )
                                     : Container();
                       },
                     ),
                   ),
+                  // Column(
+                  //   children: [
+                  //     Offstage(
+                  //       offstage: result1 == "" ? true : false,
+                  //       child: Container(
+                  //         height: 150,
+                  //         width: 310,
+                  //         decoration: BoxDecoration(
+                  //           color: Color(0xff154673),
+                  //           border: Border.all(width: 10, color: Colors.amber),
+                  //           borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  //         ),
+                  //         child: Center(
+                  //             child: Text(
+                  //               '$result1'.toUpperCase(),
+                  //               style: TextStyle(
+                  //                   color: Colors.amber,
+                  //                   fontSize: 30.0,
+                  //                   fontWeight: FontWeight.bold,
+                  //                   fontStyle: FontStyle.italic),
+                  //             )),
+                  //       ),
+                  //     ),
+                  //     Offstage(
+                  //       offstage: result2 == "" ? true : false,
+                  //       child: Container(
+                  //         height: 285,
+                  //         width: 310,
+                  //         margin: EdgeInsets.only(top: 10.0),
+                  //         decoration: BoxDecoration(
+                  //           color: Color(0xff154673),
+                  //           // border: Border.all(width: 10,color: Colors.amber),
+                  //           borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  //         ),
+                  //         child: Center(child: Text('$result2',style: TextStyle(color: Colors.white, fontSize: 24),),),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
@@ -272,7 +340,10 @@ class _DictionaryState extends State<Dictionary> {
                       color: Colors.indigo,
                       child: IconButton(
                         onPressed: () {
-                          Navigator.push(context, new MaterialPageRoute(builder: (context) => HomePage()));
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => HomePage()));
                         },
                         icon: Icon(Icons.arrow_back),
                         color: Colors.white,
