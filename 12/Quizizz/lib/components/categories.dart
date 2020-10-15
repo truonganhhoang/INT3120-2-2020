@@ -3,11 +3,36 @@ import 'category_card.dart';
 import 'alert_play.dart';
 
 const List<Map> quizs = [
-  {"imagePath": "solar", "title": "Solar system", "questionCount": 19},
-  {"imagePath": "solar", "title": "Solar system", "questionCount": 19},
-  {"imagePath": "solar", "title": "Solar system", "questionCount": 17},
-  {"imagePath": "solar", "title": "Solar system", "questionCount": 17},
-  {"imagePath": "solar", "title": "Solar system", "questionCount": 16}
+  {
+    "imagePath": "solar",
+    "title": "Solar system",
+    "questionCount": 19,
+    "percent": 0.5
+  },
+  {
+    "imagePath": "solar",
+    "title": "Solar system",
+    "questionCount": 19,
+    "percent": 0.5
+  },
+  {
+    "imagePath": "solar",
+    "title": "Solar system",
+    "questionCount": 17,
+    "percent": 0.0
+  },
+  {
+    "imagePath": "solar",
+    "title": "Solar system",
+    "questionCount": 17,
+    "percent": 0.0
+  },
+  {
+    "imagePath": "solar",
+    "title": "Solar system",
+    "questionCount": 16,
+    "percent": 0.0
+  }
 ];
 
 class Categories extends StatelessWidget {
@@ -56,6 +81,7 @@ class ListCategory extends StatelessWidget {
             imagePath: "assets/images/${quizs[index]['imagePath']}.png",
             title: quizs[index]['title'],
             questionCount: quizs[index]['questionCount'],
+            percent: quizs[index]['percent'],
             press: () {
               showDialog(
                   context: context,

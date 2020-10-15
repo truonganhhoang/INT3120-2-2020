@@ -73,7 +73,7 @@ class Category extends StatelessWidget {
                     title,
                     style: TextStyle(color: Colors.black, fontSize: 18),
                   )),
-              if (percent != null)
+              if (percent != null && percent > 0.0)
                 Padding(
                   padding: const EdgeInsets.only(top: 140, left: 5, right: 5),
                   child: ClipRRect(

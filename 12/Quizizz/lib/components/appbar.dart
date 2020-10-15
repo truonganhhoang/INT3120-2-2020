@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/setting/setting.dart';
 
 const List<Map> choices = [
   {"name": "Setting", "icon": "settings"},
@@ -44,9 +45,7 @@ class CustomAppBar extends PreferredSize {
                     ),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    onSelected: (String result) {
-                      print(result);
-                    },
+                    onSelected: (String result) {},
                     itemBuilder: (BuildContext context) {
                       return choices.map((choice) {
                         return PopupMenuItem<String>(
