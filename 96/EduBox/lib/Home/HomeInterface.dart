@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:EduBox/Authenticate/LoginScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../UserInfomation/UserInformation.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,8 +10,11 @@ import 'package:flutter/widgets.dart';
 import '../package/widget.dart';
 
 Color _color = Color(0xff00854c);
+class count with ChangeNotifier{
 
+}
 class HomeInterface extends StatelessWidget {
+
   final appbar = AppBar(
     backgroundColor: _color,
     title: Text(
@@ -224,49 +229,54 @@ class HamburgerMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.do_not_disturb),
-            title: Text("Logout"),
+            title: Text('Thông tin cá nhân'),
+            trailing: Icon(Icons.info),
+            onTap: (){
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserInformation()));
+            },
+          ),
+          ListTile(
+            title: Text("Đăng xuất"),
+            trailing: Icon(Icons.do_not_disturb),
             enabled: true,
             onTap: () {
               showDialog(
                 context: context,
-                builder: (_) =>
-                    AlertDialog(
-                      title: Text('Đăng xuất?'),
-                      actions: [
-                        FlatButton(
-                          child: Container(
-                            child: Text('Có'),
-                            height: 20,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ));
-                          },
-                        ),
-                        FlatButton(
-                          child: Container(
-                            child: Text('Không'),
-                            height: 20,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
+                builder: (_) => AlertDialog(
+                  title: Text('Đăng xuất?'),
+                  actions: [
+                    FlatButton(
+                      child: Container(
+                        child: Text('Có'),
+                        height: 20,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ));
+                      },
                     ),
+                    FlatButton(
+                      child: Container(
+                        child: Text('Không'),
+                        height: 20,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
                 barrierDismissible: true,
-
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.done),
-            title: Text("Close"),
+            title: Text("Đóng"),
             trailing: Icon(Icons.cancel),
             enabled: true,
             onTap: () {
