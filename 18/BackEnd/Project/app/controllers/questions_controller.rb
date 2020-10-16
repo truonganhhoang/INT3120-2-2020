@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   def index
-    @quests = Question.ransack(params[:q]).result.sample(params[:number])
+    @quests = Question.ransack(params[:q]).result.sample(params[:number].to_i)
     render json: {
       success: true,
       data: ActiveModel::SerializableResource.new(@quests)
@@ -8,11 +8,11 @@ class QuestionsController < ApplicationController
   end
 
   def answer
-    @result = true if params[:content] == Question.find(params[:id]).answer
+    @question = Question.find(params[:id])
+    result = true if params[:answer] == @question.answer
     render json: {
       success: true,
-      data: @result || false
+      data: { right_answer: @question.answer, result: result || false }
     }
   end
 end
-    

@@ -1,6 +1,6 @@
 class UnitsController < ApplicationController
   def index
-    @units = Unit.all
+    @units = Unit.where(book_id: params[:book_id])
     render json: {
       success: true,
       data: ActiveModel::SerializableResource.new(@units)

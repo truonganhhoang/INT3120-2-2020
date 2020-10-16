@@ -8,11 +8,11 @@ class MultipleChoicesController < ApplicationController
   end
 
   def answer
-    @result = true if params[:content] == MultipleChoice.find(params[:id]).right_answer
+    @multiple_choice = MultipleChoice.find(params[:id])
+    result = true if params[:answer] == @multiple_choice.right_answer
     render json: {
       success: true,
-      data: @result || false
+      data: { answer: @multiple_choice.right_answer, result: result || false }
     }
   end
 end
-      
