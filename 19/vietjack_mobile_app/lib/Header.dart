@@ -7,8 +7,8 @@ class Header extends StatefulWidget {
   double height;
   String userName;
   bool runAnimation = true;
-  Header({Key key, this.width, this.height,bool rumanimation = true}) : super(key: key){
-    this.runAnimation = rumanimation;
+  Header({Key key, this.width, this.height,bool runAnimation = true}) : super(key: key){
+    this.runAnimation = runAnimation;
   }
   @override
   _HeaderState createState() => _HeaderState();

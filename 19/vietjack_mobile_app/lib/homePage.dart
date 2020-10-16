@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Header.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Auth.dart';
 import 'LoginPage.dart';
-
+import 'UserInfoPage.dart';
+import 'API.dart';
 class homePage extends StatefulWidget {
   String userName = "name";
 
@@ -14,193 +16,110 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  Future<QuerySnapshot> getUserClassInfo() async{
+    String userClass = await API.getUser().then((value) {
+      return "Grade"+value.docs[0]["UserClass"].toString();
+    });
+    QuerySnapshot userClassInfo = await FirebaseFirestore.instance
+        .collection("Class_Subject").doc(userClass)
+        .collection("Info").get();
+    return userClassInfo;
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Home Page"),
-        centerTitle: true,
-      ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          new SliverList(
-            delegate: new SliverChildListDelegate(
-              [
-                new Header(width: width,height: height,)
-              ]
+        appBar: new AppBar(
+          title: new Text("Home Page"),
+          centerTitle: true,
+        ),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            new SliverList(
+              delegate: new SliverChildListDelegate([
+                new Header(
+                  width: width,
+                  height: height,
+                  runAnimation: false,
+                )
+              ]),
             ),
-          ),
-          new SliverPadding(
-            padding: EdgeInsets.fromLTRB(10,30,10,0),
-            sliver: SliverGrid.count(
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 3,
-              children: <Widget>[
-                new GestureDetector(
-                  onTap: (){print("hoc");},
-                    child: new Container(
-                          decoration: new BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white
-                      ),
-                      child: new Column(
-                          children: [
-                            new Expanded(
-                              flex: 6,
-                              child: new Container(
-                                margin: EdgeInsets.fromLTRB(7,7,7,0),
-                                child: new Image.asset(
-                                    //"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
-                                  "assets/tile000.png",
-                                  fit: BoxFit.fitHeight
-                                ),
-                              ),
+            new FutureBuilder(
+                future: this.getUserClassInfo(),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                      return new SliverList(
+                          delegate: new SliverChildListDelegate(
+                              [new Text("No connection")]));
+                    case ConnectionState.active:
+                    case ConnectionState.waiting:
+                      return new SliverList(
+                          delegate: new SliverChildListDelegate(
+                              [new Text("Loading...")]));
+                    case ConnectionState.done:
+                      List<Widget> listSubject=[];
+                      List data = snapshot.data.docs;
+                      for(int i=0;i<data.length;i++) {
+                        print(data[i]["nameSubject"]);
+                        listSubject.add(
+                          new  Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white
                             ),
-                            new Expanded(
-                              flex: 4,
-                              child: new Container(
-                                margin: EdgeInsets.fromLTRB(7,0,7,7),
-                                child: Center(
-                                  child: new Text(
-                                      "Tự nhiên và xã hội",
-                                      textAlign: TextAlign.center,
-                                      style: new TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1
-                                      ),
+                            child: new Column(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                new Expanded(
+                                  flex: 6,
+                                  child: new Container(
+                                    margin: EdgeInsets.fromLTRB(7,7,7,0),
+                                    child: new Image.network(data[i]["linkUrl"]),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
-                      ),
-                    ),
-                ),
-                Container(
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white
-                  ),
-                  child: new Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Expanded(
-                        flex: 6,
-                        child: new Container(
-                          margin: EdgeInsets.fromLTRB(7,7,7,0),
-                          child: new Image.network(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
-                          ),
-                        ),
-                      ),
-                      new Expanded(
-                        flex: 4,
-                        child: new Container(
-                          margin: EdgeInsets.fromLTRB(7,0,7,7),
-                          child: Center(
-                            child: new Text(
-                              "Tự nhiên và xã hội",
-                              textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1
-                              ),
+                                new Expanded(
+                                  flex: 4,
+                                  child: new Container(
+                                    margin: EdgeInsets.fromLTRB(7,0,7,7),
+                                    child: Center(
+                                      child: new Text(
+                                        data[i]["nameSubject"],
+                                        textAlign: TextAlign.center,
+                                        style: new TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            height: 1
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
-                          ),
+                          )
+                        );
+                      }
+                      Widget gridSubject = new SliverPadding(
+                        padding: EdgeInsets.fromLTRB(10,30,10,0),
+                        sliver: new SliverGrid.count(
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 3,
+                          children: listSubject,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white
-                  ),
-                  child: new Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Expanded(
-                        flex: 6,
-                        child: new Container(
-                          margin: EdgeInsets.fromLTRB(7,7,7,0),
-                          child: new Image.network(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
-                          ),
-                        ),
-                      ),
-                      new Expanded(
-                        flex: 4,
-                        child: new Container(
-                          margin: EdgeInsets.fromLTRB(7,0,7,7),
-                          child: Center(
-                            child: new Text(
-                              "Tự nhiên và xã hội",
-                              textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white
-                  ),
-                  child: new Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      new Expanded(
-                        flex: 6,
-                        child: new Container(
-                          margin: EdgeInsets.fromLTRB(7,7,7,0),
-                          child: new Image.network(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTBIqev_ymdML-Nns1AnHy2VR08j9To4vJlQ&usqp=CAU",
-                          ),
-                        ),
-                      ),
-                      new Expanded(
-                        flex: 4,
-                        child: new Container(
-                          margin: EdgeInsets.fromLTRB(7,0,7,7),
-                          child: Center(
-                            child: new Text(
-                              "Tự nhiên và xã hội",
-                              textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-        ],
-      )
-    );
+                      );
+                      return gridSubject;
+                    default:
+                      return new SliverList(
+                          delegate: new SliverChildListDelegate(
+                              [new Text("default")]));
+                  }
+                }),
+          ],
+        ));
   }
 }
 

@@ -4,7 +4,7 @@ import 'Auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'LoginPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'API.dart';
 class UserInfoPage extends StatefulWidget {
   @override
   _UserInfoPageState createState() => _UserInfoPageState();
@@ -16,21 +16,15 @@ class _UserInfoPageState extends State<UserInfoPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-     getUser()
+     API.getUser()
     .then((value) {
       setState(() {
         groupRadio = value.docs[0]["UserClass"];
       });
     });
   }
-  Future<QuerySnapshot> getUser() async {
-    return await FirebaseFirestore.instance
-        .collection("Users")
-        .where("UserId", isEqualTo: auth.currentUser.uid)
-        .get();
-  }
   void submitUserClass() {
-    getUser().then((value) {
+    API.getUser().then((value) {
           FirebaseFirestore.instance.collection("Users").doc(value.docs[0].id).update({
             "UserClass" : groupRadio
           });
