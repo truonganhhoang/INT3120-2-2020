@@ -18,34 +18,8 @@ class Dictionary extends StatefulWidget {
 }
 
 List<Vocabulary> vocabulary = loadWord() as List<Vocabulary>;
-// [
-//   Vocabulary('Abroad', 'Ở nước ngoài'),
-//   Vocabulary('Absence', 'Vắng mặt'),
-//   Vocabulary('Absent', 'Vắng mặt, nghỉ'),
-//   Vocabulary('Absolute', 'Tuyệt đối'),
-//   Vocabulary('Absolutely', 'Chắc chắn rồi'),
-//   Vocabulary('Absorb', 'Hấp thụ'),
-//   Vocabulary('Abstract', 'Trừu tượng'),
-//   Vocabulary('Abuse', 'Lạm dụng'),
-//   Vocabulary('Academic', 'Học tập'),
-// ];
-// final databaseReference = FirebaseDatabase.instance.reference();
-// void readData(){
-//   databaseReference.once().then((DataSnapshot snapshot) {
-//     print('Data : ${snapshot.value}');
-//   });
-// }
+
 class _DictionaryState extends State<Dictionary> {
-  // Future<String>_loadFromAsset() async {
-  //   return await rootBundle.loadString("assets/dictionary.json");
-  // }
-  // Future parseJson() async {
-  //   String jsonString = await _loadFromAsset();
-  //   final jsonResponse = jsonDecode(jsonString);
-  //   print(jsonResponse);
-  // }
-
-
   TextEditingController searchController = TextEditingController();
   String filter;
   String result1 = "";
