@@ -34,16 +34,18 @@ class _HomeState extends State<Home> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: tabs[_currentIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-              spreadRadius: 0,
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-              offset: Offset(0, 8),
-              blurRadius: 20)
-        ]),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                spreadRadius: 0,
+                color: Color.fromRGBO(0, 0, 0, 0.25),
+                offset: Offset(0, 2),
+                blurRadius: 8)
+          ],
+        ),
         // padding: EdgeInsets.symmetric(horizontal: 10),
-        margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+        margin: EdgeInsets.only(bottom: 10, left: 14, right: 14),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(25),
           child: BottomNavigationBar(
@@ -80,6 +82,7 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
