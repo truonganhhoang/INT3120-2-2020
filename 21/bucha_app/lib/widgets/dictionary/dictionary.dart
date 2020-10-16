@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// import 'package:firebase_database/firebase_database.dart';
 
 import '../../main.dart';
 
@@ -13,19 +17,35 @@ class Dictionary extends StatefulWidget {
   }
 }
 
-List<Vocabulary> vocabulary = [
-  Vocabulary(English: 'Abroad', VietNamese: 'Ở nước ngoài'),
-  Vocabulary(English: 'Absence', VietNamese: 'Vắng mặt'),
-  Vocabulary(English: 'Absent', VietNamese: 'Vắng mặt, nghỉ'),
-  Vocabulary(English: 'Absolute', VietNamese: 'Tuyệt đối'),
-  Vocabulary(English: 'Absolutely', VietNamese: 'Chắc chắn rồi'),
-  Vocabulary(English: 'Absorb', VietNamese: 'Hấp thụ'),
-  Vocabulary(English: 'Abstract', VietNamese: 'Trừu tượng'),
-  Vocabulary(English: 'Abuse', VietNamese: 'Lạm dụng'),
-  Vocabulary(English: 'Academic', VietNamese: 'Học tập'),
-];
-
+List<Vocabulary> vocabulary = loadWord() as List<Vocabulary>;
+// [
+//   Vocabulary('Abroad', 'Ở nước ngoài'),
+//   Vocabulary('Absence', 'Vắng mặt'),
+//   Vocabulary('Absent', 'Vắng mặt, nghỉ'),
+//   Vocabulary('Absolute', 'Tuyệt đối'),
+//   Vocabulary('Absolutely', 'Chắc chắn rồi'),
+//   Vocabulary('Absorb', 'Hấp thụ'),
+//   Vocabulary('Abstract', 'Trừu tượng'),
+//   Vocabulary('Abuse', 'Lạm dụng'),
+//   Vocabulary('Academic', 'Học tập'),
+// ];
+// final databaseReference = FirebaseDatabase.instance.reference();
+// void readData(){
+//   databaseReference.once().then((DataSnapshot snapshot) {
+//     print('Data : ${snapshot.value}');
+//   });
+// }
 class _DictionaryState extends State<Dictionary> {
+  // Future<String>_loadFromAsset() async {
+  //   return await rootBundle.loadString("assets/dictionary.json");
+  // }
+  // Future parseJson() async {
+  //   String jsonString = await _loadFromAsset();
+  //   final jsonResponse = jsonDecode(jsonString);
+  //   print(jsonResponse);
+  // }
+
+
   TextEditingController searchController = TextEditingController();
   String filter;
   String result1 = "";
@@ -38,6 +58,7 @@ class _DictionaryState extends State<Dictionary> {
       setState(() {
         filter = searchController.text;
       });
+      // readData();
     });
   }
 
@@ -85,19 +106,19 @@ class _DictionaryState extends State<Dictionary> {
                             decoration: BoxDecoration(
                               color: Color(0xff154673),
                               border:
-                                  Border.all(width: 10, color: Colors.amber),
+                              Border.all(width: 10, color: Colors.amber),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                             ),
                             child: Center(
                                 child: Text(
-                              '$result1'.toUpperCase(),
-                              style: TextStyle(
-                                  color: Colors.amber,
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic),
-                            )),
+                                  '$result1'.toUpperCase(),
+                                  style: TextStyle(
+                                      color: Colors.amber,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic),
+                                )),
                           ),
                         ),
                         Offstage(
@@ -110,7 +131,7 @@ class _DictionaryState extends State<Dictionary> {
                               color: Color(0xff154673),
                               // border: Border.all(width: 10,color: Colors.amber),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                              BorderRadius.all(Radius.circular(5.0)),
                             ),
                             child: Center(
                               child: Text(
@@ -169,7 +190,7 @@ class _DictionaryState extends State<Dictionary> {
                                 color: Colors.white30,
                               ),
                               contentPadding:
-                                  EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(5.0),
@@ -184,113 +205,116 @@ class _DictionaryState extends State<Dictionary> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: vocabulary.length,
+                      itemCount: 20/*
+                      vocabulary.length*/,
                       itemBuilder: (context, index) {
+                        print("-----------");
+                        print(vocabulary);
                         return filter == null || filter == ""
                             ? new Container()
                             : '${vocabulary[index].English}'
-                                    .toLowerCase()
-                                    .contains(filter.toLowerCase())
-                                ? Container(
-                                    margin: EdgeInsets.only(
-                                        left: 90.0, right: 50.0, bottom: 10.0),
-                                    height: 40.0,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xff668EA7),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(5.0),
-                                      ),
+                            .toLowerCase()
+                            .contains(filter.toLowerCase())
+                            ? Container(
+                          margin: EdgeInsets.only(
+                              left: 90.0, right: 50.0, bottom: 10.0),
+                          height: 40.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xff668EA7),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.0),
+                            ),
+                          ),
+                          child: ListTile(
+                              title: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 15.0),
+                                child: Text(
+                                  '${vocabulary[index].English}',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              // subtitle:
+                              //     Text('${vocabulary[index].VietNamese}'),
+                              // leading: CircleAvatar(
+                              //     backgroundColor: Colors.blue,
+                              //     child: Text(
+                              //         '${vocabulary[index].English.substring(0, 1)}')),
+                              onTap: () {
+                                // filter = "";
+                                searchController.text = "";
+                                result1 =
+                                '${vocabulary[index].English}';
+                                result2 =
+                                '${vocabulary[index].VietNamese}';
+                                FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus &&
+                                    currentFocus.focusedChild !=
+                                        null) {
+                                  currentFocus.focusedChild.unfocus();
+                                }
+                              }
+                            // _onTapItem(context, vocabulary[index]),
+                          ),
+                        )
+                            : '${vocabulary[index].VietNamese}'
+                            .toLowerCase()
+                            .contains(filter.toLowerCase())
+                            ? Container(
+                          margin: EdgeInsets.only(
+                              left: 90.0,
+                              right: 50.0,
+                              bottom: 10.0),
+                          height: 40.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xff668EA7),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.0),
+                            ),
+                          ),
+                          child: ListTile(
+                              title: GestureDetector(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 15.0),
+                                  child: Text(
+                                    '${vocabulary[index].VietNamese}',
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.white,
                                     ),
-                                    child: ListTile(
-                                        title: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 15.0),
-                                          child: Text(
-                                            '${vocabulary[index].English}',
-                                            style: TextStyle(
-                                              fontSize: 22,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        // subtitle:
-                                        //     Text('${vocabulary[index].VietNamese}'),
-                                        // leading: CircleAvatar(
-                                        //     backgroundColor: Colors.blue,
-                                        //     child: Text(
-                                        //         '${vocabulary[index].English.substring(0, 1)}')),
-                                        onTap: () {
-                                          // filter = "";
-                                          searchController.text = "";
-                                          result1 =
-                                              '${vocabulary[index].English}';
-                                          result2 =
-                                              '${vocabulary[index].VietNamese}';
-                                          FocusScopeNode currentFocus =
-                                              FocusScope.of(context);
-                                          if (!currentFocus.hasPrimaryFocus &&
-                                              currentFocus.focusedChild !=
-                                                  null) {
-                                            currentFocus.focusedChild.unfocus();
-                                          }
-                                        }
-                                        // _onTapItem(context, vocabulary[index]),
-                                        ),
-                                  )
-                                : '${vocabulary[index].VietNamese}'
-                                        .toLowerCase()
-                                        .contains(filter.toLowerCase())
-                                    ? Container(
-                                        margin: EdgeInsets.only(
-                                            left: 90.0,
-                                            right: 50.0,
-                                            bottom: 10.0),
-                                        height: 40.0,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff668EA7),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0),
-                                          ),
-                                        ),
-                                        child: ListTile(
-                                            title: GestureDetector(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 15.0),
-                                                child: Text(
-                                                  '${vocabulary[index].VietNamese}',
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            // subtitle:
-                                            //     Text('${vocabulary[index].VietNamese}'),
-                                            // leading: CircleAvatar(
-                                            //     backgroundColor: Colors.blue,
-                                            //     child: Text(
-                                            //         '${vocabulary[index].English.substring(0, 1)}')),
-                                            onTap: () {
-                                              // filter = "";
-                                              searchController.text = "";
-                                              result2 =
-                                                  '${vocabulary[index].English}';
-                                              result1 =
-                                                  '${vocabulary[index].VietNamese}';
-                                              FocusScopeNode currentFocus =
-                                                  FocusScope.of(context);
-                                              if (!currentFocus
-                                                      .hasPrimaryFocus &&
-                                                  currentFocus.focusedChild !=
-                                                      null) {
-                                                currentFocus.focusedChild
-                                                    .unfocus();
-                                              }
-                                            }),
-                                      )
-                                    : Container();
+                                  ),
+                                ),
+                              ),
+                              // subtitle:
+                              //     Text('${vocabulary[index].VietNamese}'),
+                              // leading: CircleAvatar(
+                              //     backgroundColor: Colors.blue,
+                              //     child: Text(
+                              //         '${vocabulary[index].English.substring(0, 1)}')),
+                              onTap: () {
+                                // filter = "";
+                                searchController.text = "";
+                                result2 =
+                                '${vocabulary[index].English}';
+                                result1 =
+                                '${vocabulary[index].VietNamese}';
+                                FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+                                if (!currentFocus
+                                    .hasPrimaryFocus &&
+                                    currentFocus.focusedChild !=
+                                        null) {
+                                  currentFocus.focusedChild
+                                      .unfocus();
+                                }
+                              }),
+                        )
+                            : Container();
                       },
                     ),
                   ),
@@ -366,5 +390,22 @@ class Vocabulary {
   final String English;
   final String VietNamese;
 
-  const Vocabulary({this.English, this.VietNamese});
+  const Vocabulary(this.English, this.VietNamese);
+}
+
+List<Vocabulary> _parseJsonForWord(String jsonString){
+  Map decoded = jsonDecode(jsonString);
+  List<Vocabulary> ls = new List<Vocabulary>();
+  for(var word in decoded["vocabulary"]){
+    ls.add(new Vocabulary(word['English'],word['VietNamese']));
+  }
+  return ls;
+}
+Future<String> _loadWordAsset() async {
+  return await rootBundle.loadString('assets/dictionary.json');
+}
+Future<List<Vocabulary>> loadWord() async {
+  String jsonString = await _loadWordAsset();
+  print(_parseJsonForWord(jsonString));
+  return _parseJsonForWord(jsonString);
 }
