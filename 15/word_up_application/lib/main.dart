@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DatabaseHelper.instance.databaseInit();
-    DatabaseHelper.instance.getNWords();
+    //DatabaseHelper.instance.getNWords(3);
+    DatabaseHelper.instance.getListFarvoriteWords();
 
     return LayoutBuilder(
       builder: (context, constraints) {

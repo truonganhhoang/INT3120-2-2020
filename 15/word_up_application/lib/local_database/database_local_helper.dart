@@ -16,6 +16,8 @@ class DatabaseHelper {
   static final tableUsers = 'users';
   static final tableQuoteExamples = 'quote_examples';
   static final tableWordKnew = 'word_knew';
+  static final tableWordFarvorite = 'word_favorite';
+  static final tableWordToLearn = 'word_toLearn';
   static final columnIdWord = 'id_word';
   static final columnWord = 'word';
   static final columnPronunUK = 'pronun_uk';
@@ -74,10 +76,22 @@ class DatabaseHelper {
     return await openDatabase(path, version: _databaseVersion);
   }
 
-  // Insert
-  Future<int> insert(Map<String, dynamic> row) async {
+  // Insert to learn word
+  Future<int> insertToLearnWord(Map<String, dynamic> row) async {
     Database db = await instance.database;
-    return await db.insert(tableWord, row);
+    return await db.insert(tableWordToLearn, row);
+  }
+
+  // Insert knew word
+  Future<int> insertKnewWord(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(tableWordKnew, row);
+  }
+
+  // Insert farvorite word
+  Future<int> insertFarvoriteWord(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(tableWordFarvorite, row);
   }
 
   // Select all
@@ -88,17 +102,75 @@ class DatabaseHelper {
   }
 
   // RAM query
-  Future<int> getCount() async {
+  // Future<int> getCount() async {
+  //   Database db = await instance.database;
+  //   return Sqflite.firstIntValue(
+  //       await db.rawQuery('SELECT COUNT(EMAIL) FROM $tableWord'));
+  // }
+
+  // Get A Word
+  Future<Word> getWord(int id) async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(EMAIL) FROM $tableWord'));
+    var result = await db
+        .rawQuery('select * from $tableWord where $columnIdWord = ?', [id]);
+    Word word = new Word.map(result);
+    return word;
   }
 
   // Get N Words
-  Future<List<Word>> getNWords() async {
+  Future<List<Word>> getNWords(int numbersWords) async {
     Database db = await instance.database;
     List<Map> result = await db.rawQuery(
-        'SELECT DISTINCT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard, $columnImage, $columnExample, $columnQuoteExample FROM $tableWord w JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord JOIN $tableExamples ex ON ex.$columnIdExample = wt.$columnIdExample JOIN $tableImages im ON im.$columnIdImage = wt.$columnIdImage JOIN $tableQuoteExamples qe ON qe.$columnIdWord = w.$columnIdWord WHERE w.$columnIdWord NOT IN (SELECT $columnIdWord FROM $tableWordKnew)');
+        'SELECT DISTINCT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard, $columnImage, $columnExample, $columnQuoteExample FROM $tableWord w JOIN $tableWordKnew wk ON wk.$columnIdWord != w.$columnIdWord JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord JOIN $tableExamples ex ON ex.$columnIdExample = wt.$columnIdExample JOIN $tableImages im ON im.$columnIdImage = wt.$columnIdImage JOIN $tableQuoteExamples qe ON qe.$columnIdWord = w.$columnIdWord LIMIT ?',
+        [numbersWords]);
+    log("$result");
+
+    List<Word> words = new List();
+    for (int i = 0; i < result.length; i++) {
+      Word word = new Word.map(result[i]);
+      words.add(word);
+    }
+    return words;
+  }
+
+  // Get List Farvorite Words
+  Future<List<Word>> getListFarvoriteWords() async {
+    Database db = await instance.database;
+    List<Map> result = await db.rawQuery(
+      'SELECT * FROM $tableWord w JOIN $tableWordFarvorite wf ON wf.$columnIdWord = w.$columnIdWord',
+    );
+    log("$result");
+
+    List<Word> words = new List();
+    for (int i = 0; i < result.length; i++) {
+      Word word = new Word.map(result[i]);
+      words.add(word);
+    }
+    return words;
+  }
+
+  // Get List Knew Words
+  Future<List<Word>> getListKnewWords() async {
+    Database db = await instance.database;
+    List<Map> result = await db.rawQuery(
+      'SELECT * FROM $tableWord w JOIN $tableWordKnew wf ON wf.$columnIdWord = w.$columnIdWord',
+    );
+    log("$result");
+
+    List<Word> words = new List();
+    for (int i = 0; i < result.length; i++) {
+      Word word = new Word.map(result[i]);
+      words.add(word);
+    }
+    return words;
+  }
+
+  // Get List To Learn Words
+  Future<List<Word>> getListToLearnWords() async {
+    Database db = await instance.database;
+    List<Map> result = await db.rawQuery(
+      'SELECT * FROM $tableWord w JOIN $tableWordToLearn wf ON wf.$columnIdWord = w.$columnIdWord',
+    );
     log("$result");
 
     List<Word> words = new List();
@@ -117,10 +189,24 @@ class DatabaseHelper {
         .update(tableWord, row, where: '$columnIdWord = ?', whereArgs: [id]);
   }
 
-  // Delete
-  Future<int> delete(String email) async {
+  // Delete to learn word
+  Future<int> deleteToLearnWord(int id) async {
     Database db = await instance.database;
     return await db
-        .delete(tableWord, where: '$columnIdWord = ?', whereArgs: [email]);
+        .delete(tableWordToLearn, where: '$columnIdWord = ?', whereArgs: [id]);
+  }
+
+  // Delete knew word
+  Future<int> deleteKnewWord(int id) async {
+    Database db = await instance.database;
+    return await db
+        .delete(tableWordKnew, where: '$columnIdWord = ?', whereArgs: [id]);
+  }
+
+  // Delete farvorite word
+  Future<int> delete(int id) async {
+    Database db = await instance.database;
+    return await db.delete(tableWordFarvorite,
+        where: '$columnIdWord = ?', whereArgs: [id]);
   }
 }
