@@ -28,8 +28,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    DatabaseHelper.instance.getAImage(1);
-    DatabaseHelper.instance.getAUserInfoWithName('trinh');
+    DatabaseHelper.instance.databaseInit();
+    DatabaseHelper.instance.getNWords();
 
     return LayoutBuilder(
       builder: (context, constraints) {

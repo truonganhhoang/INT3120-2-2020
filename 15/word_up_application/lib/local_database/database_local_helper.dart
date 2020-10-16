@@ -12,18 +12,26 @@ class DatabaseHelper {
   static final tableWord = 'word';
   static final tableWordType = 'word_type';
   static final tableExamples = 'examples';
+  static final tableImages = 'images';
+  static final tableUsers = 'users';
+  static final tableQuoteExamples = 'quote_examples';
+  static final tableWordKnew = 'word_knew';
   static final columnIdWord = 'id_word';
   static final columnWord = 'word';
+  static final columnPronunUK = 'pronun_uk';
+  static final columnSoundUK = 'sound_uk';
+  static final columnPronunUS = 'pronun_us';
+  static final columnSoundUS = 'sound_us';
   static final columnType = 'type';
   static final columnDefinition = 'definition';
   static final columnIdExample = 'id_example';
   static final columnExample = 'example';
-  static final tableImages = 'images';
   static final columnImage = 'image';
   static final columnIdImage = 'id_image';
   static final columnMeanCard = 'mean_card';
-  static final tableUsers = 'users';
   static final columnUserName = 'user_name';
+  static final columnQuoteExample = 'quote_example';
+  static final columnReviewDay = 'review_day';
 
   // Contructor
   DatabaseHelper._privateConstructor();
@@ -36,9 +44,9 @@ class DatabaseHelper {
     return _database;
   }
 
-  // void databaseInit() async {
-  //   _database = await instance.database;
-  // }
+  void databaseInit() async {
+    _database = await instance.database;
+  }
 
   _initDatabase() async {
     var databasePath = await getDatabasesPath();
@@ -86,36 +94,19 @@ class DatabaseHelper {
         await db.rawQuery('SELECT COUNT(EMAIL) FROM $tableWord'));
   }
 
-  // Get a word
-  Future<void> getAImage(int id_image) async {
-    Database db = await instance.database;
-    var result = await db.rawQuery(
-        'SELECT * FROM $tableImages where $columnIdImage = ?', [id_image]);
-    log("$result");
-  }
-
-  // Get a user
-  Future<void> getAUserInfoWithName(String user_name) async {
-    Database db = await instance.database;
-    var result = await db.rawQuery(
-        'SELECT * FROM $tableUsers where $columnUserName = ?', [user_name]);
-    log("$result");
-  }
-
   // Get N Words
-  Future<void> getNWords(int numbers) async {
+  Future<List<Word>> getNWords() async {
     Database db = await instance.database;
-    var result =
-        await db.rawQuery('SELECT * FROM $tableWord limit ?', [numbers]);
+    List<Map> result = await db.rawQuery(
+        'SELECT DISTINCT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard, $columnImage, $columnExample, $columnQuoteExample FROM $tableWord w JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord JOIN $tableExamples ex ON ex.$columnIdExample = wt.$columnIdExample JOIN $tableImages im ON im.$columnIdImage = wt.$columnIdImage JOIN $tableQuoteExamples qe ON qe.$columnIdWord = w.$columnIdWord WHERE w.$columnIdWord NOT IN (SELECT $columnIdWord FROM $tableWordKnew)');
     log("$result");
-  }
 
-  //
-  Future<void> getWordsOption() async {
-    Database db = await instance.database;
-    var result = await db.rawQuery(
-        'SELECT $tableWord.$columnIdWord, $columnWord, $columnType, $columnDefinition, $columnMeanCard, $columnImage FROM $tableWord, $tableWordType, $tableImages WHERE $tableWord.$columnIdWord = $tableWordType.$columnIdWord AND $tableWordType.$columnIdImage = $tableImages.$columnIdImage');
-    log("$result");
+    List<Word> words = new List();
+    for (int i = 0; i < result.length; i++) {
+      Word word = new Word.map(result[i]);
+      words.add(word);
+    }
+    return words;
   }
 
   // Update
