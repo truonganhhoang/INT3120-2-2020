@@ -1,10 +1,10 @@
 import 'package:bucha_app/widgets/Grammar/GrammarUnit.dart';
-import 'package:bucha_app/main.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarOption.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bucha_app/Database.dart';
+import 'package:bucha_app/ButtonBack.dart';
 
 class GrammarPage extends StatefulWidget {
   @override
@@ -23,33 +23,6 @@ class PlayButton extends StatelessWidget {
           image: DecorationImage(
               image: AssetImage('assets/PlayGameButton.png'),
               fit: BoxFit.fill)),
-    );
-  }
-}
-
-class BackButton extends StatelessWidget {
-  BackButton();
-
-  void _backToHomePage(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-      return HomePage();
-    }));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 40.0,
-      height: 40.0,
-      child: InkWell(
-        onTap: () {
-          _backToHomePage(context);
-        },
-      ),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/back.png'), fit: BoxFit.fill)),
     );
   }
 }
@@ -77,7 +50,9 @@ class _GrammarPageState extends State<GrammarPage> {
       units.add(
         GrammarUnit(
           name: grammar['name'],
-          color: _optionColors[grammar['color_id']]
+          color: _optionColors[grammar['color_id']],
+          rule: grammar['rule'].cast<String>().toList(),
+          usage: grammar['usage'].cast<String>().toList(),
         )
       );
     }
@@ -181,7 +156,7 @@ class _GrammarPageState extends State<GrammarPage> {
               height: 70.0,
               child: new Row(
                 children: [
-                  BackButton(),
+                  ButtonBack(),
                   new Padding(padding: EdgeInsets.only(left: 70.0)),
                   PlayButton(),
                 ],

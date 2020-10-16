@@ -1,8 +1,7 @@
-import 'package:bucha_app/widgets/Grammar/GrammarPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarUnit.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bucha_app/ButtonBack.dart';
 
 class UnitPage extends StatefulWidget {
   final String name;
@@ -27,33 +26,6 @@ class PlayButton extends StatelessWidget {
           image: DecorationImage(
               image: AssetImage('assets/PlayGameButton.png'),
               fit: BoxFit.fill)),
-    );
-  }
-}
-
-class BackButton extends StatelessWidget {
-  BackButton();
-
-  void _backToHomePage(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-      return GrammarPage();
-    }));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 40.0,
-      height: 40.0,
-      child: InkWell(
-        onTap: () {
-          _backToHomePage(context);
-        },
-      ),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/back.png'), fit: BoxFit.fill)),
     );
   }
 }
@@ -161,7 +133,7 @@ class _UnitPageState extends State<UnitPage> {
               height: 70.0,
               child: new Row(
                 children: [
-                  BackButton(),
+                  ButtonBack(),
                   new Padding(padding: EdgeInsets.only(left: 70.0)),
                   PlayButton(),
                 ],
