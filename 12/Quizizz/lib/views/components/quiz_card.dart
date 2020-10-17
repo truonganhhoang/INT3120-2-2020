@@ -3,8 +3,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:math';
 import 'alert_play.dart';
 
-class Category extends StatelessWidget {
-  const Category(
+class QuizCard extends StatelessWidget {
+  const QuizCard(
       {Key key,
       @required this.size,
       this.title,
@@ -26,8 +26,8 @@ class Category extends StatelessWidget {
         showDialog(
             context: context,
             builder: (context) => PopUp(
-                  title: "Solar system",
-                  questionCount: 12,
+                  title: title,
+                  questionCount: questionCount,
                   imagePath: "assets/images/solar.png",
                   size: size,
                 ));

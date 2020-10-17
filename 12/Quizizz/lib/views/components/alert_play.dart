@@ -26,8 +26,8 @@ class PopUp extends StatelessWidget {
             Title(
               size: size,
               imagePath: "assets/images/solar.png",
-              questionCount: 20,
-              title: "Solar System",
+              questionCount: questionCount,
+              title: title,
             ),
             Buttons(size: size),
           ],

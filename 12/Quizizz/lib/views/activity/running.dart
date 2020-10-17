@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/views/components/category_card.dart';
+import 'package:quiztest/views/components/quiz_card.dart';
 
 class Running extends StatelessWidget {
   @override
@@ -28,7 +28,7 @@ class ListRunning extends StatelessWidget {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 5),
           itemCount: 4,
-          itemBuilder: (context, index) => Category(
+          itemBuilder: (context, index) => QuizCard(
                 size: size,
                 title: "Solar system",
                 questionCount: 19,

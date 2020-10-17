@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/views/components/category_card.dart';
+import 'package:quiztest/views/components/quiz_card.dart';
 
 class EndQuiz extends StatelessWidget {
   @override
@@ -36,31 +36,31 @@ class EndQuiz extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        Category(
+                        QuizCard(
                           title: "Solar system",
                           imagePath: "assets/images/solar.png",
                           questionCount: 22,
                           size: size,
                         ),
-                        Category(
+                        QuizCard(
                           title: "Solar system",
                           imagePath: "assets/images/solar.png",
                           questionCount: 22,
                           size: size,
                         ),
-                        Category(
+                        QuizCard(
                           title: "Solar system",
                           imagePath: "assets/images/solar.png",
                           questionCount: 22,
                           size: size,
                         ),
-                        Category(
+                        QuizCard(
                           title: "Solar system",
                           imagePath: "assets/images/solar.png",
                           questionCount: 22,
                           size: size,
                         ),
-                        Category(
+                        QuizCard(
                           title: "Solar system",
                           imagePath: "assets/images/solar.png",
                           questionCount: 22,
