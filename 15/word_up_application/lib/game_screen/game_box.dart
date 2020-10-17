@@ -7,7 +7,7 @@ Widget GameList(BuildContext context, int index) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(1.5 * SizeConfig.heightMultiplier),
-      color: Colors.white70,
+      color: Colors.white,
     ),
     width: double.infinity,
     height: 13 * SizeConfig.heightMultiplier,
@@ -36,12 +36,12 @@ Widget GameList(BuildContext context, int index) {
                 games[index]['title'],
                 style: TextStyle(
                     color: primary,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
                     fontSize: 2.4 * SizeConfig.textMultiplier),
               ),
               Text(games[index]['description'],
                   style: TextStyle(
-                      color: Colors.black87,
+                      color: Colors.black,
                       fontSize: 2 * SizeConfig.textMultiplier,
                       letterSpacing: .3)),
             ],

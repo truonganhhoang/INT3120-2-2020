@@ -6,7 +6,7 @@ final List<Map> games = [
   },
   {
     "title": "Vocabulary Challenge!",
-    "description": "Can you pick the right word from an image in 10 seconds?",
+    "description": "Can you pick the right word from an image in 20 seconds? Click to play!!!",
     "image": "choose.png",
   },
   {
@@ -16,7 +16,7 @@ final List<Map> games = [
   },
   {
     "title": "Vocabulary Challenge!",
-    "description": "Can you pick the right word from an image in 10 seconds?",
+    "description": "Can you pick the right word from an image in 10 seconds? Click to play now!!!",
     "image": "choose.png",
   },
   {
