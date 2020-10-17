@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:word_up_application/size_config.dart';
 

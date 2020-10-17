@@ -15,10 +15,12 @@ class WordBox extends StatefulWidget {
   }) : assert(word != null);
 
   @override
-  State<StatefulWidget> createState() => _WordBoxState();
+  State<StatefulWidget> createState() => WordBoxState();
 }
 
-class _WordBoxState extends State<WordBox> {
+class WordBoxState extends State<WordBox> {
+  bool _knewThisWord = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -95,68 +97,87 @@ class _WordBoxState extends State<WordBox> {
           ),
           Expanded(
               child: Container(
-            alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                MaterialButton(
-                  elevation: 0,
-                  onPressed: () {
-                    userKnewThisWord();
-                  },
-                  color: Colors.green,
-                  height: 50,
-                  minWidth: 20,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    'I know',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 2 * SizeConfig.heightMultiplier),
-                  ),
+                alignment: Alignment.bottomCenter,
+                margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    if(_knewThisWord) Container(
+                      width: 51 * SizeConfig.widthMultiplier,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(Icons.check,
+                          color: Colors.green, size: 5 * SizeConfig.heightMultiplier,),
+                          Text(
+                          'Review in 3 days', textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 2.5 * SizeConfig.heightMultiplier,
+                              color: Colors.green, fontWeight: FontWeight.bold),
+                          ),
+                        ]
+                      ),
+                    ),
+                    if(!_knewThisWord) MaterialButton(
+                      elevation: 0,
+                      onPressed: () {
+                        userKnewThisWord();
+                      },
+                      color: Colors.green,
+                      height: 50,
+                      minWidth: 20,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        'I know',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 2 * SizeConfig.heightMultiplier),
+                      ),
+                    ),
+                    if(!_knewThisWord) MaterialButton(
+                      elevation: 0,
+                      height: 50,
+                      onPressed: () {
+                        userWantToHaveATest();
+                      },
+                      color: Colors.orange,
+                      minWidth: 20,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: Colors.orange)),
+                      child: Text(
+                        'Test me',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 2 * SizeConfig.heightMultiplier),
+                      ),
+                    ),
+                    MaterialButton(
+                      elevation: 0,
+                      height: 50,
+                      onPressed: () {
+                        userWantToLearnThisWord();
+                      },
+                      color: Colors.red,
+                      minWidth: 20,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: Colors.red)),
+                      child: Text(
+                        'Learn',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 2 * SizeConfig.heightMultiplier),
+                      ),
+                    ),
+
+                  ],
                 ),
-                MaterialButton(
-                  elevation: 0,
-                  height: 50,
-                  onPressed: () {
-                    userWantToLearnThisWord();
-                  },
-                  color: Colors.red,
-                  minWidth: 20,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(color: Colors.red)),
-                  child: Text(
-                    'Learn',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 2 * SizeConfig.heightMultiplier),
-                  ),
-                ),
-                MaterialButton(
-                  elevation: 0,
-                  height: 50,
-                  onPressed: () {
-                    userWantToHaveATest();
-                  },
-                  color: Colors.orange,
-                  minWidth: 20,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(color: Colors.orange)),
-                  child: Text(
-                    'Test me',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 2 * SizeConfig.heightMultiplier),
-                  ),
-                ),
-              ],
-            ),
-          )),
+              )),
         ],
       ),
     );
@@ -164,6 +185,9 @@ class _WordBoxState extends State<WordBox> {
 
   void userKnewThisWord() {
     // do something
+    setState(() {
+      _knewThisWord = true;
+    });
   }
 
   void userWantToLearnThisWord() {
@@ -171,12 +195,22 @@ class _WordBoxState extends State<WordBox> {
         PageTransition(type: PageTransitionType.fade, child: LearnAWord()));
   }
 
+  void userAnswerWrong() {
+    userWantToLearnThisWord();
+  }
+
+  void userAnswerCorrect() {
+    setState(() {
+      _knewThisWord = true;
+    });
+  }
+
   void userWantToHaveATest() {
     openTestPopup(context);
   }
 
   void removeThisWord() {
-    // to do
+
   }
 
   void maskThisWordAsFavorite() {
@@ -185,18 +219,21 @@ class _WordBoxState extends State<WordBox> {
 
   void openTestPopup(context) {
     var alertStyle = AlertStyle(
+      alertElevation: 0,
+      alertPadding: EdgeInsets.only(
+          left: 2 * SizeConfig.heightMultiplier,
+          right: 2 * SizeConfig.heightMultiplier,
+          top: 0 * SizeConfig.widthMultiplier,
+          bottom: 25 * SizeConfig.widthMultiplier),
       animationType: AnimationType.grow,
       isCloseButton: true,
       isOverlayTapDismiss: false,
-      overlayColor: Colors.black38,
+      overlayColor: Colors.black45,
       descStyle: TextStyle(fontWeight: FontWeight.bold),
       descTextAlign: TextAlign.start,
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
-        side: BorderSide(
-          color: Colors.blue,
-        ),
       ),
       backgroundColor: Colors.blue,
       titleStyle: TextStyle(
@@ -204,6 +241,8 @@ class _WordBoxState extends State<WordBox> {
         fontSize: 3 * SizeConfig.heightMultiplier,
       ),
       alertAlignment: Alignment.center,
+      buttonAreaPadding: EdgeInsets.only(
+          bottom: 5 * SizeConfig.widthMultiplier),
     );
 
     Alert(
@@ -215,7 +254,7 @@ class _WordBoxState extends State<WordBox> {
         style: alertStyle,
         context: context,
         title: widget.word.word + '...?',
-        content: TestQuestionScreen(widget.word),
+        content: TestQuestionScreen(word: widget.word, controller: this,),
         buttons: []).show();
   }
 }
