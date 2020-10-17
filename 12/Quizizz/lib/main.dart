@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/setting/setting.dart';
-import 'home/home_page.dart';
-import 'search/search.dart';
-import 'activity/activity.dart';
+import 'package:quiztest/views/setting/setting.dart';
+import 'views/home/home_page.dart';
+import 'views/search/search.dart';
+import 'views/activity/activity.dart';
 
 void main() {
   runApp(MyApp());

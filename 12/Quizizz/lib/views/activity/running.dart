@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/components/category_card.dart';
+import 'package:quiztest/views/components/category_card.dart';
 
-class Completed extends StatelessWidget {
+class Running extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return ListCompleted(size: size);
+    return ListRunning(size: size);
   }
 }
 
-class ListCompleted extends StatelessWidget {
-  const ListCompleted({
+class ListRunning extends StatelessWidget {
+  const ListRunning({
     Key key,
     @required this.size,
   }) : super(key: key);
@@ -33,7 +33,6 @@ class ListCompleted extends StatelessWidget {
                 title: "Solar system",
                 questionCount: 19,
                 imagePath: "assets/images/solar.png",
-                percent: 0.5,
               )),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/components/category_card.dart';
+import 'package:quiztest/views/components/category_card.dart';
 
 class EndQuiz extends StatelessWidget {
   @override

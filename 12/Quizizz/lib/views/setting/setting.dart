@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/setting/userAccount/userAccount.dart';
-import 'package:quiztest/setting/userProfile/userProfile.dart';
-import 'package:quiztest/setting/userSetting/userSetting.dart';
+import 'package:quiztest/views/setting/userAccount/userAccount.dart';
+import 'package:quiztest/views/setting/userProfile/userProfile.dart';
+import 'package:quiztest/views/setting/userSetting/userSetting.dart';
 import '../components/appbar.dart';
 
 class Setting extends StatelessWidget {

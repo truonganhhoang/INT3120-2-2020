@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/activity/completed.dart';
-import 'package:quiztest/activity/running.dart';
-import 'package:quiztest/components/appbar.dart';
+import 'package:quiztest/views/activity/completed.dart';
+import 'package:quiztest/views/activity/running.dart';
+import 'package:quiztest/views/components/appbar.dart';
 
 class Activity extends StatefulWidget {
   final Widget child;

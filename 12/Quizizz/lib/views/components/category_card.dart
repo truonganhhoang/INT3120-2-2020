@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:math';
-
 import 'alert_play.dart';
 
 class Category extends StatelessWidget {

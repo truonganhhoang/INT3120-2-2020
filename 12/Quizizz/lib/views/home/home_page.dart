@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/components/categories.dart';
+import 'package:quiztest/views/components/categories.dart';
 import '../components/appbar.dart';
 import '../components/category_card.dart';
 

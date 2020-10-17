@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/setting/setting_music.dart';
+import 'package:quiztest/views/setting/settingInfo.dart';
+import 'package:quiztest/views/setting/setting_category.dart';
 
-import '../setting_category.dart';
-
-class UserSetting extends StatelessWidget {
-  const UserSetting({
+class UserAccount extends StatelessWidget {
+  const UserAccount({
     Key key,
     @required this.size,
     this.image,
@@ -49,7 +48,7 @@ class UserSetting extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: 2,
                   itemBuilder: (BuildContext context, index) {
-                    return SettingMusic(title: content[index]);
+                    return SettingInfo(title: content[index]);
                   },
                 ),
               )

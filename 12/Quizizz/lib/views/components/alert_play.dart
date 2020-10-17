@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/play_screen/quiz_game.dart';
+import 'package:quiztest/views/play_screen/quiz_game.dart';
 
 class PopUp extends StatelessWidget {
   PopUp({this.title, this.imagePath, this.size, this.questionCount});
