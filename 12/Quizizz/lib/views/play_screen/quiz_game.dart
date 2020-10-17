@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/services/api_manager.dart';
+import 'package:quiztest/models/models.dart';
 
-class QuizGame extends StatelessWidget {
+class QuizGame extends StatefulWidget {
+  QuizGame({this.quizID});
+
+  final String quizID;
+  @override
+  _QuizGameState createState() => _QuizGameState();
+}
+
+class _QuizGameState extends State<QuizGame> {
+  Future<List<Questional>> _questional;
+  int _currentQs;
+
+  @override
+  void initState() {
+    _questional = API_Manager().fetchQuestionByQuiz(widget.quizID);
+    _currentQs = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -120,9 +140,10 @@ class Question extends StatelessWidget {
             child: Text(
               question,
               style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
               textAlign: TextAlign.center,
             ),
           )
