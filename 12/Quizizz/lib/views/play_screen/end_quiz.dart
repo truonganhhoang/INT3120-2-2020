@@ -32,41 +32,20 @@ class EndQuiz extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        QuizCard(
+                  SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return QuizCard(
                           title: "Solar system",
                           imagePath: "assets/images/solar.png",
                           questionCount: 22,
                           size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   )
                 ],
