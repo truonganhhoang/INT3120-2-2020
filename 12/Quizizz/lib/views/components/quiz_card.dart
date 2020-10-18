@@ -10,7 +10,8 @@ class QuizCard extends StatelessWidget {
       this.title,
       this.questionCount,
       this.imagePath,
-      this.percent})
+      this.percent,
+      @required this.quizID})
       : super(key: key);
 
   final Size size;
@@ -18,6 +19,7 @@ class QuizCard extends StatelessWidget {
   final int questionCount;
   final String imagePath;
   final double percent;
+  final String quizID;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class QuizCard extends StatelessWidget {
                   questionCount: questionCount,
                   imagePath: "assets/images/solar.png",
                   size: size,
+                  quizID: quizID,
                 ));
       },
       child: Container(

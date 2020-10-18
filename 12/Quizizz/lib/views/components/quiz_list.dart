@@ -72,6 +72,7 @@ class _ListCategoryState extends State<ListCategory> {
                 imagePath: "assets/images/solar.png",
                 title: quiz.name,
                 questionCount: quiz.numberOfQuestion,
+                quizID: quiz.key,
               );
             },
           );

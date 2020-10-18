@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:quiztest/views/play_screen/quiz_game.dart';
 
 class PopUp extends StatelessWidget {
-  PopUp({this.title, this.imagePath, this.size, this.questionCount});
+  PopUp(
+      {this.title,
+      this.imagePath,
+      this.size,
+      this.questionCount,
+      @required this.quizID});
 
   final String title;
   final String imagePath;
   final int questionCount;
   final Size size;
+  final String quizID;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,11 @@ class PopUp extends StatelessWidget {
               questionCount: questionCount,
               title: title,
             ),
-            Buttons(size: size),
+            Buttons(
+              size: size,
+              quizID: quizID,
+              questionCount: questionCount,
+            ),
           ],
         ),
       ),
@@ -38,12 +48,12 @@ class PopUp extends StatelessWidget {
 }
 
 class Buttons extends StatelessWidget {
-  const Buttons({
-    Key key,
-    @required this.size,
-  }) : super(key: key);
+  const Buttons({Key key, @required this.size, @required this.quizID, this.questionCount})
+      : super(key: key);
 
   final Size size;
+  final String quizID;
+  final int questionCount;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +67,13 @@ class Buttons extends StatelessWidget {
                 flex: 2,
                 child: FlatButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => QuizGame()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QuizGame(
+                                  quizID: quizID,
+                                  totalQs: questionCount,
+                                )));
                   },
                   padding: EdgeInsets.all(0),
                   child: Container(
