@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/views/components/categories.dart';
+import 'package:quiztest/views/components/quiz_list.dart';
 import '../components/appbar.dart';
-import '../components/category_card.dart';
+import 'package:quiztest/services/api_manager.dart';
+import 'package:quiztest/models/models.dart';
 
-const List<String> listCategories = ["Science", "Math", "Biology"];
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Future<List<Topic>> _topics;
+
+  @override
+  void initState() {
+    _topics = API_Manager().fetchTopic();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -17,13 +30,30 @@ class HomePage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(children: [
             EnterCode(),
-            Column(
-                children: listCategories
-                    .map((categories) => Categories(
-                          size: size,
-                          titleTopic: categories,
-                        ))
-                    .toList()),
+            FutureBuilder<List<Topic>>(
+                future: _topics,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Topic> topics = snapshot.data ?? [];
+                    print(topics.length);
+                    return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: topics.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          Topic topic = topics[index];
+                          return ListQuiz(
+                            titleTopic: topic.name,
+                            size: size,
+                            idTopic: topic.key,
+                          );
+                        });
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+
+                  return CircularProgressIndicator();
+                }),
           ]),
         ));
   }
