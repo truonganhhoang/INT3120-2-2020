@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
+import 'package:word_up_application/selection_screen/finish_selection_screen.dart';
 import 'package:word_up_application/selection_screen/selection_screen.dart';
 import 'package:word_up_application/services/database_server_handler.dart';
 import 'package:word_up_application/size_config.dart';
@@ -18,45 +19,7 @@ import 'package:device_preview/device_preview.dart';
 bool isTestResponsiveMode = true;
 
 void main() {
-  AppUser user = new AppUser(
-    idUser: '1122817271',
-    userPrivateInformation: UserPrivateInformation(
-        age: 25,
-        avatarUrl: 'https://ibb.co/T0BPtr9',
-        email: 'trinh@gmail.com',
-        nativeLanguage: 'Vietnamese',
-        userName: 'Trinh'
-    ),
 
-    learningProgress: LearningProgress(
-        wordFavorite: [1,2,9,10],
-        wordToLearn: [1,4,5,7,8,9,10,15],
-        wordKnew: [
-          WordKnew(
-            wordId: 2,
-            reviewDays: 3,
-            reviewTimes: 0,
-          ),
-          WordKnew(
-            wordId: 3,
-            reviewDays: 3,
-            reviewTimes: 1,
-          ),
-          WordKnew(
-            wordId: 6,
-            reviewDays: 3,
-            reviewTimes: 0,
-          ),
-        ]
-    ),
-    learnSetting: LearnSetting(
-      accent: 'British',
-      practiceGoal: 20, // 20 words per day.
-      reminder: Time(hour: 6, minute: 0),
-    ),
-  );
-
-  DatabaseServerHandler.instance.postUser(user);
   runApp(
     (isTestResponsiveMode)
         ? DevicePreview(
@@ -70,6 +33,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    DatabaseServerHandler.instance.getAllUsers();
+    DatabaseServerHandler.instance.updateLearnProgress('1122817271');
     DatabaseHelper.instance.databaseInit();
     //DatabaseHelper.instance.getNWords(3);
     DatabaseHelper.instance.getListFarvoriteWords();
@@ -93,7 +58,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: Home(key),
+              home: FinishSelectionScreen(),
             );
           } else {
             // default app
@@ -104,7 +69,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: Home(key),
+              home: Home(),
             );
           }
         });

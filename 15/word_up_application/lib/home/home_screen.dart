@@ -12,7 +12,7 @@ import '../chat_screen/chat_screen.dart';
 
 class Home extends StatefulWidget {
   @override
-  Home(Key key):super(key : key);
+ // Home(Key key):super(key : key);
   State<StatefulWidget> createState() => _HomeState();
 }
 

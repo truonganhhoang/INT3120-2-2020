@@ -33,7 +33,7 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                       context,
                       PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: MyApp()));
+                          child: Home()));
                 },
                 child: Icon(
                   Icons.close,
@@ -134,7 +134,7 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.rightToLeft,
-                                    child: SelectionScreen()));
+                                    child: Home()));
                           },
                           child: Container(
                             width: 0.6 * SizeConfig.screenWidth,
