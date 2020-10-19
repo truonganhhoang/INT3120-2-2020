@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:word_up_application/components/star_favorite.dart';
+import 'package:word_up_application/local_database/database_local_helper.dart';
 import '../size_config.dart';
 import '../word.dart';
-import 'box_word.dart';
 
 class ListToLearnWords extends StatefulWidget{
   @override
@@ -10,27 +11,72 @@ class ListToLearnWords extends StatefulWidget{
 }
 
 class _ListToLearnWords extends State<ListToLearnWords> {
+
+  DatabaseHelper dbHelper = DatabaseHelper.instance;
+  List<Word> words = new List();
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper.getListToLearnWords().then((rows) {
+      setState(() {
+        rows.forEach((row) {
+          words.add(row);
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return (
-        Container(
-          padding: EdgeInsets.only(right: 10, left: 10),
-          height: 78 * SizeConfig.heightMultiplier,
-          child: ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
-                BoxWord(word: new Word(id: 1, word: 'hello', pronounceUK: '/heˈləʊ/'), colorWordInBox: Colors.red[300],),
+    return Container(
+      padding: EdgeInsets.only(right: 4*SizeConfig.widthMultiplier, left: 4*SizeConfig.widthMultiplier),
+      height: 78 * SizeConfig.heightMultiplier,
+      child: ListView.builder(
+          itemCount: words.length,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, position) {
+            return Column(
+              children: <Widget>[
+                Divider(
+                  height: 5,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: ListTile(
+                    title: Center(
+                      child: Text(
+                        '${words[position].word}',
+                        style: TextStyle(
+                            fontSize: 4 * SizeConfig.heightMultiplier,
+                            color: Colors.red[300]),
+                      ),
+                    ),
+                    subtitle: Center(
+                      child: Text('${words[position].pronounceUK}',
+                          style: TextStyle(
+                              fontSize: 3 * SizeConfig.heightMultiplier)),
+                    ),
+                    leading: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ImageIcon(
+                        AssetImage('assets/sprites/sound_play_icon.png'),
+                        size: 4.5 * SizeConfig.heightMultiplier,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    trailing: StarFavorite(
+                        wordId: null,
+                        size: 4 * SizeConfig.heightMultiplier,
+                        isFavorite: true),
+                  ),
+                )
               ],
-          ),
-        )
+            );
+          }),
     );
   }
 }

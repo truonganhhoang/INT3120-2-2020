@@ -16,10 +16,9 @@ import 'word.dart';
 import 'favorite_screen/favorite_words_screen.dart';
 import 'package:device_preview/device_preview.dart';
 
-bool isTestResponsiveMode = true;
+bool isTestResponsiveMode = false;
 
 void main() {
-
   runApp(
     (isTestResponsiveMode)
         ? DevicePreview(
@@ -36,8 +35,9 @@ class MyApp extends StatelessWidget {
     DatabaseServerHandler.instance.getAllUsers();
     DatabaseServerHandler.instance.updateLearnProgress('1122817271');
     DatabaseHelper.instance.databaseInit();
-    //DatabaseHelper.instance.getNWords(3);
-    DatabaseHelper.instance.getListFarvoriteWords();
+    DatabaseHelper.instance.getNWords(3);
+    //DatabaseHelper.instance.getListFarvoriteWords();
+    DatabaseHelper.instance.getExamplesWithId(1);
 
     return LayoutBuilder(
       builder: (context, constraints) {

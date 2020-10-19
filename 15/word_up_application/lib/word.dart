@@ -32,17 +32,34 @@ class Word {
     this.quotes,
   });
 
-  Word.map(dynamic obj) {
-    this.id = obj['id'];
-    this.word = obj['word'];
-    this.pronounceUK = obj['pronounceUK'];
-    this.pronounceUS = obj['pronounceUS'];
-  }
-
+  // Convert a Word object into Map object
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map['id'] = this.id;
     map['word'] = this.word;
-    map['pronounceUK'] = this.pronounceUK;
+    map['pronun_uk'] = this.pronounceUK;
+    map['pronun_us'] = this.pronounceUS;
+    map['sound_us'] = this.pathSoundUS;
+    map['sound_uk'] = this.pathSoundUK;
+    map['type'] = this.type;
+    map['definition'] = this.definition;
+    map['mean_card'] = this.meanCard;
+    for (int i = 0; i < examples.length; i++) {
+      map['example'] = this.examples[i];
+    }
+    return map;
+  }
+
+  // Extract a Word object from a Map object
+  Word.fromMapObject(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.word = map['word'];
+    this.pronounceUK = map['pronun_uk'];
+    this.pronounceUS = map['pronun_us'];
+    this.pathSoundUK = map['sound_uk'];
+    this.pathSoundUS = map['sound_us'];
+    this.type = map['type'];
+    this.definition = map['definition'];
+    this.meanCard = map['mean_card'];
   }
 }

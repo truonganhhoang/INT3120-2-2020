@@ -49,7 +49,7 @@ class DatabaseServerHandler{
           WordKnew(
             wordId: 6,
             reviewDays: 3,
-            reviewTimes: 0,
+            reviewTimes: 2,
           ),
         ]
     );
