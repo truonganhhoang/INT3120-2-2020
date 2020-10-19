@@ -15,7 +15,7 @@ import 'word.dart';
 import 'favorite_screen/favorite_words_screen.dart';
 import 'package:device_preview/device_preview.dart';
 
-bool isTestResponsiveMode = true;
+bool isTestResponsiveMode = false;
 
 void main() {
   AppUser user = new AppUser(
@@ -25,30 +25,38 @@ void main() {
         avatarUrl: 'https://ibb.co/T0BPtr9',
         email: 'trinh@gmail.com',
         nativeLanguage: 'Vietnamese',
-        userName: 'Trinh'
-    ),
-
-    learningProgress: LearningProgress(
-        wordFavorite: [1,2,9,10],
-        wordToLearn: [1,4,5,7,8,9,10,15],
-        wordKnew: [
-          WordKnew(
-            wordId: 2,
-            reviewDays: 3,
-            reviewTimes: 0,
-          ),
-          WordKnew(
-            wordId: 3,
-            reviewDays: 3,
-            reviewTimes: 1,
-          ),
-          WordKnew(
-            wordId: 6,
-            reviewDays: 3,
-            reviewTimes: 0,
-          ),
-        ]
-    ),
+        userName: 'Trinh'),
+    learningProgress: LearningProgress(wordFavorite: [
+      1,
+      2,
+      9,
+      10
+    ], wordToLearn: [
+      1,
+      4,
+      5,
+      7,
+      8,
+      9,
+      10,
+      15
+    ], wordKnew: [
+      WordKnew(
+        wordId: 2,
+        reviewDays: 3,
+        reviewTimes: 0,
+      ),
+      WordKnew(
+        wordId: 3,
+        reviewDays: 3,
+        reviewTimes: 1,
+      ),
+      WordKnew(
+        wordId: 6,
+        reviewDays: 3,
+        reviewTimes: 0,
+      ),
+    ]),
     learnSetting: LearnSetting(
       accent: 'British',
       practiceGoal: 20, // 20 words per day.
@@ -71,8 +79,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DatabaseHelper.instance.databaseInit();
-    //DatabaseHelper.instance.getNWords(3);
-    DatabaseHelper.instance.getListFarvoriteWords();
+    DatabaseHelper.instance.getNWords(3);
+    //DatabaseHelper.instance.getListFarvoriteWords();
+    DatabaseHelper.instance.getExamplesWithId(1);
 
     return LayoutBuilder(
       builder: (context, constraints) {

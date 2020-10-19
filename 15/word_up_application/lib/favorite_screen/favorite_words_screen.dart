@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:word_up_application/components/common_components.dart';
-import 'package:word_up_application/favorite_screen/box_word.dart';
 import 'package:word_up_application/favorite_screen/list_knew_words.dart';
 import 'package:word_up_application/favorite_screen/list_to_learn_words.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
