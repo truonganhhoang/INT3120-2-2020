@@ -3,9 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:word_up_application/firebase/firebase_handler.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/selection_screen/finish_selection_screen.dart';
 import 'package:word_up_application/selection_screen/selection_screen.dart';
+import 'package:word_up_application/services/authentication_screen.dart';
 import 'package:word_up_application/services/database_server_handler.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/user.dart';
@@ -38,6 +40,13 @@ class MyApp extends StatelessWidget {
     DatabaseHelper.instance.getNWords(3);
     //DatabaseHelper.instance.getListFarvoriteWords();
     DatabaseHelper.instance.getExamplesWithId(1);
+
+
+    FirebaseHandler.initializeFirebase();
+    DatabaseHelper.instance.databaseInit();
+    //DatabaseHelper.instance.getNWords(3);
+    DatabaseHelper.instance.getListFarvoriteWords();
+    print('runMain');
 
     return LayoutBuilder(
       builder: (context, constraints) {

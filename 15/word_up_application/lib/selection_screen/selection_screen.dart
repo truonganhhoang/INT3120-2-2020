@@ -1,109 +1,200 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:sqflite/utils/utils.dart';
 import 'package:word_up_application/selection_screen/word_selection_bar.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/word.dart';
 
 class SelectionScreen extends StatefulWidget {
-  static final SelectionScreen instance = SelectionScreen._internal();
-  factory SelectionScreen() {
-    return instance;
-  }
-  SelectionScreen._internal();
-
   final List<Word> listWordToSelect = [
-    new Word(id: 1, word: 'dog'),
-    new Word(id: 2, word: 'cat'),
-    new Word(id: 3, word: 'bear')
+    new Word(id: 1, word: 'dog', pronounceUK: 'prəˈnaʊns'),
+    new Word(id: 2, word: 'cat', pronounceUK: 'prəˈnaʊns'),
+    new Word(id: 3, word: 'bear', pronounceUK: 'prəˈnaʊns'),
+    new Word(id: 4, word: 'pig'),
+    new Word(id: 5, word: 'bee')
   ];
-  final List<WordSelectionBar> listBarSelectWord =
-      new List<WordSelectionBar>(); // Word Bar to drag, select;
-  final List<Word> listWordUnSure = new List<Word>();
-  final List<WordSelectionBar> listWordBarAlreadyKnown =
-      List<WordSelectionBar>();
-  // final List<Word> listWord
 
   @override
   State<StatefulWidget> createState() => _SelectionScreenState();
-  void deleteWordBar(int kind) {
-    switch (kind) {
-      case 0:
-        listBarSelectWord.removeLast();
-        break;
-      case 1:
-        break;
-      case 2:
-        listWordBarAlreadyKnown.removeLast();
-        break;
-    }
-  }
 }
 
 class _SelectionScreenState extends State<SelectionScreen> {
-  List<String> x = ['ddds', '112', 'mn', 'lk'];
+  int index;
+  int numberWords ;
   @override
   void initState() {
+    index = 0;
     super.initState();
-    for (int i = 0; i < widget.listWordToSelect.length; i++) {
-      widget.listBarSelectWord.add(new WordSelectionBar(
-        word: widget.listWordToSelect[i].word,
-        kind: 0,
-      ));
-    }
-    print('X' + widget.listBarSelectWord.length.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    print('V' + widget.listBarSelectWord.length.toString());
+    numberWords = widget.listWordToSelect.length;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Select Words'),
+        title: Text((index + 1).toString() + '/' + numberWords.toString()),
+        centerTitle: true,
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {},
+            child: Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: SizeConfig.screenWidth,
-              height: 100,
-              decoration: BoxDecoration(color: Colors.yellow),
-            ),
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.red,
+      backgroundColor: HexColor('#F7F7F5'),
+      body: Card(
+        shadowColor: Colors.black54,
+        margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 50),
+        color: Colors.white,
+        child: Container(
+          alignment: Alignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 50),
+                child: Column(
+                  children: [
+                    Text(
+                      widget.listWordToSelect[index].word,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                          fontSize: 5 * SizeConfig.heightMultiplier,
+                          color: Colors.red),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(widget.listWordToSelect[index].pronounceUK,
+                        style: TextStyle(
+                          fontSize: 2 * SizeConfig.heightMultiplier
+                        ),)
+                    ),
+                  ],
+                ),
               ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: widget.listBarSelectWord,
-              ),
-            ),
-            Container(
-              width: SizeConfig.screenWidth,
-              height: 100,
-              decoration: BoxDecoration(color: Colors.grey),
-              child: DragTarget(builder: (context, List<String> data, rj) {
-                return Container(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: widget.listWordBarAlreadyKnown,
+              MaterialButton(
+                onPressed: () {},
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.black12,
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: ImageIcon(
+                      AssetImage('assets/sprites/sound_play_icon.png'),
+                      color: Colors.black87,
+                      size: 8 * SizeConfig.heightMultiplier,
+                    ),
                   ),
-                );
-              }, onAccept: (data) {
-                print('OnAccept');
-                setState(() {
-                  widget.listWordBarAlreadyKnown.add(WordSelectionBar(
-                    word: data,
-                    kind: 2,
-                  ));
-                });
-              }),
-            ),
-          ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: FlatButton(
+                  padding: EdgeInsets.all(0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  onPressed: () {},
+                  child: Container(
+                      alignment: Alignment.center,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.green),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'I know',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 3 * SizeConfig.heightMultiplier,
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              text: 'the meaning of ',
+                              style: TextStyle(fontSize: 1.8 * SizeConfig.heightMultiplier, color: Colors.black,
+                                  fontWeight: FontWeight.w300),
+                              children: <TextSpan>[
+                                TextSpan(text: widget.listWordToSelect[index].word, style: TextStyle(
+                                    fontStyle: FontStyle.italic
+                                )),
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {
+                    userIsUnSure();
+                  },
+                  child: Container(
+                      padding: EdgeInsets.all(0),
+                      alignment: Alignment.center,
+                      width: 400,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.red),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Un sure',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 3 * SizeConfig.heightMultiplier,
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              text: 'the meaning of ',
+                              style: TextStyle(fontSize: 1.8 * SizeConfig.heightMultiplier, color: Colors.black,
+                              fontWeight: FontWeight.w300),
+                              children: <TextSpan>[
+                                TextSpan(text: widget.listWordToSelect[index].word, style: TextStyle(
+                                  fontStyle: FontStyle.italic
+                                )),
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 50),
+                child: Text(
+                  'Skip Remaining ' + (numberWords - index).toString() + ' words.',
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void userIsUnSure(){
+    setState(() {
+      index++;
+    });
   }
 }

@@ -8,6 +8,18 @@ import '../word.dart';
 import 'word_box.dart';
 
 class StudyHomeScreen extends StatefulWidget{
+  final List<WordBox> listWords = [
+    WordBox(word: new Word(
+        id: 1, word: 'Exile', pronounceUK: '/ˈek.saɪl/')),
+    WordBox(word: new Word(
+        id: 2, word: 'Refectory', pronounceUK: '/rɪˈfek.tər.i/')),
+    WordBox(word: new Word(
+        id: 3, word: 'Opinion', pronounceUK: '/əˈpɪn.jən/')),
+    WordBox(word: new Word(
+        id: 4,
+        word: 'Confidence',
+        pronounceUK: '/ˈkɒn.fɪ.dəns/')),
+  ];
   @override
   State<StatefulWidget> createState() => _StudyHomeScreenState();
 }
@@ -39,18 +51,7 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
                       _current = index;
                     });
                   },
-                  items: <Widget>[
-                    WordBox(word: new Word(
-                        id: 1, word: 'Exile', pronounceUK: '/ˈek.saɪl/')),
-                    WordBox(word: new Word(
-                        id: 2, word: 'Refectory', pronounceUK: '/rɪˈfek.tər.i/')),
-                    WordBox(word: new Word(
-                        id: 3, word: 'Opinion', pronounceUK: '/əˈpɪn.jən/')),
-                    WordBox(word: new Word(
-                        id: 4,
-                        word: 'Confidence',
-                        pronounceUK: '/ˈkɒn.fɪ.dəns/')),
-                  ],
+                  items: widget.listWords,
                 ),
               ),
 

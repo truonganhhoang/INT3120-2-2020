@@ -19,7 +19,13 @@ class WordBox extends StatefulWidget {
 }
 
 class WordBoxState extends State<WordBox> {
-  bool _knewThisWord = false;
+  bool _reminderReview;
+
+  @override
+  void initState(){
+    _reminderReview = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +109,7 @@ class WordBoxState extends State<WordBox> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    if(_knewThisWord) Container(
+                    if(_reminderReview) Container(
                       width: 51 * SizeConfig.widthMultiplier,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,7 +126,7 @@ class WordBoxState extends State<WordBox> {
                         ]
                       ),
                     ),
-                    if(!_knewThisWord) MaterialButton(
+                    if(!_reminderReview) MaterialButton(
                       elevation: 0,
                       onPressed: () {
                         userKnewThisWord();
@@ -138,7 +144,7 @@ class WordBoxState extends State<WordBox> {
                             fontSize: 2 * SizeConfig.heightMultiplier),
                       ),
                     ),
-                    if(!_knewThisWord) MaterialButton(
+                    if(!_reminderReview) MaterialButton(
                       elevation: 0,
                       height: 50,
                       onPressed: () {
@@ -186,7 +192,7 @@ class WordBoxState extends State<WordBox> {
   void userKnewThisWord() {
     // do something
     setState(() {
-      _knewThisWord = true;
+      _reminderReview = true;
     });
   }
 
@@ -201,7 +207,7 @@ class WordBoxState extends State<WordBox> {
 
   void userAnswerCorrect() {
     setState(() {
-      _knewThisWord = true;
+      _reminderReview = true;
     });
   }
 
@@ -221,8 +227,8 @@ class WordBoxState extends State<WordBox> {
     var alertStyle = AlertStyle(
       alertElevation: 0,
       alertPadding: EdgeInsets.only(
-          left: 2 * SizeConfig.heightMultiplier,
-          right: 2 * SizeConfig.heightMultiplier,
+          left: 3 * SizeConfig.heightMultiplier,
+          right: 3 * SizeConfig.heightMultiplier,
           top: 0 * SizeConfig.widthMultiplier,
           bottom: 25 * SizeConfig.widthMultiplier),
       animationType: AnimationType.grow,
