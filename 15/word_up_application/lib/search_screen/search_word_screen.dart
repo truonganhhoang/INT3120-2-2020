@@ -32,7 +32,12 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
 
     Response response = await get(_url + _controller.text.trim(),
         headers: {"Authorization": "Token " + _token});
-    _streamController.add(json.decode(response.body));
+
+    if (response.statusCode == 200)
+      _streamController.add(json.decode(response.body));
+    else {
+      _streamController.add("error");
+    }
   }
 
   @override
@@ -101,7 +106,7 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
             Container(
               alignment: Alignment.bottomCenter,
               padding: EdgeInsets.only(
-                  top: 1.5*SizeConfig.heightMultiplier,
+                  top: 1.5 * SizeConfig.heightMultiplier,
                   right: 1.5 * SizeConfig.heightMultiplier,
                   left: 1.5 * SizeConfig.heightMultiplier),
               child: Container(
@@ -126,13 +131,32 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
                       );
                     }
 
+                    if (snapshot.data == "error") {
+                      return Container(
+                        padding: EdgeInsets.all(8),
+                        alignment: Alignment.topCenter,
+                        child: Text(
+                          'Enter the wrong word!!!',
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                      );
+                    }
+
                     return ListView.builder(
                         itemCount: snapshot.data["definitions"].length,
                         itemBuilder: (BuildContext context, int index) {
-                          return ListBody(
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                color: Colors.grey[300],
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey[300],
+                                ),
                                 child: ListTile(
                                   leading: snapshot.data["definitions"][index]
                                               ["image_url"] ==
@@ -150,8 +174,11 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
                                       ")"),
                                 ),
                               ),
-                              Text(snapshot.data["definitions"][index]
-                                  ["definition"])
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(snapshot.data["definitions"][index]
+                                    ["definition"]),
+                              )
                             ],
                           );
                         });
