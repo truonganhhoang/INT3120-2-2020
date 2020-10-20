@@ -133,6 +133,8 @@ class DatabaseHelper {
 
   // Get N Words
   Future<List<Word>> getNWords(int numbersWords) async {
+    int lengthDb = 30;
+
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
         'SELECT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard FROM $tableWord w JOIN $tableWordKnew wk ON wk.$columnIdWord != w.$columnIdWord JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord LIMIT ?',
@@ -140,6 +142,11 @@ class DatabaseHelper {
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
       words.add(Word.fromMapObject(resultMapList[i]));
+      words[i].examples = await getExamplesWithId(words[i].id);
+    }
+    for (int i = 0; i < words.length; i++) {
+      words[i].printThisWord();
+      
     }
     return words;
   }
@@ -184,14 +191,19 @@ class DatabaseHelper {
   }
 
   // Get list example with id word
-  Future<void> getExamplesWithId(int id) async {
+    Future<List<String>> getExamplesWithId(int id) async {
     Database db = await instance.database;
     var result = await db.rawQuery(
         'SELECT $columnExample FROM $tableExamples WHERE $columnIdExample = ?',
         [id]);
 
-    log("$result");
-    //return result;
+    List<String> listExp = new List<String>();
+    for (int i = 0; i < result.length; i++) {
+      listExp.add(result[i]['example'].toString());
+    }
+    print(listExp[0].toString());
+    print(listExp[1].toString());
+    return listExp;
   }
 
   // Get list images with id word

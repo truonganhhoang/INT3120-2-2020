@@ -52,7 +52,7 @@ class Word {
 
   // Extract a Word object from a Map object
   Word.fromMapObject(Map<String, dynamic> map) {
-    this.id = map['id'];
+    this.id = map['id_word'];
     this.word = map['word'];
     this.pronounceUK = map['pronun_uk'];
     this.pronounceUS = map['pronun_us'];
@@ -61,5 +61,9 @@ class Word {
     this.type = map['type'];
     this.definition = map['definition'];
     this.meanCard = map['mean_card'];
+  }
+
+  void printThisWord() {
+    print(id.toString() + ' ' + word + examples.toString());
   }
 }

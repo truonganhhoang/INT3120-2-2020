@@ -35,18 +35,19 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    DatabaseServerHandler.instance.getAllUsers();
-    DatabaseServerHandler.instance.updateLearnProgress('1122817271');
+    //DatabaseServerHandler.instance.getAllUsers();
+    //DatabaseServerHandler.instance.updateLearnProgress('1122817271');
     // DatabaseHelper.instance.databaseInit();
     // DatabaseHelper.instance.getNWords(3);
     //DatabaseHelper.instance.getListFarvoriteWords();
-    //DatabaseHelper.instance.getExamplesWithId(1);
+    DatabaseHelper.instance.getExamplesWithId(1);
 
 
     FirebaseHandler.initializeFirebase();
     DatabaseHelper.instance.databaseInit();
-    //DatabaseHelper.instance.getNWords(3);
-    DatabaseHelper.instance.getListFarvoriteWords();
+    DatabaseHelper.instance.getNWords(5);
+    
+    //DatabaseHelper.instance.getListFarvoriteWords();
     print('runMain');
 
     return LayoutBuilder(
@@ -79,7 +80,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: AuthenticationScreen(),
+              home: Home(),
             );
           }
         });
