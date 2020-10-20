@@ -8,6 +8,7 @@ import 'Auth.dart';
 import 'LoginPage.dart';
 import 'UserInfoPage.dart';
 import 'API.dart';
+import 'DetailSubject.dart';
 class homePage extends StatefulWidget {
   String userName = "name";
 
@@ -64,40 +65,47 @@ class _homePageState extends State<homePage> {
                       for(int i=0;i<data.length;i++) {
                         print(data[i]["nameSubject"]);
                         listSubject.add(
-                          new  Container(
-                            decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white
-                            ),
-                            child: new Column(
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                new Expanded(
-                                  flex: 6,
-                                  child: new Container(
-                                    margin: EdgeInsets.fromLTRB(7,7,7,0),
-                                    child: new Image.network(data[i]["linkUrl"]),
+                          new GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return new DetailSubject();
+                              }));
+                            },
+                            child: new  Container(
+                              decoration: new BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white
+                              ),
+                              child: new Column(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  new Expanded(
+                                    flex: 6,
+                                    child: new Container(
+                                      margin: EdgeInsets.fromLTRB(7,7,7,0),
+                                      child: new Image.network(data[i]["linkUrl"]),
+                                    ),
                                   ),
-                                ),
-                                new Expanded(
-                                  flex: 4,
-                                  child: new Container(
-                                    margin: EdgeInsets.fromLTRB(7,0,7,7),
-                                    child: Center(
-                                      child: new Text(
-                                        data[i]["nameSubject"],
-                                        textAlign: TextAlign.center,
-                                        style: new TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            height: 1
+                                  new Expanded(
+                                    flex: 4,
+                                    child: new Container(
+                                      margin: EdgeInsets.fromLTRB(7,0,7,7),
+                                      child: Center(
+                                        child: new Text(
+                                          data[i]["nameSubject"],
+                                          textAlign: TextAlign.center,
+                                          style: new TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              height: 1
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           )
                         );
