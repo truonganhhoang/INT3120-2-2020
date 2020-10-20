@@ -15,13 +15,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "501986905987-4994t3mcsiakupdglh43g5tv5obi8e3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.JLTA.WordUpEnglish.word_up_application",
+            "certificate_hash": "4763b3d383b11a4808059b1e76bd7dec22715c09"
+          }
+        },
+        {
           "client_id": "501986905987-eclof4prnlouu09iom0rcsih96tc1s5u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBAJ0srK5leYRPuCEiu6jndVVoFPVEzSRE"
+          "current_key": "AIzaSyCquvMlxuCxZeguIAgsQQk2Tc7-amVV53E"
         }
       ],
       "services": {
