@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:word_up_application/firebase/firebase_handler.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
+import 'package:word_up_application/search_screen/search_word_screen.dart';
 import 'package:word_up_application/selection_screen/finish_selection_screen.dart';
 import 'package:word_up_application/selection_screen/selection_screen.dart';
 import 'package:word_up_application/services/authentication_screen.dart';
@@ -36,10 +37,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     DatabaseServerHandler.instance.getAllUsers();
     DatabaseServerHandler.instance.updateLearnProgress('1122817271');
-    DatabaseHelper.instance.databaseInit();
-    DatabaseHelper.instance.getNWords(3);
+    // DatabaseHelper.instance.databaseInit();
+    // DatabaseHelper.instance.getNWords(3);
     //DatabaseHelper.instance.getListFarvoriteWords();
-    DatabaseHelper.instance.getExamplesWithId(1);
+    //DatabaseHelper.instance.getExamplesWithId(1);
 
 
     FirebaseHandler.initializeFirebase();
