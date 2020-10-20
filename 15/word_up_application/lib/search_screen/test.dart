@@ -1,19 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:word_up_application/components/common_components.dart';
-import 'package:word_up_application/size_config.dart';
 
-class SearchWordScreen extends StatefulWidget {
+import '../size_config.dart';
+
+class Test extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _SearchWordScreenState();
+  _TestState createState() => _TestState();
 }
 
-class _SearchWordScreenState extends State<SearchWordScreen> {
-  String _url = "https://owlbot.info/api/v4/dictionary/";
-  String _token = "09203f2e870ddd0e0b55f16d94040e7ab120137c";
+class _TestState extends State<Test> {
+  String _url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+  //String _token = "09203f2e870ddd0e0b55f16d94040e7ab120137c";
 
   TextEditingController _controller = TextEditingController();
 
@@ -30,8 +32,7 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
 
     _streamController.add("waiting");
 
-    Response response = await get(_url + _controller.text.trim(),
-        headers: {"Authorization": "Token " + _token});
+    Response response = await get(_url + _controller.text.trim());
     _streamController.add(json.decode(response.body));
   }
 
@@ -47,9 +48,13 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text('Search'),
+        centerTitle: true,
+      ),
       body: Container(
         decoration: CommonComponents.background,
-        child: Column(
+        child: Stack(
           children: <Widget>[
             Container(
               alignment: Alignment.topCenter,
@@ -101,27 +106,24 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
             Container(
               alignment: Alignment.bottomCenter,
               padding: EdgeInsets.only(
-                  top: 1.5*SizeConfig.heightMultiplier,
                   right: 1.5 * SizeConfig.heightMultiplier,
                   left: 1.5 * SizeConfig.heightMultiplier),
               child: Container(
-                height: 74 * SizeConfig.heightMultiplier,
+                height: 76 * SizeConfig.heightMultiplier,
                 child: StreamBuilder(
                   stream: _stream,
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.data == null) {
                       return Container(
-                        padding: EdgeInsets.all(8),
-                        alignment: Alignment.topCenter,
+                        alignment: Alignment.center,
                         child: Text('Enter a search word'),
                       );
                     }
 
                     if (snapshot.data == "waiting") {
                       return Container(
-                        padding: EdgeInsets.all(8),
-                        alignment: Alignment.topCenter,
+                        alignment: Alignment.center,
                         child: CircularProgressIndicator(),
                       );
                     }

@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:word_up_application/components/common_components.dart';
-import 'package:word_up_application/favorite_screen/list_knew_words.dart';
-import 'package:word_up_application/favorite_screen/list_to_learn_words.dart';
+import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'dart:async';
 import '../size_config.dart';
@@ -15,9 +14,14 @@ class FavoriteWordsScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
 
+DatabaseHelper dbHelper = DatabaseHelper.instance;
+List<Word> wordsToLearn = new List();
+List<Word> wordsKnew = new List();
+
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
   int viewIndex = 0;
   int colorIndex = 0;
+  bool areListKnewWordGet = false;
 
   void _onChanged(int index) {
     setState(() {
@@ -27,7 +31,32 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
       } else {
         viewIndex = 1;
         colorIndex = 1;
+        if (!areListKnewWordGet) _getDataForListKnewWord();
       }
+    });
+  }
+
+  // call only one
+  _getDataForListKnewWord() {
+    dbHelper.getListKnewWords().then((rows) {
+      setState(() {
+        rows.forEach((row) {
+          wordsKnew.add(row);
+        });
+      });
+    });
+    areListKnewWordGet = true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper.getListToLearnWords().then((rows) {
+      setState(() {
+        rows.forEach((row) {
+          wordsToLearn.add(row);
+        });
+      });
     });
   }
 
@@ -68,12 +97,72 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                 ),
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child:
-                      (viewIndex == 0) ? ListToLearnWords() : ListKnewWords(),
+                  child: (viewIndex == 0)
+                      ? listWord(wordsToLearn, Colors.red[300])
+                      : listWord(wordsKnew, Colors.green[300]),
                 )
               ],
             ),
           )),
     );
   }
+}
+
+Widget listWord(List<Word> words, Color colorText) {
+  return Container(
+    padding: EdgeInsets.only(
+        right: 4 * SizeConfig.widthMultiplier,
+        left: 4 * SizeConfig.widthMultiplier),
+    height: 78 * SizeConfig.heightMultiplier,
+    child: ListView.builder(
+        itemCount: words.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, position) {
+          var widthMultiplier = SizeConfig.widthMultiplier;
+          return Column(
+            children: <Widget>[
+              Divider(
+                height: 5,
+              ),
+              Container(
+                padding:
+                    EdgeInsets.only(bottom: 0.6 * SizeConfig.heightMultiplier),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 5 * widthMultiplier),
+                      child: ImageIcon(
+                        AssetImage('assets/sprites/sound_play_icon.png'),
+                        size: 4.5 * SizeConfig.heightMultiplier,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          '${words[position].word}',
+                          style: TextStyle(
+                              fontSize: 4 * SizeConfig.heightMultiplier,
+                              color: colorText),
+                        ),
+                        Text('${words[position].pronounceUK}',
+                            style: TextStyle(
+                                fontSize: 3 * SizeConfig.heightMultiplier))
+                      ],
+                    ),
+                    StarFavorite(
+                        wordId: null,
+                        size: 4 * SizeConfig.heightMultiplier,
+                        isFavorite: true)
+                  ],
+                ),
+              )
+            ],
+          );
+        }),
+  );
 }

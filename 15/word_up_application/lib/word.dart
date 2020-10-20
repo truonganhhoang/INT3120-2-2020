@@ -64,6 +64,6 @@ class Word {
   }
 
   void printThisWord() {
-    print(id.toString() + ' ' + word + examples.toString());
+    print(id.toString() + ' ' + word + ' ' + examples.toString());
   }
 }

@@ -146,7 +146,6 @@ class DatabaseHelper {
     }
     for (int i = 0; i < words.length; i++) {
       words[i].printThisWord();
-      
     }
     return words;
   }
@@ -191,29 +190,30 @@ class DatabaseHelper {
   }
 
   // Get list example with id word
-    Future<List<String>> getExamplesWithId(int id) async {
+  Future<List<String>> getExamplesWithId(int id) async {
     Database db = await instance.database;
     var result = await db.rawQuery(
         'SELECT $columnExample FROM $tableExamples WHERE $columnIdExample = ?',
         [id]);
 
-    List<String> listExp = new List<String>();
+    List<String> listExps = new List<String>();
     for (int i = 0; i < result.length; i++) {
-      listExp.add(result[i]['example'].toString());
+      listExps.add(result[i]['example'].toString());
     }
-    print(listExp[0].toString());
-    print(listExp[1].toString());
-    return listExp;
+    return listExps;
   }
 
   // Get list images with id word
-  Future<void> geImagesWithId(int id) async {
+  Future<List<String>> geImagesWithId(int id) async {
     Database db = await instance.database;
     var result = await db.rawQuery(
         'SELECT $columnImage FROM $tableImages WHERE $columnIdImage = ?', [id]);
 
-    log("$result");
-    //return result;
+    List<String> listImgs = List<String>();
+    for (int i = 0; i < result.length; i++) {
+      listImgs.add(result[i]['image'].toString());
+    }
+    return listImgs;
   }
 
   // Get list quotes with id word
@@ -223,8 +223,11 @@ class DatabaseHelper {
         'SELECT $columnQuoteExample FROM $tableQuoteExamples WHERE $columnIdWord = ?',
         [id]);
 
-    log("$result");
-    //return result;
+    List<String> listQuotes = List<String>();
+    for (int i = 0; i < result.length; i++) {
+      listQuotes.add(result[i]['quotes'].toString());
+    }
+    return listQuotes;
   }
 
   // Update
