@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/views/play_screen/end_quiz.dart';
 import 'package:quiztest/views/setting/setting.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
@@ -85,41 +86,4 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-}
-
-Widget get _buildBottomNavigationBar {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(45),
-    child: BottomNavigationBar(
-      backgroundColor: Colors.white,
-      selectedItemColor: Colors.orangeAccent,
-      unselectedItemColor: Colors.black,
-      items: [
-        BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/icons/home.png")),
-            title: Text(
-              "Home",
-              style: TextStyle(fontSize: 10),
-            )),
-        BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/icons/search.png")),
-            title: Text(
-              "Search",
-              style: TextStyle(fontSize: 10),
-            )),
-        BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/icons/activity.png")),
-            title: Text(
-              "Activity",
-              style: TextStyle(fontSize: 10),
-            )),
-        BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/icons/settings.png")),
-            title: Text(
-              "Setting",
-              style: TextStyle(fontSize: 10),
-            )),
-      ],
-    ),
-  );
 }
