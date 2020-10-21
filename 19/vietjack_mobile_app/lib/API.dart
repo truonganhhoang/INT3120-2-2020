@@ -8,4 +8,13 @@ class API{
         .where("UserId", isEqualTo: auth.currentUser.uid)
         .get();
   }
+  static Future<QuerySnapshot> getListContent(String grade, String nameSubject) async{
+    return await FirebaseFirestore.instance
+        .collection("Class_Subject")
+        .doc(grade)
+        .collection("Info")
+        .doc(nameSubject)
+        .collection("Content")
+        .get();
+  }
 }

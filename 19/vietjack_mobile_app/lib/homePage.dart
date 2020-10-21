@@ -17,8 +17,9 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  String userClass;
   Future<QuerySnapshot> getUserClassInfo() async{
-    String userClass = await API.getUser().then((value) {
+    userClass = await API.getUser().then((value) {
       return "Grade"+value.docs[0]["UserClass"].toString();
     });
     QuerySnapshot userClassInfo = await FirebaseFirestore.instance
@@ -68,7 +69,7 @@ class _homePageState extends State<homePage> {
                           new GestureDetector(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return new DetailSubject();
+                                return new DetailSubject(grade: this.userClass,nameSubject: data[i].id,);
                               }));
                             },
                             child: new  Container(
