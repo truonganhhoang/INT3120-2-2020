@@ -70,7 +70,7 @@ class Buttons extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => QuizGame(
+                            builder: (context) => QuizPage(
                                   quizID: quizID,
                                   totalQs: questionCount,
                                 )));

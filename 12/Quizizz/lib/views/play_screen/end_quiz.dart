@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/main.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
+import 'package:quiztest/views/home/home_page.dart';
 
 class EndQuiz extends StatelessWidget {
+  EndQuiz({@required this.correctAns, @required this.incorrectAns});
+  final int correctAns;
+  final int incorrectAns;
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -14,8 +20,8 @@ class EndQuiz extends StatelessWidget {
             FindQuiz(size: size),
             Result(
               size: size,
-              correct: 8,
-              inccorect: 10,
+              correct: correctAns,
+              inccorect: incorrectAns,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20),
@@ -32,41 +38,20 @@ class EndQuiz extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        QuizCard(
+                  SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return QuizCard(
                           title: "Solar system",
                           imagePath: "assets/images/solar.png",
                           questionCount: 22,
                           size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                        QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   )
                 ],
@@ -325,12 +310,18 @@ class PauseExit extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
-              child: Text(
-                "Exit",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()));
+                },
+                child: Text(
+                  "Exit",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             )

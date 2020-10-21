@@ -1,26 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/models/models.dart';
+import 'dart:async';
+import 'end_quiz.dart';
 
-class QuizGame extends StatefulWidget {
-  QuizGame({@required this.quizID, this.totalQs});
+bool _checkChoose;
+int _currentQs;
+int _totalQs;
+int _correctChoose;
+Future<List<Questional>> quest;
+
+class QuizPage extends StatefulWidget {
+  QuizPage({@required this.quizID, this.totalQs});
 
   final String quizID;
+  final int totalQs;
+  @override
+  _QuizPageState createState() => _QuizPageState();
+}
+
+class _QuizPageState extends State<QuizPage> {
+  @override
+  void initState() {
+    quest = API_Manager().fetchQuestionByQuiz(widget.quizID);
+    _totalQs = widget.totalQs;
+    _currentQs = 0;
+    _correctChoose = 0;
+    _correctChoose = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return QuizGame();
+  }
+}
+
+class QuizGame extends StatefulWidget {
+  QuizGame({this.totalQs});
   final int totalQs;
   @override
   _QuizGameState createState() => _QuizGameState();
 }
 
 class _QuizGameState extends State<QuizGame> {
-  Future<List<Questional>> _questional;
-  int _currentQs;
-
   @override
   void initState() {
-    _questional = API_Manager().fetchQuestionByQuiz(widget.quizID);
-    _currentQs = 0;
+    _checkChoose = false;
     super.initState();
-    print(widget.quizID);
   }
 
   @override
@@ -30,16 +58,17 @@ class _QuizGameState extends State<QuizGame> {
       child: Material(
         color: Colors.black,
         child: FutureBuilder<List<Questional>>(
-            future: _questional,
+            future: quest,
             builder: (context, snapshot) {
-              print("questions.length");
               if (snapshot.hasData) {
                 List<Questional> questions = snapshot.data ?? [];
-                print(questions.length);
                 Questional question = questions[_currentQs];
                 return Column(
                   children: [
-                    Pause(currentQs: _currentQs + 1, totalQs: widget.totalQs,),
+                    Pause(
+                      currentQs: _currentQs + 1,
+                      totalQs: _totalQs,
+                    ),
                     Question(
                       size: size,
                       question: question.question,
@@ -48,6 +77,7 @@ class _QuizGameState extends State<QuizGame> {
                     ListChoices(
                       size: size,
                       question: question,
+                      qsCount: _totalQs,
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 20, top: 10),
@@ -67,29 +97,58 @@ class _QuizGameState extends State<QuizGame> {
 }
 
 class ListChoices extends StatefulWidget {
-  const ListChoices({Key key, @required this.size, this.question})
+  const ListChoices({Key key, @required this.size, this.question, this.qsCount})
       : super(key: key);
 
   final Size size;
   final Questional question;
+  final int qsCount;
 
   @override
   _ListChoicesState createState() => _ListChoicesState();
 }
 
 class _ListChoicesState extends State<ListChoices> {
-  var status;
-
-  void check(int chooseAns) {
-    if (chooseAns == widget.question.answer) {
-    } else {}
-  }
+  var _isCorrect;
+  var _isChoose;
 
   @override
   void initState() {
-    status = [0, 0, 0, 0];
-    status[widget.question.answer] = 2;
+    _isCorrect = [false, false, false, false];
+    _isChoose = [false, false, false, false];
+    _isCorrect[widget.question.answer - 1] = true;
     super.initState();
+    print("Tong cau hoi" + _totalQs.toString());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void nextQs() {
+    if (_currentQs < widget.qsCount - 1) {
+      setState(() {
+        Timer(Duration(seconds: 1), () {
+          _currentQs++;
+          print("Cau hoi hien tai" + _currentQs.toString());
+          Navigator.push(
+              context, new MaterialPageRoute(builder: (context) => QuizGame()));
+        });
+      });
+    } else {
+      setState(() {
+        Timer(Duration(seconds: 1), () {
+          Navigator.pushReplacement(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => EndQuiz(
+                        correctAns: _correctChoose,
+                        incorrectAns: _totalQs - _correctChoose,
+                      )));
+        });
+      });
+    }
   }
 
   @override
@@ -98,54 +157,66 @@ class _ListChoicesState extends State<ListChoices> {
       children: [
         GestureDetector(
           onTap: () {
-            status[1]--;
-            status[2]--;
-            status[3]--;
+            setState(() {
+              _isChoose[0] = true;
+              _checkChoose = true;
+              nextQs();
+            });
           },
           child: Choice(
             size: widget.size,
             choice: widget.question.choice1,
             color: Colors.blue,
-            status: status[0],
+            isCorrect: _isCorrect[0],
+            isChoose: _isChoose[0],
           ),
         ),
         GestureDetector(
           onTap: () {
-            status[0]--;
-            status[2]--;
-            status[3]--;
+            setState(() {
+              _isChoose[1] = true;
+              _checkChoose = true;
+              nextQs();
+            });
           },
           child: Choice(
             size: widget.size,
             choice: widget.question.choice2,
             color: Colors.green,
-            status: status[1],
+            isCorrect: _isCorrect[1],
+            isChoose: _isChoose[1],
           ),
         ),
         GestureDetector(
           onTap: () {
-            status[0]--;
-            status[1]--;
-            status[3]--;
+            setState(() {
+              _isChoose[2] = true;
+              _checkChoose = true;
+              nextQs();
+            });
           },
           child: Choice(
             size: widget.size,
             choice: widget.question.choice3,
             color: Colors.teal,
-            status: status[2],
+            isCorrect: _isCorrect[2],
+            isChoose: _isChoose[2],
           ),
         ),
         GestureDetector(
           onTap: () {
-            status[0]--;
-            status[1]--;
-            status[2]--;
+            setState(() {
+              _isChoose[3] = true;
+              _checkChoose = true;
+              nextQs();
+            });
           },
           child: Choice(
             size: widget.size,
             choice: widget.question.choice4,
             color: Colors.pink,
-            status: status[3],
+            isCorrect: _isCorrect[3],
+            isChoose: _isChoose[3],
           ),
         ),
       ],
@@ -153,55 +224,125 @@ class _ListChoicesState extends State<ListChoices> {
   }
 }
 
-class Choice extends StatefulWidget {
+class Choice extends StatelessWidget {
   const Choice(
       {Key key,
       @required this.size,
       @required this.choice,
       @required this.color,
-      this.status})
+      @required this.isChoose,
+      this.isCorrect})
       : super(key: key);
 
   final Size size;
   final String choice;
   final Color color;
-  final int status;
-
-  @override
-  _ChoiceState createState() => _ChoiceState();
-}
-
-class _ChoiceState extends State<Choice> {
-  bool _visible;
-
-  @override
-  void initState() {
-    _visible = true;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Visibility(
-      visible: true,
-      child: Padding(
+  final bool isCorrect;
+  final bool isChoose;
+  Widget choice_quiz(bool _isCorrect, bool _isChoose) {
+    if (!_checkChoose) {
+      return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Container(
-          height: widget.size.height * 0.09,
-          width: widget.size.width,
+          height: size.height * 0.09,
+          width: size.width,
           decoration: BoxDecoration(
-              color: widget.color, borderRadius: BorderRadius.circular(5)),
+              color: color, borderRadius: BorderRadius.circular(5)),
           alignment: Alignment.center,
           child: Text(
-            widget.choice,
+            choice,
             style: TextStyle(
               color: Colors.white,
               fontSize: 22,
             ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      if (_isCorrect && _isChoose) {
+        _correctChoose++;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: Container(
+            height: size.height * 0.09,
+            width: size.width,
+            decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.white, width: 3)),
+            alignment: Alignment.center,
+            child: Text(
+              choice,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
+            ),
+          ),
+        );
+      }
+      if (_isCorrect && !_isChoose) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: Container(
+            height: size.height * 0.09,
+            width: size.width,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              choice,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
+            ),
+          ),
+        );
+      }
+      if (!_isCorrect && !_isChoose) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: Container(
+            height: size.height * 0.09,
+            width: size.width,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            alignment: Alignment.center,
+          ),
+        );
+      }
+      if (!_isCorrect && _isChoose) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: Container(
+            height: size.height * 0.09,
+            width: size.width,
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.white, width: 3)),
+            alignment: Alignment.center,
+            child: Text(
+              choice,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return choice_quiz(isCorrect, isChoose);
   }
 }
 

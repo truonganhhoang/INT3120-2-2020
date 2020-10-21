@@ -35,7 +35,6 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<Topic> topics = snapshot.data ?? [];
-                    print(topics.length);
                     return ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: topics.length,
