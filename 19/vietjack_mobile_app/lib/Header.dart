@@ -46,34 +46,61 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          new Opacity(
-            opacity: myOpacity,
-            child: new Container(
-                width: left,
-                height: 200,
-                child: Center(
-                  child: new Text(
-                    auth.currentUser.displayName,
-                    style: new TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'GoodDog',
-                        fontSize: 45,
-                        color: Colors.pink[200]),
-                  ),
-                )),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.brown[50],
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20)
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
           ),
-          new Container(
-            width: right,
-            height: 200,
-            child: new Opacity(
+        ],
+      ),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            new Opacity(
               opacity: myOpacity,
-              child: new Image(
-                  image: AssetImage('assets/idea.jpg'), fit: BoxFit.fitHeight),
+              child: new Container(
+                  width: left,
+                  height: 200,
+                  child: Center(
+                    child: new Text(
+                      auth.currentUser.displayName,
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'GoodDog',
+                          fontSize: 45,
+                          color: Colors.pink[200]),
+                    ),
+                  )),
             ),
-          ),
-        ]);
+            new Container(
+              width: right,
+              height: 200,
+              child: new Opacity(
+                opacity: myOpacity,
+                child: new ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(20) 
+                  ),
+                  child: new Image(
+                      image: AssetImage('assets/idea.jpg'), fit: BoxFit.fitHeight,),
+                ),
+              ),
+            ),
+            // new Container(
+            //   width: right,
+            //   height: 200,
+            //   child: new Stack(),
+            // )
+          ]),
+    );
   }
 }

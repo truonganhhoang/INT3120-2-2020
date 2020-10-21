@@ -43,7 +43,6 @@ class _homePageState extends State<homePage> {
                 new Header(
                   width: width,
                   height: height,
-                  runAnimation: false,
                 )
               ]),
             ),
@@ -114,8 +113,8 @@ class _homePageState extends State<homePage> {
                       Widget gridSubject = new SliverPadding(
                         padding: EdgeInsets.fromLTRB(10,30,10,0),
                         sliver: new SliverGrid.count(
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 50,
+                          mainAxisSpacing: 1,
                           crossAxisCount: 3,
                           children: listSubject,
                         ),
