@@ -15,8 +15,6 @@ class AuthService{
   AuthService._internal();
 
   Future<String> signInWithGoogle() async {
-    await Firebase.initializeApp();
-
     print('Sign');
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     print('SingXX');

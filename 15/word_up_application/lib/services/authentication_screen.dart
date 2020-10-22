@@ -33,12 +33,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
-        AuthService.instance.signInWithGoogle().then((result) {
-          if (result != null) {
-            print('Success');
-          }
-        });
-      },
+        AuthService.instance.signInWithGoogle().whenComplete(() => {
+          print('dd'),
+        });},
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       borderSide: BorderSide(color: Colors.grey),
