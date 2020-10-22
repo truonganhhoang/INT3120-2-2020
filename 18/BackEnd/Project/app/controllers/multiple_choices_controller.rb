@@ -1,6 +1,6 @@
 class MultipleChoicesController < ApplicationController
   def index
-    @multiple_choices = MultipleChoice.ransack(params[:q]).result.sample(params[:number])
+    @multiple_choices = MultipleChoice.ransack(params[:q]).result.sample(params[:number].to_i)
     render json: {
       success: true,
       data: ActiveModel::SerializableResource.new(@multiple_choices)

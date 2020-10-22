@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       post :answer
     end
   end
-  resources :multiple_choice do
+  resources :multiple_choices do
     collection do
       post :answer
     end
