@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'API.dart';
+import 'SubjectContent.dart';
 
 class DetailSubject extends StatefulWidget {
   @override
   _DetailSubjectState createState() => _DetailSubjectState();
   String grade;
   String nameSubject;
+
   DetailSubject({Key key, this.grade, this.nameSubject}) : super(key: key);
 }
 
@@ -18,6 +20,7 @@ class _DetailSubjectState extends State<DetailSubject> {
         await API.getListContent(widget.grade, widget.nameSubject);
     return listContent;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +49,14 @@ class _DetailSubjectState extends State<DetailSubject> {
                           height: 80,
                           child: Center(
                             child: new ListTile(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>new Text(snapshot.data.docs[index]["content"])));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        // new Text(snapshot.data.docs[index]["content"])
+                                        new SubjectContent(header: snapshot.data.docs[index].id,content: snapshot.data.docs[index]["content"],)
+                                    ));
                               },
                               leading: Icon(
                                 Icons.ac_unit,

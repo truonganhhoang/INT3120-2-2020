@@ -30,6 +30,7 @@ dependencies:
   flutter_auth_buttons: ^0.10.0
   google_fonts: ^1.1.0
   cloud_firestore: 0.14.1+2
+  flutter_html: ^1.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
