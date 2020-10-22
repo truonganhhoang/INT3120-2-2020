@@ -184,8 +184,7 @@ class _SearchState extends State<Search> {
                     onPressed: null,
                     child: Text(
                       "APPLY",
-                      style:
-                          TextStyle(color: Colors.purpleAccent, fontSize: 18),
+                      style: TextStyle(color: Colors.purple, fontSize: 18),
                     )),
               )
             ],
