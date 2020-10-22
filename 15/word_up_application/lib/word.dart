@@ -30,6 +30,7 @@ class Word {
     this.examples,
     this.imagePaths,
     this.quotes,
+    this.isFavorite,
   });
 
   // Convert a Word object into Map object

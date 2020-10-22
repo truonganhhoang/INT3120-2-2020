@@ -11,8 +11,8 @@ class LearnBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
-      margin: EdgeInsets.only(top: 15.0, left: 15, right: 5),
+      width: 90 * SizeConfig.widthMultiplier,
+      margin: EdgeInsets.only(top: 5.0, left: 10, right: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -21,14 +21,16 @@ class LearnBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           new Container(
-              width: 32 * SizeConfig.heightMultiplier,
-              height: 63 * SizeConfig.heightMultiplier,
-              margin: EdgeInsets.fromLTRB(10, 00, 10, 0),
-              padding: EdgeInsets.only(left: 5, right: 5),
+              width: 70 * SizeConfig.widthMultiplier,
+              height: 65 * SizeConfig.heightMultiplier,
+              //margin: EdgeInsets.fromLTRB(8, 00, 8, 0),
+              padding: EdgeInsets.only(left: 8, right: 8),
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                  Container(
+                    padding: EdgeInsets.only(
+                        left: 15, right: 15, top: SizeConfig.textMultiplier),
+                    height: 6 * SizeConfig.textMultiplier,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -36,42 +38,42 @@ class LearnBox extends StatelessWidget {
                           word.type,
                           style: TextStyle(
                             color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 2.6 * SizeConfig.textMultiplier,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 2.7 * SizeConfig.textMultiplier,
                           ),
                         ),
-                        StarFavorite(wordId: word.id,size: 3.2 * SizeConfig.heightMultiplier,isFavorite: false,)
+                        StarFavorite(
+                          wordId: word.id,
+                          size: 3.2 * SizeConfig.heightMultiplier,
+                          isFavorite: word.isFavorite,
+                        )
                       ],
+                    ),
+                  ),
+                  Text(
+                    word.word,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 3.6 * SizeConfig.textMultiplier,
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        word.word,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 3.5 * SizeConfig.textMultiplier,
+                      Container(
+                        width: 45 * SizeConfig.widthMultiplier,
+                        height: 4.2 * SizeConfig.textMultiplier,
+                        margin: EdgeInsets.only(
+                            left: 5 * SizeConfig.widthMultiplier),
+                        padding: EdgeInsets.only(
+                            top: 0.8 * SizeConfig.textMultiplier),
+                        decoration: BoxDecoration(
+                          color: Colors.yellow[200],
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: 25 * SizeConfig.heightMultiplier,
-                    height: 30,
-                    margin: EdgeInsets.only(top: SizeConfig.heightMultiplier),
-                    padding:
-                        EdgeInsets.only(left: 6.8 * SizeConfig.textMultiplier),
-                    decoration: BoxDecoration(
-                      color: Colors.yellow[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
+                        child: Text(
                           word.pronounceUK,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -80,7 +82,10 @@ class LearnBox extends StatelessWidget {
                             fontSize: 2.2 * SizeConfig.textMultiplier,
                           ),
                         ),
-                        IconButton(
+                      ),
+                      Container(
+                        width: 5 * SizeConfig.widthMultiplier,
+                        child: IconButton(
                           onPressed: () => (assetsAudioPlayer.open(
                             Audio(word.pathSoundUK),
                           )),
@@ -89,29 +94,30 @@ class LearnBox extends StatelessWidget {
                           icon: Icon(
                             Icons.volume_up,
                             color: Colors.blue,
-                            size: 2.2 * SizeConfig.textMultiplier,
+                            size: 3 * SizeConfig.textMultiplier,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: SizeConfig.heightMultiplier),
+                    margin:
+                        EdgeInsets.only(top: 0.8 * SizeConfig.widthMultiplier),
                     child: Text(
                       word.definition,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
-                        fontSize: 2 * SizeConfig.textMultiplier,
+                        fontSize: 2.1 * SizeConfig.textMultiplier,
                       ),
                     ),
                   ),
                   Container(
-                    width: 350,
-                    height: 10 * SizeConfig.heightMultiplier,
+                    width: 62 * SizeConfig.widthMultiplier,
+                    //height: 14 * SizeConfig.heightMultiplier,
                     margin:
-                        EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+                        EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
                     child: Column(
                       children: [
                         Text(
@@ -120,7 +126,7 @@ class LearnBox extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
-                            fontSize: 2 * SizeConfig.textMultiplier,
+                            fontSize: 2.1 * SizeConfig.textMultiplier,
                           ),
                         ),
                         Text(
@@ -128,17 +134,17 @@ class LearnBox extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
-                            fontSize: 2 * SizeConfig.textMultiplier,
+                            fontSize: 2.1 * SizeConfig.textMultiplier,
                           ),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    width: 15 * SizeConfig.heightMultiplier,
-                    height: 30,
+                    width: 40 * SizeConfig.widthMultiplier,
+                    height: 5 * SizeConfig.textMultiplier,
                     margin:
-                        EdgeInsets.only(top: 1.5 * SizeConfig.heightMultiplier),
+                        EdgeInsets.only(top: 1.2 * SizeConfig.textMultiplier),
                     decoration: BoxDecoration(
                       color: Colors.blue[800],
                       borderRadius: BorderRadius.circular(5),
@@ -159,11 +165,12 @@ class LearnBox extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.only(top: 2.4 * SizeConfig.textMultiplier),
-                    width: 27 * SizeConfig.heightMultiplier,
-                    height: 14 * SizeConfig.heightMultiplier,
-                    child: Image(image: AssetImage(word.imagePaths[0])),
+                    margin: EdgeInsets.only(top: 2 * SizeConfig.textMultiplier),
+                    child: Image(
+                        image: AssetImage(word.imagePaths[0]),
+                        width: 50 * SizeConfig.widthMultiplier,
+                        height: 15 * SizeConfig.heightMultiplier,
+                        fit: BoxFit.fill),
                   )
                 ],
               )),

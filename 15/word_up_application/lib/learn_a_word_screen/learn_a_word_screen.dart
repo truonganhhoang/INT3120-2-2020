@@ -7,26 +7,9 @@ import 'package:word_up_application/components/common_components.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:word_up_application/size_config.dart';
 import 'share_screen.dart';
+import 'fake_data.dart';
 
 class LearnAWord extends StatelessWidget {
-  final Word word = Word(
-    id: 1,
-    word: 'Modern',
-    type: 'adj',
-    definition: 'Designed and made using the most recent ideas and methods',
-    meanCard: 'Hiện đại',
-    examples: [
-      '- modern technology/education/art/transport.',
-      '- We\'re in the very modern-looking building opposite the station.'
-    ],
-    pathSoundUK: 'assets/audios/modern_UK.mp3',
-    pathSoundUS: 'pathSoundUS',
-    pronounceUS: '/ˈmɒd.ən/',
-    pronounceUK: '/ˈmɒd.ən/',
-    imagePaths: ['assets/images/modern.jpg'],
-    quotes: ['This house is more modern than that house'],
-  );
-
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -62,13 +45,13 @@ class LearnAWord extends StatelessWidget {
                 onPageChanged: (index) {},
                 items: <Widget>[
                   LearnBox(
-                    word: word,
+                    word: words[0],
                   ),
                   LearnBox(
-                    word: word,
+                    word: words[1],
                   ),
                   LearnBox(
-                    word: word,
+                    word: words[2],
                   ),
                 ],
               ),
@@ -110,7 +93,7 @@ class LearnAWord extends StatelessWidget {
                           margin: EdgeInsets.only(top: 10),
                           width: 32 * SizeConfig.heightMultiplier,
                           padding: EdgeInsets.only(bottom: 5),
-                          child: Text('"' + word.quotes[0] + '"',
+                          child: Text('"' + word1.quotes[0] + '"',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey[500],
