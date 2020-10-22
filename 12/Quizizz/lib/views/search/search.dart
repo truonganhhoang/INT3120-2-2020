@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/models/models.dart';
+import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/search/search-api.dart';
 import '../components/appbar.dart';
 
-const List<Color> activeColor = [Colors.white, Colors.pinkAccent];
-const List<String> filterTitles = ["Grade", "Subject", "Number of questions"];
-const List<List<String>> criterias = [
-  ["Elementary", "Middle School", "High School", "University"],
-  [
-    "Math",
-    "English",
-    "History",
-    "Geography",
-    "Biology",
-    "Chemistry",
-    "Physics"
-  ],
-  ["1-10", "11-20", "20+"]
-];
+const List<Color> activeColor = [Colors.white, Colors.pinkAccent, Colors.grey];
+// const List<String> filterTitles = ["Grade", "Subject", "Number of questions"];
 
 class Search extends StatefulWidget {
   @override
@@ -26,6 +15,33 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   bool isFiltered = false;
   int selectedTitle = 0;
+  List<Map> filterTitles = [
+    {"isSelected": true, "title": "Grade", "isChosen": false},
+    {"isSelected": false, "title": "Subject", "isChosen": false},
+    {"isSelected": false, "title": "Number of questions", "isChosen": false}
+  ];
+  List<List<Map>> criterias = [
+    [
+      {"isSelected": false, "title": "Elementary"},
+      {"isSelected": false, "title": "Middle School"},
+      {"isSelected": false, "title": "High School"},
+      {"isSelected": false, "title": "University"}
+    ],
+    [
+      {"isSelected": false, "title": "Math"},
+      {"isSelected": false, "title": "English"},
+      {"isSelected": false, "title": "History"},
+      {"isSelected": false, "title": "Geography"},
+      {"isSelected": false, "title": "Biology"},
+      {"isSelected": false, "title": "Chemistry"},
+      {"isSelected": false, "title": "physics"}
+    ],
+    [
+      {"isSelected": false, "title": "1-10"},
+      {"isSelected": false, "title": "11-20"},
+      {"isSelected": false, "title": "20+"}
+    ]
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,6 +50,7 @@ class _SearchState extends State<Search> {
           namePage: "Search",
           height: size.height,
         ),
+        resizeToAvoidBottomPadding: false,
         body: Visibility(
           maintainSize: false,
           maintainAnimation: false,
@@ -99,12 +116,23 @@ class _SearchState extends State<Search> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return ListFilter(
-                                size: size,
-                                title: filterTitles[index],
+                                title: filterTitles[index]['title'],
+                                isSelected: filterTitles[index]['isSelected'],
+                                isChosen: filterTitles[index]['isChosen'],
                                 onTap: () {
+                                  for (int i = 0;
+                                      i < filterTitles.length;
+                                      i++) {
+                                    if (filterTitles[i]['isSelected'] == true &&
+                                        i != index) {
+                                      filterTitles[i]['isSelected'] = false;
+                                    }
+                                  }
+                                  if (!filterTitles[index]['isSelected'])
+                                    filterTitles[index]['isSelected'] =
+                                        !filterTitles[index]['isSelected'];
                                   setState(() {
                                     selectedTitle = index;
-                                    print(selectedTitle);
                                   });
                                 });
                           },
@@ -112,18 +140,41 @@ class _SearchState extends State<Search> {
                       ),
                     ),
                     Container(
-                      child: Column(
-                          children: criterias[selectedTitle]
-                              .map((criteria) => Container(
-                                    alignment: Alignment.centerLeft,
-                                    height: 40,
-                                    padding: EdgeInsets.only(left: 30, top: 5),
-                                    child: Text(
-                                      criteria,
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                  ))
-                              .toList()),
+                      width: size.width * 0.55,
+                      child: ListView.builder(
+                        itemCount: criterias[selectedTitle].length,
+                        itemBuilder: (context, index) {
+                          return ListDetail(
+                            onTap: () {
+                              for (int i = 0;
+                                  i < criterias[selectedTitle].length;
+                                  i++) {
+                                if (criterias[selectedTitle][i]['isSelected'] ==
+                                        true &&
+                                    i != index) {
+                                  criterias[selectedTitle][i]['isSelected'] =
+                                      false;
+                                }
+                              }
+                              setState(() {
+                                criterias[selectedTitle][index]['isSelected'] =
+                                    !criterias[selectedTitle][index]
+                                        ['isSelected'];
+                                if (criterias[selectedTitle][index]
+                                    ['isSelected']) {
+                                  filterTitles[selectedTitle]['isChosen'] =
+                                      true;
+                                } else
+                                  filterTitles[selectedTitle]['isChosen'] =
+                                      false;
+                              });
+                            },
+                            criteria: criterias[selectedTitle][index]['title'],
+                            isSelected: criterias[selectedTitle][index]
+                                ['isSelected'],
+                          );
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -143,38 +194,33 @@ class _SearchState extends State<Search> {
   }
 }
 
-class ListFilter extends StatefulWidget {
-  const ListFilter({
+class ListDetail extends StatefulWidget {
+  const ListDetail({
     Key key,
-    @required this.size,
-    this.title,
+    this.criteria,
+    this.isSelected,
     this.onTap,
   }) : super(key: key);
-
-  final Size size;
-  final String title;
+  final String criteria;
+  final bool isSelected;
   final Function onTap;
-
   @override
-  _ListFilterState createState() => _ListFilterState();
+  _ListDetailState createState() => _ListDetailState();
 }
 
-class _ListFilterState extends State<ListFilter> {
-  bool isPressed = true;
+class _ListDetailState extends State<ListDetail> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onTap,
-      focusColor: Colors.pinkAccent,
-      hoverColor: Colors.black,
       child: Container(
-        decoration:
-            BoxDecoration(color: isPressed ? activeColor[0] : activeColor[1]),
+        decoration: BoxDecoration(
+            color: widget.isSelected ? activeColor[2] : activeColor[0]),
         alignment: Alignment.centerLeft,
-        height: 50,
-        padding: EdgeInsets.only(left: 10, top: 5),
+        height: 40,
+        padding: EdgeInsets.only(top: 5, left: 30),
         child: Text(
-          widget.title,
+          widget.criteria,
           style: TextStyle(fontSize: 18),
         ),
       ),
@@ -182,12 +228,67 @@ class _ListFilterState extends State<ListFilter> {
   }
 }
 
-class SearchFilter extends StatelessWidget {
+class ListFilter extends StatefulWidget {
+  const ListFilter({
+    Key key,
+    this.title,
+    this.onTap,
+    this.isSelected,
+    this.isChosen,
+  }) : super(key: key);
+
+  final String title;
+  final Function onTap;
+  final bool isSelected;
+  final bool isChosen;
+
+  @override
+  _ListFilterState createState() => _ListFilterState();
+}
+
+class _ListFilterState extends State<ListFilter> {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: widget.onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            color: widget.isSelected ? activeColor[1] : activeColor[0]),
+        alignment: Alignment.centerLeft,
+        height: 50,
+        padding: EdgeInsets.only(left: 10, top: 5),
+        child: Row(children: [
+          Expanded(
+            child: Text(
+              widget.title,
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          if (widget.isChosen)
+            Icon(
+              Icons.check_circle,
+              color: Colors.greenAccent,
+            )
+        ]),
+      ),
+    );
+  }
+}
+
+class SearchFilter extends StatefulWidget {
   const SearchFilter({
     Key key,
     this.onTap,
   }) : super(key: key);
   final Function onTap;
+
+  @override
+  _SearchFilterState createState() => _SearchFilterState();
+}
+
+class _SearchFilterState extends State<SearchFilter> {
+  Future<List<Quiz>> searchResults;
+  bool showSearchResults = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -208,11 +309,47 @@ class SearchFilter extends StatelessWidget {
                 ]),
             child: TextField(
                 onChanged: (value) {},
+                onSubmitted: (String value) {
+                  searchResults = API_Manager().fetchQuizByTopic(value);
+                  setState(() {
+                    showSearchResults = true;
+                  });
+                },
                 decoration: InputDecoration(
                   hintText: "Search for quizzes",
                   contentPadding: EdgeInsets.symmetric(horizontal: 10),
                   enabledBorder: InputBorder.none,
                 )),
+          ),
+          GestureDetector(
+            onTap: widget.onTap,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 26,
+                width: 71,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.grey)),
+                padding: EdgeInsets.symmetric(horizontal: 7),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image(
+                      image: AssetImage("assets/icons/filter.png"),
+                      height: 10,
+                      width: 10,
+                      color: Colors.purple,
+                    ),
+                    Text(
+                      "Filter",
+                      style: TextStyle(fontSize: 12),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
           Visibility(
             maintainAnimation: false,
@@ -220,40 +357,21 @@ class SearchFilter extends StatelessWidget {
             maintainSemantics: false,
             maintainSize: false,
             maintainState: false,
-            visible: false,
-            replacement: SearchResults(
-              size: size,
-            ),
-            child: GestureDetector(
-              onTap: onTap,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: EdgeInsets.only(top: 10),
-                  height: 26,
-                  width: 71,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.grey)),
-                  padding: EdgeInsets.symmetric(horizontal: 7),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Image(
-                        image: AssetImage("assets/icons/filter.png"),
-                        height: 10,
-                        width: 10,
-                        color: Colors.purple,
-                      ),
-                      Text(
-                        "Filter",
-                        style: TextStyle(fontSize: 12),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            visible: showSearchResults,
+            child: FutureBuilder(
+                future: searchResults,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Quiz> quizzes = snapshot.data ?? [];
+                    return SearchResults(
+                      size: size,
+                      quizzes: quizzes,
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  } else
+                    return CircularProgressIndicator();
+                }),
           )
         ],
       ),

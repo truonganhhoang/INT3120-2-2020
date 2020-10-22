@@ -35,54 +35,56 @@ class _HomeState extends State<Home> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: tabs[_currentIndex],
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                spreadRadius: 0,
-                color: Color.fromRGBO(0, 0, 0, 0.25),
-                offset: Offset(0, 2),
-                blurRadius: 8)
-          ],
-        ),
-        // padding: EdgeInsets.symmetric(horizontal: 10),
-        margin: EdgeInsets.only(bottom: 10, left: 14, right: 14),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            elevation: 1.0,
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.orangeAccent,
-            unselectedLabelStyle: TextStyle(color: Colors.black),
-            unselectedItemColor: Colors.black,
-            currentIndex: _currentIndex,
-            items: [
-              BottomNavigationBarItem(
-                label: "Home",
-                icon: ImageIcon(AssetImage("assets/icons/home.png")),
+      floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0.0
+          ? null
+          : Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      spreadRadius: 0,
+                      color: Color.fromRGBO(0, 0, 0, 0.25),
+                      offset: Offset(0, 2),
+                      blurRadius: 8)
+                ],
               ),
-              BottomNavigationBarItem(
-                label: "Search",
-                icon: ImageIcon(AssetImage("assets/icons/search.png")),
+              // padding: EdgeInsets.symmetric(horizontal: 10),
+              margin: EdgeInsets.only(bottom: 10, left: 14, right: 14),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  elevation: 1.0,
+                  backgroundColor: Colors.white,
+                  selectedItemColor: Colors.orangeAccent,
+                  unselectedLabelStyle: TextStyle(color: Colors.black),
+                  unselectedItemColor: Colors.black,
+                  currentIndex: _currentIndex,
+                  items: [
+                    BottomNavigationBarItem(
+                      label: "Home",
+                      icon: ImageIcon(AssetImage("assets/icons/home.png")),
+                    ),
+                    BottomNavigationBarItem(
+                      label: "Search",
+                      icon: ImageIcon(AssetImage("assets/icons/search.png")),
+                    ),
+                    BottomNavigationBarItem(
+                      label: "Activities",
+                      icon: ImageIcon(AssetImage("assets/icons/activity.png")),
+                    ),
+                    BottomNavigationBarItem(
+                      label: "Setting",
+                      icon: ImageIcon(AssetImage("assets/icons/settings.png")),
+                    ),
+                  ],
+                  onTap: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
               ),
-              BottomNavigationBarItem(
-                label: "Activities",
-                icon: ImageIcon(AssetImage("assets/icons/activity.png")),
-              ),
-              BottomNavigationBarItem(
-                label: "Setting",
-                icon: ImageIcon(AssetImage("assets/icons/settings.png")),
-              ),
-            ],
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-          ),
-        ),
-      ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
