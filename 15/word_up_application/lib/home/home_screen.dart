@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
 
   final List<Widget> screens = [
     StudyHomeScreen(),
-    FavoriteWordsScreen(),
+    FavoriteWordsScreen(viewIndex: 0,),
     ChatScreen(),
     PlayGameScreen(),
   ];
@@ -196,7 +196,7 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         setState(() {
                           _currentScreen =
-                              FavoriteWordsScreen(); // if user taps on this dashboard tab will be active
+                              FavoriteWordsScreen(viewIndex: 0,); // if user taps on this dashboard tab will be active
                           _currentTab = 2;
                           _screenTitle = 'Favorite';
                         });

@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,16 @@ import '../word.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class FavoriteWordsScreen extends StatefulWidget {
+  int viewIndex;
+
+  FavoriteWordsScreen({Key key, @required this.viewIndex}) : super(key: key);
+
+  set setIndexView(int _index) {
+    viewIndex = _index;
+  }
+
+  // int get getIndexView => viewIndex;
+
   @override
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
@@ -17,47 +28,47 @@ class FavoriteWordsScreen extends StatefulWidget {
 DatabaseHelper dbHelper = DatabaseHelper.instance;
 List<Word> wordsToLearn = new List();
 List<Word> wordsKnew = new List();
+final assetsAudioPlayer = AssetsAudioPlayer();
 
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
-  int viewIndex = 0;
   int colorIndex = 0;
-  bool areListKnewWordGet = false;
-
+  //int viewIndex = 0;
   void _onChanged(int index) {
     setState(() {
       if (index == 0) {
-        viewIndex = 0;
+        widget.setIndexView = 0;
         colorIndex = 0;
       } else {
-        viewIndex = 1;
+        widget.setIndexView = 1;
         colorIndex = 1;
-        if (!areListKnewWordGet) _getDataForListKnewWord();
       }
     });
-  }
-
-  // call only one
-  _getDataForListKnewWord() {
-    dbHelper.getListKnewWords().then((rows) {
-      setState(() {
-        rows.forEach((row) {
-          wordsKnew.add(row);
-        });
-      });
-    });
-    areListKnewWordGet = true;
   }
 
   @override
   void initState() {
     super.initState();
-    dbHelper.getListToLearnWords().then((rows) {
-      setState(() {
-        rows.forEach((row) {
-          wordsToLearn.add(row);
+    if (widget.viewIndex == 0) colorIndex = 0;
+    if (widget.viewIndex == 1) colorIndex = 1;
+    if (wordsToLearn.length == 0) {
+      dbHelper.getListToLearnWords().then((rows) {
+        setState(() {
+          rows.forEach((row) {
+            wordsToLearn.add(row);
+          });
         });
       });
-    });
+    }
+
+    if (wordsKnew.length == 0) {
+      dbHelper.getListKnewWords().then((rows) {
+        setState(() {
+          rows.forEach((row) {
+            wordsKnew.add(row);
+          });
+        });
+      });
+    }
   }
 
   @override
@@ -74,7 +85,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                     padding:
                         EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
                     child: ToggleSwitch(
-                      initialLabelIndex: viewIndex,
+                      initialLabelIndex: widget.viewIndex,
                       minWidth: 80 * SizeConfig.widthMultiplier,
                       minHeight: 6 * SizeConfig.heightMultiplier,
                       cornerRadius: 20,
@@ -97,7 +108,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                 ),
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: (viewIndex == 0)
+                  child: (widget.viewIndex == 0)
                       ? listWord(wordsToLearn, Colors.red[300])
                       : listWord(wordsKnew, Colors.green[300]),
                 )
@@ -134,11 +145,17 @@ Widget listWord(List<Word> words, Color colorText) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 5 * widthMultiplier),
-                      child: ImageIcon(
-                        AssetImage('assets/sprites/sound_play_icon.png'),
-                        size: 4.5 * SizeConfig.heightMultiplier,
-                        color: Colors.grey,
+                      padding: EdgeInsets.only(left: 3 * widthMultiplier),
+                      child: IconButton(
+                        onPressed: () => {
+                          assetsAudioPlayer.open(Audio(
+                              'assets/audios/${words[position].pathSoundUK}'))
+                        },
+                        icon: ImageIcon(
+                          AssetImage('assets/sprites/sound_play_icon.png'),
+                          size: 4.5 * SizeConfig.heightMultiplier,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                     Column(

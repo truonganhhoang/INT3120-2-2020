@@ -52,141 +52,148 @@ class _SearchWordScreenState extends State<SearchWordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        decoration: CommonComponents.background,
-        child: Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.topCenter,
-              padding: EdgeInsets.only(
-                  top: 2 * SizeConfig.heightMultiplier,
-                  right: 1.5 * SizeConfig.heightMultiplier,
-                  left: 1.5 * SizeConfig.heightMultiplier),
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32),
-                  color: Colors.white,
-                  boxShadow: kElevationToShadow[6],
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextFormField(
-                        onChanged: (String text) {
-                          if (_debounce?.isActive ?? false) _debounce.cancel();
-                          _debounce =
-                              Timer(const Duration(milliseconds: 1000), () {
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Container(
+          decoration: CommonComponents.background,
+          child: Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.only(
+                    top: 2 * SizeConfig.heightMultiplier,
+                    right: 1.5 * SizeConfig.heightMultiplier,
+                    left: 1.5 * SizeConfig.heightMultiplier),
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(32),
+                    color: Colors.white,
+                    boxShadow: kElevationToShadow[6],
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextFormField(
+                          autofocus: true,
+                          onChanged: (String text) {
+                            if (_debounce?.isActive ?? false)
+                              _debounce.cancel();
+                            _debounce =
+                                Timer(const Duration(milliseconds: 1000), () {
+                              _search();
+                            });
+                          },
+                          controller: _controller,
+                          decoration: InputDecoration(
+                              hintText: 'Search...',
+                              hintStyle: TextStyle(color: Colors.blue[300]),
+                              contentPadding: const EdgeInsets.only(left: 24),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 7.0),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.search,
+                          ),
+                          onPressed: () {
                             _search();
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                padding: EdgeInsets.only(
+                    top: 1.5 * SizeConfig.heightMultiplier,
+                    right: 1.5 * SizeConfig.heightMultiplier,
+                    left: 1.5 * SizeConfig.heightMultiplier),
+                child: Container(
+                  height: 74 * SizeConfig.heightMultiplier,
+                  child: StreamBuilder(
+                    stream: _stream,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.data == null) {
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          alignment: Alignment.topCenter,
+                          child: Text('Enter a search word'),
+                        );
+                      }
+
+                      if (snapshot.data == "waiting") {
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          alignment: Alignment.topCenter,
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      if (snapshot.data == "error") {
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          alignment: Alignment.topCenter,
+                          child: Text(
+                            'No found',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        );
+                      }
+
+                      return ListView.builder(
+                          itemCount: snapshot.data["definitions"].length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.grey[300],
+                                  ),
+                                  child: ListTile(
+                                    leading: snapshot.data["definitions"][index]
+                                                ["image_url"] ==
+                                            null
+                                        ? null
+                                        : CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                snapshot.data["definitions"]
+                                                    [index]["image_url"]),
+                                          ),
+                                    title: Text(_controller.text.trim() +
+                                        " (" +
+                                        snapshot.data["definitions"][index]
+                                            ["type"] +
+                                        ")"),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: Text(snapshot.data["definitions"]
+                                      [index]["definition"]),
+                                )
+                              ],
+                            );
                           });
-                        },
-                        controller: _controller,
-                        decoration: InputDecoration(
-                            hintText: 'Search...',
-                            hintStyle: TextStyle(color: Colors.blue[300]),
-                            contentPadding: const EdgeInsets.only(left: 24),
-                            border: InputBorder.none),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 7.0),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.search,
-                        ),
-                        onPressed: () {
-                          _search();
-                        },
-                      ),
-                    )
-                  ],
+                    },
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(
-                  top: 1.5 * SizeConfig.heightMultiplier,
-                  right: 1.5 * SizeConfig.heightMultiplier,
-                  left: 1.5 * SizeConfig.heightMultiplier),
-              child: Container(
-                height: 74 * SizeConfig.heightMultiplier,
-                child: StreamBuilder(
-                  stream: _stream,
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.data == null) {
-                      return Container(
-                        padding: EdgeInsets.all(8),
-                        alignment: Alignment.topCenter,
-                        child: Text('Enter a search word'),
-                      );
-                    }
-
-                    if (snapshot.data == "waiting") {
-                      return Container(
-                        padding: EdgeInsets.all(8),
-                        alignment: Alignment.topCenter,
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-
-                    if (snapshot.data == "error") {
-                      return Container(
-                        padding: EdgeInsets.all(8),
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          'Enter the wrong word!!!',
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      );
-                    }
-
-                    return ListView.builder(
-                        itemCount: snapshot.data["definitions"].length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.grey[300],
-                                ),
-                                child: ListTile(
-                                  leading: snapshot.data["definitions"][index]
-                                              ["image_url"] ==
-                                          null
-                                      ? null
-                                      : CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              snapshot.data["definitions"]
-                                                  [index]["image_url"]),
-                                        ),
-                                  title: Text(_controller.text.trim() +
-                                      " (" +
-                                      snapshot.data["definitions"][index]
-                                          ["type"] +
-                                      ")"),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Text(snapshot.data["definitions"][index]
-                                    ["definition"]),
-                              )
-                            ],
-                          );
-                        });
-                  },
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

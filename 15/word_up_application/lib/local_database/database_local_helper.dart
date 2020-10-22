@@ -115,11 +115,25 @@ class DatabaseHelper {
     return wordList;
   }
 
-  // Get numbers of object in database
+  // Get numbers of words in database
   Future<int> getCount() async {
     Database db = await instance.database;
     return Sqflite.firstIntValue(
         await db.rawQuery('SELECT COUNT(*) FROM $tableWord'));
+  }
+
+  // Get numbers of knew words in database
+  Future<int> getCountKnewWords() async {
+    Database db = await instance.database;
+    return Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $tableWordKnew'));
+  }
+
+  // Get numbers of to learn words in database
+  Future<int> getCountToLearnWord() async {
+    Database db = await instance.database;
+    return Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $tableWordToLearn'));
   }
 
   // Get A Word
@@ -133,11 +147,9 @@ class DatabaseHelper {
 
   // Get N Words
   Future<List<Word>> getNWords(int numbersWords) async {
-    int lengthDb = 30;
-
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
-        'SELECT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard FROM $tableWord w JOIN $tableWordKnew wk ON wk.$columnIdWord != w.$columnIdWord JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord LIMIT ?',
+        'SELECT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard FROM $tableWord w JOIN $tableWordKnew wk ON wk.$columnIdWord != w.$columnIdWord JOIN $tableWordToLearn wtl ON wtl.$columnIdWord != w.$columnIdWord JOIN $tableWordFarvorite wf ON wf.$columnIdWord != w.$columnIdWord JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord LIMIT ?',
         [numbersWords]);
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
