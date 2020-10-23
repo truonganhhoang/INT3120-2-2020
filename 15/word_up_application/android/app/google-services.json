@@ -8,14 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:501986905987:android:e094ea9c72b854f35e30b6",
+        "mobilesdk_app_id": "1:501986905987:android:9bf68ef9462f38185e30b6",
         "android_client_info": {
           "package_name": "com.JLTA.WordUpEnglish.word_up_application"
         }
       },
       "oauth_client": [
         {
-          "client_id": "501986905987-afncmdrf4c7kp5184mr9j4qkllb9kdup.apps.googleusercontent.com",
+          "client_id": "501986905987-6thhu54ojkc83mmk1c40fqg2olqevgih.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.JLTA.WordUpEnglish.word_up_application",
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBu9aMzMnb-bNO1l86AoEWL3Lslou9ROFg"
+          "current_key": "AIzaSyDb57VTw_JsEjMcCg0D857e0i4vux0Ue-4"
         }
       ],
       "services": {

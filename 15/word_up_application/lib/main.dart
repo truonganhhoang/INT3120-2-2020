@@ -35,20 +35,20 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FirebaseHandler.initializeFirebase();
     DatabaseServerHandler.instance.getAllUsers();
-    //DatabaseServerHandler.instance.updateLearnProgress('1122817271');
+    DatabaseServerHandler.instance.updateLearnProgress('1122817271');
     // DatabaseHelper.instance.databaseInit();
     //DatabaseHelper.instance.getNWords(3);
     //DatabaseHelper.instance.getListFarvoriteWords();
     // DatabaseHelper.instance.getExamplesWithId(1);
 
-    FirebaseHandler.initializeFirebase();
     //DatabaseHelper.instance.databaseInit();
     // DatabaseHelper.instance.getNWords(5);
 
     //DatabaseHelper.instance.getListFarvoriteWords();
-    DatabaseLocalHelper.instance.insertToLearnWord(5);
-    DatabaseLocalHelper.instance.getListToLearnWords();
+  //  DatabaseLocalHelper.instance.insertToLearnWord(5);
+   // DatabaseLocalHelper.instance.getListToLearnWords();
     //DatabaseLocalHelper.instance.getWord(1);
     print('runMain');
 
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: SelectionScreen(),
+              home: AuthenticationScreen(),
             );
           }
         });

@@ -87,6 +87,7 @@ class LearnSetting {
 class LearningProgress {
   // Qua trinh hoc, so tu, thong ke...
   static String idFirebase = "learningProgress";
+  int estimateWords;
   List<int> wordFavorite = new List<int>();
   List<int> wordToLearn = new List<int>();
   List<WordKnew> wordKnew = new List<WordKnew>();

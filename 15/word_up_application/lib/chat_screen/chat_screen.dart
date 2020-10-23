@@ -41,7 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void Response(query) async {
+  void response(query) async {
     _textController.clear();
     AuthGoogle authGoogle =
         await AuthGoogle(fileJson: "assets/credentials.json").build();
@@ -70,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       _messages.insert(0, message);
     });
-    Response(text);
+    response(text);
   }
 
   @override

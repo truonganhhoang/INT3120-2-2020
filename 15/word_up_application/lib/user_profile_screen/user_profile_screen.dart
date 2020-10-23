@@ -5,6 +5,7 @@ import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/favorite_screen/knew_and_to_learn_words_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/size_config.dart';
+import 'package:word_up_application/user.dart';
 import 'package:word_up_application/user_profile_screen/about_me_screen.dart';
 import 'package:word_up_application/user_profile_screen/my_learning_screen.dart';
 

@@ -89,18 +89,17 @@ class DatabaseLocalHelper {
   }
 
   // Insert knew word
-  Future<int> insertKnewWord(int id) async {
+  Future<void> insertKnewWord(int id) async {
     Database db = await instance.database;
     var result = await db.rawQuery(
         'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordKnew wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
         [id]);
-    int res = await db.insert(tableWordToLearn, result[0]);
-    print(res);
-    return res;
+    await db.insert(tableWordToLearn, result[0]);
+
   }
 
-  // Insert farvorite word
-  Future<int> insertFarvoriteWord(int id) async {
+  // Insert favorite word
+  Future<int> insertFavoriteWord(int id) async {
     Database db = await instance.database;
     var result = await db.rawQuery(
         'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordFarvorite wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
