@@ -78,21 +78,36 @@ class DatabaseLocalHelper {
   }
 
   // Insert to learn word
-  Future<int> insertToLearnWord(Word word) async {
+  Future<int> insertToLearnWord(int id) async {
     Database db = await instance.database;
-    return await db.insert(tableWordToLearn, word.toMap());
+    var result = await db.rawQuery(
+        'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordToLearn wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
+        [id]);
+    int res = await db.insert(tableWordToLearn, result[0]);
+    print(res);
+    return res;
   }
 
   // Insert knew word
-  Future<int> insertKnewWord(Word word) async {
+  Future<int> insertKnewWord(int id) async {
     Database db = await instance.database;
-    return await db.insert(tableWordKnew, word.toMap());
+    var result = await db.rawQuery(
+        'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordKnew wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
+        [id]);
+    int res = await db.insert(tableWordToLearn, result[0]);
+    print(res);
+    return res;
   }
 
   // Insert farvorite word
-  Future<int> insertFarvoriteWord(Word word) async {
+  Future<int> insertFarvoriteWord(int id) async {
     Database db = await instance.database;
-    return await db.insert(tableWordFarvorite, word.toMap());
+    var result = await db.rawQuery(
+        'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordFarvorite wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
+        [id]);
+    int res = await db.insert(tableWordToLearn, result[0]);
+    print(res);
+    return res;
   }
 
   // Get the Map List Object
@@ -141,12 +156,20 @@ class DatabaseLocalHelper {
   }
 
   // Get A Word
-  Future<List<Map<String, dynamic>>> getWord(int id) async {
+  Future<List<Word>> getWord(int id) async {
     Database db = await instance.database;
-    var result = await db
+    var resultMapList = await db
         .rawQuery('select * from $tableWord where $columnIdWord = ?', [id]);
     //Word word = new Word.map(result);
-    return result;
+    List<Word> words = new List();
+    for (int i = 0; i < resultMapList.length; i++) {
+      words.add(Word.fromMapObject(resultMapList[i]));
+      words[i].examples = await getExamplesWithId(words[i].id);
+      words[i].imagePaths = await getImagesWithId(words[i].id);
+      words[i].quotes = await getQuotesWithId(words[i].id);
+    }
+    //print(words[0].word.toString());
+    return words;
   }
 
   // Get N Words
@@ -209,6 +232,9 @@ class DatabaseLocalHelper {
       words[i].examples = await getExamplesWithId(words[i].id);
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
+    }
+    for (int i = 0; i < words.length; i++) {
+      words[i].printThisWord();
     }
     return words;
   }

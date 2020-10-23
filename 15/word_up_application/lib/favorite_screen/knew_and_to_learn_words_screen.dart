@@ -51,7 +51,7 @@ class _ListWordsScreenState extends State<ListWordsScreen> {
     if (widget.viewIndex == 0) colorIndex = 0;
     if (widget.viewIndex == 1) colorIndex = 1;
     if (wordsToLearn.length == 0) {
-      dbHelper.getAllWords().then((rows) {
+      dbHelper.getListToLearnWords().then((rows) {
         setState(() {
           rows.forEach((row) {
             wordsToLearn.add(row);

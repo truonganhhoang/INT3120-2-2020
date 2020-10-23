@@ -37,17 +37,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     DatabaseServerHandler.instance.getAllUsers();
     //DatabaseServerHandler.instance.updateLearnProgress('1122817271');
-   // DatabaseHelper.instance.databaseInit();
+    // DatabaseHelper.instance.databaseInit();
     //DatabaseHelper.instance.getNWords(3);
     //DatabaseHelper.instance.getListFarvoriteWords();
-   // DatabaseHelper.instance.getExamplesWithId(1);
-
+    // DatabaseHelper.instance.getExamplesWithId(1);
 
     FirebaseHandler.initializeFirebase();
     //DatabaseHelper.instance.databaseInit();
-   // DatabaseHelper.instance.getNWords(5);
-    
+    // DatabaseHelper.instance.getNWords(5);
+
     //DatabaseHelper.instance.getListFarvoriteWords();
+    DatabaseLocalHelper.instance.insertToLearnWord(5);
+    DatabaseLocalHelper.instance.getListToLearnWords();
+    //DatabaseLocalHelper.instance.getWord(1);
     print('runMain');
 
     return LayoutBuilder(
