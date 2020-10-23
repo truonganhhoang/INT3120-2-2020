@@ -2,37 +2,43 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:word_up_application/components/common_components.dart';
+import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/show_examples.dart';
 import '../word.dart';
 import 'word_box.dart';
 
-class StudyHomeScreen extends StatefulWidget{
-  final List<WordBox> listWords = [
-    WordBox(word: new Word(
-        id: 1, word: 'Exile', pronounceUK: '/ˈek.saɪl/')),
-    WordBox(word: new Word(
-        id: 2, word: 'Refectory', pronounceUK: '/rɪˈfek.tər.i/')),
-    WordBox(word: new Word(
-        id: 3, word: 'Opinion', pronounceUK: '/əˈpɪn.jən/')),
-    WordBox(word: new Word(
-        id: 4,
-        word: 'Confidence',
-        pronounceUK: '/ˈkɒn.fɪ.dəns/')),
-  ];
+class StudyHomeScreen extends StatefulWidget {
+  final List<WordBox> listWords = new List<WordBox>();
   @override
   State<StatefulWidget> createState() => _StudyHomeScreenState();
 }
 
 class _StudyHomeScreenState extends State<StudyHomeScreen> {
+  List<Word> listWordsNeedToLearn;
   int _current = 0;
+  @override
+  void initState() {
+    _readData();
+    super.initState();
+  }
+
+  void _readData() async {
+    listWordsNeedToLearn =
+        await DatabaseLocalHelper.instance.getListToLearnWords();
+    widget.listWords.clear();
+    for (int i = 0; i < listWordsNeedToLearn.length; i++) {
+      widget.listWords.add(
+        WordBox(word: listWordsNeedToLearn[i]),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //resizeToAvoidBottomInset: true,
-      body:
-      Container(
+      body: Container(
         decoration: CommonComponents.background,
         child: Container(
           child: Column(
@@ -54,7 +60,6 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
                   items: widget.listWords,
                 ),
               ),
-
               Container(
                 alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.only(top: 3 * SizeConfig.heightMultiplier),

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:word_up_application/home/home_screen.dart';
-import 'package:word_up_application/main.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/selection_screen/selection_screen.dart';
 

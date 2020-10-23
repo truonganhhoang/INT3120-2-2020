@@ -75,12 +75,11 @@ class MyApp extends StatelessWidget {
             // default app
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
               theme: ThemeData(
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: Home(),
+              home: SelectionScreen(),
             );
           }
         });

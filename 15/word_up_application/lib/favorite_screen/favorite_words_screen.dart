@@ -25,7 +25,7 @@ class FavoriteWordsScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
 
-DatabaseHelper dbHelper = DatabaseHelper.instance;
+DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
 List<Word> wordsToLearn = new List();
 List<Word> wordsKnew = new List();
 final assetsAudioPlayer = AssetsAudioPlayer();

@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'dart:developer';
 import '../word.dart';
 
-class DatabaseHelper {
+class DatabaseLocalHelper {
   static final _databaseName = 'WordUpDB2020.db';
   static final _databaseVersion = 1;
   static final tableWord = 'word';
@@ -36,8 +36,8 @@ class DatabaseHelper {
   static final columnReviewDay = 'review_day';
 
   // Contructor
-  DatabaseHelper._privateConstructor();
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+  DatabaseLocalHelper._privateConstructor();
+  static final DatabaseLocalHelper instance = DatabaseLocalHelper._privateConstructor();
 
   static Database _database;
   Future<Database> get database async {
@@ -155,9 +155,6 @@ class DatabaseHelper {
     for (int i = 0; i < resultMapList.length; i++) {
       words.add(Word.fromMapObject(resultMapList[i]));
       words[i].examples = await getExamplesWithId(words[i].id);
-    }
-    for (int i = 0; i < words.length; i++) {
-      words[i].printThisWord();
     }
     return words;
   }

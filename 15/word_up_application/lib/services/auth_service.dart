@@ -15,9 +15,7 @@ class AuthService{
   AuthService._internal();
 
   Future<String> signInWithGoogle() async {
-    print('Sign');
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    print('SingXX');
     final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(

@@ -12,7 +12,7 @@ class UserProfileScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _UserProfileScreen();
 }
 
-DatabaseHelper dbHelper = DatabaseHelper.instance;
+DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
 int numberOfKnewWords;
 int numberOfToLearnWords;
 

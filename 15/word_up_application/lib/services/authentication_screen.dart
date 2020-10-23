@@ -1,7 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:word_up_application/home/home_screen.dart';
 import 'package:word_up_application/services/auth_service.dart';
+import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   @override
@@ -13,7 +15,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: Colors.indigo,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -21,7 +23,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             children: <Widget>[
               FlutterLogo(size: 150),
               SizedBox(height: 50),
-              _signInButton(),
+              _signInGoogleButton(),
+              SizedBox(height: 50),
+              _signInFacebookButton(),
+              SizedBox(height: 50,),
+              _continueAsGuest(),
             ],
           ),
         ),
@@ -29,33 +35,139 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     );
   }
 
-  Widget _signInButton() {
-    return OutlineButton(
-      splashColor: Colors.grey,
+  Widget _signInGoogleButton() {
+    return RaisedButton(
+      padding: EdgeInsets.all(0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40.0),
+      ),
       onPressed: () {
-        AuthService.instance.signInWithGoogle().whenComplete(() => {
-          print('dd'),
-        });},
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        AuthService().signInWithGoogle().then((result){
+          if(result != null) print('login successful');
+        },);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+
+                colors: [
+                  Colors.lightBlue,
+                  Colors.white,
+                ]),
+            borderRadius: BorderRadius.circular(40.0),
+        ),
+        width: 270,
         child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-           // Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+          children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Sign in with Google',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
-                ),
-              ),
-            )
+              padding: EdgeInsets.only(left: 10),
+              child: Image(
+                  image: AssetImage("assets/sprites/GoogleIcon.png"),
+                  height: 30.0),
+            ),
+            Expanded(
+                child: Center(
+                  child: Text(
+                    'Sign in with Google',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _signInFacebookButton() {
+    return RaisedButton(
+      padding: EdgeInsets.all(0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40.0),
+      ),
+      onPressed: () {},
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+
+              colors: [
+                Colors.lightBlue,
+                Colors.white,
+              ]),
+          borderRadius: BorderRadius.circular(40.0),
+        ),
+        width: 270,
+        child: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Image(
+                  image: AssetImage("assets/sprites/facebookIcon.png"),
+                  height: 30.0),
+            ),
+            Expanded(
+                child: Center(
+                  child: Text(
+                    'Sign in with Facebook',
+                    style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                  ),
+                  ),
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _continueAsGuest(){
+    return RaisedButton(
+      padding: EdgeInsets.all(0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40.0),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+
+              colors: [
+                Colors.brown,
+                Colors.black,
+              ]),
+          borderRadius: BorderRadius.circular(40.0),
+        ),
+        width: 270,
+        height: 50,
+        child: Row(
+          children: [
+            Expanded(
+                child: Center(
+                  child: Text(
+                    'Continue as Guest',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ))
           ],
         ),
       ),
