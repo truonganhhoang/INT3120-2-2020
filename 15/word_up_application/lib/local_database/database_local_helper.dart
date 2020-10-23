@@ -37,7 +37,8 @@ class DatabaseLocalHelper {
 
   // Contructor
   DatabaseLocalHelper._privateConstructor();
-  static final DatabaseLocalHelper instance = DatabaseLocalHelper._privateConstructor();
+  static final DatabaseLocalHelper instance =
+      DatabaseLocalHelper._privateConstructor();
 
   static Database _database;
   Future<Database> get database async {
@@ -110,6 +111,9 @@ class DatabaseLocalHelper {
     List<Word> wordList = List<Word>();
     for (int i = 0; i < count; i++) {
       wordList.add(Word.fromMapObject(wordMapList[i]));
+      wordList[i].examples = await getExamplesWithId(wordList[i].id);
+      wordList[i].imagePaths = await getImagesWithId(wordList[i].id);
+      wordList[i].quotes = await getQuotesWithId(wordList[i].id);
     }
 
     return wordList;
@@ -155,6 +159,8 @@ class DatabaseLocalHelper {
     for (int i = 0; i < resultMapList.length; i++) {
       words.add(Word.fromMapObject(resultMapList[i]));
       words[i].examples = await getExamplesWithId(words[i].id);
+      words[i].imagePaths = await getImagesWithId(words[i].id);
+      words[i].quotes = await getQuotesWithId(words[i].id);
     }
     return words;
   }
@@ -168,6 +174,9 @@ class DatabaseLocalHelper {
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
       words.add(Word.fromMapObject(resultMapList[i]));
+      words[i].examples = await getExamplesWithId(words[i].id);
+      words[i].imagePaths = await getImagesWithId(words[i].id);
+      words[i].quotes = await getQuotesWithId(words[i].id);
     }
     return words;
   }
@@ -181,6 +190,9 @@ class DatabaseLocalHelper {
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
       words.add(Word.fromMapObject(resultMapList[i]));
+      words[i].examples = await getExamplesWithId(words[i].id);
+      words[i].imagePaths = await getImagesWithId(words[i].id);
+      words[i].quotes = await getQuotesWithId(words[i].id);
     }
     return words;
   }
@@ -194,6 +206,9 @@ class DatabaseLocalHelper {
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
       words.add(Word.fromMapObject(resultMapList[i]));
+      words[i].examples = await getExamplesWithId(words[i].id);
+      words[i].imagePaths = await getImagesWithId(words[i].id);
+      words[i].quotes = await getQuotesWithId(words[i].id);
     }
     return words;
   }
@@ -213,7 +228,7 @@ class DatabaseLocalHelper {
   }
 
   // Get list images with id word
-  Future<List<String>> geImagesWithId(int id) async {
+  Future<List<String>> getImagesWithId(int id) async {
     Database db = await instance.database;
     var result = await db.rawQuery(
         'SELECT $columnImage FROM $tableImages WHERE $columnIdImage = ?', [id]);
@@ -226,7 +241,7 @@ class DatabaseLocalHelper {
   }
 
   // Get list quotes with id word
-  Future<void> getQuotesWithId(int id) async {
+  Future<List<String>> getQuotesWithId(int id) async {
     Database db = await instance.database;
     var result = await db.rawQuery(
         'SELECT $columnQuoteExample FROM $tableQuoteExamples WHERE $columnIdWord = ?',

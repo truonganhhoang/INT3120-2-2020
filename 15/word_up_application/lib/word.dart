@@ -45,9 +45,7 @@ class Word {
     map['type'] = this.type;
     map['definition'] = this.definition;
     map['mean_card'] = this.meanCard;
-    for (int i = 0; i < examples.length; i++) {
-      map['example'] = this.examples[i];
-    }
+  
     return map;
   }
 

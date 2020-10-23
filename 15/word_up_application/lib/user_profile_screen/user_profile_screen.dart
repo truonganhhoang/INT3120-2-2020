@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
+import 'package:word_up_application/favorite_screen/knew_and_to_learn_words_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/user_profile_screen/about_me_screen.dart';
@@ -120,7 +121,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                             context,
                             PageTransition(
                                 type: PageTransitionType.fade,
-                                child: FavoriteWordsScreen(viewIndex: 1,)));
+                                child: ListWordsScreen(viewIndex: 1,)));
                       },
                       child: Container(
                         height: 10 * SizeConfig.heightMultiplier,
@@ -183,7 +184,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                             context,
                             PageTransition(
                                 type: PageTransitionType.fade,
-                                child: FavoriteWordsScreen(viewIndex: 0,)));
+                                child: ListWordsScreen(viewIndex: 0,)));
                       },
                       child: Container(
                         height: 10 * SizeConfig.heightMultiplier,
