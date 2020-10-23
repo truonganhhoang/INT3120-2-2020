@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Text, Dimensions, ScrollView } from 'react-native';
 import {Container, Row, Col } from 'native-base';
+
 import ItemExam from '../../components/ItemExam';
 import HeaderMedia from '../../components/HeaderMedia';
 
-const data = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
-const data2 = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];
+const dataItemLeft = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
+const dataItemRight = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];
+
 const Exam = () => {
   return (
     <Container style={styles.body}>
@@ -16,13 +18,13 @@ const Exam = () => {
       <ScrollView style={styles.content}>
         <Row>
           <Col style={styles.collums}>
-          {data.map((item) => (
-            <ItemExam label={`Unit ${item}`} />
+          {dataItemLeft.map((item) => (
+            <ItemExam label={`Unit ${item}`} key={item} />
           ))}
           </Col>
           <Col style={styles.collums}>
-          {data2.map((item) => (
-            <ItemExam label={`Unit ${item}`} />
+          {dataItemRight.map((item) => (
+            <ItemExam label={`Unit ${item}`} key={item} />
           ))}
           </Col>
         </Row>

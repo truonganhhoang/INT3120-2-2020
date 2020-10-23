@@ -4,8 +4,9 @@ import {Container, Row, Col } from 'native-base';
 import ItemPractice from '../../components/ItemPractice';
 import HeaderPractice from '../../components/HeaderPractice';
 
-const data = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
-const data2 = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];
+const dataItemLeft = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
+const dataItemRight = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];
+
 const Practice = () => {
   return (
     <Container style={styles.body}>
@@ -16,13 +17,13 @@ const Practice = () => {
       <ScrollView style={styles.content}>
         <Row>
           <Col style={styles.collums}>
-          {data.map((item) => (
-            <ItemPractice label={`Unit ${item}`} />
+          {dataItemLeft.map((item) => (
+            <ItemPractice label={`Unit ${item}`} key={item} />
           ))}
           </Col>
           <Col style={styles.collums}>
-          {data2.map((item) => (
-            <ItemPractice label={`Unit ${item}`} />
+          {dataItemRight.map((item) => (
+            <ItemPractice label={`Unit ${item}`} key={item} />
           ))}
           </Col>
         </Row>

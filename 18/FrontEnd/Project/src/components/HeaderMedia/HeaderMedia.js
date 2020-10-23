@@ -6,7 +6,7 @@ import avatar from '../../constants/images/avatar.png';
 const HeaderMedia = ({ icon, label, onClick, ...props }) => {
   return (
     <View style={styles.container} onPress={onClick} {...props} bordered info>
-      <Row style={{ paddingTop: 15 }}>
+      <Row style={{ paddingTop: 8 }}>
         <Col style={{ width: '20%', height: 50 }}>
           <Image source={avatar} style={{ width: 40, height: 40, marginLeft: 20 }} />
         </Col>
@@ -23,12 +23,14 @@ const styles = StyleSheet.create({
     height: screen.height * 0.07,
     backgroundColor: '#fff',
     textAlign: 'center',
+    marginBottom: 8
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#00CDDA',
     textAlign: 'left',
+    marginTop: 10
   },
   option: {
     margin: 20,

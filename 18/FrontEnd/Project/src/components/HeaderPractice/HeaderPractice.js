@@ -7,8 +7,8 @@ const HeaderPractice = ({ icon, label, score, onClick, ...props }) => {
   return (
     <View style={styles.container} bordered info>
       <Row style={{ paddingTop: 15 }}>
-        <Col style={{ width: '30%', height: 50, paddingLeft: 10 }}>
-          <Icon name={icon} size={30} color="#00CDDA" onPress={onClick} {...props} />
+        <Col style={{ width: '30%', height: 50, paddingLeft: 20 }}>
+          <Icon name={icon} size={24} color="#000" onPress={onClick} {...props} />
         </Col>
         <Col style={{ width: '40%', height: 50 }}>
           <Text style={styles.header_text}>{label}</Text>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   header_text: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#00CDDA',
     textAlign: 'center',

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     width: screen.width * 0.45,
     height: 50,
     borderRadius: 15,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   text: {
     fontSize: 10,
