@@ -89,8 +89,8 @@ class DatabaseLocalHelper {
     return await db.insert(tableWordKnew, word.toMap());
   }
 
-  // Insert farvorite word
-  Future<int> insertFarvoriteWord(Word word) async {
+  // Insert favorite word
+  Future<int> insertFavoriteWord(Word word) async {
     Database db = await instance.database;
     return await db.insert(tableWordFarvorite, word.toMap());
   }
