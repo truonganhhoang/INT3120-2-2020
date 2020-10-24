@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:word_up_application/local_database/database_local_helper.dart';
 
 class StarFavorite extends StatefulWidget {
   final int wordId;
@@ -14,6 +15,8 @@ class StarFavorite extends StatefulWidget {
   State<StatefulWidget> createState() => _StarFavoriteStage();
 }
 
+DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
+
 class _StarFavoriteStage extends State<StarFavorite> {
   final String starFavoriteNotChosenIconPath =
       'assets/sprites/Favorite_NotChosen.png';
@@ -26,10 +29,10 @@ class _StarFavoriteStage extends State<StarFavorite> {
   void initState() {
     super.initState();
     isChosen = widget.isFavorite;
-    if(isChosen){
+    if (isChosen) {
       starIcon = starFavoriteChosenIconPath;
-    }
-    else starIcon = starFavoriteNotChosenIconPath;
+    } else
+      starIcon = starFavoriteNotChosenIconPath;
   }
 
   @override
@@ -65,11 +68,11 @@ class _StarFavoriteStage extends State<StarFavorite> {
     }
   }
 
-  void addThisWordToFavoriteList(){
-    //To do
+  void addThisWordToFavoriteList() {
+    dbHelper.insertFavoriteWord(widget.wordId);
   }
 
-  void removeThisWordFromFavoriteList(){
-    //To do
+  void removeThisWordFromFavoriteList() {
+    dbHelper.deleteFavoriteWord(widget.wordId);
   }
 }

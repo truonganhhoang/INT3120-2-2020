@@ -45,7 +45,7 @@ class Word {
     map['type'] = this.type;
     map['definition'] = this.definition;
     map['mean_card'] = this.meanCard;
-  
+
     return map;
   }
 
@@ -63,6 +63,14 @@ class Word {
   }
 
   void printThisWord() {
-    print(id.toString() + ' ' + word + ' ' + examples.toString());
+    print(id.toString() +
+        ' ' +
+        word +
+        ' ' +
+        examples.toString() +
+        ' ' +
+        imagePaths.toString() +
+        ' ' +
+        quotes.toString());
   }
 }

@@ -176,7 +176,7 @@ Widget listWord(List<Word> words, Color colorText) {
                       ],
                     ),
                     StarFavorite(
-                        wordId: null,
+                        wordId: words[position].id,
                         size: 4 * SizeConfig.heightMultiplier,
                         isFavorite: false)
                   ],

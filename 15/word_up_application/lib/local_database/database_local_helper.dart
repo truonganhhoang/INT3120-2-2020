@@ -78,35 +78,64 @@ class DatabaseLocalHelper {
   }
 
   // Insert to learn word
-  Future<int> insertToLearnWord(int id) async {
+  Future<void> insertToLearnWord(int id) async {
     Database db = await instance.database;
-    var result = await db.rawQuery(
-        'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordToLearn wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
-        [id]);
-    int res = await db.insert(tableWordToLearn, result[0]);
-    print(res);
-    return res;
+    var checkEmpty =
+        await db.rawQuery('SELECT COUNT(*) AS TOTAL FROM $tableWordToLearn');
+
+    var result;
+    if (checkEmpty[0]['TOTAL'].toString() == '0') {
+      //print('Empty');
+      result = await db.rawQuery(
+          'SELECT $columnIdWord FROM $tableWord WHERE $columnIdWord = ?', [id]);
+    } else {
+      result = await db.rawQuery(
+          'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordToLearn wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
+          [id]);
+    }
+
+    await db.insert(tableWordToLearn, result[0]);
   }
 
   // Insert knew word
   Future<void> insertKnewWord(int id) async {
     Database db = await instance.database;
-    var result = await db.rawQuery(
-        'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordKnew wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
-        [id]);
-    await db.insert(tableWordToLearn, result[0]);
+    var checkEmpty =
+        await db.rawQuery('SELECT COUNT(*) AS TOTAL FROM $tableWordKnew');
 
+    var result;
+    if (checkEmpty[0]['TOTAL'].toString() == '0') {
+      //print('Empty');
+      result = await db.rawQuery(
+          'SELECT $columnIdWord FROM $tableWord WHERE $columnIdWord = ?', [id]);
+    } else {
+      //print('Not Empty');
+      result = await db.rawQuery(
+          'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordKnew wk ON w.$columnIdWord != wk.$columnIdWord where w.$columnIdWord = ?',
+          [id]);
+    }
+    await db.insert(tableWordKnew, result[0]);
   }
 
   // Insert favorite word
-  Future<int> insertFavoriteWord(int id) async {
+  Future<void> insertFavoriteWord(int id) async {
     Database db = await instance.database;
-    var result = await db.rawQuery(
-        'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordFarvorite wtl ON w.$columnIdWord != wtl.$columnIdWord where w.$columnIdWord = ?',
-        [id]);
-    int res = await db.insert(tableWordToLearn, result[0]);
-    print(res);
-    return res;
+    var checkEmpty =
+        await db.rawQuery('SELECT COUNT(*) AS TOTAL FROM $tableWordFarvorite');
+
+    var result;
+    if (checkEmpty[0]['TOTAL'].toString() == '0') {
+      //print('Empty');
+      result = await db.rawQuery(
+          'SELECT $columnIdWord FROM $tableWord WHERE $columnIdWord = ?', [id]);
+    } else {
+      //print('Not Empty');
+      result = await db.rawQuery(
+          'SELECT w.$columnIdWord FROM $tableWord w JOIN $tableWordFarvorite wf ON w.$columnIdWord != wf.$columnIdWord where w.$columnIdWord = ?',
+          [id]);
+    }
+
+    await db.insert(tableWordFarvorite, result[0]);
   }
 
   // Get the Map List Object
@@ -184,6 +213,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
+    for (int j = 0; j < words.length; j++) {
+      words[j].printThisWord();
+    }
     return words;
   }
 
@@ -232,9 +264,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
-    for (int i = 0; i < words.length; i++) {
-      words[i].printThisWord();
-    }
+    // for (int i = 0; i < words.length; i++) {
+    //   words[i].printThisWord();
+    // }
     return words;
   }
 
@@ -274,7 +306,7 @@ class DatabaseLocalHelper {
 
     List<String> listQuotes = List<String>();
     for (int i = 0; i < result.length; i++) {
-      listQuotes.add(result[i]['quotes'].toString());
+      listQuotes.add(result[i]['quote_example'].toString());
     }
     return listQuotes;
   }
@@ -301,9 +333,10 @@ class DatabaseLocalHelper {
         .delete(tableWordKnew, where: '$columnIdWord = ?', whereArgs: [id]);
   }
 
-  // Delete farvorite word
-  Future<int> delete(int id) async {
+  // Delete favorite word
+  Future<int> deleteFavoriteWord(int id) async {
     Database db = await instance.database;
+    print('delete favorite word');
     return await db.delete(tableWordFarvorite,
         where: '$columnIdWord = ?', whereArgs: [id]);
   }

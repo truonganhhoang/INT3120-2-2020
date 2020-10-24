@@ -11,60 +11,24 @@ import '../word.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class FavoriteWordsScreen extends StatefulWidget {
-  int viewIndex;
-
-  FavoriteWordsScreen({Key key, @required this.viewIndex}) : super(key: key);
-
-  set setIndexView(int _index) {
-    viewIndex = _index;
-  }
-
-  // int get getIndexView => viewIndex;
-
   @override
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
 
 DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
-List<Word> wordsToLearn = new List();
-List<Word> wordsKnew = new List();
+List<Word> wordsFarvorite = new List();
 final assetsAudioPlayer = AssetsAudioPlayer();
 
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
-  int colorIndex = 0;
-  //int viewIndex = 0;
-  void _onChanged(int index) {
-    setState(() {
-      if (index == 0) {
-        widget.setIndexView = 0;
-        colorIndex = 0;
-      } else {
-        widget.setIndexView = 1;
-        colorIndex = 1;
-      }
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    if (widget.viewIndex == 0) colorIndex = 0;
-    if (widget.viewIndex == 1) colorIndex = 1;
-    if (wordsToLearn.length == 0) {
-      dbHelper.getListToLearnWords().then((rows) {
+    if (wordsFarvorite.length == 0) {
+      dbHelper.getListFarvoriteWords().then((rows) {
         setState(() {
           rows.forEach((row) {
-            wordsToLearn.add(row);
-          });
-        });
-      });
-    }
-
-    if (wordsKnew.length == 0) {
-      dbHelper.getListKnewWords().then((rows) {
-        setState(() {
-          rows.forEach((row) {
-            wordsKnew.add(row);
+            wordsFarvorite.add(row);
           });
         });
       });
@@ -80,37 +44,8 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
             child: Stack(
               children: <Widget>[
                 Container(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
-                    child: ToggleSwitch(
-                      initialLabelIndex: widget.viewIndex,
-                      minWidth: 80 * SizeConfig.widthMultiplier,
-                      minHeight: 6 * SizeConfig.heightMultiplier,
-                      cornerRadius: 20,
-                      activeBgColor: Colors.white,
-                      activeFgColor:
-                          (colorIndex == 0) ? Colors.red[300] : Colors.green,
-                      inactiveBgColor: Colors.grey[300],
-                      inactiveFgColor: Colors.grey[600],
-                      labels: ['To learn', 'Knew'],
-                      icons: [
-                        FontAwesomeIcons.question,
-                        FontAwesomeIcons.check
-                      ],
-                      onToggle: (index) {
-                        print('switched to: $index');
-                        _onChanged(index);
-                      },
-                    ),
-                  ),
-                ),
-                Container(
                   alignment: Alignment.bottomCenter,
-                  child: (widget.viewIndex == 0)
-                      ? listWord(wordsToLearn, Colors.red[300])
-                      : listWord(wordsKnew, Colors.green[300]),
+                  child: listWord(wordsFarvorite, Colors.blueAccent),
                 )
               ],
             ),
@@ -124,7 +59,7 @@ Widget listWord(List<Word> words, Color colorText) {
     padding: EdgeInsets.only(
         right: 4 * SizeConfig.widthMultiplier,
         left: 4 * SizeConfig.widthMultiplier),
-    height: 78 * SizeConfig.heightMultiplier,
+    height: 85 * SizeConfig.heightMultiplier,
     child: ListView.builder(
         itemCount: words.length,
         scrollDirection: Axis.vertical,
@@ -172,7 +107,7 @@ Widget listWord(List<Word> words, Color colorText) {
                       ],
                     ),
                     StarFavorite(
-                        wordId: null,
+                        wordId: words[position].id,
                         size: 4 * SizeConfig.heightMultiplier,
                         isFavorite: true)
                   ],
