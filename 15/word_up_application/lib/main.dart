@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: SelectionScreen(),
+              home: AuthenticationScreen(),
             );
           }
         });

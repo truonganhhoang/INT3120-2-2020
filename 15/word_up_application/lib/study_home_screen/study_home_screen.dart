@@ -73,7 +73,7 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
                 alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.only(top: 3 * SizeConfig.heightMultiplier),
                 padding: EdgeInsets.only(left: 15, right: 15),
-                child: (listWordsNeedToLearn.length > 0) ? new ShowExamples(listExamples: listWordsNeedToLearn[_current].examples): Container(),
+                child: (widget.listWords.length > 0) ? new ShowExamples(listExamples: listWordsNeedToLearn[_current].examples): Container(),
               )
             ],
           ),

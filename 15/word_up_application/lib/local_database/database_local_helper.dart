@@ -267,6 +267,7 @@ class DatabaseLocalHelper {
     // for (int i = 0; i < words.length; i++) {
     //   words[i].printThisWord();
     // }
+    print('X' + words.length.toString());
     return words;
   }
 
