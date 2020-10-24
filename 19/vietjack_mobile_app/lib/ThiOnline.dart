@@ -8,6 +8,7 @@ import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 class ThiOnline extends StatefulWidget {
   static int firstRun = 0;
   static int weeksNumber = 0;
+  static dynamic detailArray;
   ThiOnline({Key key}) : super(key: key) {
     FirebaseFirestore.instance
         .collection("ThiOnline")
@@ -60,6 +61,19 @@ class _ThiOnlineState extends State<ThiOnline> {
           ThiOnline.weeksNumber = value.data()["weeks"];
         });
       });
+      FirebaseFirestore.instance
+          .collection("ThiOnline")
+          .doc("Class 12")
+          .collection("Subject")
+          .doc(currentSubject)
+          .collection("Detail")
+          .orderBy("id")
+          .get()
+          .then((data) => {
+                this.setState(() {
+                  ThiOnline.detailArray = data.docs;
+                })
+              });
     }
   }
 
@@ -167,7 +181,8 @@ class _ThiOnlineState extends State<ThiOnline> {
         ),
         MyCustomCard(
             key: PageStorageKey('MyCustomCard'),
-            weekNumber: ThiOnline.weeksNumber),
+            weekNumber: ThiOnline.weeksNumber,
+            snapshot: ThiOnline.detailArray),
       ],
     );
   }
@@ -188,7 +203,7 @@ class _ThiOnlineState extends State<ThiOnline> {
                 child: Container(),
                 preferredSize: Size(0.0, 0.0),
               ),
-        body: body(width, height),
+        body: ThiOnline.detailArray == null ? Scaffold() : body(width, height),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _onButtonPress();

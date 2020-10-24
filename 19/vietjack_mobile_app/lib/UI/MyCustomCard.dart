@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class MyCustomCard extends StatelessWidget {
-  MyCustomCard({Key key, @required this.weekNumber}) : super(key: key);
+  MyCustomCard({Key key, @required this.weekNumber, @required this.snapshot})
+      : super(key: key);
 
   final int weekNumber;
+  final List<dynamic> snapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +14,9 @@ class MyCustomCard extends StatelessWidget {
       key: PageStorageKey('MyCustomCard'),
       shrinkWrap: true,
       physics: ScrollPhysics(),
-      itemCount: this.weekNumber,
+      itemCount: snapshot.length,
       itemBuilder: (BuildContext context, int index) {
-        return MakeCard(index);
+        return MakeCard(index, snapshot);
       },
     );
   }
@@ -21,8 +24,8 @@ class MyCustomCard extends StatelessWidget {
 
 class MakeCard extends StatelessWidget {
   final int index;
-
-  MakeCard(this.index);
+  final dynamic snapshot;
+  MakeCard(this.index, this.snapshot);
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -51,14 +54,14 @@ class MakeCard extends StatelessWidget {
                   ),
                 ),
                 title: Text(
-                  "Tuần " + (this.index + 1).toString(),
+                  snapshot[index]['title'].toString(),
                   style: TextStyle(
                       color: Colors.blue[600], fontWeight: FontWeight.bold),
                 ),
                 subtitle: Row(
                   children: <Widget>[
                     Icon(Icons.book, size: 20),
-                    Text(" Intermediate",
+                    Text(snapshot[index]["exams"].toString() + " Bộ đề",
                         style: TextStyle(color: Colors.grey[500]))
                   ],
                 ),
