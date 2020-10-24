@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
     FirebaseHandler.initializeFirebase();
     DatabaseServerHandler.instance.getAllUsers();
     DatabaseServerHandler.instance.updateLearnProgress('1122817271');
-    // DatabaseHelper.instance.databaseInit();
-    //DatabaseHelper.instance.getNWords(3);
+    DatabaseLocalHelper.instance.databaseInit();
+
     //DatabaseHelper.instance.getListFarvoriteWords();
     // DatabaseHelper.instance.getExamplesWithId(1);
 
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: AuthenticationScreen(),
+              home: SelectionScreen(),
             );
           }
         });

@@ -90,7 +90,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(40.0),
       ),
-      onPressed: () {},
+      onPressed: () {
+        AuthService.instance.signOutGoogle();
+      },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(

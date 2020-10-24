@@ -2,33 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sqflite/utils/utils.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
+import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/selection_screen/finish_selection_screen.dart';
 import 'package:word_up_application/selection_screen/word_selection_bar.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/word.dart';
 
 class SelectionScreen extends StatefulWidget {
-  final List<Word> listWordToSelect = [
-    new Word(id: 1, word: 'dog', pronounceUK: 'prəˈnaʊns'),
-    new Word(id: 2, word: 'cat', pronounceUK: 'prəˈnaʊns'),
-    new Word(id: 3, word: 'bear', pronounceUK: 'prəˈnaʊns'),
-    new Word(id: 4, word: 'pig', pronounceUK: 'prəˈnaʊns'),
-    new Word(id: 5, word: 'bee', pronounceUK: 'prəˈnaʊns')
-  ];
-
   @override
   State<StatefulWidget> createState() => _SelectionScreenState();
 }
 
 class _SelectionScreenState extends State<SelectionScreen> {
+  List<Word> listWordToSelect = new List<Word>();
+  int numberWordNotKnow = 0;
+
   int index;
   int numberWords;
   bool isTesting;
+
+  Future<void> _getData(int number) async{
+    listWordToSelect = await DatabaseLocalHelper.instance.getNWords(number);
+  }
 
   @override
   void initState() {
     index = 0;
     isTesting = false;
+    _getData(5).then((value) => {
+      setState(() {
+        index = 0;
+      })
+    });
     super.initState();
   }
 
@@ -39,10 +44,14 @@ class _SelectionScreenState extends State<SelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    numberWords = widget.listWordToSelect.length;
+    numberWords = listWordToSelect.length;
     if (index >= numberWords) index--;
+    if(index < 0) return Container(
+      color: Colors.white,
+    );
+
     return isTesting
-        ? _testScreen(widget.listWordToSelect[index])
+        ? _testScreen(listWordToSelect[index])
         : Scaffold(
             appBar: AppBar(
               title:
@@ -74,7 +83,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                       child: Column(
                         children: [
                           Text(
-                            widget.listWordToSelect[index].word,
+                            listWordToSelect[index].word,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 5 * SizeConfig.heightMultiplier,
@@ -83,7 +92,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                           Padding(
                               padding: EdgeInsets.all(10),
                               child: Text(
-                                widget.listWordToSelect[index].pronounceUK,
+                                listWordToSelect[index].pronounceUK,
                                 style: TextStyle(
                                     fontSize: 2 * SizeConfig.heightMultiplier),
                               )),
@@ -143,8 +152,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                                         fontWeight: FontWeight.w300),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: widget
-                                              .listWordToSelect[index].word,
+                                          text: listWordToSelect[index].word,
                                           style: TextStyle(
                                               fontStyle: FontStyle.italic)),
                                     ],
@@ -192,8 +200,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                                         fontWeight: FontWeight.w300),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: widget
-                                              .listWordToSelect[index].word,
+                                          text: listWordToSelect[index].word,
                                           style: TextStyle(
                                               fontStyle: FontStyle.italic)),
                                     ],
@@ -223,6 +230,8 @@ class _SelectionScreenState extends State<SelectionScreen> {
   }
 
   void userIsUnSure() {
+    numberWordNotKnow ++;
+    DatabaseLocalHelper.instance.insertToLearnWord(listWordToSelect[index].id);
     if (index == numberWords - 1) {
       finishSelect();
     }
@@ -234,7 +243,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
   void finishSelect() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => FinishSelectionScreen()),
+      MaterialPageRoute(builder: (context) => FinishSelectionScreen(n: numberWordNotKnow)),
     );
   }
 

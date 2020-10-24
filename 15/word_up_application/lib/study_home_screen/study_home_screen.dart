@@ -19,11 +19,20 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
   int _current = 0;
   @override
   void initState() {
-    _readData();
+    _readData().then((value) => {
+     setState(() {
+
+     })
+    });
     super.initState();
   }
 
-  void _readData() async {
+  @override
+  void setState(fn) {
+    super.setState(fn);
+  }
+
+  Future<void> _readData() async {
     listWordsNeedToLearn =
         await DatabaseLocalHelper.instance.getListToLearnWords();
     widget.listWords.clear();
@@ -64,11 +73,7 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
                 alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.only(top: 3 * SizeConfig.heightMultiplier),
                 padding: EdgeInsets.only(left: 15, right: 15),
-                child: new ShowExamples(listExamples: [
-                  'The monarch was exiled because of the coup.',
-                  'The king went into exile because of the political situation in his country.',
-                  'The king went iii exile because of the political situation in his country.'
-                ]),
+                child: (listWordsNeedToLearn.length > 0) ? new ShowExamples(listExamples: listWordsNeedToLearn[_current].examples): Container(),
               )
             ],
           ),
