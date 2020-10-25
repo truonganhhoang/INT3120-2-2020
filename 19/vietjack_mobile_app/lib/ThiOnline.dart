@@ -9,6 +9,7 @@ class ThiOnline extends StatefulWidget {
   static int firstRun = 0;
   static int weeksNumber = 0;
   static dynamic detailArray;
+  static String currentSubject;
   ThiOnline({Key key}) : super(key: key) {
     FirebaseFirestore.instance
         .collection("ThiOnline")
@@ -22,7 +23,7 @@ class ThiOnline extends StatefulWidget {
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
-  static String currentSubject = "Ngữ văn";
+  String currentSubject = "Ngữ văn";
   final List<String> subjectArray = [
     'Ngữ văn',
     'Toán',
@@ -40,6 +41,23 @@ class _ThiOnlineState extends State<ThiOnline> {
   bool _showAppbar = false;
   ScrollController _scrollBottomController = new ScrollController();
 
+  void getData() {
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(this.currentSubject)
+        .collection("Detail")
+        .orderBy("id")
+        .get()
+        .then((data) => {
+              this.setState(() {
+                ThiOnline.detailArray = data.docs;
+                ThiOnline.currentSubject = this.currentSubject;
+              })
+            });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,49 +68,16 @@ class _ThiOnlineState extends State<ThiOnline> {
       });
     }
     if (ThiOnline.firstRun < 1) {
-      FirebaseFirestore.instance
-          .collection("ThiOnline")
-          .doc("Class 12")
-          .collection("Subject")
-          .doc(currentSubject)
-          .get()
-          .then((value) {
-        this.setState(() {
-          ThiOnline.weeksNumber = value.data()["weeks"];
-        });
-      });
-      FirebaseFirestore.instance
-          .collection("ThiOnline")
-          .doc("Class 12")
-          .collection("Subject")
-          .doc(currentSubject)
-          .collection("Detail")
-          .orderBy("id")
-          .get()
-          .then((data) => {
-                this.setState(() {
-                  ThiOnline.detailArray = data.docs;
-                })
-              });
+      getData();
     }
   }
 
   void _changeSubject(BuildContext context, String subject) async {
     this.setState(() {
-      currentSubject = subject;
+      this.currentSubject = subject;
       Navigator.pop(context);
     });
-    FirebaseFirestore.instance
-        .collection("ThiOnline")
-        .doc("Class 12")
-        .collection("Subject")
-        .doc(currentSubject)
-        .get()
-        .then((value) {
-      this.setState(() {
-        ThiOnline.weeksNumber = value.data()["weeks"];
-      });
-    });
+    getData();
   }
 
   void _onButtonPress() {
@@ -155,22 +140,6 @@ class _ThiOnlineState extends State<ThiOnline> {
     super.dispose();
   }
 
-  Widget containterContent() {
-    return Container(
-      height: 50.0,
-      color: Colors.cyanAccent,
-      margin: EdgeInsets.all(8.0),
-      width: MediaQuery.of(context).size.width - 100,
-      child: Center(
-          child: Text(
-        'Item 1',
-        style: TextStyle(
-          fontSize: 14.0,
-        ),
-      )),
-    );
-  }
-
   Widget body(width, height) {
     return ListView(
       controller: _scrollBottomController,
@@ -182,7 +151,8 @@ class _ThiOnlineState extends State<ThiOnline> {
         MyCustomCard(
             key: PageStorageKey('MyCustomCard'),
             weekNumber: ThiOnline.weeksNumber,
-            snapshot: ThiOnline.detailArray),
+            snapshot: ThiOnline.detailArray,
+            currentSubject: ThiOnline.currentSubject),
       ],
     );
   }

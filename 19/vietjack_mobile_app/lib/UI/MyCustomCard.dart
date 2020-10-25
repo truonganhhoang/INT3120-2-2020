@@ -1,12 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'ExamsPicker.dart';
+
 class MyCustomCard extends StatelessWidget {
-  MyCustomCard({Key key, @required this.weekNumber, @required this.snapshot})
+  MyCustomCard(
+      {Key key,
+      @required this.weekNumber,
+      @required this.snapshot,
+      this.currentSubject})
       : super(key: key);
 
   final int weekNumber;
   final List<dynamic> snapshot;
+  final String currentSubject;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class MyCustomCard extends StatelessWidget {
       physics: ScrollPhysics(),
       itemCount: snapshot.length,
       itemBuilder: (BuildContext context, int index) {
-        return MakeCard(index, snapshot);
+        return MakeCard(index, snapshot, currentSubject);
       },
     );
   }
@@ -25,12 +31,19 @@ class MyCustomCard extends StatelessWidget {
 class MakeCard extends StatelessWidget {
   final int index;
   final dynamic snapshot;
-  MakeCard(this.index, this.snapshot);
+  final String currentSubject;
+  MakeCard(this.index, this.snapshot, this.currentSubject);
   @override
   Widget build(BuildContext context) {
     return Material(
         child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ExamsPicker(currentSubject: currentSubject)));
+            },
             child: Container(
               height: 75,
               decoration: BoxDecoration(
