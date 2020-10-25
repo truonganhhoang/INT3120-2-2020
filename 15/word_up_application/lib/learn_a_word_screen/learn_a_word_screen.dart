@@ -6,6 +6,7 @@ import 'package:word_up_application/word.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:word_up_application/size_config.dart';
+import 'package:share/share.dart';
 import 'share_screen.dart';
 import 'fake_data.dart';
 
@@ -25,7 +26,7 @@ class LearnAWord extends StatelessWidget {
                 Navigator.push(
                     context,
                     PageTransition(
-                        type: PageTransitionType.bottomToTop,
+                        type: PageTransitionType.fade,
                         child: ShareScreen()));
               },
             ),
