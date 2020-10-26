@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/models/models.dart';
+import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
 
 class Running extends StatelessWidget {
@@ -10,7 +12,7 @@ class Running extends StatelessWidget {
   }
 }
 
-class ListRunning extends StatelessWidget {
+class ListRunning extends StatefulWidget {
   const ListRunning({
     Key key,
     @required this.size,
@@ -19,21 +21,46 @@ class ListRunning extends StatelessWidget {
   final Size size;
 
   @override
+  _ListRunningState createState() => _ListRunningState();
+}
+
+class _ListRunningState extends State<ListRunning> {
+  Future<List<Quiz>> _quizzes;
+
+  @override
+  void initState() {
+    _quizzes = API_Manager().fetchQuizByTopic("2wZYm3a7hLcOyFnB0tEC");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: GridView.builder(
-          shrinkWrap: true,
-          // physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 5),
-          itemCount: 4,
-          itemBuilder: (context, index) => QuizCard(
-                size: size,
-                title: "Solar system",
-                questionCount: 19,
-                imagePath: "assets/images/solar.png",
-              )),
+      child: FutureBuilder(
+        future: _quizzes,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Quiz> quizzes = snapshot.data ?? [];
+            return GridView.builder(
+                shrinkWrap: true,
+                // physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 5),
+                itemCount: quizzes.length,
+                itemBuilder: (context, index) => QuizCard(
+                      size: widget.size,
+                      title: quizzes[index].name,
+                      questionCount: quizzes[index].numberOfQuestion,
+                      imagePath: "assets/images/solar.png",
+                      quizID: quizzes[index].key,
+                    ));
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          } else
+            return CircularProgressIndicator();
+        },
+      ),
     );
   }
 }

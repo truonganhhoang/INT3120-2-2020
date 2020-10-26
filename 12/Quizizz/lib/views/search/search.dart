@@ -309,10 +309,12 @@ class _SearchFilterState extends State<SearchFilter> {
             child: TextField(
                 onChanged: (value) {},
                 onSubmitted: (String value) {
-                  searchResults = API_Manager().fetchQuizByTopic(value);
-                  setState(() {
-                    showSearchResults = true;
-                  });
+                  if (value != '') {
+                    searchResults = API_Manager().searchQuiz(value);
+                    setState(() {
+                      showSearchResults = true;
+                    });
+                  }
                 },
                 decoration: InputDecoration(
                   hintText: "Search for quizzes",
