@@ -26,8 +26,7 @@ class LearnAWord extends StatelessWidget {
                 Navigator.push(
                     context,
                     PageTransition(
-                        type: PageTransitionType.fade,
-                        child: ShareScreen()));
+                        type: PageTransitionType.fade, child: ShareScreen()));
               },
             ),
           ],

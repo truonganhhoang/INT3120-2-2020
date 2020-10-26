@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:word_up_application/services/auth_service.dart';
 import 'package:word_up_application/size_config.dart';
+import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
 
 class AccountPage extends StatelessWidget {
   @override
@@ -47,33 +51,37 @@ class AccountPage extends StatelessWidget {
                     leading: Icon(Icons.person),
                     title: new Text("My Account"),
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: UserProfileScreen()));
                     }),
                 new Divider(),
                 new ListTile(
                     leading: Icon(Icons.info),
                     title: new Text("About us"),
                     onTap: () {
-                      Navigator.pop(context);
+                      _launchURL();
                     }),
                 new ListTile(
                     leading: Icon(Icons.feedback),
                     title: new Text("Feedback"),
                     onTap: () {
-                      Navigator.pop(context);
+                      _launchURL();
                     }),
                 new ListTile(
                     leading: Icon(Icons.help),
                     title: new Text("Support"),
                     onTap: () {
-                      Navigator.pop(context);
+                      _launchURL();
                     }),
                 new Divider(),
                 new ListTile(
                     leading: Icon(Icons.power_settings_new),
                     title: new Text("Logout"),
                     onTap: () {
-                      Navigator.pop(context);
+                      AuthService.instance.signOutGoogle();
                     }),
                 new Container(
                   margin: EdgeInsets.only(top: 3 * SizeConfig.heightMultiplier),
@@ -91,5 +99,14 @@ class AccountPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+_launchURL() async {
+  const url = 'https://sites.google.com/view/evocab/trang-ch%E1%BB%A7';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

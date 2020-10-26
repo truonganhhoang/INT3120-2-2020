@@ -14,17 +14,27 @@ class ShareScreen extends StatefulWidget {
 }
 
 class ShareScreenState extends State<ShareScreen> {
-
   Widget buildImage(Uint8List bytes) =>
       bytes != null ? Image.memory(bytes) : Container();
-
 
   String text = '';
   String subject = '';
   String imgPath = '';
   List<String> imagePaths = [];
-  TextEditingController controllerText = TextEditingController()..text = word1.word + "\n" + "Example: " + "\n" + word1.examples[0] + "\n" + word1.examples[1] + "\n" + "Quote Example: " + "\n" + word1.quotes[0] ;
-  TextEditingController controllerSubject = TextEditingController()..text = "New word: " + word1.word;
+  TextEditingController controllerText = TextEditingController()
+    ..text = word1.word +
+        "\n" +
+        "Example: " +
+        "\n" +
+        word1.examples[0] +
+        "\n" +
+        word1.examples[1] +
+        "\n" +
+        "Quote Example: " +
+        "\n" +
+        word1.quotes[0];
+  TextEditingController controllerSubject = TextEditingController()
+    ..text = "New word: " + word1.word;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,14 +42,12 @@ class ShareScreenState extends State<ShareScreen> {
       home: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }
-            ),
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
             centerTitle: true,
             title: new Text('Share Demo'),
-
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -47,7 +55,6 @@ class ShareScreenState extends State<ShareScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-
                   TextField(
                     controller: controllerText,
                     decoration: const InputDecoration(
@@ -58,7 +65,6 @@ class ShareScreenState extends State<ShareScreen> {
                     onChanged: (String value) => setState(() {
                       text = value;
                     }),
-
                   ),
                   TextField(
                     controller: controllerSubject,
@@ -97,7 +103,9 @@ class ShareScreenState extends State<ShareScreen> {
                       return RaisedButton(
                         color: Colors.blue[500],
                         child: const Text('Share'),
-                        onPressed: text.isEmpty && imagePaths.isEmpty && subject.isEmpty
+                        onPressed: text.isEmpty &&
+                                imagePaths.isEmpty &&
+                                subject.isEmpty
                             ? null
                             : () => _onShare(context),
                       );
@@ -125,8 +133,8 @@ class ShareScreenState extends State<ShareScreen> {
     // a RenderObjectWidget. The RaisedButton's RenderObject
     // has its position and size after it's built.
     final RenderBox box = context.findRenderObject();
-    if(text.isEmpty) text = controllerText.text;
-    if(subject.isEmpty) subject = controllerSubject.text;
+    if (text.isEmpty) text = controllerText.text;
+    if (subject.isEmpty) subject = controllerSubject.text;
     if (imagePaths.isNotEmpty) {
       await Share.shareFiles(imagePaths,
           text: text,
