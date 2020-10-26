@@ -1,32 +1,40 @@
+import 'package:EduBox/LandingPage.dart';
+import 'package:EduBox/Models/User.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
+import 'package:provider/provider.dart';
 import 'package/widget.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'EduBox',
-      theme: ThemeData(
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            color: Colors.red,
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
+    return ChangeNotifierProvider(
+      create: (context)=>UserDetail(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'EduBox',
+        theme: ThemeData(
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              color: Colors.red,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+            ),
           ),
+          primaryColor: Color(0xff00854c),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        primaryColor: Color(0xff00854c),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        home: LandingPage(),
+        //LoginScreen(),
       ),
-      home: HomeInterface(),
-      //Empty(),
     );
   }
 }

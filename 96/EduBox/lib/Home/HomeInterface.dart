@@ -1,20 +1,16 @@
 import 'dart:ui';
-
-import 'package:EduBox/Authenticate/LoginScreen.dart';
+import 'package:EduBox/Models/User.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import '../UserInfomation/UserInformation.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import '../package/widget.dart';
 
 Color _color = Color(0xff00854c);
-class count with ChangeNotifier{
 
-}
 class HomeInterface extends StatelessWidget {
-
   final appbar = AppBar(
     backgroundColor: _color,
     title: Text(
@@ -29,13 +25,15 @@ class HomeInterface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = FirebaseAuth.instance.currentUser;
     // TODO: implement build
     return SafeArea(
       child: Scaffold(
         appBar: appbar,
         drawer: HamburgerMenu(
-          name: 'Vu Huy',
-          email: 'halloffame2979@gmail.com',
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
         ),
         body: ListView(
           children: [
@@ -201,11 +199,16 @@ class HomeInterface extends StatelessWidget {
 class HamburgerMenu extends StatelessWidget {
   final String name;
   final String email;
+  final String photoURL;
 
-  const HamburgerMenu({Key key, this.name, this.email})
-      : assert(name != null),
-        assert(email != null),
-        super(key: key);
+  const HamburgerMenu({Key key, this.name, this.email, this.photoURL})
+      : super(key: key);
+
+  Future<void> signOutGoogle() async {
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
+    print("Signed Out");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -215,25 +218,23 @@ class HamburgerMenu extends StatelessWidget {
         children: <Widget>[
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(color: _color),
-            accountName: Text(name),
-            accountEmail: Text(email),
+            accountName: Text(name??''),
+            accountEmail: Text(email??''),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              child: Text(
-                name[0],
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 40,
-                ),
+              child: ClipRRect(
+                child: Image.network(photoURL),
+                borderRadius: BorderRadius.circular(150),
               ),
             ),
           ),
           ListTile(
             title: Text('Thông tin cá nhân'),
             trailing: Icon(Icons.info),
-            onTap: (){
+            onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserInformation()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => UserInformation()));
             },
           ),
           ListTile(
@@ -247,19 +248,15 @@ class HamburgerMenu extends StatelessWidget {
                   title: Text('Đăng xuất?'),
                   actions: [
                     FlatButton(
-                      child: Container(
-                        child: Text('Có'),
-                        height: 20,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
-                        ));
-                      },
-                    ),
+                        child: Container(
+                          child: Text('Có'),
+                          height: 20,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).popUntil((route) => route.isFirst);
+                          signOutGoogle();
+                        }),
                     FlatButton(
                       child: Container(
                         child: Text('Không'),
@@ -280,7 +277,8 @@ class HamburgerMenu extends StatelessWidget {
             trailing: Icon(Icons.cancel),
             enabled: true,
             onTap: () {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
+              print(Provider.of<UserDetail>(context, listen: false).toJson());
             },
           ),
         ],

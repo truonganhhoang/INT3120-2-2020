@@ -1,9 +1,12 @@
+import 'package:EduBox/UserInfomation/DateOfBirth.dart';
+import 'package:EduBox/UserInfomation/UserAddress.dart';
+import 'package:EduBox/UserInfomation/UserGender.dart';
+import 'package:EduBox/UserInfomation/UserPhoneNumber.dart';
 import 'package:EduBox/package/widget.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:intl/intl.dart';
 
 class UserInformation extends StatefulWidget {
   @override
@@ -12,129 +15,107 @@ class UserInformation extends StatefulWidget {
 
 class _UserInformationState extends State<UserInformation> {
   var divider = Divider(height: 10, color: Colors.transparent);
-
-  // var data = value.data();
-  // user.address = data['Address'];
-  // user.avatarUrl = data['Avatar'];
-  // user.birth = data['Birth'].toDate();
-  // user.email = data['Email'];
+  var user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
-    //var a = StreamBuilder(builder: null);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text('Thông tin cá nhân'),
         ),
-        body: Padding(
-          padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 2 - 150),
-          child: StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('User')
-                  .doc('SA8TXV76TtA48bvaDLNd')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                return ListView(
-                  children: [
-                    Container(
-                      height: 70,
-                      margin: EdgeInsets.only(top: 15, bottom: 10, right: MediaQuery.of(context).size.width / 2 - 150),
-                      alignment: Alignment.bottomCenter,
-                      child:
-                          Text('Ảnh đại diện', style: TextStyle(fontSize: 20)),
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width / 2 - 150),
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('User')
+                    .doc(user.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return Container(
+                    child: ListView(
+                      children: [
+                        Container(
+                          height: 70,
+                          margin: EdgeInsets.only(
+                              top: 15,
+                              bottom: 10,
+                              right:
+                                  MediaQuery.of(context).size.width / 2 - 150),
+                          alignment: Alignment.bottomCenter,
+                          child: Text('Ảnh đại diện',
+                              style: TextStyle(fontSize: 20)),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              right:
+                                  MediaQuery.of(context).size.width / 2 - 150),
+                          alignment: Alignment.center,
+                          //height: 350,
+                          decoration: BoxDecoration(),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(147),
+                            child: snapshot.data['Avatar'] != null
+                                ? Image.network(
+                                    snapshot.data['Avatar'],
+                                    //fit: BoxFit.cover,
+                                  )
+                                : Text(snapshot.data['Name'][0]),
+                          ),
+                        ),
+                        divider,
+                        LabelText(
+                          text: 'Tên',
+                          size: 17,
+                        ),
+                        StaticInfoBox(
+                          text: snapshot.data['Name'],
+                        ),
+                        divider,
+                        LabelText(text: 'Email', size: 17),
+                        StaticInfoBox(text: snapshot.data['Email'] ?? ''),
+                        divider,
+                        LabelText(text: 'Số điện thoại', size: 17),
+                        UserPhoneNumber(text: snapshot.data['PhoneNumber'],),
+                        divider,
+                        LabelText(text: 'Giới tính', size: 17),
+                        UserGender(),
+                        divider,
+                        LabelText(text: 'Ngày sinh', size: 17),
+                        DateOfBirth(dateTime: snapshot.data['Birth'].toDate(),),
+                        divider,
+                        LabelText(text: 'Địa chỉ', size: 17),
+                        UserAddress(text: snapshot.data['Address'],),
+                        divider,
+                        divider,
+                        divider,
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width / 2 - 150),
-                      alignment: Alignment.center,
-                      child: ClayContainer(
-                        borderRadius: 56,
-                        child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 60,
-                            child: Text(
-                              snapshot.data['Avatar'],
-                              style:
-                                  TextStyle(color: Colors.blue, fontSize: 30),
-                            )),
-                      ),
-                    ),
-                    divider,
-                    LabelText(text: 'Số điện thoại', size: 17),
-                    InfoBox(
-                        field: 'PhoneNumber',
-                        text: snapshot.data['PhoneNumber'] ?? ''),
-                    divider,
-                    LabelText(text: 'Giới tính', size: 17),
-                    InfoBox(
-                        field: 'Gender',
-                        text: snapshot.data['Gender']['Female']
-                            ? 'Nữ'
-                            : 'Nam' ?? ''),
-                    divider,
-                    LabelText(text: 'Ngày sinh', size: 17),
-                    InfoBox(
-                        field: 'Birth',
-                        text: DateFormat('dd-MM-yyyy')
-                                .format(snapshot.data['Birth'].toDate()) ??
-                            ''),
-                    divider,
-                    LabelText(text: 'Địa chỉ', size: 17),
-                    InfoBox(
-                        field: 'Address', text: snapshot.data['Address'] ?? ''),
-                    divider,
-                    LabelText(text: 'Email', size: 17),
-                    InfoBox(field: 'Email', text: snapshot.data['Email'] ?? ''),
-                  ],
-                );
-              }),
+                  );
+                }),
+          ),
         ),
       ),
     );
   }
 }
 
-class InfoBox extends StatefulWidget {
-  final text;
-  final field;
+class StaticInfoBox extends StatelessWidget {
+  final String text;
 
-  InfoBox({Key key, this.text, this.field}) : super(key: key);
-
-  @override
-  _InfoBoxState createState() => _InfoBoxState();
-
-  _InfoBoxState of(BuildContext context) {
-    final _InfoBoxState navigator =
-        context.findAncestorStateOfType<_InfoBoxState>();
-    return navigator;
-  }
-}
-
-class _InfoBoxState extends State<InfoBox> {
-  //final globalKey = GlobalKey<_InfoBoxState>();
-  var textController = TextEditingController();
-  @override
-  void initState() {
-    textController.text = widget.text;
-    textController.selection = TextSelection.fromPosition(TextPosition(offset: textController.text.length));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
+  const StaticInfoBox({Key key, this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
-          //height: 45,
+          height: 50,
           width: 300,
+
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
           decoration: BoxDecoration(
@@ -143,17 +124,70 @@ class _InfoBoxState extends State<InfoBox> {
             borderRadius: BorderRadius.circular(9),
           ),
           // child: Text(widget.text, style: TextStyle(fontSize: 17)),
-          child: TextField(
-            controller: textController,
-            onSubmitted: (text) {
-              FirebaseFirestore.instance
-                  .collection('User')
-                  .doc('SA8TXV76TtA48bvaDLNd')
-                  .update({widget.field: text});
-            },
+          child: Text(
+            text,
+            style: TextStyle(fontSize: 17),
           ),
         ),
       ],
     );
   }
 }
+//
+// class CanChangeInfoBox extends StatefulWidget {
+//   final text;
+//   final field;
+//
+//   CanChangeInfoBox({Key key, this.text, this.field}) : super(key: key);
+//
+//   @override
+//   _CanChangeInfoBoxState createState() => _CanChangeInfoBoxState();
+// }
+//
+// class _CanChangeInfoBoxState extends State<CanChangeInfoBox> {
+//   //final globalKey = GlobalKey<_InfoBoxState>();
+//   var textController = TextEditingController();
+//
+//   @override
+//   void initState() {
+//     textController.text = widget.text;
+//     textController.selection = TextSelection.fromPosition(
+//         TextPosition(offset: textController.text.length));
+//     super.initState();
+//   }
+//
+//   @override
+//   void dispose() {
+//     textController.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Container(
+//           height: 50,
+//           width: 300,
+//           alignment: Alignment.centerLeft,
+//           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+//           decoration: BoxDecoration(
+//             border:
+//                 Border.all(color: Theme.of(context).primaryColor, width: 1.5),
+//             borderRadius: BorderRadius.circular(9),
+//           ),
+//           // child: Text(widget.text, style: TextStyle(fontSize: 17)),
+//           child: TextField(
+//             controller: textController,
+//             onSubmitted: (text) {
+//               FirebaseFirestore.instance
+//                   .collection('User')
+//                   .doc(FirebaseAuth.instance.currentUser.uid)
+//                   .update({widget.field: text});
+//             },
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

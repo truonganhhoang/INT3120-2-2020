@@ -1,20 +1,71 @@
+
 import 'package:EduBox/package/widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreen extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<String> signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final UserCredential authResult =
+        await _auth.signInWithCredential(credential);
+    final User user = authResult.user;
+
+    if (user != null) {
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final User currentUser = _auth.currentUser;
+      assert(user.uid == currentUser.uid);
+
+      var db = FirebaseFirestore.instance;
+      bool userExists =
+          (await db.collection('User').doc(user.uid).get()).exists;
+      if (!userExists) {
+        await db.collection('User').doc(user.uid).set({
+          'Address': 'N/A',
+          'Avatar': user.photoURL,
+          'Birth': Timestamp.fromDate(DateTime(1960)),
+          'Email': user.email,
+          'Gender': '(Trống)',
+          'Name': user.displayName,
+          'PhoneNumber': 'N/A',
+        });
+      } else {
+        await db.collection('User').doc(user.uid).update({
+          'Avatar': user.photoURL,
+          'Email': user.email,
+          'Name': user.displayName,
+        });
+      }
+      
+      return '';
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    //final userDetail = Provider.of<UserDetail>(context);
     return Scaffold(
       body: Center(
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => HomeInterface()));
+            signInWithGoogle();
           },
           child: Container(
             height: 100,
@@ -46,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  child: Image.asset('lib/assests/google.png'),
+                  child: Image.asset('lib/assets/google.png'),
                   height: 45,
                   width: 45,
                 ),

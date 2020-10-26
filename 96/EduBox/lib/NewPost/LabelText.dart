@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class LabelText extends StatelessWidget {
   final String text;
+  final double size;
 
-  const LabelText({Key key, this.text}) : super(key: key);
+
+  const LabelText({Key key, this.text, this.size = 15}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,11 @@ class LabelText extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         text,
-        style: Theme.of(context).textTheme.headline1,
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: size,
+          fontWeight: FontWeight.w400,
+        ),
       ),
     );
   }
