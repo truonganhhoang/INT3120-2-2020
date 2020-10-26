@@ -32,74 +32,76 @@ class _BeginDatePickerState extends State<BeginDatePicker> {
       ),
     ];
     return GestureDetector(
-      onTap: () =>
-          showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (context) => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 100,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: boxShadow,
-                    ),
-                    child: CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.date,
-                      initialDateTime: form.beginDate,
-                      onDateTimeChanged: (DateTime newDateTime) {
-                        setState(() {
-                          bufferedDate = newDateTime;
-                        });
-                      },
-                    ),
+      onTap: () {
+        showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 100,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: boxShadow,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: boxShadow,
-                        ),
-                        child: FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            form.beginDate = bufferedDate;
-                          },
-                          child: Text(
-                            'Xong',
-                            style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: boxShadow,
-                        ),
-                        child: FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            'Thoát',
-                            style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: form.beginDate,
+                    onDateTimeChanged: (DateTime newDateTime) {
+                      setState(() {
+                        bufferedDate = newDateTime;
+                      });
+                    },
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: boxShadow,
+                      ),
+                      child: FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          form.beginDate = bufferedDate;
 
-                ],
-              )),
+                        },
+                        child: Text(
+                          'Xong',
+                          style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: boxShadow,
+                      ),
+                      child: FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          'Thoát',
+                          style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+              ],
+            ));
+      },
       child: Container(
         height: 40,
         width: 124,

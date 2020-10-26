@@ -1,5 +1,5 @@
 import 'package:EduBox/LandingPage.dart';
-import 'package:EduBox/Models/User.dart';
+import 'package:EduBox/NewPost/NewPostTemplate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +16,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context)=>UserDetail(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=>SubmitForm())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'EduBox',

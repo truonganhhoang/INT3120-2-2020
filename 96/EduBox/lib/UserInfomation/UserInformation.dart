@@ -82,7 +82,7 @@ class _UserInformationState extends State<UserInformation> {
                         UserPhoneNumber(text: snapshot.data['PhoneNumber'],),
                         divider,
                         LabelText(text: 'Giới tính', size: 17),
-                        UserGender(),
+                        UserGender(gender: snapshot.data['Gender'],),
                         divider,
                         LabelText(text: 'Ngày sinh', size: 17),
                         DateOfBirth(dateTime: snapshot.data['Birth'].toDate(),),
@@ -133,61 +133,4 @@ class StaticInfoBox extends StatelessWidget {
     );
   }
 }
-//
-// class CanChangeInfoBox extends StatefulWidget {
-//   final text;
-//   final field;
-//
-//   CanChangeInfoBox({Key key, this.text, this.field}) : super(key: key);
-//
-//   @override
-//   _CanChangeInfoBoxState createState() => _CanChangeInfoBoxState();
-// }
-//
-// class _CanChangeInfoBoxState extends State<CanChangeInfoBox> {
-//   //final globalKey = GlobalKey<_InfoBoxState>();
-//   var textController = TextEditingController();
-//
-//   @override
-//   void initState() {
-//     textController.text = widget.text;
-//     textController.selection = TextSelection.fromPosition(
-//         TextPosition(offset: textController.text.length));
-//     super.initState();
-//   }
-//
-//   @override
-//   void dispose() {
-//     textController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         Container(
-//           height: 50,
-//           width: 300,
-//           alignment: Alignment.centerLeft,
-//           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-//           decoration: BoxDecoration(
-//             border:
-//                 Border.all(color: Theme.of(context).primaryColor, width: 1.5),
-//             borderRadius: BorderRadius.circular(9),
-//           ),
-//           // child: Text(widget.text, style: TextStyle(fontSize: 17)),
-//           child: TextField(
-//             controller: textController,
-//             onSubmitted: (text) {
-//               FirebaseFirestore.instance
-//                   .collection('User')
-//                   .doc(FirebaseAuth.instance.currentUser.uid)
-//                   .update({widget.field: text});
-//             },
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+

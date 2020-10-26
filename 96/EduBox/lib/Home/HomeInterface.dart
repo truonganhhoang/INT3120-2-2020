@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:EduBox/Models/User.dart';
+import 'package:EduBox/NewPost/NewPostTemplate.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ class HomeInterface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = FirebaseAuth.instance.currentUser;
-    // TODO: implement build
+    var submitForm = Provider.of<SubmitForm>(context);
     return SafeArea(
       child: Scaffold(
         appBar: appbar,
@@ -67,11 +67,10 @@ class HomeInterface extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                submitForm.type = 0;
                                 Navigator.of(context).pop();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewOrder(
-                                          type: classType.findStudent,
-                                        )));
+                                    builder: (context) => NewOrder()));
                               },
                               child: ClayContainer(
                                 height: 60,
@@ -88,11 +87,10 @@ class HomeInterface extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
+                                submitForm.type = 1;
                                 Navigator.of(context).pop();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewOrder(
-                                          type: classType.findTeacher,
-                                        )));
+                                    builder: (context) => NewOrder()));
                               },
                               child: ClayContainer(
                                 height: 60,
@@ -278,7 +276,7 @@ class HamburgerMenu extends StatelessWidget {
             enabled: true,
             onTap: () {
               // Navigator.of(context).pop();
-              print(Provider.of<UserDetail>(context, listen: false).toJson());
+              print(Provider.of<SubmitForm>(context,listen: false).type);
             },
           ),
         ],

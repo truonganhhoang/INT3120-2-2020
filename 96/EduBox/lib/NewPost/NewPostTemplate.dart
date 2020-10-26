@@ -1,4 +1,6 @@
 import 'package:EduBox/package/widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 //
 // class CanBeSubmit with ChangeNotifier {
 //   bool _can = true;
@@ -123,17 +125,59 @@ import 'package:EduBox/package/widget.dart';
 // }
 
 class SubmitForm with ChangeNotifier {
-  int _grade = 0;
-  int _subject = 0;
+  int _type;
+  int _grade = 1;
+  String _subject = 'Toán';
   String _address;
   List<bool> _days = List.generate(7, (index) => false);
   int _beginHour = DateTime.now().hour;
+  int _beginMinute = DateTime.now().minute;
   int _endHour = DateTime.now().hour;
+  int _endMinute = DateTime.now().minute;
   DateTime _beginDate = DateTime.now();
   DateTime _endDate = DateTime.now();
-  int _gender = 0;
+  String _gender = '(Nam/Nữ)';
   String _requirement;
-  double _salary;
+  double _salary = 1;
+  String _phoneNumber = '0965390715';
+  String _whoPost = FirebaseAuth.instance.currentUser.uid;
+  bool _accepted = false;
+  String _whoAccept;
+
+  List<bool> _canBeSubmit = List.generate(5, (index) => false);
+
+  void reset() {
+    grade = 1;
+    subject = 'Toán';
+    address = null;
+    days = List.generate(7, (index) => false);
+    beginHour = DateTime.now().hour;
+    endHour = DateTime.now().hour;
+    beginDate = DateTime.now();
+    endDate = DateTime.now();
+    gender = '(Nam/Nữ)';
+    type = null;
+    requirement = null;
+    salary = 1;
+    canBeSubmit = List.generate(5, (index) => false);
+    accepted = false;
+    whoAccept = null;
+    notifyListeners();
+  }
+
+  int get type => _type;
+
+  set type(int value) {
+    _type = value;
+    notifyListeners();
+  }
+
+  List<bool> get canBeSubmit => _canBeSubmit;
+
+  set canBeSubmit(List<bool> value) {
+    _canBeSubmit = value;
+    notifyListeners();
+  }
 
   int get grade => _grade;
 
@@ -142,9 +186,9 @@ class SubmitForm with ChangeNotifier {
     notifyListeners();
   }
 
-  int get subject => _subject;
+  String get subject => _subject;
 
-  set subject(int value) {
+  set subject(String value) {
     _subject = value;
     notifyListeners();
   }
@@ -167,6 +211,10 @@ class SubmitForm with ChangeNotifier {
 
   set beginHour(int value) {
     _beginHour = value;
+    if (endHour * 60 + endMinute - beginHour * 60 - beginMinute < 60)
+      canBeSubmit[2] = false;
+    else
+      canBeSubmit[2] = true;
     notifyListeners();
   }
 
@@ -174,6 +222,32 @@ class SubmitForm with ChangeNotifier {
 
   set endHour(int value) {
     _endHour = value;
+    if (endHour * 60 + endMinute - beginHour * 60 - beginMinute < 60)
+      canBeSubmit[2] = false;
+    else
+      canBeSubmit[2] = true;
+    notifyListeners();
+  }
+
+  int get beginMinute => _beginMinute;
+
+  set beginMinute(int value) {
+    _beginMinute = value;
+    if (endHour * 60 + endMinute - beginHour * 60 - beginMinute < 60)
+      canBeSubmit[2] = false;
+    else
+      canBeSubmit[2] = true;
+    notifyListeners();
+  }
+
+  int get endMinute => _endMinute;
+
+  set endMinute(int value) {
+    _endMinute = value;
+    if (endHour * 60 + endMinute - beginHour * 60 - beginMinute < 60)
+      canBeSubmit[2] = false;
+    else
+      canBeSubmit[2] = true;
     notifyListeners();
   }
 
@@ -181,6 +255,10 @@ class SubmitForm with ChangeNotifier {
 
   set beginDate(DateTime value) {
     _beginDate = value;
+    if (_beginDate.difference(_endDate).inDays > -30)
+      canBeSubmit[3] = false;
+    else
+      canBeSubmit[3] = true;
     notifyListeners();
   }
 
@@ -188,12 +266,16 @@ class SubmitForm with ChangeNotifier {
 
   set endDate(DateTime value) {
     _endDate = value;
+    if (_beginDate.difference(_endDate).inDays > -30)
+      canBeSubmit[3] = false;
+    else
+      canBeSubmit[3] = true;
     notifyListeners();
   }
 
-  int get gender => _gender;
+  String get gender => _gender;
 
-  set gender(int value) {
+  set gender(String value) {
     _gender = value;
     notifyListeners();
   }
@@ -212,6 +294,17 @@ class SubmitForm with ChangeNotifier {
     notifyListeners();
   }
 
-//StreamController
+  String get whoAccept => _whoAccept;
 
+  set whoAccept(String value) {
+    _whoAccept = value;
+    notifyListeners();
+  }
+
+  bool get accepted => _accepted;
+
+  set accepted(bool value) {
+    _accepted = value;
+    notifyListeners();
+  }
 }

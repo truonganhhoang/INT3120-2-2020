@@ -6,53 +6,52 @@ import 'package:provider/provider.dart';
 
 Color _color = Color(0xff00854c);
 
-class EndDatePicker extends StatefulWidget {
+class BeginTimePicker extends StatefulWidget {
   @override
-  _EndDatePickerState createState() => _EndDatePickerState();
+  _BeginTimePickerState createState() => _BeginTimePickerState();
 }
 
-class _EndDatePickerState extends State<EndDatePicker> {
+class _BeginTimePickerState extends State<BeginTimePicker> {
+  String hour = DateTime.now().hour.toString() + ':00';
+  int bufferedHour;
+  int bufferedMinute;
+  var boxShadow = [
+    BoxShadow(
+      spreadRadius: 3,
+      blurRadius: 10,
+      offset: Offset(2, 2),
+      color: Colors.black54,
+    ),
+    BoxShadow(
+      spreadRadius: 3,
+      blurRadius: 10,
+      offset: Offset(-2, -2),
+      color: Colors.white54,
+    ),
+  ];
 
-  @override
   Widget build(BuildContext context) {
     final form = Provider.of<SubmitForm>(context);
-    DateTime bufferedDate = DateTime.now();
-    List<BoxShadow> boxShadow = [
-      BoxShadow(
-        spreadRadius: 3,
-        blurRadius: 10,
-        offset: Offset(2, 2),
-        color: Colors.black54,
-      ),
-      BoxShadow(
-        spreadRadius: 3,
-        blurRadius: 10,
-        offset: Offset(-2, -2),
-        color: Colors.white54,
-      ),
-    ];
     return GestureDetector(
-      onTap: () =>
-          showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (context) => Column(
+      onTap: () => showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 100,
-                    width: 300,
+                    width: 200,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: boxShadow,
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: boxShadow),
                     child: CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.date,
-                      initialDateTime: form.endDate,
+                      mode: CupertinoDatePickerMode.time,
                       onDateTimeChanged: (DateTime newDateTime) {
                         setState(() {
-                          bufferedDate = newDateTime;
+                          bufferedHour = newDateTime.hour;
+                          bufferedMinute = newDateTime.minute;
                         });
                       },
                     ),
@@ -70,12 +69,13 @@ class _EndDatePickerState extends State<EndDatePicker> {
                         child: FlatButton(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            form.endDate = bufferedDate;
-
+                            form.beginHour = bufferedHour;
+                            form.beginMinute = bufferedMinute;
                           },
                           child: Text(
                             'Xong',
-                            style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
+                            style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 255, 1)),
                           ),
                         ),
                       ),
@@ -92,13 +92,13 @@ class _EndDatePickerState extends State<EndDatePicker> {
                           },
                           child: Text(
                             'Thoát',
-                            style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
+                            style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 255, 1)),
                           ),
                         ),
                       ),
                     ],
                   ),
-
                 ],
               )),
       child: Container(
@@ -110,8 +110,10 @@ class _EndDatePickerState extends State<EndDatePicker> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Consumer<SubmitForm>(
-          builder: (context, submitForm,_)=>Text(
-            DateFormat('dd-MM-yyyy').format(submitForm.endDate),
+          builder: (context, form, _) => Text(
+            form.beginHour.toString() +
+                ':' +
+                NumberFormat('00').format(form.beginMinute),
             style: TextStyle(fontSize: 16),
           ),
         ),

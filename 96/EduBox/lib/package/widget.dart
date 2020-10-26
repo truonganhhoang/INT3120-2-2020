@@ -8,8 +8,7 @@ export '../Home/ClassList.dart';
 export '../Home/FocusPopup.dart';
 export '../Home/HomeInterface.dart';
 export '../Home/PopUpMenu.dart';
-export '../NewPost/DropDownMenu.dart';
-export '../NewPost/InputCommentAddressBox.dart';
+export '../NewPost/RequiredGender.dart';
 export '../NewPost/LabelText.dart';
 export '../NewPost/NewOrder.dart';
 

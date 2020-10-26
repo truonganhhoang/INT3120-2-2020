@@ -1,12 +1,19 @@
 import 'dart:ui';
 
 import 'package:EduBox/NewPost/BeginDatePicker.dart';
+import 'package:EduBox/NewPost/ClassAddress.dart';
+import 'package:EduBox/NewPost/CommentBox.dart';
+import 'package:EduBox/NewPost/EndDatePicker.dart';
+import 'package:EduBox/NewPost/EndTimePicker.dart';
+import 'package:EduBox/NewPost/GradePicker.dart';
+import 'package:EduBox/NewPost/InputSalaryBox.dart';
 import 'package:EduBox/NewPost/NewPostTemplate.dart';
-import 'package:EduBox/NewPost/TimePicker.dart';
+import 'package:EduBox/NewPost/BeginTimePicker.dart';
 import 'package:provider/provider.dart';
 
 import '../NewPost/DaysOfWeek.dart';
 import '../package/widget.dart';
+import 'SubjectPicker.dart';
 
 enum classType { findTeacher, findStudent }
 
@@ -80,9 +87,6 @@ class FindTeacher extends StatelessWidget {
 }
 
 class NewOrder extends StatefulWidget {
-  final classType type;
-  const NewOrder({Key key, this.type}) : super(key: key);
-
   @override
   _NewOrderState createState() => _NewOrderState();
 }
@@ -90,7 +94,6 @@ class NewOrder extends StatefulWidget {
 class _NewOrderState extends State<NewOrder> {
   static var divider = Divider(height: 10, color: Colors.transparent);
   double width = 0;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -102,218 +105,225 @@ class _NewOrderState extends State<NewOrder> {
         appBar: AppBar(
           title: Text('Thêm yêu cầu mới'),
         ),
-        body: ChangeNotifierProvider(
-          create: (context)=>SubmitForm(),
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: ListView(
-              children: [
-                widget.type == classType.findStudent
-                    ? FindStudent()
-                    : FindTeacher(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width / 2 - 150),
-                  child: Column(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          LabelText(text: 'Lớp'),
-                          ADropDownMenu(
-                              listOfItems: List.generate(12,
-                                  (index) => 'Lớp ' + (index + 1).toString())),
-                        ],
-                      ),
-                      divider,
-                      Column(
-                        children: [
-                          LabelText(text: 'Môn'),
-                          ADropDownMenu(listOfItems: [
-                            'Toán',
-                            'Lý',
-                            'Hóa',
-                            'Văn',
-                            'Sinh',
-                            'Anh',
-                            'Tin'
-                          ]),
-                        ],
-                      ),
-                      divider,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          LabelText(text: 'Địa chỉ'),
-                          InputCommentAddressBox(hintText: 'Địa chỉ học'),
-                        ],
-                      ),
-                      divider,
-                      Column(
-                        children: [
-                          LabelText(text: 'Ngày học trong tuần'),
-                          DaysOfWeek(),
-                        ],
-                      ),
-                      divider,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            //height: 80,
-                            width: 124,
-                            alignment: Alignment.bottomCenter,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                LabelText(text: 'Thời gian'),
-                                TimePicker(),
-                              ],
-                            ),
-                          ),
-                          Icon(Icons.arrow_forward, size: 32),
-                          Container(
-                            //height: 80,
-                            width: 124,
-                            alignment: Alignment.bottomCenter,
-                            child: TimePicker(),
-                          ),
-                        ],
-                      ),
-                      divider,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 80,
-                            width: 124,
-                            child: Column(
-                              children: [
-                                LabelText(text: 'Thời gian bắt đầu'),
-                                BeginDatePicker(),
-                              ],
-                            ),
-                          ),
-                          Icon(Icons.arrow_forward, size: 32),
-                          Container(
-                            height: 80,
-                            width: 124,
-                            alignment: Alignment.bottomCenter,
-                            child: Column(
-                              children: [
-                                LabelText(text: 'Thời gian kết thúc'),
-                                //BeginDatePicker(),
+        floatingActionButton: Consumer<SubmitForm>(
+          builder: (context, form, _) => Container(
+            height: 50,
+            width: 300,
+            child: FloatingActionButton.extended(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(9)),
+              onPressed: !form.canBeSubmit.contains(false)
+                  ? () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text('Xác nhận?'),
+                          actions: [
+                            FlatButton(
+                              child: Container(
+                                child: Text('Có'),
+                                height: 20,
+                              ),
+                              onPressed: () {
 
-                              ],
+                                Navigator.of(context).popUntil((route) => route.isFirst);
+                              },
                             ),
-                          ),
-                        ],
-                      ),
-                      divider,
-                      Column(
-                        children: [
-                          LabelText(text: 'Giới tính yêu cầu'),
-                          ADropDownMenu(
-                            listOfItems: ['Nam/Nữ', 'Nam', 'Nữ'],
-                          )
-                        ],
-                      ),
-                      divider,
-                      Column(
-                        children: [
-                          LabelText(text: 'Mô tả yêu cầu'),
-                          InputCommentAddressBox(
-                            hintText:
-                                'Nhập mô tả của bạn \nVui lòng nhập chi tiết mô tả (nếu có)',
-                          )
-                        ],
-                      ),
-                      divider,
-                      Column(
-                        children: [
-                          LabelText(text: 'Lương/buổi (hệ số của 100.000 VND)'),
-                          InputCommentAddressBox(
-                            hintText: 'Tối thiểu 1',
-                            canBeNull: false,
-                          ),
-                        ],
-                      ),
-                      divider,
-                      Center(
-                        child: InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                title: Text('Xác nhận?'),
-                                actions: [
-                                  FlatButton(
-                                    child: Container(
-                                      child: Text('Có'),
-                                      height: 20,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Container(
-                                      child: Text('Không'),
-                                      height: 20,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
+                            FlatButton(
+                              child: Container(
+                                child: Text('Không'),
+                                height: 20,
                               ),
-                              barrierDismissible: true,
-                            );
-                          },
-                          child: Container(
-                            height: 60,
-                            width: 200,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color:
-                                  Theme.of(context).primaryColor.withOpacity(1),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  spreadRadius: 0,
-                                  blurRadius: 3,
-                                  offset: Offset(3, 3),
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(1),
-                                ),
-                                BoxShadow(
-                                  blurRadius: 2,
-                                  offset: Offset(1.5, 1.5),
-                                  color: Colors.black,
-                                )
-                              ],
+                              onPressed: () {
+                                print(Provider.of<SubmitForm>(context, listen: false).type);
+                                Navigator.of(context).pop();
+                              },
                             ),
-                            child: Text(
-                              'Đăng bài',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                              ),
-                            ),
+                          ],
+                        ),
+                        barrierDismissible: true,
+                      );
+                    }
+                  : () {},
+              backgroundColor: !form.canBeSubmit.contains(false)
+                  ? Theme.of(context).primaryColor
+                  : Colors.grey,
+              label: Text(
+                'Đăng bài',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.centerFloat,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: ListView(
+            children: [
+
+              Provider.of<SubmitForm>(context, listen: false).type == 0
+                  ? FindStudent()
+                  : FindTeacher(),
+
+              Consumer<SubmitForm>(
+                builder: (context, form, _) => Column(
+                  children: [
+
+                    Text(form.type.toString()),
+                    Text(form.grade.toString()),
+                    Text(form.subject),
+                    Text(form.address ?? 'null'),
+                    Text(form.days.toString()),
+
+                    Text(form.salary.toString() ?? ''),
+                    Text(form.canBeSubmit.toString()),
+
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width / 2 - 150),
+                child: Column(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        LabelText(text: 'Lớp'),
+                        GradePicker(),
+                      ],
+                    ),
+                    divider,
+                    Column(
+                      children: [
+                        LabelText(text: 'Môn'),
+                        SubjectPicker(),
+                      ],
+                    ),
+                    divider,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LabelText(text: 'Địa chỉ'),
+                        ClassAddress(),
+                      ],
+                    ),
+                    divider,
+                    Column(
+                      children: [
+                        LabelText(text: 'Ngày học trong tuần'),
+                        DaysOfWeek(),
+                      ],
+                    ),
+                    divider,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          //height: 80,
+                          width: 124,
+                          alignment: Alignment.bottomCenter,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              LabelText(text: 'Thời gian'),
+                              BeginTimePicker(),
+                            ],
                           ),
                         ),
+                        Icon(Icons.arrow_forward, size: 32),
+                        Container(
+                          //height: 80,
+                          width: 124,
+                          alignment: Alignment.bottomCenter,
+                          child: EndTimePicker(),
+                        ),
+                      ],
+                    ),
+                    divider,
+                    Consumer<SubmitForm>(
+                      builder: (context, form, _) => Visibility(
+                        child: Text(
+                          'Tối thiểu 1 tiếng ( 60 phút )',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        visible: !form.canBeSubmit[2],
                       ),
-                      Divider(
-                        height: 30,
-                      )
-                    ],
-                  ),
+                    ),
+                    divider,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 80,
+                          width: 124,
+                          child: Column(
+                            children: [
+                              LabelText(text: 'Thời gian bắt đầu'),
+                              BeginDatePicker(),
+                            ],
+                          ),
+                        ),
+                        Icon(Icons.arrow_forward, size: 32),
+                        Container(
+                          height: 80,
+                          width: 124,
+                          alignment: Alignment.bottomCenter,
+                          child: Column(
+                            children: [
+                              LabelText(text: 'Thời gian kết thúc'),
+                              EndDatePicker(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Consumer<SubmitForm>(
+                      builder: (context, form, _) => Visibility(
+                        child: Text(
+                          'Tối thiểu 30 ngày',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        visible: !form.canBeSubmit[3],
+                      ),
+                    ),
+                    divider,
+                    Column(
+                      children: [
+                        LabelText(text: 'Giới tính yêu cầu'),
+                        RequiredGender(),
+                      ],
+                    ),
+                    divider,
+                    Column(
+                      children: [
+                        LabelText(text: 'Mô tả yêu cầu'),
+                        CommentBox(),
+                      ],
+                    ),
+                    divider,
+                    //Consumer<SubmitForm>(builder: (context, form,_)=>Text(form.requirement??'')),
+                    Column(
+                      children: [
+                        LabelText(text: 'Lương/buổi ( hệ số 10.000 VND)'),
+                        InputSalaryBox(),
+                      ],
+                    ),
+                    divider,
+                    Divider(
+                      height: 60,
+                    )
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

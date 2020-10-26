@@ -1,21 +1,22 @@
-import '../package/widget.dart';
+
+
+import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Color _color = Color(0xff00854c);
 
-class ADropDownMenu extends StatefulWidget {
-  final List<String> listOfItems;
-
-  const ADropDownMenu({Key key, this.listOfItems}) : super(key: key);
-
+class RequiredGender extends StatefulWidget {
   @override
-  _ADropDownMenuState createState() => _ADropDownMenuState();
+  _RequiredGenderState createState() => _RequiredGenderState();
 }
 
-class _ADropDownMenuState extends State<ADropDownMenu> {
+class _RequiredGenderState extends State<RequiredGender> {
   int _value = 0;
-
+var listOfItems = ['(Nam/Nữ)', 'Nam', 'Nữ'] ;
   @override
   Widget build(BuildContext context) {
+    final form = Provider.of<SubmitForm>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
@@ -27,10 +28,10 @@ class _ADropDownMenuState extends State<ADropDownMenu> {
             isExpanded: true,
             value: _value,
             items: List.generate(
-              widget.listOfItems.length,
+              listOfItems.length,
               (index) => DropdownMenuItem(
                 child: Text(
-                  widget.listOfItems[index],
+                  listOfItems[index],
                   style: TextStyle(
                     color: _value == index ? null : _color,
                   ),
@@ -42,6 +43,7 @@ class _ADropDownMenuState extends State<ADropDownMenu> {
               setState(() {
                 _value = value;
               });
+              form.gender = listOfItems[value];
             }),
       ),
     );

@@ -5,15 +5,33 @@ import 'package:flutter/material.dart';
 Color _color = Color(0xff00854c);
 
 class UserGender extends StatefulWidget {
+  final String gender;
+
+  const UserGender({Key key, this.gender}) : super(key: key);
   @override
   _UserGenderState createState() => _UserGenderState();
 }
 
 class _UserGenderState extends State<UserGender> {
   var listOfGenders = ['(Trống)', 'Nam', 'Nữ'];
-  int _value = 0;
+  int _value;
   var user = FirebaseAuth.instance.currentUser;
-  var db = FirebaseFirestore.instance.collection('User');
+  var db = FirebaseFirestore.instance;
+  var gender;
+
+
+  @override
+  void initState() {
+    if (widget.gender == 'Nam')
+      _value = 1;
+    else if (widget.gender == 'Nữ')
+      _value = 2;
+    else
+      _value = 0;
+
+    print(_value);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +65,7 @@ class _UserGenderState extends State<UserGender> {
                   setState(() {
                     _value = value;
                   });
-                  db.doc(user.uid).update({'Gender': listOfGenders[value]});
+                  db.collection('User').doc(user.uid).update({'Gender': listOfGenders[value]});
                 }),
           ),
         ),
