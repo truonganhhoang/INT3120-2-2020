@@ -42,4 +42,17 @@ class API_Manager {
       return questions;
     }
   }
+
+  Future<List<Quiz>> searchQuiz(String name) async {
+    var urlGetQuiz = url + "/v1/quiz/SearchQuiz/" + name;
+    final response = await http.get(urlGetQuiz);
+    List<Quiz> quizzes = List<Quiz>();
+    if (response.statusCode == 200) {
+      Map list = json.decode(response.body);
+      list.forEach((key, value) {
+        quizzes.add(Quiz.fromJson(value, key));
+      });
+      return quizzes;
+    }
+  }
 }
