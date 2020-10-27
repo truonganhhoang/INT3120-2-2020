@@ -41,59 +41,62 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBody: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: new Text(_screenTitle),
-        actions: <Widget>[
-          MaterialButton(
-            minWidth: 50,
-            child: Icon(
-              Icons.person,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              openProfileUserScreen();
-            },
-          ),
-        ],
-      ),
-      drawer: AccountPage(),
-      body: Container(
-        child: PageStorage(
-          child: _currentScreen,
-          bucket: _bucket,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        child: FloatingActionButton(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ImageIcon(
-                AssetImage(iconLookUpPath),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        extendBody: true,
+        appBar: AppBar(
+          centerTitle: true,
+          title: new Text(_screenTitle),
+          actions: <Widget>[
+            MaterialButton(
+              minWidth: 50,
+              child: Icon(
+                Icons.person,
                 color: Colors.white,
               ),
-              Text('Search', style: TextStyle(fontSize: 15)),
-            ],
-          ),
-          onPressed: () {
-            setState(() {
-              _currentScreen = SearchWordScreen();
-              _currentTab = 4;
-              _screenTitle = 'Search';
-            });
-          },
-          tooltip: 'Look up',
-          elevation: 2.0,
+              onPressed: () {
+                openProfileUserScreen();
+              },
+            ),
+          ],
         ),
-        width: 70,
-        height: 70,
+        drawer: AccountPage(),
+        body: Container(
+          child: PageStorage(
+            child: _currentScreen,
+            bucket: _bucket,
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+          child: FloatingActionButton(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ImageIcon(
+                  AssetImage(iconLookUpPath),
+                  color: Colors.white,
+                ),
+                Text('Search', style: TextStyle(fontSize: 15)),
+              ],
+            ),
+            onPressed: () {
+              setState(() {
+                _currentScreen = SearchWordScreen();
+                _currentTab = 4;
+                _screenTitle = 'Search';
+              });
+            },
+            tooltip: 'Look up',
+            elevation: 2.0,
+          ),
+          width: 70,
+          height: 70,
+        ),
+        bottomNavigationBar: createBottomAppBar(),
       ),
-      bottomNavigationBar: createBottomAppBar(),
     );
   }
 
@@ -133,8 +136,8 @@ class _HomeState extends State<Home> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(
-                            Icons.book,
+                          ImageIcon(
+                            AssetImage('assets/sprites/learnIcon.png'),
                             color: _currentTab == 0 ? Colors.blue : Colors.grey,
                           ),
                           Text(

@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.8"
+  edge_alert:
+    dependency: "direct main"
+    description:
+      name: edge_alert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -214,6 +221,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.3"
+  flutter_page_transition:
+    dependency: "direct main"
+    description:
+      name: flutter_page_transition
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.6"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -336,6 +350,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  loading_animations:
+    dependency: "direct main"
+    description:
+      name: loading_animations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   matcher:
     dependency: transitive
     description:
@@ -477,7 +498,7 @@ packages:
     source: hosted
     version: "0.6.5+3"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"

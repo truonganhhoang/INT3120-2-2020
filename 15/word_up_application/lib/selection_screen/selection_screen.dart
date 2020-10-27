@@ -1,5 +1,9 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:edge_alert/edge_alert.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:sqflite/utils/utils.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
@@ -16,24 +20,29 @@ class SelectionScreen extends StatefulWidget {
 class _SelectionScreenState extends State<SelectionScreen> {
   List<Word> listWordToSelect = new List<Word>();
   int numberWordNotKnow = 0;
-
+  final assetsAudioPlayer = AssetsAudioPlayer();
   int index;
   int numberWords;
   bool isTesting;
+  bool waitingForNotification;
+  int correctIndex = 1;
+  int chosenIndex;
 
-  Future<void> _getData(int number) async{
+  Future<void> _getData(int number) async {
     listWordToSelect = await DatabaseLocalHelper.instance.getNWords(number);
   }
 
   @override
   void initState() {
+    waitingForNotification = false;
+    chosenIndex = 0;
     index = 0;
     isTesting = false;
     _getData(5).then((value) => {
-      setState(() {
-        index = 0;
-      })
-    });
+          setState(() {
+            index = 0;
+          })
+        });
     super.initState();
   }
 
@@ -46,9 +55,11 @@ class _SelectionScreenState extends State<SelectionScreen> {
   Widget build(BuildContext context) {
     numberWords = listWordToSelect.length;
     if (index >= numberWords) index--;
-    if(index < 0) return Container(
-      color: Colors.white,
-    );
+    if (index < 0)
+      return Container(
+        color: Colors.white,
+        child: _loading(),
+      );
 
     return isTesting
         ? _testScreen(listWordToSelect[index])
@@ -100,7 +111,12 @@ class _SelectionScreenState extends State<SelectionScreen> {
                       ),
                     ),
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        assetsAudioPlayer.open(
+                          Audio('assets/audios/' +
+                              listWordToSelect[index].pathSoundUK),
+                        );
+                      },
                       child: CircleAvatar(
                         radius: 30,
                         backgroundColor: Colors.black12,
@@ -121,9 +137,11 @@ class _SelectionScreenState extends State<SelectionScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
-                          setState(() {
-                            isTesting = true;
-                          });
+                          if (!waitingForNotification)
+                            setState(() {
+                              isTesting = true;
+                              chosenIndex = 0;
+                            });
                         },
                         child: Container(
                             alignment: Alignment.center,
@@ -229,21 +247,11 @@ class _SelectionScreenState extends State<SelectionScreen> {
           );
   }
 
-  void userIsUnSure() {
-    numberWordNotKnow ++;
-    DatabaseLocalHelper.instance.insertToLearnWord(listWordToSelect[index].id);
-    if (index == numberWords - 1) {
-      finishSelect();
-    }
-    setState(() {
-      index++;
-    });
-  }
-
   void finishSelect() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => FinishSelectionScreen(n: numberWordNotKnow)),
+      MaterialPageRoute(
+          builder: (context) => FinishSelectionScreen(n: numberWordNotKnow)),
     );
   }
 
@@ -252,9 +260,10 @@ class _SelectionScreenState extends State<SelectionScreen> {
         appBar: AppBar(
           leading: FlatButton(
             onPressed: () {
-              setState(() {
-                isTesting = false;
-              });
+              if (!waitingForNotification)
+                setState(() {
+                  isTesting = false;
+                });
             },
             child: Icon(Icons.close),
           ),
@@ -267,47 +276,66 @@ class _SelectionScreenState extends State<SelectionScreen> {
             child: Column(
               children: [
                 Container(
+                    padding: EdgeInsets.symmetric(vertical: 20),
                     child: RichText(
-                  text: TextSpan(
-                    text: word.word,
-                    style: TextStyle(
-                        fontSize: 2.5 * SizeConfig.heightMultiplier,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: ' means ______________.',
-                          style: TextStyle(fontWeight: FontWeight.normal)),
-                    ],
-                  ),
-                )),
-                _answerBox(),
+                      text: TextSpan(
+                        text: word.word,
+                        style: TextStyle(
+                            fontSize: 2.5 * SizeConfig.heightMultiplier,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: ' means ______________.',
+                              style: TextStyle(fontWeight: FontWeight.normal)),
+                        ],
+                      ),
+                    )),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: _answerBox(1),
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                _answerBox(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: _answerBox(2),
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                _answerBox(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: _answerBox(3),
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                _answerBox(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: _answerBox(4),
+                ),
               ],
             ),
           ),
         ));
   }
 
-  Widget _answerBox() {
+  Widget _answerBox(int index) {
     return RaisedButton(
       padding: EdgeInsets.all(0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      onPressed: () {},
+      onPressed: () {
+        if (chosenIndex > 0) return;
+        _checkTheAnswer(index);
+        setState(() {
+          chosenIndex = index;
+        });
+      },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: Colors.white12,
           borderRadius: BorderRadius.circular(5),
         ),
         padding: EdgeInsets.all(0),
@@ -319,22 +347,131 @@ class _SelectionScreenState extends State<SelectionScreen> {
                 flex: 1,
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(5),
-                        topLeft: Radius.circular(5)),
-                    color: Colors.red,
-                  ),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(5),
+                          topLeft: Radius.circular(5)),
+                      color: (chosenIndex == index)
+                          ? ((chosenIndex == correctIndex)
+                              ? Colors.green
+                              : Colors.red)
+                          : Colors.blue,
+                      border: Border()),
                   padding: EdgeInsets.all(10),
                   width: 50,
-                  child: Text('A'),
+                  child: Text(
+                    (() {
+                      switch (index) {
+                        case 1:
+                          return 'A';
+                        case 2:
+                          return 'B';
+                        case 3:
+                          return 'C';
+                        case 4:
+                          return 'D';
+                      }
+                      return 'E';
+                    })(),
+                    style: TextStyle(
+                      fontSize: 2.5 * SizeConfig.heightMultiplier,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               Expanded(
                 flex: 4,
-                child: Text('provide money to pay(a cost or expense'),
+                child: Container(
+                  padding:
+                      EdgeInsets.only(bottom: 20, top: 20, left: 10, right: 10),
+                  child: Text(
+                    'provide money to pay(a cost or expense',
+                    style: TextStyle(
+                        fontSize: 2 * SizeConfig.heightMultiplier,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void userIsUnSure() async {
+    waitingForNotification = true;
+    _showUnSureNotification();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    numberWordNotKnow++;
+    DatabaseLocalHelper.instance.insertToLearnWord(listWordToSelect[index].id);
+    if (index == numberWords - 1) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      finishSelect();
+    }
+    else {
+      setState(() {
+        isTesting = false;
+        waitingForNotification = false;
+        index++;
+      });
+    }
+  }
+
+  void _showUnSureNotification() {
+    EdgeAlert.show(context,
+        icon: Icons.book,
+        backgroundColor: Colors.deepOrange,
+        title: listWordToSelect[index].word,
+        description: 'Learn this word',
+        gravity: EdgeAlert.BOTTOM,
+        duration: 1);
+  }
+
+  void _userKnewThisWord() {
+    waitingForNotification = true;
+    _showKnewNotification();
+    DatabaseLocalHelper.instance.insertKnewWord(listWordToSelect[index].id);
+    if (index == numberWords - 1) {
+      finishSelect();
+    } else {
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        setState(() {
+          waitingForNotification = false;
+          isTesting = false;
+          index++;
+        });
+      });
+    }
+  }
+
+  void _showKnewNotification(){
+    EdgeAlert.show(context,
+        icon: Icons.book,
+        backgroundColor: Colors.green,
+        title: listWordToSelect[index].word,
+        description: 'You know this word',
+        gravity: EdgeAlert.BOTTOM,
+        duration: 1);
+  }
+
+  void _checkTheAnswer(int index) {
+    if (index == correctIndex) {
+      _userKnewThisWord();
+    } else {
+      userIsUnSure();
+    }
+  }
+
+  Widget _loading() {
+    return Center(
+      child: Container(
+       // margin: EdgeInsets.only(bottom: 15 * SizeConfig.heightMultiplier),
+        child: LoadingBouncingGrid.square(
+          size: 8 * SizeConfig.heightMultiplier,
+          backgroundColor: Colors.blue,
+          inverted: true,
         ),
       ),
     );

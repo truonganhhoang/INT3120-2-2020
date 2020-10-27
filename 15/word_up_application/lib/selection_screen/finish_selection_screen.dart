@@ -29,11 +29,11 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                 minWidth: 4 * SizeConfig.heightMultiplier,
                 padding: EdgeInsets.only(left: 0.8 * SizeConfig.screenWidth),
                 onPressed: () {
+                  print('smms');
                   Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: Home()));
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
                 },
                 child: Icon(
                   Icons.close,
@@ -86,13 +86,13 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                 child: Column(
                   children: [
                     Card(
-                      elevation: 7,
+                      elevation: 0,
                       margin:
                           EdgeInsets.only(top: 3 * SizeConfig.heightMultiplier),
                       color: Colors.red,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
-                            2 * SizeConfig.heightMultiplier),
+                            10),
                       ),
                       child: GestureDetector(
                         onTap: () {
@@ -112,29 +112,29 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 3.3 * SizeConfig.textMultiplier,
+                                fontSize: 3 * SizeConfig.textMultiplier,
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
                     ),
                     Card(
-                      elevation: 7,
+                      elevation: 0,
                       margin: EdgeInsets.only(
                         top: 2 * SizeConfig.heightMultiplier,
                       ),
                       color: Colors.grey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
-                            2 * SizeConfig.heightMultiplier),
+                            10),
                       ),
                       child: GestureDetector(
                           onTap: () {
+                            print('đs');
                             Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.rightToLeft,
-                                    child: Home()));
+                              context,
+                              MaterialPageRoute(builder: (context) => Home()),
+                            );
                           },
                           child: Container(
                             width: 0.6 * SizeConfig.screenWidth,
@@ -146,7 +146,7 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 3.3 * SizeConfig.textMultiplier,
+                                  fontSize: 3 * SizeConfig.textMultiplier,
                                   fontWeight: FontWeight.w500),
                             ),
                           )),

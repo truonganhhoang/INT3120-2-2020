@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:word_up_application/app_manager.dart';
 import 'package:word_up_application/firebase/firebase_handler.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/search_screen/search_word_screen.dart';
@@ -13,6 +14,7 @@ import 'package:word_up_application/services/database_server_handler.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/user.dart';
 import 'home/home_screen.dart';
+import 'introduction_screen/introduction_screen.dart';
 import 'learn_a_word_screen/learn_a_word_screen.dart';
 import 'user_profile_screen/user_profile_screen.dart';
 import 'word.dart';
@@ -35,6 +37,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AppManager.instance.init();
     FirebaseHandler.initializeFirebase();
     DatabaseServerHandler.instance.getAllUsers();
     DatabaseServerHandler.instance.updateLearnProgress('1122817271');
@@ -81,7 +84,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: AuthenticationScreen(),
+              home:  AuthenticationScreen(),
             );
           }
         });

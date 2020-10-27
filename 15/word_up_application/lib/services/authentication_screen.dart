@@ -1,9 +1,15 @@
+import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/home/home_screen.dart';
 import 'package:word_up_application/services/auth_service.dart';
 import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
+
+import '../size_config.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   @override
@@ -15,18 +21,20 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.indigo,
+        color: HexColor('#E7E8EA'),
+        // color: Colors.white,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlutterLogo(size: 150),
               SizedBox(height: 50),
               _signInGoogleButton(),
               SizedBox(height: 50),
               _signInFacebookButton(),
-              SizedBox(height: 50,),
+              SizedBox(
+                height: 50,
+              ),
               _continueAsGuest(),
             ],
           ),
@@ -42,22 +50,30 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         borderRadius: BorderRadius.circular(40.0),
       ),
       onPressed: () {
-        AuthService().signInWithGoogle().then((result){
-          if(result != null) print('login successful');
-        },);
+        _onLoading();
+        AuthService().signInWithGoogle().then(
+          (result) {
+            Navigator.of(context, rootNavigator: true).pop();
+            if (result != null) {
+              print('login successful');
+              _showHelloUser(AuthService.instance.auth.currentUser.displayName);
+              _moveToHome();
+            }
+            else _showCanNotLogin();
+          },
+        );
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-
-                colors: [
-                  Colors.lightBlue,
-                  Colors.white,
-                ]),
-            borderRadius: BorderRadius.circular(40.0),
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.white,
+                Colors.white,
+              ]),
+          borderRadius: BorderRadius.circular(40.0),
         ),
         width: 270,
         child: Row(
@@ -70,14 +86,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             ),
             Expanded(
                 child: Center(
-                  child: Text(
-                    'Sign in with Google',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ))
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),
+              ),
+            ))
           ],
         ),
       ),
@@ -99,10 +115,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-
               colors: [
-                Colors.lightBlue,
-                Colors.white,
+                Colors.blue,
+                Colors.indigo,
               ]),
           borderRadius: BorderRadius.circular(40.0),
         ),
@@ -110,28 +125,36 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Image(
-                  image: AssetImage("assets/sprites/facebookIcon.png"),
-                  height: 30.0),
-            ),
+                padding: EdgeInsets.only(left: 10),
+                child: Container(
+                  width: 30,
+                  child: Text(
+                    'f',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                )),
             Expanded(
                 child: Center(
-                  child: Text(
-                    'Sign in with Facebook',
-                    style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
-                  ),
-                  ),
-                ))
+              child: Text(
+                'Sign in with Facebook',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ))
           ],
         ),
       ),
     );
   }
 
-  Widget _continueAsGuest(){
+  Widget _continueAsGuest() {
     return RaisedButton(
       padding: EdgeInsets.all(0),
       shape: RoundedRectangleBorder(
@@ -149,10 +172,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-
               colors: [
                 Colors.brown,
-                Colors.black,
+                Colors.blueGrey,
               ]),
           borderRadius: BorderRadius.circular(40.0),
         ),
@@ -162,17 +184,64 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           children: [
             Expanded(
                 child: Center(
-                  child: Text(
-                    'Continue as Guest',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ))
+              child: Text(
+                'Continue as Guest',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ))
           ],
         ),
       ),
     );
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return _loading();
+      },
+    );
+  }
+
+  Widget _loading() {
+    return Center(
+      child: Container(
+        child: LoadingBouncingGrid.square(
+          size: 8 * SizeConfig.heightMultiplier,
+          backgroundColor: Colors.blue,
+          inverted: true,
+        ),
+      ),
+    );
+  }
+
+  void _showHelloUser(String userName) {
+    EdgeAlert.show(context,
+        icon: Icons.tag_faces,
+        backgroundColor: HexColor('#8F8FDD'),
+        title: 'Hi ' + userName,
+        gravity: EdgeAlert.TOP,
+        duration: 2);
+  }
+
+  void _showCanNotLogin(){
+    EdgeAlert.show(context,
+        icon: Icons.sentiment_dissatisfied,
+        backgroundColor: HexColor('#8F8FDD'),
+        title: 'Oops',
+        description: 'Something went wrong, Please try again.',
+        gravity: EdgeAlert.TOP,
+        duration: 1);
+  }
+
+  void _moveToHome() async{
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    });
   }
 }

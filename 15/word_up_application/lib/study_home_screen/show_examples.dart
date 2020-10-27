@@ -64,9 +64,9 @@ class _ShowExamplesState extends State<ShowExamples>
             pagination: SwiperPagination(
               margin: EdgeInsets.only(bottom: 0 * SizeConfig.heightMultiplier),
               builder: DotSwiperPaginationBuilder(
-                activeColor: Colors.black54,
-                size: 1.2 * SizeConfig.heightMultiplier,
-                activeSize: 1.6 * SizeConfig.heightMultiplier,
+                activeColor: Colors.blue,
+                size: 0.8 * SizeConfig.heightMultiplier,
+                activeSize: 1* SizeConfig.heightMultiplier,
               ),
             ),
           ),

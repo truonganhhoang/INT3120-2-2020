@@ -1,14 +1,17 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_up_application/components/star_favorite.dart';
+import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/learn_a_word_screen/learn_a_word_screen.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/test_question_screen.dart';
 import 'package:word_up_application/word.dart';
 
 class WordBox extends StatefulWidget {
+  final assetsAudioPlayer = AssetsAudioPlayer();
   final Word word;
   WordBox({
     @required this.word,
@@ -56,9 +59,10 @@ class WordBoxState extends State<WordBox> {
                 isFavorite: false,
               ),
               MaterialButton(
+                splashColor: Colors.transparent,
                 minWidth: 40,
                 onPressed: () {
-                  removeThisWord();
+                  _removeThisWord();
                 },
                 child: Icon(
                   Icons.close,
@@ -92,7 +96,11 @@ class WordBoxState extends State<WordBox> {
               margin: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
               //padding: EdgeInsets.all(0),
               child: MaterialButton(
-                onPressed: () {},
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  print(widget.word.pathSoundUK);
+                  widget.assetsAudioPlayer.open(Audio('assets/audios/' + widget.word.pathSoundUK));
+                },
                 child: ImageIcon(
                   AssetImage('assets/sprites/sound_play_icon.png'),
                   color: Colors.grey,
@@ -215,10 +223,6 @@ class WordBoxState extends State<WordBox> {
     openTestPopup(context);
   }
 
-  void removeThisWord() {
-
-  }
-
   void maskThisWordAsFavorite() {
     // to do
   }
@@ -262,5 +266,42 @@ class WordBoxState extends State<WordBox> {
         title: widget.word.word + '...?',
         content: TestQuestionScreen(word: widget.word, controller: this,),
         buttons: []).show();
+  }
+
+  void _removeThisWord(){
+    AlertStyle _style = AlertStyle(
+      titleStyle: TextStyle(fontSize: 4 * SizeConfig.heightMultiplier),
+    );
+    Alert(
+      context: context,
+      style: _style,
+      type: AlertType.warning,
+      title: widget.word.word,
+      desc: "Are you sure to remove this word?",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Yes",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          color: Colors.blueGrey,
+          onPressed: () => {Navigator.pop(context),
+          _deleteThisWord(),},
+          width: 120,
+        ),
+        DialogButton(
+          child: Text(
+            "No",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
+  }
+
+  void _deleteThisWord(){
+
   }
 }
