@@ -311,8 +311,9 @@ class PauseExit extends StatelessWidget {
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Home()));
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => Home()),
+                      (Route<dynamic> route) => false);
                 },
                 child: Text(
                   "Exit",

@@ -33,7 +33,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: tabs[_currentIndex],
       floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0.0

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'quiz_card.dart';
-import 'alert_play.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/services/api_manager.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quiztest/views/home/see_all_quiz.dart';
 
 class ListQuiz extends StatelessWidget {
-  const ListQuiz({Key key, @required this.size, this.titleTopic, this.idTopic})
-      : super(key: key);
+  const ListQuiz({Key key, @required this.size, this.topic}) : super(key: key);
 
   final Size size;
-  final String titleTopic;
-  final String idTopic;
+  final Topic topic;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +18,17 @@ class ListQuiz extends StatelessWidget {
       child: Column(
         children: [
           TitleTopic(
-            title: titleTopic,
-            press: () {},
+            title: topic.name,
+            press: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AllQuiz(topic: topic)));
+            },
           ),
           ListCategory(
             size: size,
-            idTopic: idTopic,
+            idTopic: topic.key,
           ),
         ],
       ),
@@ -57,30 +61,32 @@ class _ListCategoryState extends State<ListCategory> {
     return SizedBox(
       height: widget.size.width * 0.5,
       child: FutureBuilder(
-        future: _quizzes,
-        builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          List<Quiz> quizzes = snapshot.data ?? [];
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: quizzes.length > 5 ? 5 : quizzes.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              Quiz quiz = quizzes[index];
-              return QuizCard(
-                size: widget.size,
-                imagePath: "assets/images/solar.png",
-                title: quiz.name,
-                questionCount: quiz.numberOfQuestion,
-                quizID: quiz.key,
+          future: _quizzes,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<Quiz> quizzes = snapshot.data ?? [];
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: quizzes.length > 5 ? 5 : quizzes.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  Quiz quiz = quizzes[index];
+                  return QuizCard(
+                    size: widget.size,
+                    imagePath: "assets/images/solar.png",
+                    title: quiz.name,
+                    questionCount: quiz.numberOfQuestion,
+                    quizID: quiz.key,
+                  );
+                },
               );
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        } else
-          return CircularProgressIndicator();
-      }),
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            } else
+              return SpinKitDualRing(
+                color: Colors.blue,
+              );
+          }),
     );
   }
 }

@@ -1,41 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/models/models.dart';
+import 'package:quiztest/views/components/appbar.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Running extends StatelessWidget {
+class AllQuiz extends StatelessWidget {
+  AllQuiz({@required this.topic});
+  final Topic topic;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    return ListRunning(size: size);
+    return Scaffold(
+      appBar: CustomAppBar(namePage: "Home", height: size.height),
+      body: ListAllQuiz(topic: topic, size: size,),
+    );
   }
 }
 
-class ListRunning extends StatefulWidget {
-  const ListRunning({
-    Key key,
-    @required this.size,
-  }) : super(key: key);
-
+class ListAllQuiz extends StatefulWidget {
+  ListAllQuiz({@required this.topic, this.size});
+  final Topic topic;
   final Size size;
 
   @override
-  _ListRunningState createState() => _ListRunningState();
+  _ListAllQuizState createState() => _ListAllQuizState();
 }
 
-class _ListRunningState extends State<ListRunning> {
+class _ListAllQuizState extends State<ListAllQuiz> {
   Future<List<Quiz>> _quizzes;
-
   @override
   void initState() {
-    _quizzes = API_Manager().fetchQuizByTopic("2wZYm3a7hLcOyFnB0tEC");
+    _quizzes = API_Manager().fetchQuizByTopic(widget.topic.key);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: FutureBuilder(
@@ -59,7 +61,9 @@ class _ListRunningState extends State<ListRunning> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           } else
-            return SpinKitDualRing(color: Colors.blue,);
+            return SpinKitDualRing(
+              color: Colors.blue,
+            );
         },
       ),
     );

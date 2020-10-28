@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Completed extends StatelessWidget {
   @override
@@ -59,7 +60,7 @@ class _ListCompletedState extends State<ListCompleted> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           } else
-            return CircularProgressIndicator();
+            return SpinKitDualRing(color: Colors.blue,);
         },
       ),
     );

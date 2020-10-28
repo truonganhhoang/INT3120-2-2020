@@ -4,6 +4,7 @@ import 'package:quiztest/models/models.dart';
 import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 import 'dart:async';
 import 'end_quiz.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 bool _checkChoose;
 int _currentQs;
@@ -90,7 +91,7 @@ class _QuizGameState extends State<QuizGame> {
               } else if (snapshot.hasError)
                 return Text("${snapshot.error}");
               else
-                return CircularProgressIndicator();
+                return SpinKitHourGlass(color: Colors.white);
             }),
       ),
     );
