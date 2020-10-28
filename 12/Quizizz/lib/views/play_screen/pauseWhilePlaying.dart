@@ -79,14 +79,15 @@ class _PauseWhilePlayingState extends State<PauseWhilePlaying> {
                         animation: true,
                         lineHeight: 20.0,
                         animationDuration: 2500,
-                        percent: 0.25,
+                        percent:
+                            widget.questionsRemaining / widget.totalQuestions,
                         linearStrokeCap: LinearStrokeCap.roundAll,
                         progressColor: Colors.redAccent,
                         backgroundColor: Colors.white,
                       ),
                     ),
                     Text(
-                      "17 question remaining",
+                      "${widget.totalQuestions - widget.questionsRemaining} question remaining",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

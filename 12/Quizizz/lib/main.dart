@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
             backgroundColor: Colors.white),
-        home: PauseWhilePlaying());
+        home: Home());
   }
 }
 
