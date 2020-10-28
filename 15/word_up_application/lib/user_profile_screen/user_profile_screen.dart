@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
-import 'package:word_up_application/favorite_screen/knew_and_to_learn_words_screen.dart';
+import 'package:word_up_application/favorite_screen/my_words_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/user.dart';
@@ -17,6 +17,7 @@ class UserProfileScreen extends StatefulWidget {
 DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
 int numberOfKnewWords;
 int numberOfToLearnWords;
+int numberOfLearningWords;
 
 class _UserProfileScreen extends State<UserProfileScreen> {
   @override
@@ -30,6 +31,11 @@ class _UserProfileScreen extends State<UserProfileScreen> {
     dbHelper.getCountToLearnWord().then((res) {
       setState(() {
         numberOfToLearnWords = res;
+      });
+    });
+    dbHelper.getCountLearningWord().then((res) {
+      setState(() {
+        numberOfLearningWords = res;
       });
     });
   }
@@ -122,7 +128,9 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                             context,
                             PageTransition(
                                 type: PageTransitionType.fade,
-                                child: ListWordsScreen(viewIndex: 1,)));
+                                child: ListWordsScreen(
+                                  viewIndex: 0,
+                                )));
                       },
                       child: Container(
                         height: 10 * SizeConfig.heightMultiplier,
@@ -152,31 +160,42 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: 10 * SizeConfig.heightMultiplier,
-                      width: 26 * SizeConfig.widthMultiplier,
-                      decoration: new BoxDecoration(
-                        color: Color(0xFFEEAB00),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '27',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 3 * SizeConfig.heightMultiplier),
-                          ),
-                          Text(
-                            'Learning',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 3 * SizeConfig.heightMultiplier),
-                          ),
-                        ],
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                child: ListWordsScreen(
+                                  viewIndex: 1,
+                                )));
+                      },
+                      child: Container(
+                        height: 10 * SizeConfig.heightMultiplier,
+                        width: 26 * SizeConfig.widthMultiplier,
+                        decoration: new BoxDecoration(
+                          color: Color(0xFFEEAB00),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '$numberOfLearningWords',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 3 * SizeConfig.heightMultiplier),
+                            ),
+                            Text(
+                              'Learning',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 3 * SizeConfig.heightMultiplier),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     InkWell(
@@ -185,7 +204,9 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                             context,
                             PageTransition(
                                 type: PageTransitionType.fade,
-                                child: ListWordsScreen(viewIndex: 0,)));
+                                child: ListWordsScreen(
+                                  viewIndex: 2,
+                                )));
                       },
                       child: Container(
                         height: 10 * SizeConfig.heightMultiplier,

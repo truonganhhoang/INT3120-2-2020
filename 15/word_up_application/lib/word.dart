@@ -16,22 +16,24 @@ class Word {
 
   bool isFavorite;
   int reviewTimes;
+  String reviewDate;
 
-  Word({
-    @required this.id,
-    @required this.word,
-    this.type,
-    this.definition,
-    this.meanCard,
-    this.pathSoundUK,
-    this.pathSoundUS,
-    this.pronounceUK,
-    this.pronounceUS,
-    this.examples,
-    this.imagePaths,
-    this.quotes,
-    this.isFavorite,
-  });
+  Word(
+      {@required this.id,
+      @required this.word,
+      this.type,
+      this.definition,
+      this.meanCard,
+      this.pathSoundUK,
+      this.pathSoundUS,
+      this.pronounceUK,
+      this.pronounceUS,
+      this.examples,
+      this.imagePaths,
+      this.quotes,
+      this.isFavorite,
+      this.reviewDate,
+      this.reviewTimes});
 
   // Convert a Word object into Map object
   Map<String, dynamic> toMap() {
@@ -45,6 +47,10 @@ class Word {
     map['type'] = this.type;
     map['definition'] = this.definition;
     map['mean_card'] = this.meanCard;
+    if (this.isFavorite == true) map['is_favorite'] = 1;
+    if (this.isFavorite == false) map['is_favorite'] = 0;
+    map['review_date'] = this.reviewDate;
+    map['review_time'] = this.reviewTimes;
 
     return map;
   }
@@ -60,6 +66,10 @@ class Word {
     this.type = map['type'];
     this.definition = map['definition'];
     this.meanCard = map['mean_card'];
+    if (map['is_favorite'] == 1) this.isFavorite = true;
+    if (map['is_favorite'] == 0) this.isFavorite = false;
+    this.reviewDate = map['review_date'];
+    this.reviewTimes = map['review_time'];
   }
 
   void printThisWord() {
@@ -71,6 +81,12 @@ class Word {
         ' ' +
         imagePaths.toString() +
         ' ' +
-        quotes.toString());
+        quotes.toString() +
+        ' ' +
+        isFavorite.toString() +
+        ' ' +
+        reviewDate +
+        ' ' +
+        reviewTimes.toString());
   }
 }

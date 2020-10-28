@@ -11,24 +11,23 @@ import '../word.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class FavoriteWordsScreen extends StatefulWidget {
+  List<Word> wordsFarvorite = new List();
+
   @override
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
 
 DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
-List<Word> wordsFarvorite = new List();
-final assetsAudioPlayer = AssetsAudioPlayer();
 
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
-
   @override
   void initState() {
     super.initState();
-    if (wordsFarvorite.length == 0) {
+    if (widget.wordsFarvorite.length == 0) {
       dbHelper.getListFarvoriteWords().then((rows) {
         setState(() {
           rows.forEach((row) {
-            wordsFarvorite.add(row);
+            widget.wordsFarvorite.add(row);
           });
         });
       });
@@ -45,7 +44,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: listWord(wordsFarvorite, Colors.blueAccent),
+                  child: listWord(widget.wordsFarvorite, Colors.blueAccent),
                 )
               ],
             ),
@@ -55,6 +54,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
 }
 
 Widget listWord(List<Word> words, Color colorText) {
+  final assetsAudioPlayer = AssetsAudioPlayer();
   return Container(
     padding: EdgeInsets.only(
         right: 4 * SizeConfig.widthMultiplier,
@@ -109,7 +109,7 @@ Widget listWord(List<Word> words, Color colorText) {
                     StarFavorite(
                         wordId: words[position].id,
                         size: 4 * SizeConfig.heightMultiplier,
-                        isFavorite: true)
+                        isFavorite: words[position].isFavorite)
                   ],
                 ),
               )

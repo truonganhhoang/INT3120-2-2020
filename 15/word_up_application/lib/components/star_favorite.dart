@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
+import 'package:word_up_application/word.dart';
 
 class StarFavorite extends StatefulWidget {
   final int wordId;
@@ -69,10 +70,10 @@ class _StarFavoriteStage extends State<StarFavorite> {
   }
 
   void addThisWordToFavoriteList() {
-    dbHelper.insertFavoriteWord(widget.wordId);
+    dbHelper.updateInsertFavoriteWord(widget.wordId);
   }
 
   void removeThisWordFromFavoriteList() {
-    dbHelper.deleteFavoriteWord(widget.wordId);
+    dbHelper.updateDeleteFavoriteWord(widget.wordId);
   }
 }
