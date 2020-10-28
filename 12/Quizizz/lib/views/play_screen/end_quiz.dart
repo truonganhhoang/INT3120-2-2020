@@ -1,11 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:quiztest/main.dart';
-import 'package:quiztest/views/components/quiz_card.dart';
+import 'dart:math';
 
-class EndQuiz extends StatelessWidget {
-  EndQuiz({@required this.correctAns, @required this.incorrectAns});
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quiztest/main.dart';
+import 'package:quiztest/models/models.dart';
+import 'package:quiztest/views/components/quiz_card.dart';
+import 'package:quiztest/services/api_manager.dart';
+
+class EndQuiz extends StatefulWidget {
+  EndQuiz({@required this.correctAns, @required this.incorrectAns, this.topic});
   final int correctAns;
   final int incorrectAns;
+  final Topic topic;
+
+  @override
+  _EndQuizState createState() => _EndQuizState();
+}
+
+class _EndQuizState extends State<EndQuiz> {
+  Future<List<Quiz>> _quizzes;
+  @override
+  void initState() {
+    _quizzes = API_Manager().fetchQuizByTopic(widget.topic.key);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +37,8 @@ class EndQuiz extends StatelessWidget {
             FindQuiz(size: size),
             Result(
               size: size,
-              correct: correctAns,
-              inccorect: incorrectAns,
+              correct: widget.correctAns,
+              inccorect: widget.incorrectAns,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20),
@@ -39,19 +57,30 @@ class EndQuiz extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 200,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return QuizCard(
-                          title: "Solar system",
-                          imagePath: "assets/images/solar.png",
-                          questionCount: 22,
-                          size: size,
-                        );
-                      },
-                    ),
+                    child: FutureBuilder(
+                        future: _quizzes,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List<Quiz> quizzes = snapshot.data ?? [];
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                                  quizzes.length > 3 ? 3 : quizzes.length,
+                              itemBuilder: (context, index) {
+                                Quiz quiz = quizzes[index];
+                                return QuizCard(
+                                  quiz: quiz,
+                                  imagePath: "assets/images/solar.png",
+                                  size: size,
+                                );
+                              },
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("${snapshot.error}");
+                          } else
+                            return SpinKitDualRing(color: Colors.white);
+                        }),
                   )
                 ],
               ),

@@ -51,10 +51,8 @@ class _ListCompletedState extends State<ListCompleted> {
                 itemCount: quizzes.length,
                 itemBuilder: (context, index) => QuizCard(
                       size: widget.size,
-                      title: quizzes[index].name,
-                      questionCount: quizzes[index].numberOfQuestion,
                       imagePath: "assets/images/solar.png",
-                      quizID: quizzes[index].key,
+                      quiz: quizzes[index],
                       percent: 0.2 + index * 0.2,
                     ));
           } else if (snapshot.hasError) {

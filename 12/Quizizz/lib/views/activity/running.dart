@@ -51,10 +51,8 @@ class _ListRunningState extends State<ListRunning> {
                 itemCount: quizzes.length,
                 itemBuilder: (context, index) => QuizCard(
                       size: widget.size,
-                      title: quizzes[index].name,
-                      questionCount: quizzes[index].numberOfQuestion,
+                      quiz: quizzes[index],
                       imagePath: "assets/images/solar.png",
-                      quizID: quizzes[index].key,
                     ));
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
