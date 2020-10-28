@@ -5,7 +5,6 @@ import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,7 +15,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _topics = API_Manager().fetchTopic();
+    if (_topics == null) {
+      _topics = API_Manager().fetchTopic();
+    }
     super.initState();
   }
 
@@ -51,7 +52,9 @@ class _HomePageState extends State<HomePage> {
                     return Text("${snapshot.error}");
                   }
 
-                  return SpinKitDualRing(color: Colors.blue,);
+                  return SpinKitDualRing(
+                    color: Colors.blue,
+                  );
                 }),
           ]),
         ));
