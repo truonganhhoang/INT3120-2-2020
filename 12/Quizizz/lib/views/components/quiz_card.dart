@@ -2,24 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:math';
 import 'alert_play.dart';
+import 'package:quiztest/models/models.dart';
 
 class QuizCard extends StatelessWidget {
   const QuizCard(
-      {Key key,
-      @required this.size,
-      this.title,
-      this.questionCount,
-      this.imagePath,
-      this.percent,
-      @required this.quizID})
+      {Key key, @required this.size, this.imagePath, this.percent, @required this.quiz, this.topic})
       : super(key: key);
 
   final Size size;
-  final String title;
-  final int questionCount;
   final String imagePath;
   final double percent;
-  final String quizID;
+  final Quiz quiz;
+  final Topic topic;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +22,10 @@ class QuizCard extends StatelessWidget {
         showDialog(
             context: context,
             builder: (context) => PopUp(
-                  title: title,
-                  questionCount: questionCount,
+                  quiz: quiz,
                   imagePath: "assets/images/solar.png",
                   size: size,
-                  quizID: quizID,
+                  topic: topic
                 ));
       },
       child: Container(
@@ -73,7 +66,7 @@ class QuizCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.white),
                   child: Text(
-                    questionCount.toString() + " Qs",
+                    quiz.numberOfQuestion.toString() + " Qs",
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),
@@ -83,7 +76,7 @@ class QuizCard extends StatelessWidget {
                   top: 100,
                   left: 5,
                   child: Text(
-                    title,
+                    quiz.name,
                     style: TextStyle(color: Colors.black, fontSize: 18),
                   )),
               if (percent != null && percent > 0.0)

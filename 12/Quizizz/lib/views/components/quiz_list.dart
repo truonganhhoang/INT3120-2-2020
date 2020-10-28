@@ -28,7 +28,7 @@ class ListQuiz extends StatelessWidget {
           ),
           ListCategory(
             size: size,
-            idTopic: topic.key,
+            topic: topic,
           ),
         ],
       ),
@@ -37,11 +37,11 @@ class ListQuiz extends StatelessWidget {
 }
 
 class ListCategory extends StatefulWidget {
-  const ListCategory({Key key, @required this.size, @required this.idTopic})
+  const ListCategory({Key key, @required this.size, @required this.topic})
       : super(key: key);
 
   final Size size;
-  final String idTopic;
+  final Topic topic;
 
   @override
   _ListCategoryState createState() => _ListCategoryState();
@@ -52,7 +52,7 @@ class _ListCategoryState extends State<ListCategory> {
 
   @override
   void initState() {
-    _quizzes = API_Manager().fetchQuizByTopic(widget.idTopic);
+    _quizzes = API_Manager().fetchQuizByTopic(widget.topic.key);
     super.initState();
   }
 
@@ -74,9 +74,8 @@ class _ListCategoryState extends State<ListCategory> {
                   return QuizCard(
                     size: widget.size,
                     imagePath: "assets/images/solar.png",
-                    title: quiz.name,
-                    questionCount: quiz.numberOfQuestion,
-                    quizID: quiz.key,
+                    quiz: quiz,
+                    topic: widget.topic,
                   );
                 },
               );

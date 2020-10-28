@@ -11,12 +11,13 @@ int _currentQs;
 int _totalQs;
 int _correctChoose;
 Future<List<Questional>> quest;
+Topic _topic;
 
 class QuizPage extends StatefulWidget {
-  QuizPage({@required this.quizID, this.totalQs});
+  QuizPage({this.quiz, this.topic});
 
-  final String quizID;
-  final int totalQs;
+  final Quiz quiz;
+  final Topic topic;
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -24,17 +25,17 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
-    quest = API_Manager().fetchQuestionByQuiz(widget.quizID);
-    _totalQs = widget.totalQs;
+    quest = API_Manager().fetchQuestionByQuiz(widget.quiz.key);
+    _totalQs = widget.quiz.numberOfQuestion;
     _currentQs = 0;
     _correctChoose = 0;
     _correctChoose = 0;
+    _topic = widget.topic;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return QuizGame();
   }
 }
@@ -120,7 +121,6 @@ class _ListChoicesState extends State<ListChoices> {
     _isChoose = [false, false, false, false];
     _isCorrect[widget.question.answer - 1] = true;
     super.initState();
-    print("Tong cau hoi" + _totalQs.toString());
   }
 
   @override
@@ -133,7 +133,6 @@ class _ListChoicesState extends State<ListChoices> {
       setState(() {
         Timer(Duration(seconds: 1), () {
           _currentQs++;
-          print("Cau hoi hien tai" + _currentQs.toString());
           Navigator.push(
               context, new MaterialPageRoute(builder: (context) => QuizGame()));
         });
@@ -141,12 +140,14 @@ class _ListChoicesState extends State<ListChoices> {
     } else {
       setState(() {
         Timer(Duration(seconds: 1), () {
+          print(_topic.key);
           Navigator.pushReplacement(
               context,
               new MaterialPageRoute(
                   builder: (context) => EndQuiz(
                         correctAns: _correctChoose,
                         incorrectAns: _totalQs - _correctChoose,
+                        topic: _topic,
                       )));
         });
       });
@@ -249,7 +250,7 @@ class Choice extends StatelessWidget {
           height: size.height * 0.09,
           width: size.width,
           decoration: BoxDecoration(
-              color: color  , borderRadius: BorderRadius.circular(5)),
+              color: color, borderRadius: BorderRadius.circular(5)),
           alignment: Alignment.center,
           child: Text(
             choice,

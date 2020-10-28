@@ -24,10 +24,8 @@ class SearchResults extends StatelessWidget {
           itemCount: 4,
           itemBuilder: (context, index) => QuizCard(
                 size: size,
-                title: quizzes[index].name,
-                questionCount: quizzes[index].numberOfQuestion,
                 imagePath: "assets/images/solar.png",
-                quizID: quizzes[index].key,
+                quiz: quizzes[index],
               )),
     );
   }

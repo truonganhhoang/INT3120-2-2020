@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/views/play_screen/quiz_game.dart';
+import 'package:quiztest/models/models.dart';
 
 class PopUp extends StatelessWidget {
   PopUp(
-      {this.title,
+      {
       this.imagePath,
       this.size,
-      this.questionCount,
-      @required this.quizID});
+      @required this.quiz,
+      this.topic});
 
-  final String title;
+  final Quiz quiz;
   final String imagePath;
-  final int questionCount;
   final Size size;
-  final String quizID;
+  final Topic topic;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +32,12 @@ class PopUp extends StatelessWidget {
             Title(
               size: size,
               imagePath: "assets/images/solar.png",
-              questionCount: questionCount,
-              title: title,
+              quiz: quiz,
             ),
             Buttons(
               size: size,
-              quizID: quizID,
-              questionCount: questionCount,
+              quiz: quiz,
+              topic: topic,
             ),
           ],
         ),
@@ -48,12 +47,13 @@ class PopUp extends StatelessWidget {
 }
 
 class Buttons extends StatelessWidget {
-  const Buttons({Key key, @required this.size, @required this.quizID, this.questionCount})
+  const Buttons(
+      {Key key, @required this.size, this.quiz, this.topic})
       : super(key: key);
 
   final Size size;
-  final String quizID;
-  final int questionCount;
+  final Quiz quiz;
+  final Topic topic;
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +71,8 @@ class Buttons extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => QuizPage(
-                                  quizID: quizID,
-                                  totalQs: questionCount,
+                                  quiz: quiz,
+                                  topic: topic,
                                 )));
                   },
                   padding: EdgeInsets.all(0),
@@ -139,14 +139,12 @@ class Title extends StatelessWidget {
       {Key key,
       @required this.size,
       this.imagePath,
-      this.questionCount,
-      this.title})
+      this.quiz})
       : super(key: key);
 
   final Size size;
   final String imagePath;
-  final int questionCount;
-  final String title;
+  final Quiz quiz;
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +170,7 @@ class Title extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.grey, borderRadius: BorderRadius.circular(5)),
                 child: Text(
-                  questionCount.toString() + " Question",
+                  quiz.numberOfQuestion.toString() + " Question",
                   style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ),
@@ -183,7 +181,7 @@ class Title extends StatelessWidget {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Text(
-              title,
+              quiz.name,
               style: TextStyle(fontSize: 24, color: Colors.black),
             ))
       ],
