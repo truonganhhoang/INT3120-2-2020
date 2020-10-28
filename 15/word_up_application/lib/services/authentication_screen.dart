@@ -12,6 +12,8 @@ import 'package:word_up_application/user_profile_screen/user_profile_screen.dart
 import '../size_config.dart';
 
 class AuthenticationScreen extends StatefulWidget {
+  final bool noGuest;
+  AuthenticationScreen({this.noGuest});
   @override
   State<StatefulWidget> createState() => _AuthenticationScreenState();
 }
@@ -35,7 +37,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               SizedBox(
                 height: 50,
               ),
-              _continueAsGuest(),
+              if(!widget.noGuest) _continueAsGuest(),
             ],
           ),
         ),
