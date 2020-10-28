@@ -6,8 +6,11 @@ import 'package:word_up_application/components/star_favorite.dart';
 
 class LearnBox extends StatelessWidget {
   final Word word;
+  final int index;
   final assetsAudioPlayer = AssetsAudioPlayer();
-  LearnBox({this.word});
+
+  LearnBox({this.word, this.index});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -121,7 +124,7 @@ class LearnBox extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          word.examples[0],
+                          word.examples[2 * index],
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.black,
@@ -130,7 +133,7 @@ class LearnBox extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          word.examples[1],
+                          word.examples[2 * index + 1],
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
@@ -167,7 +170,7 @@ class LearnBox extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 2 * SizeConfig.textMultiplier),
                     child: Image(
-                        image: AssetImage(word.imagePaths[0]),
+                        image: AssetImage(word.imagePaths[index]),
                         width: 50 * SizeConfig.widthMultiplier,
                         height: 15 * SizeConfig.heightMultiplier,
                         fit: BoxFit.fill),

@@ -6,11 +6,21 @@ import 'package:word_up_application/word.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:word_up_application/size_config.dart';
-import 'package:share/share.dart';
 import 'share_screen.dart';
 import 'fake_data.dart';
 
-class LearnAWord extends StatelessWidget {
+class LearnAWord extends StatefulWidget {
+  final Word word;
+
+  LearnAWord({
+    this.word,
+  }) : assert(word != null);
+
+  @override
+  LearnAWordState createState() => LearnAWordState();
+}
+
+class LearnAWordState extends State<LearnAWord> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -26,7 +36,8 @@ class LearnAWord extends StatelessWidget {
                 Navigator.push(
                     context,
                     PageTransition(
-                        type: PageTransitionType.fade, child: ShareScreen()));
+                        type: PageTransitionType.fade,
+                        child: ShareScreen(wordShare: word)));
               },
             ),
           ],
@@ -45,13 +56,16 @@ class LearnAWord extends StatelessWidget {
                 onPageChanged: (index) {},
                 items: <Widget>[
                   LearnBox(
-                    word: words[0],
+                    word: word,
+                    index: 0,
                   ),
                   LearnBox(
-                    word: words[1],
+                    word: word,
+                    index: 1,
                   ),
                   LearnBox(
-                    word: words[2],
+                    word: word,
+                    index: 2,
                   ),
                 ],
               ),
