@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
+import 'package:word_up_application/learn_a_word_screen/fake_data.dart';
 import 'package:word_up_application/learn_a_word_screen/learn_a_word_screen.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/test_question_screen.dart';
@@ -206,7 +207,7 @@ class WordBoxState extends State<WordBox> {
 
   void userWantToLearnThisWord() {
     Navigator.push(context,
-        PageTransition(type: PageTransitionType.fade, child: LearnAWord()));
+        PageTransition(type: PageTransitionType.fade, child: LearnAWord(word: word,)));
   }
 
   void userAnswerWrong() {

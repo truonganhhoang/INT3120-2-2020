@@ -8,13 +8,17 @@ final Word word1 = Word(
   meanCard: 'Hiện đại',
   examples: [
     '- modern technology/education/art/transport.',
-    '- We\'re in the very modern-looking building opposite the station.'
+    '- We\'re in the very modern-looking building opposite the station.',
+    '- What do you think is the role of religion in the modern world?',
+    '- Taste is a complex, modern phenomenon that can be understood in a number of ways.',
+    '- In the early modern period some significant themes emerge.',
+    '- The main appeal of the modern reader is that it tells the story so well.',
   ],
   pathSoundUK: 'assets/audios/modern_UK.mp3',
   pathSoundUS: 'pathSoundUS',
   pronounceUS: '/ˈmɒd.ən/',
   pronounceUK: '/ˈmɒd.ən/',
-  imagePaths: ['assets/images/modern.jpg'],
+  imagePaths: ['assets/images/modern.jpg','assets/images/modern1.jpg','assets/images/modern2.jpg'],
   quotes: ['This house is more modern than that house'],
   isFavorite: false,
 );
@@ -58,3 +62,4 @@ final Word word3 = Word(
 );
 
 final words = [word1, word2, word3];
+final word = word1;
