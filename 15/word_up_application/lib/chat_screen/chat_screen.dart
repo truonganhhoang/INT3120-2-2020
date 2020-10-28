@@ -60,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleSubmitted(String text) {
-    if(text == "") return;
+    if (text == "") return;
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
@@ -91,7 +91,11 @@ class _ChatScreenState extends State<ChatScreen> {
               itemCount: _messages.length,
             )),
             new Container(
-              margin: EdgeInsets.fromLTRB(2 * SizeConfig.heightMultiplier, 2 * SizeConfig.heightMultiplier, 2 * SizeConfig.heightMultiplier,6 * SizeConfig.heightMultiplier),
+              margin: EdgeInsets.fromLTRB(
+                  2 * SizeConfig.heightMultiplier,
+                  2 * SizeConfig.heightMultiplier,
+                  2 * SizeConfig.heightMultiplier,
+                  6 * SizeConfig.heightMultiplier),
               decoration: new BoxDecoration(
                 border: Border.all(
                   color: Colors.grey[800],
@@ -117,8 +121,11 @@ class ChatMessage extends StatelessWidget {
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
         child: new CircleAvatar(
-            radius: 3 * SizeConfig.textMultiplier,
-            child: new Text('B', style:TextStyle(fontSize: 3 * SizeConfig.textMultiplier,fontWeight: FontWeight.bold)),
+          radius: 3 * SizeConfig.textMultiplier,
+          child: new Text('B',
+              style: TextStyle(
+                  fontSize: 3 * SizeConfig.textMultiplier,
+                  fontWeight: FontWeight.bold)),
         ),
       ),
       new Expanded(
@@ -126,11 +133,20 @@ class ChatMessage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             new Text(this.name,
-                style: new TextStyle(color: Colors.grey[700],fontSize: 2.7*SizeConfig.textMultiplier)),
+                style: new TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 2.7 * SizeConfig.textMultiplier)),
             new Container(
-              padding: EdgeInsets.fromLTRB(8,6,8,6),
+              constraints: BoxConstraints(
+                  minWidth: 10, maxWidth: 0.65 * SizeConfig.screenWidth),
+              padding: EdgeInsets.fromLTRB(8, 6, 8, 6),
               margin: const EdgeInsets.only(top: 5.0),
-              child: new Text(text, style: new TextStyle(color:Colors.white ,fontSize: 2.7*SizeConfig.textMultiplier),),
+              child: new Text(
+                text,
+                style: new TextStyle(
+                    color: Colors.white,
+                    fontSize: 2.7 * SizeConfig.textMultiplier),
+              ),
               decoration: BoxDecoration(
                 color: Colors.green[500],
                 borderRadius: BorderRadius.circular(8),
@@ -149,15 +165,22 @@ class ChatMessage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             new Text(this.name,
-                style: new TextStyle(color: Colors.grey[700],fontSize: 2.7*SizeConfig.textMultiplier)),
+                style: new TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 2.7 * SizeConfig.textMultiplier)),
             new Container(
+              constraints: BoxConstraints(
+                  minWidth: 25, maxWidth: 0.65 * SizeConfig.screenWidth),
               padding: EdgeInsets.all(6),
               margin: const EdgeInsets.only(top: 5.0),
-              child: new Text(text, style: new TextStyle(fontSize: 2.7*SizeConfig.textMultiplier),),
+              child: new Text(
+                text,
+                style: new TextStyle(fontSize: 2.7 * SizeConfig.textMultiplier),
+              ),
               decoration: BoxDecoration(
                 color: Colors.white70,
                 borderRadius: BorderRadius.circular(8),
-            ),
+              ),
             )
           ],
         ),
@@ -167,9 +190,11 @@ class ChatMessage extends StatelessWidget {
         child: new CircleAvatar(
             radius: 3 * SizeConfig.textMultiplier,
             child: new Text(
-          this.name[0],
-          style: new TextStyle(fontSize: 3 * SizeConfig.textMultiplier,fontWeight: FontWeight.bold),
-        )),
+              this.name[0],
+              style: new TextStyle(
+                  fontSize: 3 * SizeConfig.textMultiplier,
+                  fontWeight: FontWeight.bold),
+            )),
       ),
     ];
   }
