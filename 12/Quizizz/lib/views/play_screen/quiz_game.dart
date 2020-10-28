@@ -247,7 +247,7 @@ class Choice extends StatelessWidget {
           height: size.height * 0.09,
           width: size.width,
           decoration: BoxDecoration(
-              color: color, borderRadius: BorderRadius.circular(5)),
+              color: color  , borderRadius: BorderRadius.circular(5)),
           alignment: Alignment.center,
           child: Text(
             choice,
