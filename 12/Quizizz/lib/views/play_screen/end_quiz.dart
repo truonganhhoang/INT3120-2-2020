@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/main.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
-import 'package:quiztest/views/home/home_page.dart';
 
 class EndQuiz extends StatelessWidget {
   EndQuiz({@required this.correctAns, @required this.incorrectAns});
   final int correctAns;
   final int incorrectAns;
-  
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/models/models.dart';
+import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 import 'dart:async';
 import 'end_quiz.dart';
 
@@ -396,8 +397,19 @@ class Pause extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10, top: 5),
       child: Row(
         children: [
-          Image(
-            image: AssetImage("assets/icons/pause.png"),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PauseWhilePlaying(
+                            questionsRemaining: currentQs,
+                            totalQuestions: totalQs,
+                          )));
+            },
+            child: Image(
+              image: AssetImage("assets/icons/pause.png"),
+            ),
           ),
           Container(
             margin: EdgeInsets.only(top: 8, left: 10),

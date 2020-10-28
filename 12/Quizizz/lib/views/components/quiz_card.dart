@@ -54,15 +54,15 @@ class QuizCard extends StatelessWidget {
             children: [
               ClipPath(
                 child: Container(
-                  height: 95,
+                  height: 92,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(imagePath), fit: BoxFit.cover),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10),
-                          bottomLeft: Radius.elliptical(150, 28),
-                          bottomRight: Radius.elliptical(150, 28))),
+                          bottomLeft: Radius.elliptical(160, 20),
+                          bottomRight: Radius.elliptical(160, 20))),
                 ),
               ),
               Positioned(

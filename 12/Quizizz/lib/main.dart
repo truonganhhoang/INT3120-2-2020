@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/views/play_screen/end_quiz.dart';
+import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 import 'package:quiztest/views/setting/setting.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
@@ -14,11 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white, backgroundColor: Colors.white),
-      home: Home(),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            backgroundColor: Colors.white),
+        home: PauseWhilePlaying());
   }
 }
 
