@@ -2,11 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService{
   final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final FacebookLogin facebookLogin = FacebookLogin();
 
   static final AuthService instance = AuthService._internal();
 
@@ -40,7 +42,6 @@ class AuthService{
 
       return '$user';
     }
-
     return null;
   }
 
@@ -48,5 +49,32 @@ class AuthService{
     await googleSignIn.signOut();
 
     print("User Signed Out");
+  }
+
+  Future<String> signInWithFacebook() async {
+    final result = await facebookLogin.logIn(['email']);
+    print('xxx');
+    if(result.status != FacebookLoginStatus.loggedIn) return null;
+    print('xxx');
+    final AuthCredential credential = FacebookAuthProvider.credential(
+      result.accessToken.token,
+    );
+
+
+    final UserCredential authResult = await auth.signInWithCredential(credential);
+    final User user = authResult.user;
+
+    if (user != null) {
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final User currentUser = auth.currentUser;
+      assert(user.uid == currentUser.uid);
+
+      print('signInWithFacebook succeeded: $user');
+
+      return '$user';
+    }
+    return null;
   }
 }

@@ -53,6 +53,7 @@ dependencies:
   shared_preferences: ^0.5.12+2
   flutter_page_transition: ^0.1.6
   loading_animations: "^2.1.0"
+  flutter_facebook_login: ^3.0.0
 
 dev_dependencies:
   flutter_test:

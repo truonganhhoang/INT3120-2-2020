@@ -109,7 +109,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         borderRadius: BorderRadius.circular(40.0),
       ),
       onPressed: () {
-        AuthService.instance.signOutGoogle();
+        AuthService.instance.signInWithFacebook();
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
