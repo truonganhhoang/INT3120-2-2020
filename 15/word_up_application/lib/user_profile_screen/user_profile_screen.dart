@@ -10,6 +10,8 @@ import 'package:word_up_application/user_profile_screen/about_me_screen.dart';
 import 'package:word_up_application/user_profile_screen/my_learning_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
+  AppUser user = new AppUser();
+
   @override
   State<StatefulWidget> createState() => _UserProfileScreen();
 }

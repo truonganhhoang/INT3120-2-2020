@@ -47,11 +47,12 @@ class MyApp extends StatelessWidget {
     // DatabaseHelper.instance.getExamplesWithId(1);
 
     //DatabaseHelper.instance.databaseInit();
-    // DatabaseHelper.instance.getNWords(5);
+    DatabaseLocalHelper.instance.getNWords(5);
+    //DatabaseLocalHelper.instance.getListLearningWords();
 
     //DatabaseHelper.instance.getListFarvoriteWords();
-  //  DatabaseLocalHelper.instance.insertToLearnWord(5);
-   // DatabaseLocalHelper.instance.getListToLearnWords();
+    //  DatabaseLocalHelper.instance.insertToLearnWord(5);
+    // DatabaseLocalHelper.instance.getListToLearnWords();
     //DatabaseLocalHelper.instance.getWord(1);
     print('runMain');
 
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home:  IntroductionScreen(),
+              home: IntroductionScreen(),
             );
           }
         });

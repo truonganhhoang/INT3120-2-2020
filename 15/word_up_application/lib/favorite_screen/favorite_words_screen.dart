@@ -1,7 +1,9 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
@@ -20,6 +22,8 @@ class FavoriteWordsScreen extends StatefulWidget {
 DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
 
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +35,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
           });
         });
       });
+      isLoading = false;
     }
   }
 
@@ -44,7 +49,9 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: listWord(widget.wordsFarvorite, Colors.blueAccent),
+                  child: isLoading
+                      ? CircularProgressIndicator()
+                      : listWord(widget.wordsFarvorite, Colors.blueAccent),
                 )
               ],
             ),
@@ -93,18 +100,23 @@ Widget listWord(List<Word> words, Color colorText) {
                         ),
                       ),
                     ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          '${words[position].word}',
-                          style: TextStyle(
-                              fontSize: 4 * SizeConfig.heightMultiplier,
-                              color: colorText),
-                        ),
-                        Text('${words[position].pronounceUK}',
+                    MaterialButton(
+                      onPressed: () {
+                        showDetailsOfWord(context, position, words);
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            '${words[position].word}',
                             style: TextStyle(
-                                fontSize: 3 * SizeConfig.heightMultiplier))
-                      ],
+                                fontSize: 4 * SizeConfig.heightMultiplier,
+                                color: colorText),
+                          ),
+                          Text('${words[position].pronounceUK}',
+                              style: TextStyle(
+                                  fontSize: 3 * SizeConfig.heightMultiplier))
+                        ],
+                      ),
                     ),
                     StarFavorite(
                         wordId: words[position].id,
@@ -117,4 +129,61 @@ Widget listWord(List<Word> words, Color colorText) {
           );
         }),
   );
+}
+
+void showDetailsOfWord(context, position, words) {
+  var alertStyle = AlertStyle(
+    alertElevation: 0,
+    alertPadding: EdgeInsets.only(
+        left: 3 * SizeConfig.heightMultiplier,
+        right: 3 * SizeConfig.heightMultiplier,
+        top: 0 * SizeConfig.widthMultiplier,
+        bottom: 25 * SizeConfig.widthMultiplier),
+    animationType: AnimationType.fromRight,
+    isCloseButton: true,
+    isOverlayTapDismiss: false,
+    descStyle: TextStyle(fontWeight: FontWeight.bold),
+    descTextAlign: TextAlign.start,
+    animationDuration: Duration(milliseconds: 400),
+    alertBorder: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      side: BorderSide(
+        color: Colors.grey,
+      ),
+    ),
+    titleStyle:
+        TextStyle(color: Colors.red, fontSize: 3 * SizeConfig.heightMultiplier),
+    alertAlignment: Alignment.center,
+  );
+
+  Alert(
+      closeIcon: Icon(
+        Icons.close,
+      ),
+      context: context,
+      type: AlertType.none,
+      title: '${words[position].word}',
+      style: alertStyle,
+      content: Container(
+        height: 200,
+        decoration: BoxDecoration(
+            color: Colors.red, borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          children: <Widget>[
+            Text('${words[position].word}'),
+            Text('${words[position].pronounceUK}'),
+            // Swiper(
+            //   itemCount: words.length,
+            //   itemBuilder: (context, index) {
+            //     return Container(
+            //       child: Center(
+            //         child: Text('${words[position].examples[${index}]}'),
+            //       ),
+            //     );
+            //   },
+            // )
+          ],
+        ),
+      ),
+      buttons: []).show();
 }

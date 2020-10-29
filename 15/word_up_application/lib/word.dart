@@ -81,12 +81,14 @@ class Word {
         ' ' +
         imagePaths.toString() +
         ' ' +
-        quotes.toString() +
-        ' ' +
-        isFavorite.toString() +
-        ' ' +
-        reviewDate +
-        ' ' +
-        reviewTimes.toString());
+        quotes.toString()
+        // ' ' 
+        // +
+        // isFavorite.toString() +
+        // ' ' +
+        // reviewDate +
+        // ' ' +
+        // reviewTimes.toString()
+        );
   }
 }

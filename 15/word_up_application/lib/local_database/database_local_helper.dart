@@ -222,7 +222,7 @@ class DatabaseLocalHelper {
   Future<List<Word>> getNWords(int numbersWords) async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
-        'SELECT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard FROM $tableWord w JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord WHERE NOT EXISTS (SELECT * FROM $tableWordToLearn wtl WHERE wtl.$columnIdWord = w.$columnIdWord) AND NOT EXISTS (SELECT * FROM $tableWordKnew wk WHERE wk.$columnIdWord = w.$columnIdWord) AND NOT EXISTS (SELECT * FROM $tableWordFarvorite wf WHERE wf.$columnIdWord = w.$columnIdWord) LIMIT ?',
+        'SELECT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard FROM $tableWord w JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord WHERE NOT EXISTS (SELECT * FROM $tableWordToLearn wtl WHERE wtl.$columnIdWord = w.$columnIdWord) AND NOT EXISTS (SELECT * FROM $tableWordKnew wk WHERE wk.$columnIdWord = w.$columnIdWord) AND NOT EXISTS (SELECT * FROM $tableWordLearning wf WHERE wf.$columnIdWord = w.$columnIdWord) LIMIT ?',
         [numbersWords]);
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
@@ -231,9 +231,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
-    // for (int j = 0; j < words.length; j++) {
-    //   words[j].printThisWord();
-    // }
+    for (int j = 0; j < words.length; j++) {
+      words[j].printThisWord();
+    }
     return words;
   }
 
