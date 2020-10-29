@@ -42,9 +42,9 @@ class _InputSalaryBoxState extends State<InputSalaryBox> {
           enabledBorder: border,
           errorText: _validate ? error : null,
         ),
-        onSubmitted: (text) {
+        onChanged: (text) {
           if (text.isEmpty) {
-            submitForm.canBeSubmit[0] = false;
+            submitForm.canBeSubmit[4] = false;
             setState(() {
               error = 'Không được để trống';
               _validate = true;

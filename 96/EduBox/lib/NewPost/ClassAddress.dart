@@ -41,7 +41,7 @@ class _ClassAddressState extends State<ClassAddress> {
           enabledBorder: border,
           errorText: _validate ? 'Không được để trống' : null,
         ),
-        onSubmitted: (String text) {
+        onChanged: (String text) {
           if (text.isEmpty || !RegExp('\[a-zA-Z]').hasMatch(text)) {
             submitForm.canBeSubmit[0] = false;
             setState(() {

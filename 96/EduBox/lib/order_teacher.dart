@@ -344,7 +344,7 @@ class OrderTeacher extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => NewOrder()),
+                      MaterialPageRoute(builder: (context) => NewPost()),
                     );
                   }),
             ),

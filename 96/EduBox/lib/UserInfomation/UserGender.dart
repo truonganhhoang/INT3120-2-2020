@@ -29,7 +29,6 @@ class _UserGenderState extends State<UserGender> {
     else
       _value = 0;
 
-    print(_value);
     super.initState();
   }
 

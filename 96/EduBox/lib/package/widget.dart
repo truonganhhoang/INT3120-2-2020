@@ -10,5 +10,5 @@ export '../Home/HomeInterface.dart';
 export '../Home/PopUpMenu.dart';
 export '../NewPost/RequiredGender.dart';
 export '../NewPost/LabelText.dart';
-export '../NewPost/NewOrder.dart';
+export '../NewPost/NewPost.dart';
 

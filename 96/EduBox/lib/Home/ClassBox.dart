@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:EduBox/Models/Post.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,77 +10,74 @@ import 'ClassDetail.dart';
 Color _color = Color(0xff00854c);
 
 class ClassBox extends StatelessWidget {
-  final String name;
-  final String grade;
-  final double height;
-  final double width;
+  final Post post;
 
-  const ClassBox({
-    Key key,
-    this.name = 'Lớp',
-    this.grade = '1',
-    this.height = 400,
-    this.width = 350,
-  }) : super(key: key);
+  const ClassBox({Key key, this.post}) : super(key: key);
 
-  void _navigateToApply(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ClassDetail()));
+  void _navigateTo(BuildContext context, Post post) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) =>
+            AcceptedClass(
+              post: post,
+            ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(5),
-      child: Material(
-        elevation: 5,
-        child: Container(
-          height: height,
-          width: width,
-          child: Column(
-            children: [
-              Container(
-                color: _color,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      child: ClayContainer(
+        width: 350,
+        height: 400,
+        child: Column(
+          children: [
+            Container(
+              color: _color,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      '${post.subject} - Lớp ${post.grade}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 17,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Icon(
+                        Icons.info,
+                        color: _color,
+                        size: 30,
+                      ),
+                    ),
+                    onPressed: () => _navigateTo(context, post),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () => _navigateTo(context, post),
+                child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        '$name - Lớp $grade',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 17,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Icon(
-                          Icons.info,
-                          color: _color,
-                          size: 30,
-                        ),
-                      ),
-                      onPressed: () => _navigateToApply(context),
-                    ),
+                    Text(post.toJson().toString()),
                   ],
                 ),
               ),
-              InkWell(
-                onTap: () => _navigateToApply(context),
-                child: Container(
-                  height: 342,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -56,12 +56,10 @@ class _UserInformationState extends State<UserInformation> {
                           alignment: Alignment.center,
                           //height: 350,
                           decoration: BoxDecoration(),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(147),
+                          child: ClipOval(
                             child: snapshot.data['Avatar'] != null
                                 ? Image.network(
                                     snapshot.data['Avatar'],
-                                    //fit: BoxFit.cover,
                                   )
                                 : Text(snapshot.data['Name'][0]),
                           ),

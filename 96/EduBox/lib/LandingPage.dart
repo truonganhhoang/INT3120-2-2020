@@ -11,8 +11,11 @@ class LandingPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           User user = snapshot.data;
-          return user != null? HomeInterface(): LoginScreen();
-        } else {
+          //print(user);
+          return user != null? HomeInterface():
+          LoginScreen();
+        }
+        else {
           return Scaffold(
             body: Center(
               child: CircularProgressIndicator(),

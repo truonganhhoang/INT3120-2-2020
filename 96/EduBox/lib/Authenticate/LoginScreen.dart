@@ -1,16 +1,15 @@
-
 import 'package:EduBox/package/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-
 class LoginScreen extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+
 
   Future<String> signInWithGoogle() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -31,27 +30,27 @@ class LoginScreen extends StatelessWidget {
       final User currentUser = _auth.currentUser;
       assert(user.uid == currentUser.uid);
 
-      var db = FirebaseFirestore.instance;
-      bool userExists =
-          (await db.collection('User').doc(user.uid).get()).exists;
+      bool userExists = (await FirebaseFirestore.instance
+          .collection('User')
+          .doc(user.uid)
+          .get()).exists;
       if (!userExists) {
-        await db.collection('User').doc(user.uid).set({
-          'Address': 'N/A',
+        FirebaseFirestore.instance.collection('User').doc(user.uid).set({
+          'Address': '',
           'Avatar': user.photoURL,
           'Birth': Timestamp.fromDate(DateTime(1960)),
           'Email': user.email,
-          'Gender': '(Trống)',
+          'Gender': '',
           'Name': user.displayName,
-          'PhoneNumber': 'N/A',
+          'PhoneNumber': '',
         });
       } else {
-        await db.collection('User').doc(user.uid).update({
+        FirebaseFirestore.instance.collection('User').doc(user.uid).update({
           'Avatar': user.photoURL,
           'Email': user.email,
           'Name': user.displayName,
         });
       }
-      
       return '';
     }
 
@@ -66,6 +65,7 @@ class LoginScreen extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             signInWithGoogle();
+
           },
           child: Container(
             height: 100,

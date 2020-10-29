@@ -1,51 +1,54 @@
-import 'dart:ui';
-
+import 'package:EduBox/Models/Post.dart';
+import 'package:EduBox/package/widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'ClassBox.dart';
 
-Color _color = Color(0xff00854c);
-var name = ['Tiếng Anh', 'Toán', 'Văn', 'Hóa', 'Lý', 'Sinh', 'Tin'];
-var grade = ['9', '10', '11', '12', '9', '12', '9'];
-
-class ListOfClass {
-  ListOfClass();
-
-  static List<ClassBox> list() {
-    return List.generate(
-        name.length,
-        (i) => ClassBox(
-              name: name[i],
-              grade: grade[i],
-            ));
-  }
-}
 
 class ClassList extends StatelessWidget {
-  const ClassList({Key key}) : super(key: key);
+  final Axis scrollDirection;
+
+  final List<String> field;
+  final List<dynamic> isEqualTo;
+
+  const ClassList({
+    Key key,
+    this.scrollDirection = Axis.vertical,
+    this.field = const ['Accepted', 'Owner'],
+    this.isEqualTo = const [false, false],
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: _color,
-          title: Text('All classes'),
-        ),
-        body: ListView(
-          children: List.generate(
-              name.length,
-                  (i) =>
-                  Center(
-                    child: ClassBox(
-                      name: name[i],
-                      grade: grade[i],
-                    ),
-                  )),
-        ),
-      ),
-    );
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('Post').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasError) {
+            return snapshot.connectionState != ConnectionState.active
+                ?CircularProgressIndicator()
+                : ListView(
+                    scrollDirection: scrollDirection,
+                    children: snapshot.data.docs
+                        // .where((element) => element[field[0]] != null
+                        //     ? element[field[0]] == isEqualTo[0]
+                        //     : true &&
+                        //         (isEqualTo[1]
+                        //             ? element[field[1]] == uid
+                        //             : element[field[1]] != uid))
+                    .where((element) => element['Accepted'] == true && element['Acceptor'] == uid)
+                        .map((DocumentSnapshot document) {
+                      Map map = document.data();
+                      map['DocumentID'] = document.id;
+                      Post post = Post.fromJson(map);
+                      return document.data().isEmpty?Center(child: Text('Không có bài nào')): ClassBox(post: post);
+                    }).toList(),
+                  );
+          } else
+            return Text('Error');
+        });
   }
 }

@@ -9,8 +9,8 @@ import 'package:EduBox/NewPost/GradePicker.dart';
 import 'package:EduBox/NewPost/InputSalaryBox.dart';
 import 'package:EduBox/NewPost/NewPostTemplate.dart';
 import 'package:EduBox/NewPost/BeginTimePicker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-
 import '../NewPost/DaysOfWeek.dart';
 import '../package/widget.dart';
 import 'SubjectPicker.dart';
@@ -86,12 +86,12 @@ class FindTeacher extends StatelessWidget {
   }
 }
 
-class NewOrder extends StatefulWidget {
+class NewPost extends StatefulWidget {
   @override
-  _NewOrderState createState() => _NewOrderState();
+  _NewPostState createState() => _NewPostState();
 }
 
-class _NewOrderState extends State<NewOrder> {
+class _NewPostState extends State<NewPost> {
   static var divider = Divider(height: 10, color: Colors.transparent);
   double width = 0;
 
@@ -125,7 +125,14 @@ class _NewOrderState extends State<NewOrder> {
                                 height: 20,
                               ),
                               onPressed: () {
-
+                                FirebaseFirestore.instance
+                                    .collection('Post')
+                                    .add(Provider.of<SubmitForm>(context,
+                                            listen: false)
+                                        .toJson());
+                                // print(Provider.of<SubmitForm>(context,
+                                //         listen: false)
+                                //     .toJson());
                                 Navigator.of(context).popUntil((route) => route.isFirst);
                               },
                             ),
@@ -135,7 +142,9 @@ class _NewOrderState extends State<NewOrder> {
                                 height: 20,
                               ),
                               onPressed: () {
-                                print(Provider.of<SubmitForm>(context, listen: false).type);
+                                print(Provider.of<SubmitForm>(context,
+                                        listen: false)
+                                    .type);
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -158,32 +167,27 @@ class _NewOrderState extends State<NewOrder> {
             ),
           ),
         ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
           child: ListView(
             children: [
-
               Provider.of<SubmitForm>(context, listen: false).type == 0
                   ? FindStudent()
                   : FindTeacher(),
-
               Consumer<SubmitForm>(
                 builder: (context, form, _) => Column(
                   children: [
-
                     Text(form.type.toString()),
                     Text(form.grade.toString()),
+                    Text(form.whoPost),
                     Text(form.subject),
                     Text(form.address ?? 'null'),
                     Text(form.days.toString()),
-
                     Text(form.salary.toString() ?? ''),
                     Text(form.canBeSubmit.toString()),
-
                   ],
                 ),
               ),
@@ -206,6 +210,14 @@ class _NewOrderState extends State<NewOrder> {
                       ],
                     ),
                     divider,
+                    // Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     LabelText(text: 'Số điện thoại'),
+                    //     PostPhoneNumber(),
+                    //   ],
+                    // ),
+                    // divider,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

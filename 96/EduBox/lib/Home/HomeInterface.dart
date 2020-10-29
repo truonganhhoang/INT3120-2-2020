@@ -1,5 +1,8 @@
 import 'dart:ui';
 import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'package:EduBox/Posts/AllUnacceptPost.dart';
+import 'package:EduBox/Posts/MyClassSchedule.dart';
+import 'package:EduBox/Posts/MyPost.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -67,10 +70,11 @@ class HomeInterface extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                submitForm.reset();
                                 submitForm.type = 0;
                                 Navigator.of(context).pop();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewOrder()));
+                                    builder: (context) => NewPost()));
                               },
                               child: ClayContainer(
                                 height: 60,
@@ -87,10 +91,11 @@ class HomeInterface extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
+                                submitForm.reset();
                                 submitForm.type = 1;
                                 Navigator.of(context).pop();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewOrder()));
+                                    builder: (context) => NewPost()));
                               },
                               child: ClayContainer(
                                 height: 60,
@@ -109,10 +114,14 @@ class HomeInterface extends StatelessWidget {
                   ),
                 ),
                 Button(
-                  name: 'Yêu cầu gần đây',
-                  icondata: Icon(Icons.near_me, size: 55),
-                  navigatePage: ClassList(),
-                ),
+                    name: 'Yêu cầu gần đây',
+                    icondata: Icon(Icons.near_me, size: 55),
+                    navigatePage: Scaffold(
+                        appBar: AppBar(
+                          backgroundColor: _color,
+                          title: Text('Các lớp mới'),
+                        ),
+                        body: ClassList())),
                 Button(
                   name: 'Bản đồ',
                   icondata: Icon(Icons.map, size: 55),
@@ -120,11 +129,12 @@ class HomeInterface extends StatelessWidget {
                 Button(
                   name: 'Bài đăng của bạn',
                   icondata: Icon(Icons.library_books, size: 55),
-                  navigatePage: OrderTeacher(),
+                  navigatePage: MyPost(),
                 ),
                 Button(
                   name: 'Lịch học',
                   icondata: Icon(Icons.schedule, size: 55),
+                  navigatePage: MyClassSchedule(),
                 ),
               ],
             ),
@@ -149,8 +159,8 @@ class HomeInterface extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ClassList()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AllUnacceptedPost()));
                   },
                   child: Container(
                     width: 150,
@@ -182,9 +192,8 @@ class HomeInterface extends StatelessWidget {
             ),
             Container(
               height: 400,
-              child: ListView(
+              child: ClassList(
                 scrollDirection: Axis.horizontal,
-                children: ListOfClass.list().sublist(0, 3),
               ),
             ),
           ],
@@ -204,6 +213,7 @@ class HamburgerMenu extends StatelessWidget {
 
   Future<void> signOutGoogle() async {
     await FirebaseAuth.instance.signOut();
+    //print(FirebaseAuth.instance.currentUser.uid);
     await GoogleSignIn().signOut();
     print("Signed Out");
   }
@@ -216,13 +226,12 @@ class HamburgerMenu extends StatelessWidget {
         children: <Widget>[
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(color: _color),
-            accountName: Text(name??''),
-            accountEmail: Text(email??''),
+            accountName: Text(name ?? ''),
+            accountEmail: Text(email ?? ''),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              child: ClipRRect(
+              child: ClipOval(
                 child: Image.network(photoURL),
-                borderRadius: BorderRadius.circular(150),
               ),
             ),
           ),
@@ -252,7 +261,8 @@ class HamburgerMenu extends StatelessWidget {
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
-                          Navigator.of(context).popUntil((route) => route.isFirst);
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
                           signOutGoogle();
                         }),
                     FlatButton(
@@ -276,7 +286,6 @@ class HamburgerMenu extends StatelessWidget {
             enabled: true,
             onTap: () {
               // Navigator.of(context).pop();
-              print(Provider.of<SubmitForm>(context,listen: false).type);
             },
           ),
         ],
