@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -86,9 +88,50 @@ class AuthService {
     return null;
   }
 
-  void syncDataUser(user) async {
+  void syncDataUser(user) {
     final ref =
         FirebaseDatabase.instance.reference().child("Users").child(user.uid);
-    DatabaseServerHandler.instance.checkUser(ref, user);
+    ref.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      if (values != null) {
+        print("Exist");
+        String rawJson = jsonEncode(values);
+        print(rawJson);
+        Map map = jsonDecode(rawJson);
+        AppUser currentUser;
+        currentUser = AppUser.fromJson(map);
+        // Now we have currentUser
+      } else {
+        print("Not Exist");
+        AppUser newUser = new AppUser(
+          idUser: user.uid,
+          userPrivateInformation: UserPrivateInformation(
+              age: 0,
+              avatarUrl: user.photoURL,
+              email: user.email,
+              nativeLanguage: 'Vietnamese',
+              userName: user.displayName),
+          learningProgress: LearningProgress(
+            wordFavorite: [0],
+            wordToLearn: [0],
+            wordKnew: [0],
+            wordLearning: [
+              WordLearning(
+                wordId: 0,
+                reviewDate: 0,
+                reviewTimes: 0,
+              ),
+            ],
+          ),
+          learnSetting: LearnSetting(
+            accent: 'British',
+            practiceGoal: 0, // 20 words per day.
+            reminder: Time(hour: 0, minute: 0),
+          ),
+        );
+        DatabaseServerHandler.instance.postUser(newUser);
+        // Now we add newUser
+      }
+    });
   }
 }
