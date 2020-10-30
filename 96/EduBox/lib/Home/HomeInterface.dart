@@ -278,7 +278,7 @@ class HamburgerMenu extends StatelessWidget {
             trailing: Icon(Icons.cancel),
             enabled: true,
             onTap: () {
-              // Navigator.of(context).pop();
+              Navigator.of(context).pop();
             },
           ),
         ],
