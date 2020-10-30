@@ -52,7 +52,6 @@ class Label extends StatelessWidget {
             ),
             Text(
               text,
-              // 'Tìm học sinh',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 25,
@@ -135,7 +134,8 @@ class _NewPostState extends State<NewPost> {
                                 // print(Provider.of<SubmitForm>(context,
                                 //         listen: false)
                                 //     .toJson());
-                                Navigator.of(context).popUntil((route) => route.isFirst);
+                                Navigator.of(context)
+                                    .popUntil((route) => route.isFirst);
                               },
                             ),
                             FlatButton(
@@ -144,9 +144,6 @@ class _NewPostState extends State<NewPost> {
                                 height: 20,
                               ),
                               onPressed: () {
-                                print(Provider.of<SubmitForm>(context,
-                                        listen: false)
-                                    .type);
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -179,20 +176,6 @@ class _NewPostState extends State<NewPost> {
               Provider.of<SubmitForm>(context, listen: false).type == 0
                   ? FindStudent()
                   : FindTeacher(),
-              Consumer<SubmitForm>(
-                builder: (context, form, _) => Column(
-                  children: [
-                    Text(form.type.toString()),
-                    Text(form.grade.toString()),
-                    Text(form.whoPost),
-                    Text(form.subject),
-                    Text(form.address ?? 'null'),
-                    Text(form.days.toString()),
-                    Text(form.salary.toString() ?? ''),
-                    Text(form.canBeSubmit.toString()),
-                  ],
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: width / 2 - 150),
                 child: Column(

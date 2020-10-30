@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Post {
   String id; //random id
   int type; // 0 : find student; 1 = find teacher
@@ -13,6 +15,7 @@ class Post {
   String gender; // required gender for acceptor
   String requiredComment; //some addition required comment
   double salary;
+  Timestamp postDate;
 
   Post.fromJson(Map<String, dynamic>json){
     this.id = json['DocumentID'];
@@ -29,6 +32,8 @@ class Post {
     this.gender = json['Gender'];
     this.requiredComment = json['RequiredComment'];
     this.salary = json['Salary'];
+    this.postDate = json['PostDate'];
+
   }
 
   Map toJson() =>
@@ -46,6 +51,7 @@ class Post {
         'Gender': this.gender,
         'RequiredComment': this.requiredComment,
         'Salary': this.salary,
+        'PostDate': this.postDate
       };
 
 

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 String uid = FirebaseAuth.instance.currentUser.uid;
 var database = FirebaseFirestore.instance;
@@ -208,6 +209,10 @@ class MyClassAndBeAcceptedDetail extends StatelessWidget {
                       children: [
                         LabelText(text: 'Kiểu lớp'),
                         Info(post.type == 0 ? 'Tìm học sinh' : 'Tìm gia sư'),
+                        divider,
+                        LabelText(text: 'Ngày đăng'),
+                        Info(DateFormat('dd-MM-yyyy').format(post.postDate.toDate())),
+                        divider,
                         LabelText(text: 'Người nhận lớp'),
                         Info(snapshot.data['Name']),
                         divider,
@@ -220,6 +225,9 @@ class MyClassAndBeAcceptedDetail extends StatelessWidget {
                         divider,
                         LabelText(text: 'Môn'),
                         Info(post.subject),
+                        divider,
+                        LabelText(text: 'Lớp'),
+                        Info(post.grade.toString()),
                         divider,
                         LabelText(text: 'Địa điểm'),
                         Info(post.address),
@@ -277,6 +285,9 @@ class ClassIAcceptedDetail extends StatelessWidget {
                       children: [
                         LabelText(text: 'Kiểu lớp'),
                         Info(post.type == 0 ? 'Tìm học sinh' : 'Tìm gia sư'),
+                        divider,LabelText(text: 'Ngày đăng'),
+                        Info(DateFormat('dd-MM-yyyy').format(post.postDate.toDate())),
+                        divider,
                         LabelText(text: 'Người tìm lớp'),
                         Info(snapshot.data['Name']),
                         divider,
@@ -345,8 +356,14 @@ class MyClassAndBeNotAcceptedDetail extends StatelessWidget {
           LabelText(text: 'Kiểu lớp'),
           Info(post.type == 0 ? 'Tìm học sinh' : 'Tìm gia sư'),
           divider,
+          LabelText(text: 'Ngày đăng'),
+          Info(DateFormat('dd-MM-yyyy').format(post.postDate.toDate())),
+          divider,
           LabelText(text: 'Môn'),
           Info(post.subject),
+          divider,
+          LabelText(text: 'Lớp'),
+          Info(post.grade.toString()),
           divider,
           LabelText(text: 'Địa điểm'),
           Info(post.address),
@@ -396,6 +413,10 @@ class OtherUnacceptedClassDetail extends StatelessWidget {
                       children: [
                         LabelText(text: 'Kiểu lớp'),
                         Info(post.type == 0 ? 'Tìm học sinh' : 'Tìm gia sư'),
+                        divider,
+                        LabelText(text: 'Ngày đăng'),
+                        Info(DateFormat('dd-MM-yyyy').format(post.postDate.toDate())),
+                        divider,
                         LabelText(text: 'Người tìm lớp'),
                         Info(snapshot.data['Name']),
                         divider,
@@ -408,6 +429,9 @@ class OtherUnacceptedClassDetail extends StatelessWidget {
                         divider,
                         LabelText(text: 'Môn'),
                         Info(post.subject),
+                        divider,
+                        LabelText(text: 'Lớp'),
+                        Info(post.grade.toString()),
                         divider,
                         LabelText(text: 'Địa điểm'),
                         Info(post.address),
