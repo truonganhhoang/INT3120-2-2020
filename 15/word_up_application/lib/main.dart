@@ -40,14 +40,14 @@ class MyApp extends StatelessWidget {
     AppManager.instance.init();
     FirebaseHandler.initializeFirebase();
     DatabaseServerHandler.instance.getAllUsers();
-    DatabaseServerHandler.instance.updateLearnProgress('1122817271');
+    DatabaseServerHandler.instance.updateLearnProgress('822817271');
     DatabaseLocalHelper.instance.databaseInit();
 
     //DatabaseHelper.instance.getListFarvoriteWords();
     // DatabaseHelper.instance.getExamplesWithId(1);
 
     //DatabaseHelper.instance.databaseInit();
-    DatabaseLocalHelper.instance.getNWords(5);
+    //DatabaseLocalHelper.instance.getNWords(5);
     //DatabaseLocalHelper.instance.getListLearningWords();
 
     //DatabaseHelper.instance.getListFarvoriteWords();

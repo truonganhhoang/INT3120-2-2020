@@ -90,45 +90,49 @@ class LearningProgress {
   int estimateWords;
   List<int> wordFavorite = new List<int>();
   List<int> wordToLearn = new List<int>();
-  List<WordKnew> wordKnew = new List<WordKnew>();
+  List<int> wordKnew = new List<int>();
+  List<WordLearning> wordLearning = new List<WordLearning>();
 
   LearningProgress(
       {@required this.wordFavorite,
       @required this.wordToLearn,
-      @required this.wordKnew});
+      @required this.wordKnew,
+      @required this.wordLearning});
 
   Map<String, dynamic> toJson() => {
         'wordFavorite': this.wordFavorite,
         'wordToLearn': this.wordToLearn,
         'wordKnew': this.wordKnew,
+        'wordLearning': this.wordLearning,
       };
 
   LearningProgress.fromJson(Map<String, dynamic> json)
       : wordFavorite = json['wordFavorite'].cast<int>(),
         wordToLearn = json['wordToLearn'].cast<int>(),
-        wordKnew = json['wordKnew'].cast<WordKnew>();
+        wordKnew = json['wordKnew'].cast<int>(),
+        wordLearning = json['wordLearning'].cast<WordLearning>();
 }
 
-class WordKnew {
-  int reviewDays; // So ngay can review
+class WordLearning {
+  int reviewDate; // So ngay can review
   int reviewTimes; // So lan da review
   int wordId;
 
-  WordKnew({
-    this.reviewDays,
+  WordLearning({
+    this.reviewDate,
     this.reviewTimes,
     @required this.wordId,
   });
 
   Map<String, dynamic> toJson() => {
-        'reviewDays': this.reviewDays,
+        'reviewDays': this.reviewDate,
         'reviewTimes': this.reviewTimes,
         'wordId': this.wordId,
       };
 
-  WordKnew.fromJson(Map<String, dynamic> json)
+  WordLearning.fromJson(Map<String, dynamic> json)
       : reviewTimes = json['reviewTimes'],
-        reviewDays = json['reviewDays'],
+        reviewDate = json['reviewDate'],
         wordId = json['wordId'];
 }
 
@@ -167,20 +171,21 @@ void main(List<String> args) {
     learningProgress: LearningProgress(
         wordFavorite: [1,2,9,10],
         wordToLearn: [1,4,5,7,8,9],
-        wordKnew: [
-          WordKnew(
+        wordKnew: [10,12,15],
+        wordLearning: [
+          WordLearning(
             wordId: 2,
-            reviewDays: 3,
+            reviewDate: 3,
             reviewTimes: 0,
           ),
-          WordKnew(
+          WordLearning(
             wordId: 3,
-            reviewDays: 3,
+            reviewDate: 3,
             reviewTimes: 1,
           ),
-          WordKnew(
+          WordLearning(
             wordId: 6,
-            reviewDays: 3,
+            reviewDate: 3,
             reviewTimes: 0,
           ),
         ]

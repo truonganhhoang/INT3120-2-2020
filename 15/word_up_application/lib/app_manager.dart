@@ -1,10 +1,12 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:word_up_application/user.dart';
 
 class AppManager {
   static bool firstTimeUse = false;
   static final AppManager instance = AppManager._internal();
 
+  AppUser appUser;
   factory AppManager() {
     return instance;
   }
