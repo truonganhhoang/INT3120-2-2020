@@ -4,8 +4,6 @@ class Post {
   bool accepted; // is accepted or not
   String whoPostUid; // post owner
   String whoAcceptUid; //post acceptor
-  String phoneNumberPost; //owner phone number
-  String phoneNumberAccept; //acceptor phone number
   int grade; // class's grade
   String subject; // subject
   String address; // class address
@@ -22,8 +20,6 @@ class Post {
     this.accepted = json['Accepted'];
     this.whoPostUid = json['Owner'];
     this.whoAcceptUid = json['Acceptor'];
-    // this.phoneNumberPost = json['OwnerPhoneNumber'];
-    // this.phoneNumberAccept = json['AcceptorPhoneNumber'];
     this.grade = json['Grade'];
     this.subject = json['Subject'];
     this.address = json['Address'];
@@ -38,13 +34,10 @@ class Post {
   Map toJson() =>
       {
         'DocumentID': this.id,
-        //'No': this.no,
         'Type': this.type,
         'Accepted': this.accepted,
         'Owner': this.whoPostUid,
         'Acceptor': this.whoAcceptUid,
-        // 'OwnerPhoneNumber': this.phoneNumberPost,
-        // 'AcceptorPhoneNumber': this.phoneNumberAccept,
         'Grade': this.grade,
         'Subject': this.subject,
         'Address': this.address,

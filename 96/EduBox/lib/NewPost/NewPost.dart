@@ -1,18 +1,20 @@
 import 'dart:ui';
 
-import 'package:EduBox/NewPost/BeginDatePicker.dart';
-import 'package:EduBox/NewPost/ClassAddress.dart';
-import 'package:EduBox/NewPost/CommentBox.dart';
-import 'package:EduBox/NewPost/EndDatePicker.dart';
-import 'package:EduBox/NewPost/EndTimePicker.dart';
-import 'package:EduBox/NewPost/GradePicker.dart';
-import 'package:EduBox/NewPost/InputSalaryBox.dart';
-import 'package:EduBox/NewPost/NewPostTemplate.dart';
-import 'package:EduBox/NewPost/BeginTimePicker.dart';
+import 'BeginDatePicker.dart';
+import 'ClassAddress.dart';
+import 'CommentBox.dart';
+import 'EndDatePicker.dart';
+import 'EndTimePicker.dart';
+import 'GradePicker.dart';
+import 'InputSalaryBox.dart';
+import 'NewPostTemplate.dart';
+import 'BeginTimePicker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../NewPost/DaysOfWeek.dart';
-import '../package/widget.dart';
+import 'LabelText.dart';
+import 'RequiredGender.dart';
 import 'SubjectPicker.dart';
 
 enum classType { findTeacher, findStudent }

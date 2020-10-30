@@ -1,7 +1,7 @@
 import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../package/widget.dart';
 
 Color _color = Color(0xff00854c);
 

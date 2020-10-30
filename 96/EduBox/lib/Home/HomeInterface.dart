@@ -1,15 +1,15 @@
 import 'dart:ui';
+import 'package:EduBox/NewPost/NewPost.dart';
 import 'package:EduBox/NewPost/NewPostTemplate.dart';
-import 'package:EduBox/Posts/AllUnacceptPost.dart';
-import 'package:EduBox/Posts/MyClassSchedule.dart';
-import 'package:EduBox/Posts/MyPost.dart';
+import 'package:EduBox/PostManagement/ClassPageRoute.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import '../UserInfomation/UserInformation.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import '../package/widget.dart';
+import 'Button.dart';
+import '../PostManagement/ClassList.dart';
 
 Color _color = Color(0xff00854c);
 
@@ -116,12 +116,7 @@ class HomeInterface extends StatelessWidget {
                 Button(
                     name: 'Yêu cầu gần đây',
                     icondata: Icon(Icons.near_me, size: 55),
-                    navigatePage: Scaffold(
-                        appBar: AppBar(
-                          backgroundColor: _color,
-                          title: Text('Các lớp mới'),
-                        ),
-                        body: ClassList())),
+                    navigatePage: OtherUnacceptedClassPage()),
                 Button(
                   name: 'Bản đồ',
                   icondata: Icon(Icons.map, size: 55),
@@ -129,12 +124,12 @@ class HomeInterface extends StatelessWidget {
                 Button(
                   name: 'Bài đăng của bạn',
                   icondata: Icon(Icons.library_books, size: 55),
-                  navigatePage: MyPost(),
+                  navigatePage: AllMyClassPage(),
                 ),
                 Button(
                   name: 'Lịch học',
                   icondata: Icon(Icons.schedule, size: 55),
-                  navigatePage: MyClassSchedule(),
+                  navigatePage: MyOnScheduleClassPage(),
                 ),
               ],
             ),
@@ -160,7 +155,7 @@ class HomeInterface extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AllUnacceptedPost()));
+                        builder: (context) => OtherUnacceptedClassPage()));
                   },
                   child: Container(
                     width: 150,
@@ -192,9 +187,7 @@ class HomeInterface extends StatelessWidget {
             ),
             Container(
               height: 400,
-              child: ClassList(
-                scrollDirection: Axis.horizontal,
-              ),
+              child: OtherUnacceptedClassList(scrollDirection: Axis.horizontal),
             ),
           ],
         ),

@@ -38,7 +38,7 @@ class Button extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => navigatePage != null
-                  ? navigatePage
+                  ? SafeArea(child: navigatePage)
                   : SafeArea(
                       child: Scaffold(
                         appBar: AppBar(

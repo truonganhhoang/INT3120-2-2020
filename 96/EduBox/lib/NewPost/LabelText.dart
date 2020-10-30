@@ -10,10 +10,10 @@ class LabelText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(vertical: 7),
       alignment: Alignment.centerLeft,
       child: Text(
-        text,
+        text +':',
         style: TextStyle(
           color: Colors.red,
           fontSize: size,
