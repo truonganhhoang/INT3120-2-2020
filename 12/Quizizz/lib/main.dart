@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/views/play_screen/end_quiz.dart';
 import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
+import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
 import 'package:quiztest/views/setting/setting.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
