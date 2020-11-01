@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
+import 'package:quiztest/views/setting/popUpSetting/userName.dart';
 
 import '../settingInfo.dart';
 import '../setting_category.dart';
@@ -61,9 +62,18 @@ class UserProfile extends StatelessWidget {
                         prop: "Parry Pirate",
                       ),
                     ),
-                    SettingInfo(
-                      title: "User name",
-                      prop: "Thanh Dat",
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return UserNameSetting();
+                            });
+                      },
+                      child: SettingInfo(
+                        title: "User name",
+                        prop: "Thanh Dat",
+                      ),
                     ),
                     SettingInfo(
                       title: "Grade",
