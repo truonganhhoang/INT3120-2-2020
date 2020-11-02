@@ -55,4 +55,18 @@ class API_Manager {
       return quizzes;
     }
   }
+
+  Future<User> postUser(String userName) async {
+    var urlPostUser = url + "/v1/user/PostUser";
+    final response = await http.post(
+      urlPostUser,
+      headers: <String, String>{
+        "content-type": "application/json; charset=utf-8"
+      },
+      body: jsonEncode(<String, String>{"UserName": userName}),
+    );
+    if (response.statusCode == 201) {
+      return User.fromJson(json.decode(response.body));
+    }
+  }
 }
