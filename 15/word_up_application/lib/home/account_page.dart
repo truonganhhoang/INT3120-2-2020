@@ -20,13 +20,13 @@ class AccountPage extends StatelessWidget {
               children: <Widget>[
                 new UserAccountsDrawerHeader(
                   accountName: new Text(
-                    "Word Up",
+                    "E Vocab",
                     style: TextStyle(
                         fontSize: 2.4 * SizeConfig.textMultiplier,
                         color: Colors.white),
                   ),
                   accountEmail: new Text(
-                    "wordup15@gmail.com",
+                    "evocab15@gmail.com",
                     style: TextStyle(
                         fontSize: 1.8 * SizeConfig.textMultiplier,
                         color: Colors.white),
@@ -40,7 +40,7 @@ class AccountPage extends StatelessWidget {
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.lightBlueAccent,
                     child: Text(
-                      'W',
+                      'E',
                       style: TextStyle(
                           fontSize: 4 * SizeConfig.textMultiplier,
                           color: Colors.black),
@@ -86,7 +86,7 @@ class AccountPage extends StatelessWidget {
                 new Container(
                   margin: EdgeInsets.only(top: 3 * SizeConfig.heightMultiplier),
                   child: Text(
-                    "WordUp",
+                    "E Vocab",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 4.5 * SizeConfig.textMultiplier,
