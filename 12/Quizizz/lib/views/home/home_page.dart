@@ -88,7 +88,7 @@ class EnterCode extends StatelessWidget {
               onChanged: (value) {},
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(top: 5, left: 20),
-                  hintText: "Enter a gane code",
+                  hintText: "Enter a game code",
                   border: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: Color.fromRGBO(209, 209, 209, 1)),
