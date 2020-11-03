@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:quiztest/services/user.dart';
+import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
+import 'package:quiztest/views/setting/popUpSetting/userName.dart';
 import '../settingInfo.dart';
 import '../setting_category.dart';
+import 'package:quiztest/models/models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:quiztest/services/api_manager.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({
@@ -16,6 +21,7 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future _userName = UserSave().userName();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Align(
@@ -47,14 +53,40 @@ class UserProfile extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
-                    SettingInfo(
-                      title: "Avatar",
-                      prop: "Parry Pirate",
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AvatarSetting();
+                            });
+                      },
+                      child: SettingInfo(
+                        title: "Avatar",
+                        prop: "Parry Pirate",
+                      ),
                     ),
-                    SettingInfo(
-                      title: "User name",
-                      prop: "Thanh Dat",
-                    ),
+                    FutureBuilder<String>(
+                        future: _userName,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return UserNameSetting(userName: snapshot.data.toString(),);
+                                    });
+                              },
+                              child: SettingInfo(
+                                title: "User name",
+                                prop: snapshot.data.toString(),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                          } else
+                            return CircularProgressIndicator();
+                        }),
                     SettingInfo(
                       title: "Grade",
                       prop: "Univ.",

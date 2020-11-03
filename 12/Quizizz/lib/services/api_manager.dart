@@ -58,15 +58,25 @@ class API_Manager {
 
   Future<User> postUser(String userName) async {
     var urlPostUser = url + "/v1/user/PostUser";
-    final response = await http.post(
-      urlPostUser,
-      headers: <String, String>{
-        "content-type": "application/json; charset=utf-8"
-      },
-      body: jsonEncode(<String, String>{"UserName": userName}),
-    );
-    if (response.statusCode == 201) {
+    final headers = {'Content-Type': 'application/json'};
+    Map<String, dynamic> body = {"UserName": userName};
+    String jsonBody = json.encode(body);
+    final encoding = Encoding.getByName('utf-8');
+    final response = await http.post(urlPostUser,
+        headers: headers, body: jsonBody, encoding: encoding);
+    print("alo alo");
+    if (response.statusCode == 200) {
+      print("1234");
       return User.fromJson(json.decode(response.body));
+    }
+  }
+
+  Future<String> getUserName(String userID) async {
+    var urlGetUser = url + "/v1/user/GetUser/" + userID;
+    final response = await http.get(urlGetUser);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseJson = json.decode(response.body);
+      return responseJson["UserName"];
     }
   }
 }

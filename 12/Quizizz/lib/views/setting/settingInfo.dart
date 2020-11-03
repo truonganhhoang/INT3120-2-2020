@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
 
 class SettingInfo extends StatelessWidget {
   const SettingInfo({

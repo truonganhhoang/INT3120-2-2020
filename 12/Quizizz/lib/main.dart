@@ -3,12 +3,11 @@ import 'package:quiztest/views/setting/setting.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
 import 'views/activity/activity.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:quiztest/services/user.dart';
 
 void main() {
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -31,10 +30,11 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final tabs = [HomePage(), Search(), Activity(), Setting()];
 
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    UserSave().saveId("User Name");
   }
 
   @override
