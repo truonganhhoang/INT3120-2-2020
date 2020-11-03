@@ -26,13 +26,17 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
             Container(
               margin: EdgeInsets.only(top: 6 * SizeConfig.heightMultiplier),
               child: MaterialButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 minWidth: 4 * SizeConfig.heightMultiplier,
                 padding: EdgeInsets.only(left: 0.8 * SizeConfig.screenWidth),
                 onPressed: () {
                   print('smms');
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                      PageTransition(
+                          type: PageTransitionType.fade,
+                          child: Home()),
                   );
                 },
                 child: Icon(
@@ -99,7 +103,7 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  type: PageTransitionType.rightToLeft,
+                                  type: PageTransitionType.leftToRight,
                                   child: SelectionScreen()));
                         },
                         child: Container(
@@ -130,11 +134,11 @@ class _FinishSelectionScreenState extends State<FinishSelectionScreen> {
                       ),
                       child: GestureDetector(
                           onTap: () {
-                            print('đs');
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Home()),
-                            );
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: Home()));
                           },
                           child: Container(
                             width: 0.6 * SizeConfig.screenWidth,

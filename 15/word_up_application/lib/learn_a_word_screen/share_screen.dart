@@ -15,10 +15,10 @@ class ShareScreen extends StatefulWidget {
   }) : assert(wordShare != null);
 
   @override
-  ShareScreenState createState() => ShareScreenState();
+  State<StatefulWidget> createState() => _ShareScreenState();
 }
 
-class ShareScreenState extends State<ShareScreen> {
+class _ShareScreenState extends State<ShareScreen> {
   Widget buildImage(Uint8List bytes) =>
       bytes != null ? Image.memory(bytes) : Container();
 

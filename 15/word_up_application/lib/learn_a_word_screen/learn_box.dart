@@ -9,7 +9,7 @@ class LearnBox extends StatelessWidget {
   final int index;
   final assetsAudioPlayer = AssetsAudioPlayer();
 
-  LearnBox({this.word, this.index});
+  LearnBox({this.word, this.index}) : assert(word != null && index != null);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class LearnBox extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          word.type,
+                          word.type.toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
@@ -54,7 +54,7 @@ class LearnBox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    word.word,
+                    word.word.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -77,7 +77,7 @@ class LearnBox extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          word.pronounceUK,
+                          word.pronounceUK.toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
@@ -90,7 +90,7 @@ class LearnBox extends StatelessWidget {
                         width: 5 * SizeConfig.widthMultiplier,
                         child: IconButton(
                           onPressed: () => (assetsAudioPlayer.open(
-                            Audio(word.pathSoundUK),
+                            Audio('assets/audios/' + word.pathSoundUK),
                           )),
                           color: Colors.blueGrey,
                           //padding: EdgeInsets.all(10.0),
@@ -107,7 +107,7 @@ class LearnBox extends StatelessWidget {
                     margin:
                         EdgeInsets.only(top: 0.8 * SizeConfig.widthMultiplier),
                     child: Text(
-                      word.definition,
+                      word.definition.toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -124,7 +124,7 @@ class LearnBox extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          word.examples[2 * index],
+                          "- " + word.examples[2 * index].toString(),
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.black,
@@ -133,7 +133,8 @@ class LearnBox extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          word.examples[2 * index + 1],
+                          "- " + word.examples[2 * index + 1].toString(),
+                          textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
@@ -156,7 +157,7 @@ class LearnBox extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          word.meanCard,
+                          word.meanCard.toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -170,7 +171,7 @@ class LearnBox extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 2 * SizeConfig.textMultiplier),
                     child: Image(
-                        image: AssetImage(word.imagePaths[index]),
+                        image: AssetImage('assets/images/' + word.imagePaths[index]),
                         width: 50 * SizeConfig.widthMultiplier,
                         height: 15 * SizeConfig.heightMultiplier,
                         fit: BoxFit.fill),

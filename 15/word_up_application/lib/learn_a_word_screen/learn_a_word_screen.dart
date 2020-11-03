@@ -7,20 +7,19 @@ import 'package:word_up_application/components/common_components.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:word_up_application/size_config.dart';
 import 'share_screen.dart';
-import 'fake_data.dart';
+//import 'fake_data.dart';
 
 class LearnAWord extends StatefulWidget {
   final Word word;
-
   LearnAWord({
     this.word,
   }) : assert(word != null);
 
   @override
-  LearnAWordState createState() => LearnAWordState();
+  State<StatefulWidget> createState() => _LearnAWordState();
 }
 
-class LearnAWordState extends State<LearnAWord> {
+class _LearnAWordState extends State<LearnAWord> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -28,6 +27,8 @@ class LearnAWordState extends State<LearnAWord> {
           title: new Text('Learning'),
           actions: <Widget>[
             MaterialButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               child: Icon(
                 Icons.share,
                 color: Colors.white,
@@ -37,7 +38,7 @@ class LearnAWordState extends State<LearnAWord> {
                     context,
                     PageTransition(
                         type: PageTransitionType.fade,
-                        child: ShareScreen(wordShare: word)));
+                        child: ShareScreen(wordShare: widget.word)));
               },
             ),
           ],
@@ -54,19 +55,19 @@ class LearnAWordState extends State<LearnAWord> {
                 height: 66 * SizeConfig.heightMultiplier,
                 initialPage: 0,
                 onPageChanged: (index) {},
-                items: <Widget>[
+                items: <Widget> [
                   LearnBox(
-                    word: word,
+                    word: widget.word,
                     index: 0,
                   ),
-                  LearnBox(
-                    word: word,
+                  /*LearnBox(
+                    word: widget.word,
                     index: 1,
                   ),
                   LearnBox(
-                    word: word,
+                    word: widget.word,
                     index: 2,
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -107,7 +108,7 @@ class LearnAWordState extends State<LearnAWord> {
                           margin: EdgeInsets.only(top: 10),
                           width: 32 * SizeConfig.heightMultiplier,
                           padding: EdgeInsets.only(bottom: 5),
-                          child: Text('"' + word1.quotes[0] + '"',
+                          child: Text('"' + widget.word.quotes[0] + '"',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey[500],
