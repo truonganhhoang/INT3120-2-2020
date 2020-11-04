@@ -147,6 +147,76 @@ class OtherUnacceptedClassList extends StatelessWidget {
   }
 }
 
+class UnacceptedFindStudentClassList extends StatelessWidget {
+
+@override
+  Widget build(BuildContext context) {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('Post').orderBy('PostDate').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasError) {
+            if (snapshot.connectionState != ConnectionState.active)
+              return CircularProgressIndicator();
+            List<Widget> list = snapshot.data.docs
+                .where((element) =>
+            element['Accepted'] == false && element['Owner'] != uid && element['Type']==0)
+                .map((DocumentSnapshot document) {
+              Map map = document.data();
+              map['DocumentID'] = document.id;
+              Post post = Post.fromJson(map);
+              return OtherUnacceptedClassBox(post: post);
+            }).toList();
+            return list.length != 0
+                ? ListView(
+              children: list,
+            )
+                : Center(
+                child: Text(
+                  'Không có bài nào',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ));
+          } else
+            return Text('Error');
+        });
+  }
+}
+
+class UnacceptedFindTeacherClassList extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('Post').orderBy('PostDate').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasError) {
+            if (snapshot.connectionState != ConnectionState.active)
+              return CircularProgressIndicator();
+            List<Widget> list = snapshot.data.docs
+                .where((element) =>
+            element['Accepted'] == false && element['Owner'] != uid && element['Type']==1)
+                .map((DocumentSnapshot document) {
+              Map map = document.data();
+              map['DocumentID'] = document.id;
+              Post post = Post.fromJson(map);
+              return OtherUnacceptedClassBox(post: post);
+            }).toList();
+            return list.length != 0
+                ? ListView(
+              children: list,
+            )
+                : Center(
+                child: Text(
+                  'Không có bài nào',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ));
+          } else
+            return Text('Error');
+        });
+  }
+}
+
 class MyOnScheduleClassList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -217,3 +287,5 @@ class ClassIAcceptedList extends StatelessWidget {
         });
   }
 }
+
+

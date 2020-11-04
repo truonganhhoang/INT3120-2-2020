@@ -143,12 +143,19 @@ class _MyOnScheduleClassPageState extends State<MyOnScheduleClassPage> {
   }
 }
 
-class OtherUnacceptedClassPage extends StatelessWidget {
+class OtherUnacceptedClassPage extends StatefulWidget {
 
   final Axis scrollDirection;
 
   const OtherUnacceptedClassPage({Key key, this.scrollDirection}) : super(key: key);
 
+  @override
+  _OtherUnacceptedClassPageState createState() => _OtherUnacceptedClassPageState();
+}
+
+class _OtherUnacceptedClassPageState extends State<OtherUnacceptedClassPage> {
+  int num = 0;
+  int clicked = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -156,7 +163,42 @@ class OtherUnacceptedClassPage extends StatelessWidget {
         appBar: AppBar(
           title: Text('Các lớp mới'),
         ),
-        body: OtherUnacceptedClassList(),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Row(
+                children: List.generate(
+                  3,
+                      (index) => Expanded(
+                    child: MyPostFilter(
+                      function: () {
+                        setState(() {
+                          num = index;
+                          clicked = index;
+                        });
+                      },
+                      name: index == 0
+                          ? 'Tất cả'
+                          : index == 1
+                          ? 'Tìm học sinh'
+                          : 'Tìm gia sư',
+                      clicked: clicked == index,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height - 175,
+              child: num == 0
+                  ? OtherUnacceptedClassList()
+                  : num == 1
+                  ? UnacceptedFindStudentClassList()
+                  : UnacceptedFindTeacherClassList(),
+            )
+          ],
+        ),
       ),
     );
   }
