@@ -77,6 +77,10 @@ class Word {
         ' ' +
         word +
         ' ' +
+        meanCard + 
+        ' ' +
+        definition +
+        ' ' +
         examples.toString() +
         ' ' +
         imagePaths.toString() +
