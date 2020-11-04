@@ -52,7 +52,7 @@ class _LearnAWordState extends State<LearnAWord> {
               margin: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
               child: CarouselSlider(
                 enableInfiniteScroll: false,
-                height: 65 * SizeConfig.heightMultiplier,
+                height: 67 * SizeConfig.heightMultiplier,
                 initialPage: 0,
                 onPageChanged: (index) {},
                 items: <Widget>[
@@ -72,7 +72,7 @@ class _LearnAWordState extends State<LearnAWord> {
               ),
             ),
             new Container(
-                margin: EdgeInsets.only(top: 69 * SizeConfig.heightMultiplier),
+                margin: EdgeInsets.only(top: 70 * SizeConfig.heightMultiplier),
                 padding: EdgeInsets.only(
                     left: 2.8 * SizeConfig.heightMultiplier,
                     right: 2.8 * SizeConfig.heightMultiplier),

@@ -26,7 +26,7 @@ class LearnBox extends StatelessWidget {
         children: <Widget>[
           new Container(
               width: 70 * SizeConfig.widthMultiplier,
-              height: 64 * SizeConfig.heightMultiplier,
+              height: 66 * SizeConfig.heightMultiplier,
               padding: EdgeInsets.only(left: 6, right: 6),
               child: Column(
                 children: [
