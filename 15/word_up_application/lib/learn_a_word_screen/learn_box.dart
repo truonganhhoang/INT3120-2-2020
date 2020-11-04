@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:word_up_application/word.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -25,14 +26,13 @@ class LearnBox extends StatelessWidget {
         children: <Widget>[
           new Container(
               width: 70 * SizeConfig.widthMultiplier,
-              height: 65 * SizeConfig.heightMultiplier,
-              //margin: EdgeInsets.fromLTRB(8, 00, 8, 0),
-              padding: EdgeInsets.only(left: 8, right: 8),
+              height: 64 * SizeConfig.heightMultiplier,
+              padding: EdgeInsets.only(left: 6, right: 6),
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                        left: 15, right: 15, top: SizeConfig.textMultiplier),
+                        left: 6, right: 0, top: SizeConfig.textMultiplier),
                     height: 6 * SizeConfig.textMultiplier,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +67,7 @@ class LearnBox extends StatelessWidget {
                     children: [
                       Container(
                         width: 45 * SizeConfig.widthMultiplier,
-                        height: 4.2 * SizeConfig.textMultiplier,
+                        height: 4.6 * SizeConfig.textMultiplier,
                         margin: EdgeInsets.only(
                             left: 5 * SizeConfig.widthMultiplier),
                         padding: EdgeInsets.only(
@@ -118,7 +118,6 @@ class LearnBox extends StatelessWidget {
                   ),
                   Container(
                     width: 62 * SizeConfig.widthMultiplier,
-                    //height: 14 * SizeConfig.heightMultiplier,
                     margin:
                         EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
                     child: Column(
@@ -171,7 +170,8 @@ class LearnBox extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 2 * SizeConfig.textMultiplier),
                     child: Image(
-                        image: AssetImage('assets/images/' + word.imagePaths[index]),
+                        image: AssetImage(
+                            'assets/images/' + word.imagePaths[index]),
                         width: 50 * SizeConfig.widthMultiplier,
                         height: 15 * SizeConfig.heightMultiplier,
                         fit: BoxFit.fill),

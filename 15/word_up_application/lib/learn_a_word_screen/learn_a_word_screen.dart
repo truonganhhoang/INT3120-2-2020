@@ -52,10 +52,10 @@ class _LearnAWordState extends State<LearnAWord> {
               margin: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
               child: CarouselSlider(
                 enableInfiniteScroll: false,
-                height: 66 * SizeConfig.heightMultiplier,
+                height: 65 * SizeConfig.heightMultiplier,
                 initialPage: 0,
                 onPageChanged: (index) {},
-                items: <Widget> [
+                items: <Widget>[
                   LearnBox(
                     word: widget.word,
                     index: 0,
@@ -72,7 +72,7 @@ class _LearnAWordState extends State<LearnAWord> {
               ),
             ),
             new Container(
-                margin: EdgeInsets.only(top: 71 * SizeConfig.heightMultiplier),
+                margin: EdgeInsets.only(top: 69 * SizeConfig.heightMultiplier),
                 padding: EdgeInsets.only(
                     left: 2.8 * SizeConfig.heightMultiplier,
                     right: 2.8 * SizeConfig.heightMultiplier),
@@ -106,14 +106,14 @@ class _LearnAWordState extends State<LearnAWord> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(top: 10),
-                          width: 32 * SizeConfig.heightMultiplier,
+                          width: 67 * SizeConfig.widthMultiplier,
                           padding: EdgeInsets.only(bottom: 5),
                           child: Text('"' + widget.word.quotes[0] + '"',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey[500],
                                 fontWeight: FontWeight.w500,
-                                fontSize: 2 * SizeConfig.textMultiplier,
+                                fontSize: 2.1 * SizeConfig.textMultiplier,
                               )),
                         ),
                       ],

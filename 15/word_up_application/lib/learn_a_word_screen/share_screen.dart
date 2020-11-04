@@ -50,13 +50,6 @@ class _ShareScreenState extends State<ShareScreen> {
     TextEditingController controllerSubject = TextEditingController()
       ..text = "New word:     " + widget.wordShare.word;
     _onShare(BuildContext context) async {
-      // A builder is used to retrieve the context immediately
-      // surrounding the RaisedButton.
-      //
-      // The context's `findRenderObject` returns the first
-      // RenderObject in its descendent tree when it's not
-      // a RenderObjectWidget. The RaisedButton's RenderObject
-      // has its position and size after it's built.
       final RenderBox box = context.findRenderObject();
       if (text.isEmpty) text = controllerText.text;
       if (subject.isEmpty) subject = controllerSubject.text;
@@ -155,21 +148,13 @@ class _ShareScreenState extends State<ShareScreen> {
                     ),
                     Image.asset(imgPath),
                     const Padding(padding: EdgeInsets.only(top: 15.0)),
-                    Builder(
-                      builder: (BuildContext context) {
-                        return RaisedButton(
-                          color: Colors.grey,
-                          child: const Text(
-                            'Share',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          onPressed: text.isEmpty &&
-                                  imagePaths.isEmpty &&
-                                  subject.isEmpty
-                              ? null
-                              : () => _onShare(context),
-                        );
-                      },
+                    RaisedButton(
+                      color: Colors.blue,
+                      child: const Text(
+                        'Share',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () => _onShare(context),
                     ),
                   ],
                 ),
