@@ -6,14 +6,19 @@ import 'package:quiztest/constants/constants.dart';
 class API_Manager {
   Future<List<Topic>> fetchTopic() async {
     var urlGetTopic = url + "/v1/topic/GetAll";
+    print("fetch topic");
+    print(urlGetTopic);
     final response = await http.get(urlGetTopic);
     List<Topic> topics = List<Topic>();
     if (response.statusCode == 200) {
+      print("manh");
       Map list = json.decode(response.body);
       list.forEach((key, value) {
         topics.add(Topic.fromJson(value, key));
       });
       return topics;
+    } else {
+      print("error");
     }
   }
 
@@ -64,9 +69,7 @@ class API_Manager {
     final encoding = Encoding.getByName('utf-8');
     final response = await http.post(urlPostUser,
         headers: headers, body: jsonBody, encoding: encoding);
-    print("alo alo");
     if (response.statusCode == 200) {
-      print("1234");
       return User.fromJson(json.decode(response.body));
     }
   }
@@ -79,4 +82,18 @@ class API_Manager {
       return responseJson["UserName"];
     }
   }
+
+  // Future<SaveGame> postGame(int doneQ, dynamic mapQ, bool isDone, String quizID,
+  //     String userID) async {
+  //   var urlPostGame = url + "/v1/save-game/PostSaveGame";
+  //   final headers = {'Content-Type': 'application/json'};
+  //   Map<String, dynamic> body = {
+  //     "DoneQuest": doneQ,
+  //     "QuizDone": isDone,
+  //     "QuizID": quizID,
+  //     "UserID": userID,
+  //     "MapQuest": mapQ
+  //   };
+  //   String jsonBody = json.encode(body);
+  // }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:quiztest/bloC/topic/topic_bloc.dart';
+import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/setting/setting.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
 import 'views/activity/activity.dart';
 import 'package:quiztest/services/user.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,12 +31,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  final tabs = [HomePage(), Search(), Activity(), Setting()];
-
+  final tabs = [HomePageBloc(), Search(), Activity(), Setting()];
 
   @override
   void initState() {
     super.initState();
+    print("OK");
     UserSave().saveId("User Name");
   }
 
@@ -92,6 +95,20 @@ class _HomeState extends State<Home> {
               ),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+}
+
+class HomePageBloc extends StatelessWidget {
+  const HomePageBloc({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => TopicBloc(api: API_Manager()),
+      child: HomePage(),
     );
   }
 }

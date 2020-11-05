@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiztest/views/components/quiz_list.dart';
 import '../components/appbar.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiztest/bloC/topic/topic_bloc.dart';
+import 'package:quiztest/bloC/topic/topic_event.dart';
+import 'package:quiztest/bloC/topic/topic_state.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,12 +16,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<List<Topic>> _topics;
+  TopicBloc topicBloc;
 
   @override
   void initState() {
-    _topics = API_Manager().fetchTopic();
     super.initState();
+    topicBloc = BlocProvider.of<TopicBloc>(context);
+    topicBloc.add(FetchTopicEvent());
   }
 
   @override
@@ -30,11 +36,50 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(children: [
             EnterCode(),
-            FutureBuilder<List<Topic>>(
-                future: _topics,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<Topic> topics = snapshot.data ?? [];
+            // FutureBuilder<List<Topic>>(
+            //     future: _topics,
+            //     builder: (context, snapshot) {
+            //       if (snapshot.hasData) {
+            //         List<Topic> topics = snapshot.data ?? [];
+            //         return ListView.builder(
+            //             physics: NeverScrollableScrollPhysics(),
+            //             itemCount: topics.length,
+            //             shrinkWrap: true,
+            //             itemBuilder: (context, index) {
+            //               Topic topic = topics[index];
+            //               return ListQuiz(
+            //                 topic: topic,
+            //                 size: size,
+            //               );
+            //             });
+            //       } else if (snapshot.hasError) {
+            //         return Text("${snapshot.error}");
+            //       }
+
+            //       return SpinKitDualRing(
+            //         color: Colors.blue,
+            //       );
+            //     }),
+            BlocListener(
+              cubit: topicBloc,
+              listener: (context, state) {
+                if (state is TopicErrorState) {
+                  Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text(state.message)));
+                }
+              },
+              child: BlocBuilder<TopicBloc, TopicState>(
+                cubit: topicBloc,
+                builder: (context, state) {
+                  if (state is TopicInitState) {
+                    print("Init state");
+                    return SpinKitDualRing(color: Colors.blue);
+                  } else if (state is TopicLoadingState) {
+                    print("loading state");
+                    return SpinKitDualRing(color: Colors.blue);
+                  } else if (state is TopicLoadedState) {
+                    print("Loaded state");
+                    List<Topic> topics = state.topics ?? [];
                     return ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: topics.length,
@@ -46,14 +91,12 @@ class _HomePageState extends State<HomePage> {
                             size: size,
                           );
                         });
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
+                  } else if (state is TopicErrorState) {
+                    return Text(state.message);
                   }
-
-                  return SpinKitDualRing(
-                    color: Colors.blue,
-                  );
-                }),
+                },
+              ),
+            )
           ]),
         ));
   }

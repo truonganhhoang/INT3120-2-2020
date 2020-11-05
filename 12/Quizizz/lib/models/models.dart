@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Topic {
   final String name;
   final String key;
@@ -56,7 +58,30 @@ class Questional {
 class User {
   final String id;
   User({this.id});
-  factory User.fromJson(Map<String, dynamic> json){
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(id: json["Id"]);
   }
+}
+
+class SaveGame {
+  final String quizID;
+  final int doneQ;
+  final bool isDone;
+  final String userID;
+  final Map<String, AnswerData> ansData;
+
+  SaveGame({this.quizID, this.doneQ, this.isDone, this.userID, this.ansData});
+  factory SaveGame.fromJson(Map<String, dynamic> json) {
+    return SaveGame(
+        quizID: json["QuizID"],
+        doneQ: json["DoneQuest"],
+        isDone: json["QuizDone"],
+        ansData: jsonDecode(json["MapQuest"]));
+  }
+}
+
+class AnswerData {
+  final int chooseAns;
+  final int correctAns;
+  AnswerData({this.chooseAns, this.correctAns});
 }
