@@ -3,12 +3,7 @@ import 'package:quiztest/views/play_screen/quiz_game.dart';
 import 'package:quiztest/models/models.dart';
 
 class PopUp extends StatelessWidget {
-  PopUp(
-      {
-      this.imagePath,
-      this.size,
-      @required this.quiz,
-      this.topic});
+  PopUp({this.imagePath, this.size, @required this.quiz, this.topic});
 
   final Quiz quiz;
   final String imagePath;
@@ -31,7 +26,7 @@ class PopUp extends StatelessWidget {
           children: [
             Title(
               size: size,
-              imagePath: "assets/images/solar.png",
+              imagePath: imagePath,
               quiz: quiz,
             ),
             Buttons(
@@ -47,8 +42,7 @@ class PopUp extends StatelessWidget {
 }
 
 class Buttons extends StatelessWidget {
-  const Buttons(
-      {Key key, @required this.size, this.quiz, this.topic})
+  const Buttons({Key key, @required this.size, this.quiz, this.topic})
       : super(key: key);
 
   final Size size;
@@ -135,11 +129,7 @@ class Buttons extends StatelessWidget {
 }
 
 class Title extends StatelessWidget {
-  const Title(
-      {Key key,
-      @required this.size,
-      this.imagePath,
-      this.quiz})
+  const Title({Key key, @required this.size, this.imagePath, this.quiz})
       : super(key: key);
 
   final Size size;
@@ -157,7 +147,7 @@ class Title extends StatelessWidget {
               height: size.height * 1 / 4,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(imagePath), fit: BoxFit.cover),
+                      image: NetworkImage(imagePath), fit: BoxFit.cover),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10))),
