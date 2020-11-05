@@ -74,21 +74,21 @@ class Word {
 
   void printThisWord() {
     print(id.toString() +
-        ' ' +
-        word +
-        ' ' +
-        meanCard + 
-        ' ' +
-        definition +
-        ' ' +
-        type +
-        ' ' +
-        examples.toString() +
-        ' ' +
-        imagePaths.toString() +
-        ' ' +
-        quotes.toString()
-        // ' ' 
+            ' ' +
+            word +
+            ' ' +
+            meanCard +
+            ' ' +
+            definition +
+            ' ' +
+            type +
+            ' ' +
+            examples.toString() +
+            ' ' +
+            imagePaths.toString() +
+            ' ' +
+            quotes.toString()
+        // ' '
         // +
         // isFavorite.toString() +
         // ' ' +

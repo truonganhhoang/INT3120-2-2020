@@ -201,11 +201,12 @@ class DatabaseLocalHelper {
         await db.rawQuery('SELECT COUNT(*) FROM $tableWordLearning'));
   }
 
-  // Get A Word
+  // Get A Word with ID
   Future<List<Word>> getWord(int id) async {
     Database db = await instance.database;
-    var resultMapList = await db
-        .rawQuery('select * from $tableWord where $columnIdWord = ?', [id]);
+    var resultMapList = await db.rawQuery(
+        'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord WHERE $columnIdWord = ?',
+        [id]);
     //Word word = new Word.map(result);
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
@@ -214,7 +215,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
-    //print(words[0].word.toString());
+    // for (int j = 0; j < words.length; j++) {
+    //   words[j].printThisWord();
+    // }
     return words;
   }
 
@@ -231,9 +234,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
-    for (int j = 0; j < words.length; j++) {
-      words[j].printThisWord();
-    }
+    // for (int j = 0; j < words.length; j++) {
+    //   words[j].printThisWord();
+    // }
     return words;
   }
 
@@ -251,9 +254,9 @@ class DatabaseLocalHelper {
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
 
-    for (int i = 0; i < words.length; i++) {
-      words[i].printThisWord();
-    }
+    // for (int i = 0; i < words.length; i++) {
+    //   words[i].printThisWord();
+    // }
 
     return words;
   }
@@ -298,7 +301,7 @@ class DatabaseLocalHelper {
   Future<List<Word>> getListLearningWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
-      'SELECT * FROM $tableWord w JOIN $tableWordLearning wl ON wl.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON w.$columnIdWord = wf.$columnIdWord',
+      'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord JOIN $tableWordLearning wl ON wl.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON w.$columnIdWord = wf.$columnIdWord',
     );
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
@@ -307,9 +310,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
-    for (int i = 0; i < words.length; i++) {
-      words[i].printThisWord();
-    }
+    // for (int i = 0; i < words.length; i++) {
+    //   words[i].printThisWord();
+    // }
     return words;
   }
 
@@ -317,7 +320,7 @@ class DatabaseLocalHelper {
   Future<List<Word>> getListReviewWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
-      'SELECT * FROM $tableWord w JOIN $tableWordLearning wl ON wl.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON w.$columnIdWord = wf.$columnIdWord WHERE date($columnReviewDate) <= date()',
+      'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord JOIN $tableWordLearning wl ON wl.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON w.$columnIdWord = wf.$columnIdWord WHERE date(wl.$columnReviewDate) <= date()',
     );
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
@@ -326,9 +329,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
-    for (int i = 0; i < words.length; i++) {
-      words[i].printThisWord();
-    }
+    // for (int i = 0; i < words.length; i++) {
+    //   words[i].printThisWord();
+    // }
     return words;
   }
 
