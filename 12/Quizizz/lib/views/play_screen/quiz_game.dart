@@ -12,6 +12,7 @@ int _totalQs;
 int _correctChoose;
 Future<List<Questional>> quest;
 Topic _topic;
+Quiz _quiz;
 
 class QuizPage extends StatefulWidget {
   QuizPage({this.quiz, this.topic});
@@ -31,18 +32,25 @@ class _QuizPageState extends State<QuizPage> {
     _correctChoose = 0;
     _correctChoose = 0;
     _topic = widget.topic;
+    _quiz = widget.quiz;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return QuizGame();
+    return QuizGame(
+      quiz: widget.quiz,
+    );
   }
 }
 
 class QuizGame extends StatefulWidget {
-  QuizGame({this.totalQs});
+  QuizGame({
+    this.totalQs,
+    this.quiz,
+  });
   final int totalQs;
+  final Quiz quiz;
   @override
   _QuizGameState createState() => _QuizGameState();
 }
@@ -75,7 +83,10 @@ class _QuizGameState extends State<QuizGame> {
                     Question(
                       size: size,
                       question: question.question,
-                      imagePath: "assets/images/solar.png",
+                      imagePath:
+                          "https://storage.googleapis.com/quiz-010.appspot.com/" +
+                              widget.quiz.key +
+                              "-$_currentQs",
                     ),
                     ListChoices(
                       size: size,
@@ -134,7 +145,11 @@ class _ListChoicesState extends State<ListChoices> {
         Timer(Duration(seconds: 1), () {
           _currentQs++;
           Navigator.push(
-              context, new MaterialPageRoute(builder: (context) => QuizGame()));
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => QuizGame(
+                        quiz: _quiz,
+                      )));
         });
       });
     } else {
@@ -366,8 +381,11 @@ class Question extends StatelessWidget {
         children: [
           Container(
               constraints: BoxConstraints(
-                  maxWidth: size.width * 2 / 3, maxHeight: size.height * 4),
-              child: Image(image: AssetImage(imagePath))),
+                  maxWidth: size.width * 2 / 3, maxHeight: size.height * 0.2),
+              child: Image(
+                image: NetworkImage(imagePath),
+                fit: BoxFit.cover,
+              )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Text(
