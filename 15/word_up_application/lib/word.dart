@@ -81,6 +81,8 @@ class Word {
         ' ' +
         definition +
         ' ' +
+        type +
+        ' ' +
         examples.toString() +
         ' ' +
         imagePaths.toString() +

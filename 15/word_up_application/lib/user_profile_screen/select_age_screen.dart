@@ -34,6 +34,7 @@ class _SelectAgeState extends State<SelectAge> {
                   obscureText: false,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
+                  autofocus: true,
                   decoration: InputDecoration(
                     //border: InputBorder.none,
                     hintText: 'PLEASE ENTER YOUR AGE',

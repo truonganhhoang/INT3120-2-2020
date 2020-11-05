@@ -241,7 +241,7 @@ class DatabaseLocalHelper {
   Future<List<Word>> getListFarvoriteWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
-      'SELECT * FROM $tableWord w JOIN $tableWordFarvorite wf ON wf.$columnIdWord = w.$columnIdWord WHERE $columnIsFavorite = 1',
+      'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON wf.$columnIdWord = w.$columnIdWord WHERE $columnIsFavorite = 1',
     );
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
@@ -251,9 +251,9 @@ class DatabaseLocalHelper {
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
 
-    // for (int i = 0; i < words.length; i++) {
-    //   words[i].printThisWord();
-    // }
+    for (int i = 0; i < words.length; i++) {
+      words[i].printThisWord();
+    }
 
     return words;
   }

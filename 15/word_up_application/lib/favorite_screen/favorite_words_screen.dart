@@ -7,6 +7,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
+import 'package:word_up_application/study_home_screen/show_examples.dart';
 import 'dart:async';
 import '../size_config.dart';
 import '../word.dart';
@@ -85,6 +86,7 @@ Widget listWord(List<Word> words, Color colorText) {
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(left: 3 * widthMultiplier),
@@ -132,6 +134,7 @@ Widget listWord(List<Word> words, Color colorText) {
 }
 
 void showDetailsOfWord(context, position, words) {
+  final assetsAudioPlayer = AssetsAudioPlayer();
   var alertStyle = AlertStyle(
     alertElevation: 0,
     alertPadding: EdgeInsets.only(
@@ -162,26 +165,99 @@ void showDetailsOfWord(context, position, words) {
       ),
       context: context,
       type: AlertType.none,
-      title: '${words[position].word}',
+      title: 'Details',
       style: alertStyle,
       content: Container(
-        height: 200,
+        height: 56 * SizeConfig.heightMultiplier,
         decoration: BoxDecoration(
-            color: Colors.red, borderRadius: BorderRadius.circular(10)),
+            color: Colors.transparent, borderRadius: BorderRadius.circular(10)),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('${words[position].word}'),
-            Text('${words[position].pronounceUK}'),
-            // Swiper(
-            //   itemCount: words.length,
-            //   itemBuilder: (context, index) {
-            //     return Container(
-            //       child: Center(
-            //         child: Text('${words[position].examples[${index}]}'),
-            //       ),
-            //     );
-            //   },
-            // )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text('#' + '${words[position].id}',
+                    style: TextStyle(
+                        fontSize: 2.5 * SizeConfig.textMultiplier,
+                        fontStyle: FontStyle.italic)),
+                Text('${words[position].word}',
+                    style: TextStyle(
+                        fontSize: 3.5 * SizeConfig.textMultiplier,
+                        fontWeight: FontWeight.bold)),
+                Text('${words[position].type}',
+                    style: TextStyle(
+                        fontSize: 2.5 * SizeConfig.textMultiplier,
+                        fontStyle: FontStyle.italic)),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () => {
+                      assetsAudioPlayer.open(
+                          Audio('assets/audios/${words[position].pathSoundUK}'))
+                    },
+                    icon: ImageIcon(
+                      AssetImage('assets/sprites/sound_play_icon.png'),
+                      size: 3.5 * SizeConfig.heightMultiplier,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text('${words[position].pronounceUK}',
+                      style: TextStyle(
+                          fontSize: 2.5 * SizeConfig.textMultiplier,
+                          fontStyle: FontStyle.italic)),
+                  StarFavorite(
+                      wordId: words[position].id,
+                      size: 3 * SizeConfig.heightMultiplier,
+                      isFavorite: words[position].isFavorite)
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+              width: 20*SizeConfig.widthMultiplier,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.grey)),
+              child: Center(
+                child: Text('${words[position].meanCard}',
+                    style: TextStyle(fontSize: 2.5 * SizeConfig.textMultiplier)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
+              child: Text('${words[position].definition}',
+                  style: TextStyle(fontSize: 2.5 * SizeConfig.textMultiplier)),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+              child:
+                  Image.asset('assets/images/' + words[position].imagePaths[0]),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
+              child: Text(
+                '${words[position].examples[0]}',
+                style: TextStyle(fontSize: 2.5 * SizeConfig.textMultiplier),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
+              child: Text(
+                '"' + '${words[position].quotes[0]}' + '"',
+                style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 2 * SizeConfig.textMultiplier),
+              ),
+            ),
+            //ShowExamples(listExamples: words[position].examples)
           ],
         ),
       ),

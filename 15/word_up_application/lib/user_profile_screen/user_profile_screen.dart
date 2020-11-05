@@ -451,6 +451,8 @@ class _AboutMeState extends State<AboutMe> {
                   style: TextStyle(fontSize: 2.5 * SizeConfig.heightMultiplier),
                 ),
                 InkWell(
+                  splashColor: Colors.green[200],
+                  focusColor: Colors.red,
                   onTap: () async {
                     var res = await Navigator.push(
                         context,
@@ -499,7 +501,7 @@ class _AboutMeState extends State<AboutMe> {
                     padding:
                         EdgeInsets.only(left: 20 * SizeConfig.widthMultiplier),
                     child: Text(
-                      user.userPrivateInformation.age.toString(),
+                      user.userPrivateInformation.age.toString() + ' >',
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -521,11 +523,11 @@ class _AboutMeState extends State<AboutMe> {
                 InkWell(
                   onTap: () async {
                     //var res = await
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: SelectLanguage(),
-                            type: PageTransitionType.fade));
+                    // Navigator.push(
+                    //     context,
+                    //     PageTransition(
+                    //         child: SelectLanguage(),
+                    //         type: PageTransitionType.fade));
                     // setState(() {
                     //   user.userPrivateInformation.nativeLanguage = res;
                     // });
@@ -534,7 +536,7 @@ class _AboutMeState extends State<AboutMe> {
                     padding:
                         EdgeInsets.only(left: 6 * SizeConfig.widthMultiplier),
                     child: Text(
-                      user.userPrivateInformation.nativeLanguage + ' >',
+                      user.userPrivateInformation.nativeLanguage,
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -594,7 +596,7 @@ class _MyLearningState extends State<MyLearning> {
                       style: TextStyle(
                           fontSize: 2.5 * SizeConfig.heightMultiplier)),
                   Text(
-                    user.learnSetting.accent,
+                    user.learnSetting.accent + ' >',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -604,12 +606,16 @@ class _MyLearningState extends State<MyLearning> {
             ),
           ),
           InkWell(
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              var res = await Navigator.push(
                   context,
                   PageTransition(
                       child: SelectPracticeGoal(),
                       type: PageTransitionType.fade));
+
+              setState(() {
+                if (res != null) user.learnSetting.practiceGoal = res;
+              });
             },
             child: Padding(
               padding: EdgeInsets.only(top: 10, left: 5, right: 5),
@@ -620,7 +626,7 @@ class _MyLearningState extends State<MyLearning> {
                       style: TextStyle(
                           fontSize: 2.5 * SizeConfig.heightMultiplier)),
                   Text(
-                    user.learnSetting.practiceGoal.toString() + ' min/day',
+                    user.learnSetting.practiceGoal.toString() + ' min/day >',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -640,7 +646,7 @@ class _MyLearningState extends State<MyLearning> {
                       style: TextStyle(
                           fontSize: 2.5 * SizeConfig.heightMultiplier)),
                   Text(
-                    'Per english definition >',
+                    'Per english definition',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -654,10 +660,15 @@ class _MyLearningState extends State<MyLearning> {
               var res = await Navigator.push(
                   context,
                   PageTransition(
-                      child: SelectReminder(), type: PageTransitionType.fade));
+                      child: SelectReminder(
+                        hour: user.learnSetting.reminder.hour,
+                        minute: user.learnSetting.reminder.minute,
+                      ),
+                      type: PageTransitionType.fade));
               setState(() {
                 if (res != null) {
-                  user.learnSetting.reminder = res;
+                  user.learnSetting.reminder.hour = res.hour;
+                  user.learnSetting.reminder.minute = res.minute;
                 }
               });
             },
@@ -670,11 +681,15 @@ class _MyLearningState extends State<MyLearning> {
                       style: TextStyle(
                           fontSize: 2.5 * SizeConfig.heightMultiplier)),
                   Text(
-                    '0' +
-                        user.learnSetting.reminder.hour.toString() +
-                        ":" +
-                        '0' +
-                        user.learnSetting.reminder.minute.toString(),
+                    ((user.learnSetting.reminder.hour < 10)
+                            ? ('0' + user.learnSetting.reminder.hour.toString())
+                            : user.learnSetting.reminder.hour.toString()) +
+                        ' : ' +
+                        ((user.learnSetting.reminder.minute < 10)
+                            ? ('0' +
+                                user.learnSetting.reminder.minute.toString())
+                            : user.learnSetting.reminder.minute.toString()) +
+                        ' >',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 2.5 * SizeConfig.heightMultiplier),

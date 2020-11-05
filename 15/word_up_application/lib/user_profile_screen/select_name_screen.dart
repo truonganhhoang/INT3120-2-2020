@@ -35,8 +35,9 @@ class _SelectNameState extends State<SelectName> {
                   controller: firstNameController,
                   obscureText: false,
                   textAlign: TextAlign.center,
+                  autofocus: true,
                   decoration: InputDecoration(
-                    //border: InputBorder.none,
+                    
                     hintText: 'PLEASE ENTER YOUR FIRST NAME',
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
@@ -51,7 +52,7 @@ class _SelectNameState extends State<SelectName> {
                   obscureText: false,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    //border: InputBorder.none,
+                    
                     hintText: 'PLEASE ENTER YOUR LAST NAME',
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
