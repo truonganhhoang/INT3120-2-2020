@@ -240,8 +240,8 @@ class DatabaseLocalHelper {
     return words;
   }
 
-  // Get List Farvorite Words
-  Future<List<Word>> getListFarvoriteWords() async {
+  // Get List Favorite Words
+  Future<List<Word>> getListFavoriteWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
       'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON wf.$columnIdWord = w.$columnIdWord WHERE $columnIsFavorite = 1',
@@ -329,9 +329,12 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
+
     // for (int i = 0; i < words.length; i++) {
     //   words[i].printThisWord();
     // }
+
+
     return words;
   }
 

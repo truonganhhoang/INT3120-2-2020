@@ -41,6 +41,7 @@ class _StarFavoriteStage extends State<StarFavorite> {
     return Container(
       child: MaterialButton(
         splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         minWidth: 40,
         onPressed: () {
           isChosen = !isChosen;

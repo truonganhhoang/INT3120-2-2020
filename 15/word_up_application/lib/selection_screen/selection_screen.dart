@@ -70,6 +70,9 @@ class _SelectionScreenState extends State<SelectionScreen> {
               centerTitle: true,
               actions: <Widget>[
                 FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
                   onPressed: () {},
                   child: Icon(
                     Icons.close,
@@ -187,7 +190,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             borderRadius: BorderRadius.circular(5)),
                         padding: EdgeInsets.all(0),
                         onPressed: () {
-                          userIsUnSure();
+                          if (!waitingForNotification) userIsUnSure();
                         },
                         child: Container(
                             padding: EdgeInsets.all(0),
@@ -265,7 +268,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                   isTesting = false;
                 });
             },
-            child: Icon(Icons.close),
+            child: Icon(Icons.close, color: Colors.white,),
           ),
         ),
         body: Card(
@@ -407,7 +410,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
     numberWordNotKnow++;
     DatabaseLocalHelper.instance.insertToLearnWord(listWordToSelect[index].id);
     if (index == numberWords - 1) {
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 1000));
       finishSelect();
     }
     else {
@@ -426,7 +429,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
         title: listWordToSelect[index].word,
         description: 'Learn this word',
         gravity: EdgeAlert.BOTTOM,
-        duration: 1);
+        duration: 0);
   }
 
   void _userKnewThisWord() {
@@ -453,7 +456,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
         title: listWordToSelect[index].word,
         description: 'You know this word',
         gravity: EdgeAlert.BOTTOM,
-        duration: 1);
+        duration: 0);
   }
 
   void _checkTheAnswer(int index) {

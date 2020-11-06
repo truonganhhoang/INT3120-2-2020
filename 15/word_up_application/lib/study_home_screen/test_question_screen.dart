@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/word_box.dart';
 import 'package:word_up_application/word.dart';
@@ -18,13 +21,17 @@ class TestQuestionScreen extends StatefulWidget {
 }
 
 class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerProviderStateMixin{
+  List<String> listAnswers = new List<String>(4);
   int _chosenAnswer = 0;
   int _correctAnswer = 1;
   AnimationController _controller;
   Animation _animation;
+  bool loadFinished;
 
   @override
   void initState() {
+    loadFinished = false;
+    _correctAnswer = Random().nextInt(5) + 1;
     super.initState();
     _controller = AnimationController(
       vsync: this,
@@ -34,6 +41,35 @@ class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerPro
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
+
+    spawnAnswers().then((value) async=>{
+      loadFinished = true,
+      setState(() { }),
+    });
+  }
+
+  @override
+  void setState(fn) {
+    super.setState(fn);
+  }
+
+  Future<void> spawnAnswers() async{
+    listAnswers[_correctAnswer - 1] = widget.word.definition;
+    int numberWords = await DatabaseLocalHelper.instance.getCount();
+
+    List<int> listIds = new List<int>(3);
+
+    int id1 = Random().nextInt(numberWords);
+    while(id1 == widget.word.id) int id1 = Random().nextInt(numberWords);
+    int id2 = Random().nextInt(numberWords);
+    while(id2 == widget.word.id || id2 == id1) int id2 = Random().nextInt(numberWords);
+    int id3 = Random().nextInt(numberWords);
+    while(id3 == widget.word.id || id3 == id1 ||id3 == id2) int id3 = Random().nextInt(numberWords);
+
+    for(int i = 0; i < 4; i ++){
+      if(i == _correctAnswer - 1) continue;
+      listAnswers[i] = "testing";
+    }
   }
 
   @override
@@ -43,7 +79,7 @@ class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerPro
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return (loadFinished) ? Container(
       child: Column(
         children: <Widget>[
           answerOption(1),
@@ -52,7 +88,7 @@ class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerPro
           answerOption(4)
         ],
       ),
-    );
+    ) : Container();
   }
 
   Widget answerOption(int index) {
@@ -118,7 +154,7 @@ class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerPro
                     ),
                     Expanded(
                         child: Text(
-                      'A subject that is discussed, written about, or studied',
+                      listAnswers[index - 1],
                       style: TextStyle(
                           color: (index == _chosenAnswer) ? Colors.white : Colors.black87,
                           fontSize: 2 * SizeConfig.heightMultiplier),

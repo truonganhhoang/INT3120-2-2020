@@ -109,7 +109,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         borderRadius: BorderRadius.circular(40.0),
       ),
       onPressed: () {
-        AuthService.instance.signInWithFacebook();
+        AuthService.instance.signInWithFacebook().then((result){
+          if (result != null) {
+            print('login successful');
+            _showHelloUser(AuthService.instance.auth.currentUser.displayName);
+            _moveToHome();
+          }
+          else _showCanNotLogin();
+        },);
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
@@ -225,7 +232,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   void _showHelloUser(String userName) {
     EdgeAlert.show(context,
         icon: Icons.tag_faces,
-        backgroundColor: HexColor('#8F8FDD'),
+        backgroundColor: Colors.deepOrangeAccent, //#8F8FDD
         title: 'Hi ' + userName,
         gravity: EdgeAlert.TOP,
         duration: 2);

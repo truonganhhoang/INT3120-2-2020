@@ -29,7 +29,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
   void initState() {
     super.initState();
     if (widget.wordsFarvorite.length == 0) {
-      dbHelper.getListFarvoriteWords().then((rows) {
+      dbHelper.getListFavoriteWords().then((rows) {
         setState(() {
           rows.forEach((row) {
             widget.wordsFarvorite.add(row);

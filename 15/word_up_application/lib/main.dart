@@ -24,6 +24,8 @@ import 'package:device_preview/device_preview.dart';
 bool isTestResponsiveMode = false;
 
 void main() {
+  DateTime dateTime = new DateTime(2020, 10, 10);
+  print(dateTime.add(Duration(days: 40)));
   runApp(
     (isTestResponsiveMode)
         ? DevicePreview(
