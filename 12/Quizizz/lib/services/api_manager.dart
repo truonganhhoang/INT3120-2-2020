@@ -7,7 +7,6 @@ class API_Manager {
   Future<List<Topic>> fetchTopic() async {
     var urlGetTopic = url + "/v1/topic/GetAll";
     print("fetch topic");
-    print(urlGetTopic);
     final response = await http.get(urlGetTopic);
     List<Topic> topics = List<Topic>();
     if (response.statusCode == 200) {
@@ -17,8 +16,6 @@ class API_Manager {
         topics.add(Topic.fromJson(value, key));
       });
       return topics;
-    } else {
-      print("error");
     }
   }
 
