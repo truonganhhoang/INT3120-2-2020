@@ -25,7 +25,7 @@ class _TimeScreen extends State<TimeScreen> {
   int trueAnswer = 0;
   var random = new Random();
   int duplicateTime;
-  int gameTime = 300;
+  int gameTime = 180;
   bool isBack = false;
   FocusNode playerAnswer = new FocusNode();
   final myController = TextEditingController();
@@ -93,13 +93,13 @@ class _TimeScreen extends State<TimeScreen> {
   Widget build(BuildContext context) {
     String calculateIcon, result;
 
-    if (widget.calculation == "plus")
+    if (this.calculation == "plus")
       calculateIcon = " + ";
-    else if (widget.calculation == 'minus')
+    else if (this.calculation == 'minus')
       calculateIcon = " - ";
-    else if (widget.calculation == 'duplicate')
+    else if (this.calculation == 'duplicate')
       calculateIcon = " x ";
-    else if (widget.calculation == 'divide') calculateIcon = " : ";
+    else if (this.calculation == 'divide') calculateIcon = " : ";
 
     String question = "none";
     if (calculation == "plus") {

@@ -114,13 +114,13 @@ class _QuizScreen extends State<QuizScreen> {
         randomAnswer3 = (random.nextInt(499));
     }
 
-    if (widget.calculation == "plus")
+    if (this.calculation == "plus")
       calculateIcon = " + ";
-    else if (widget.calculation == 'minus')
+    else if (this.calculation == 'minus')
       calculateIcon = " - ";
-    else if (widget.calculation == 'duplicate')
+    else if (this.calculation == 'duplicate')
       calculateIcon = " x ";
-    else if (widget.calculation == 'divide') calculateIcon = " : ";
+    else if (this.calculation == 'divide') calculateIcon = " : ";
 
     String question = "none";
     if (calculation == "plus") {
