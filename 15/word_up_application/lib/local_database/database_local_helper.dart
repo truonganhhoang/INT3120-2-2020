@@ -215,9 +215,9 @@ class DatabaseLocalHelper {
       words[i].imagePaths = await getImagesWithId(words[i].id);
       words[i].quotes = await getQuotesWithId(words[i].id);
     }
-    // for (int j = 0; j < words.length; j++) {
-    //   words[j].printThisWord();
-    // }
+    for (int j = 0; j < words.length; j++) {
+      words[j].printThisWord();
+    }
     return words;
   }
 
@@ -334,7 +334,6 @@ class DatabaseLocalHelper {
     //   words[i].printThisWord();
     // }
 
-
     return words;
   }
 
@@ -377,6 +376,16 @@ class DatabaseLocalHelper {
       listQuotes.add(result[i]['quote_example'].toString());
     }
     return listQuotes;
+  }
+
+  // Get definition word with id
+  Future<String> getDefinitionWithId(int id) async {
+    Database db = await instance.database;
+    var res = await db.rawQuery(
+        'SELECT $columnDefinition FROM $tableWordType WHERE $columnIdWord = ?',
+        [id]);
+    print(res[0]['definition'].toString());
+    return res[0]['definition'].toString();
   }
 
   // Update
@@ -432,7 +441,7 @@ class DatabaseLocalHelper {
   // Reset local database
   Future<void> resetDatabase() async {
     Database db = await instance.database;
-    await db.rawQuery('DELETE FROM $tableWordFarvorite');
+    await db.rawQuery('UPDATE $tableWordFarvorite SET $columnIsFavorite = 0');
     await db.rawQuery('DELETE FROM $tableWordKnew');
     await db.rawQuery('DELETE FROM $tableWordToLearn');
     await db.rawQuery('DELETE FROM $tableWordLearning');

@@ -16,7 +16,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 class FavoriteWordsScreen extends StatefulWidget {
   List<Word> wordsFarvorite = new List();
 
-  @override
+  @override 
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
 

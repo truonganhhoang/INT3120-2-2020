@@ -5,6 +5,7 @@ import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/favorite_screen/my_words_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
+import 'package:word_up_application/services/auth_service.dart';
 import 'package:word_up_application/services/authentication_screen.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/user.dart';
@@ -30,11 +31,12 @@ int numberOfToLearnWords;
 int numberOfLearningWords;
 bool isSelectImage = false;
 String imagePath;
+
 AppUser user = new AppUser(
-  idUser: '822817271',
+  idUser: AuthService.instance.auth.currentUser.uid,
   userPrivateInformation: UserPrivateInformation(
       age: 15,
-      avatarUrl: 'https://images.unsplash.com/photo-1486578077620-8a022ddd481f',
+      avatarUrl: AuthService.instance.auth.currentUser.photoURL,
       email: 'truong@gmail.com',
       nativeLanguage: 'Vietnamese',
       userName: 'Truong'),
