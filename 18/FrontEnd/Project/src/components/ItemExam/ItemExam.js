@@ -2,17 +2,17 @@ import { Button } from 'native-base';
 import React from 'react';
 import {Dimensions, Text, StyleSheet, View} from 'react-native';
 
-const ItemExam = ({icon, label, onClick, ...props}) => {
+const ItemExam = ({exam_id, label, onClickVA, onClickAV, onClickAT, ...props}) => {
   return (
     <View style={styles.box_container}>
       <Text style={styles.title_text}>{label}</Text>
-      <Button style={styles.button} onPress={onClick} {...props} bordered info>
+      <Button style={styles.button} onPress={onClickVA} {...props} bordered info>
         <Text> Việt - Anh </Text>
       </Button>
-      <Button style={styles.button} onPress={onClick} {...props} bordered info>
+      <Button style={styles.button} onPress={onClickAV} {...props} bordered info>
         <Text> Anh - Việt </Text>
       </Button>
-      <Button style={styles.button} onPress={onClick} {...props} bordered info>
+      <Button style={styles.button} onPress={onClickAT} {...props} bordered info>
         <Text> Âm thanh </Text>
       </Button>
     </View>

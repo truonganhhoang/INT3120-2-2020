@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import BottomTabs from './BottomTabs';
 import HeaderPractice from '../components/HeaderPractice';
+import ExamUnit from '../components/ItemExam/ExamUnit/ExamUnit'
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ export default function MainStack() {
       <Stack.Screen name="Home" options={{ headerShown: false }} component={BottomTabs} />
       <Stack.Screen name="Audio Unit" options={{ headerShown: false }} component={AudioUnit} />
       <Stack.Screen name="Video Unit" options={{ headerShown: false }} component={VideoUnit} />
+      <Stack.Screen name="Exam Unit" options={{ headerShown: false }} component={ExamUnit} />
     </Stack.Navigator>
   );
 }
