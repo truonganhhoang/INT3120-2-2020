@@ -84,29 +84,29 @@ Widget listWord(List<Word> words, Color colorText) {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 3 * widthMultiplier),
-                      child: IconButton(
-                        onPressed: () => {
-                          assetsAudioPlayer.open(Audio(
-                              'assets/audios/${words[position].pathSoundUK}'))
-                        },
-                        icon: ImageIcon(
-                          AssetImage('assets/sprites/sound_play_icon.png'),
-                          size: 4.5 * SizeConfig.heightMultiplier,
-                          color: Colors.grey,
+                child: MaterialButton(
+                  onPressed: () {
+                    showDetailsOfWord(context, position, words);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 3 * widthMultiplier),
+                        child: IconButton(
+                          onPressed: () => {
+                            assetsAudioPlayer.open(Audio(
+                                'assets/audios/${words[position].pathSoundUK}'))
+                          },
+                          icon: ImageIcon(
+                            AssetImage('assets/sprites/sound_play_icon.png'),
+                            size: 4.5 * SizeConfig.heightMultiplier,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {
-                        showDetailsOfWord(context, position, words);
-                      },
-                      child: Column(
+                      Column(
                         children: <Widget>[
                           Text(
                             '${words[position].word}',
@@ -119,12 +119,12 @@ Widget listWord(List<Word> words, Color colorText) {
                                   fontSize: 3 * SizeConfig.heightMultiplier))
                         ],
                       ),
-                    ),
-                    StarFavorite(
-                        wordId: words[position].id,
-                        size: 4 * SizeConfig.heightMultiplier,
-                        isFavorite: words[position].isFavorite)
-                  ],
+                      StarFavorite(
+                          wordId: words[position].id,
+                          size: 4 * SizeConfig.heightMultiplier,
+                          isFavorite: words[position].isFavorite)
+                    ],
+                  ),
                 ),
               )
             ],
@@ -222,13 +222,14 @@ void showDetailsOfWord(context, position, words) {
             ),
             Container(
               padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
-              width: 20*SizeConfig.widthMultiplier,
+              width: 20 * SizeConfig.widthMultiplier,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   border: Border.all(color: Colors.grey)),
               child: Center(
                 child: Text('${words[position].meanCard}',
-                    style: TextStyle(fontSize: 2.5 * SizeConfig.textMultiplier)),
+                    style:
+                        TextStyle(fontSize: 2.5 * SizeConfig.textMultiplier)),
               ),
             ),
             Padding(
@@ -236,10 +237,12 @@ void showDetailsOfWord(context, position, words) {
               child: Text('${words[position].definition}',
                   style: TextStyle(fontSize: 2.5 * SizeConfig.textMultiplier)),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
-              child:
-                  Image.asset('assets/images/' + words[position].imagePaths[0]),
+            Expanded(
+                          child: Padding(
+                padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
+                child:
+                    Image.asset('assets/images/' + words[position].imagePaths[0]),
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
@@ -257,7 +260,6 @@ void showDetailsOfWord(context, position, words) {
                     fontSize: 2 * SizeConfig.textMultiplier),
               ),
             ),
-            //ShowExamples(listExamples: words[position].examples)
           ],
         ),
       ),

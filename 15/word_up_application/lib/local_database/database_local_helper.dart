@@ -265,7 +265,7 @@ class DatabaseLocalHelper {
   Future<List<Word>> getListKnewWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
-      'SELECT * FROM $tableWord w JOIN $tableWordKnew wk ON wk.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON w.$columnIdWord = wf.$columnIdWord',
+      'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord JOIN $tableWordKnew wk ON wk.$columnIdWord = w.$columnIdWord JOIN $tableWordFarvorite wf ON w.$columnIdWord = wf.$columnIdWord',
     );
     List<Word> words = new List();
     for (int i = 0; i < resultMapList.length; i++) {
