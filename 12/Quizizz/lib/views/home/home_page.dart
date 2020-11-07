@@ -10,6 +10,7 @@ import 'package:quiztest/bloC/topic/topic_bloc.dart';
 import 'package:quiztest/bloC/topic/topic_event.dart';
 import 'package:quiztest/bloC/topic/topic_state.dart';
 
+bool isAPICall = false;
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,7 +18,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TopicBloc topicBloc;
-  bool isAPICall = false;
 
   @override
   void initState() {

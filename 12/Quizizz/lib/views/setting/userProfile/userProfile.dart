@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiztest/services/user.dart';
 import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
 import 'package:quiztest/views/setting/popUpSetting/userName.dart';
@@ -75,7 +76,9 @@ class UserProfile extends StatelessWidget {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return UserNameSetting(userName: snapshot.data.toString(),);
+                                      return UserNameSetting(
+                                        userName: snapshot.data.toString(),
+                                      );
                                     });
                               },
                               child: SettingInfo(
@@ -84,8 +87,9 @@ class UserProfile extends StatelessWidget {
                               ),
                             );
                           } else if (snapshot.hasError) {
+                            return Text(snapshot.error);
                           } else
-                            return CircularProgressIndicator();
+                            return SpinKitDualRing();
                         }),
                     SettingInfo(
                       title: "Grade",

@@ -6,7 +6,12 @@ import 'package:quiztest/models/models.dart';
 
 class QuizCard extends StatelessWidget {
   const QuizCard(
-      {Key key, @required this.size, this.imagePath, this.percent, @required this.quiz, this.topic})
+      {Key key,
+      @required this.size,
+      this.imagePath,
+      this.percent,
+      @required this.quiz,
+      this.topic})
       : super(key: key);
 
   final Size size;
@@ -22,11 +27,12 @@ class QuizCard extends StatelessWidget {
         showDialog(
             context: context,
             builder: (context) => PopUp(
-                  quiz: quiz,
-                  imagePath: "assets/images/solar.png",
-                  size: size,
-                  topic: topic
-                ));
+                quiz: quiz,
+                imagePath:
+                    "https://storage.googleapis.com/quiz-010.appspot.com/" +
+                        quiz.key,
+                size: size,
+                topic: topic));
       },
       child: Container(
         margin: EdgeInsets.only(top: 10, bottom: 10, left: 10),
@@ -50,7 +56,10 @@ class QuizCard extends StatelessWidget {
                   height: 92,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(imagePath), fit: BoxFit.cover),
+                          image: NetworkImage(
+                              "https://storage.googleapis.com/quiz-010.appspot.com/" +
+                                  quiz.key),
+                          fit: BoxFit.cover),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10),
