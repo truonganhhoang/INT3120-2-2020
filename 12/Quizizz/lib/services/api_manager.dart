@@ -80,17 +80,17 @@ class API_Manager {
     }
   }
 
-  // Future<SaveGame> postGame(int doneQ, dynamic mapQ, bool isDone, String quizID,
-  //     String userID) async {
-  //   var urlPostGame = url + "/v1/save-game/PostSaveGame";
-  //   final headers = {'Content-Type': 'application/json'};
-  //   Map<String, dynamic> body = {
-  //     "DoneQuest": doneQ,
-  //     "QuizDone": isDone,
-  //     "QuizID": quizID,
-  //     "UserID": userID,
-  //     "MapQuest": mapQ
-  //   };
-  //   String jsonBody = json.encode(body);
-  // }
+  Future<SaveGame> postGame(int doneQ, dynamic mapQ, bool isDone, String quizID,
+      String userID) async {
+    var urlPostGame = url + "/v1/save-game/PostSaveGame";
+    final headers = {'Content-Type': 'application/json'};
+    Map<String, dynamic> body = {
+      "DoneQuest": doneQ,
+      "QuizDone": isDone,
+      "QuizID": quizID,
+      "UserID": userID,
+      "MapQuest": mapQ
+    };
+    String jsonBody = json.encode(body);
+  }
 }

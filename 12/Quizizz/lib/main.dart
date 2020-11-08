@@ -7,6 +7,7 @@ import 'views/search/search.dart';
 import 'views/activity/activity.dart';
 import 'package:quiztest/services/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'views/challenge/challenge_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
             backgroundColor: Colors.white),
-        home: Home());
+        home: Challenge());
   }
 }
 
