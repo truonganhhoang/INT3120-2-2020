@@ -1,15 +1,15 @@
 import 'dart:ui';
 import 'package:EduBox/NewPost/NewPost.dart';
 import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'package:EduBox/PostManagement/ClassList.dart';
 import 'package:EduBox/PostManagement/ClassPageRoute.dart';
+import 'package:EduBox/UserInformation/UserInformation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import '../UserInfomation/UserInformation.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'Button.dart';
-import '../PostManagement/ClassList.dart';
 
 Color _color = Color(0xff00854c);
 
@@ -17,7 +17,7 @@ class HomeInterface extends StatelessWidget {
   final appbar = AppBar(
     backgroundColor: _color,
     title: Text(
-      'Edubox',
+      'Waiting Wisdom',
       style: TextStyle(
         fontSize: 20,
         color: Colors.white,
@@ -205,15 +205,13 @@ class HamburgerMenu extends StatelessWidget {
       : super(key: key);
 
   Future<void> signOutGoogle() async {
-    await FirebaseAuth.instance.signOut();
-    //print(FirebaseAuth.instance.currentUser.uid);
     await GoogleSignIn().signOut();
-    print("Signed Out");
+    await FirebaseAuth.instance.signOut();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -253,7 +251,6 @@ class HamburgerMenu extends StatelessWidget {
                           height: 20,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop();
                           Navigator.of(context)
                               .popUntil((route) => route.isFirst);
                           signOutGoogle();

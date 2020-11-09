@@ -2,9 +2,8 @@ import 'package:EduBox/LandingPage.dart';
 import 'package:EduBox/NewPost/NewPostTemplate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import 'Authenticate/MyAnimatedIcon.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,13 +16,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=>SubmitForm())
+        ChangeNotifierProvider(create: (_) => SubmitForm()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'EduBox',
+        title: 'WaitingWisdom',
         theme: ThemeData(
           textTheme: TextTheme(
             headline1: TextStyle(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: LandingPage(),
-        //Empty(),
+        //HomeInterface(),
       ),
     );
   }

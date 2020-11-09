@@ -9,19 +9,19 @@ class MyAnimatedIcon extends StatefulWidget {
 
 class _MyAnimatedIconState extends State<MyAnimatedIcon> {
   final riveFileName = 'lib/assets/Map.riv';
-  Artboard _artBoard;
 
-  void _loadRiveFile() async {
+  Future<Artboard> _loadRiveFile() async {
     final bytes = await rootBundle.load(riveFileName);
     final file = RiveFile();
 
     if (file.import(bytes)) {
       // Select an animation by its name
-      setState(() => _artBoard = file.mainArtboard
+      return file.mainArtboard
         ..addController(
           SimpleAnimation('Swing the bell'),
-        ));
-    }
+        );
+    } else
+      return null;
   }
 
   @override
@@ -32,11 +32,33 @@ class _MyAnimatedIconState extends State<MyAnimatedIcon> {
 
   @override
   Widget build(BuildContext context) {
-    return _artBoard != null
-        ? Rive(
-            artboard: _artBoard,
-            fit: BoxFit.cover,
-          )
-        : Container();
+    return FutureBuilder(
+        future: _loadRiveFile(),
+        builder: (context, future) => future.data != null
+            ? Container(
+                height: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width / 2,
+                child: Rive(
+                  artboard: future.data,
+                  fit: BoxFit.cover,
+                ),
+              )
+            : Container(
+                height: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width / 2,
+              ));
   }
 }
+// _artBoard != null
+// ? Container(
+// height: MediaQuery.of(context).size.width / 2,
+// width: MediaQuery.of(context).size.width / 2,
+// child: Rive(
+// artboard: _artBoard,
+// fit: BoxFit.cover,
+// ),
+// )
+// : Container(
+// height: MediaQuery.of(context).size.width / 2,
+// width: MediaQuery.of(context).size.width / 2,
+// );
