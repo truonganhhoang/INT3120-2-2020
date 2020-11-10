@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/play_screen/enterChallengeRoom.dart';
 import 'package:quiztest/views/play_screen/quiz_game.dart';
@@ -120,7 +121,15 @@ class Buttons extends StatelessWidget {
                               return EnterChallengeRoom(
                                 hostCode: snapshot.data,
                               );
-                            }
+                            } else if (snapshot.hasError) {
+                              return Text(
+                                "${snapshot.error}",
+                                style: TextStyle(fontSize: 16),
+                              );
+                            } else
+                              return SpinKitDualRing(
+                                color: Colors.blue,
+                              );
                           })));
             },
             child: Container(

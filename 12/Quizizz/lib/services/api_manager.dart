@@ -90,13 +90,13 @@ class API_Manager {
     final pref = await SharedPreferences.getInstance();
     final userId = pref.getString("userId");
     final encoding = Encoding.getByName('utf-8');
-    Map<String, dynamic> postBody = {"Owner": userId, "QuizID": quizId};
+    Map<String, String> postBody = {"Owner": userId, "QuizID": quizId};
     String body = json.encode(postBody);
     final response = await http.post(urlPost,
         headers: headers, body: body, encoding: encoding);
     if (response.statusCode == 200) {
-      Map<String, String> hostCode = json.decode(response.body);
-      return hostCode['id'];
+      Map<String, dynamic> hostCode = json.decode(response.body);
+      return hostCode['Id'];
     }
   }
 

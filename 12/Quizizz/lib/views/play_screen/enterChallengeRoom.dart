@@ -83,7 +83,7 @@ class EnterChallengeRoom extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
                 child: Text(
-                  "123 456",
+                  hostCode,
                   style: TextStyle(color: Colors.black, fontSize: 24),
                 ),
               ),
