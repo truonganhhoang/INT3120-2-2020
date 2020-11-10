@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quiztest/services/api_manager.dart';
+import 'package:quiztest/views/play_screen/enterChallengeRoom.dart';
 import 'package:quiztest/views/play_screen/quiz_game.dart';
 import 'package:quiztest/models/models.dart';
 
@@ -9,7 +12,6 @@ class PopUp extends StatelessWidget {
   final String imagePath;
   final Size size;
   final Topic topic;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -106,20 +108,45 @@ class Buttons extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Container(
-            width: size.width * 2 / 5,
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: Colors.purple, borderRadius: BorderRadius.circular(5)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Challenge \nFriends",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
-                ),
-                Image.asset("assets/icons/friends.png")
-              ],
+          GestureDetector(
+            onTap: () {
+              Future<String> hostCode = API_Manager().getHostCode(quiz.key);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FutureBuilder(
+                          future: hostCode,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return EnterChallengeRoom(
+                                hostCode: snapshot.data,
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text(
+                                "${snapshot.error}",
+                                style: TextStyle(fontSize: 16),
+                              );
+                            } else
+                              return SpinKitDualRing(
+                                color: Colors.blue,
+                              );
+                          })));
+            },
+            child: Container(
+              width: size.width * 2 / 5,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.purple, borderRadius: BorderRadius.circular(5)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Challenge \nFriends",
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                  Image.asset("assets/icons/friends.png")
+                ],
+              ),
             ),
           ),
         ],

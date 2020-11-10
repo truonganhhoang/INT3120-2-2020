@@ -21,7 +21,7 @@ class SearchResults extends StatelessWidget {
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 5),
-          itemCount: 4,
+          itemCount: quizzes.length,
           itemBuilder: (context, index) => QuizCard(
                 size: size,
                 imagePath: "assets/images/solar.png",

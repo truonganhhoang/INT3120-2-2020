@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/constants/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class API_Manager {
   Future<List<Topic>> fetchTopic() async {
@@ -46,7 +47,7 @@ class API_Manager {
   }
 
   Future<List<Quiz>> searchQuiz(String name) async {
-    var urlGetQuiz = url + "/v1/quiz/SearchQuiz/" + name;
+    var urlGetQuiz = url + "/v1/quiz/SearchQuiz?key=" + name;
     final response = await http.get(urlGetQuiz);
     List<Quiz> quizzes = List<Quiz>();
     if (response.statusCode == 200) {
@@ -79,7 +80,21 @@ class API_Manager {
       return responseJson["UserName"];
     }
   }
-
+  Future<String> getHostCode(String quizId) async {
+    var urlPost = url + "/v1/host/PostHost";
+    final headers = {'Content-Type': 'application/json'};
+    final pref = await SharedPreferences.getInstance();
+    final userId = pref.getString("userId");
+    final encoding = Encoding.getByName('utf-8');
+    Map<String, String> postBody = {"Owner": userId, "QuizID": quizId};
+    String body = json.encode(postBody);
+    final response = await http.post(urlPost,
+        headers: headers, body: body, encoding: encoding);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> hostCode = json.decode(response.body);
+      return hostCode['Id'];
+    }
+  }
   Future<SaveGame> postGame(int doneQ, dynamic mapQ, bool isDone, String quizID,
       String userID) async {
     var urlPostGame = url + "/v1/save-game/PostSaveGame";
