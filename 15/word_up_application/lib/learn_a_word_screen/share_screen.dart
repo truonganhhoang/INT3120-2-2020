@@ -22,19 +22,13 @@ class _ShareScreenState extends State<ShareScreen> {
   Widget buildImage(Uint8List bytes) =>
       bytes != null ? Image.memory(bytes) : Container();
 
+  TextEditingController controllerText;
+  TextEditingController controllerSubject;
+
   @override
   void initState() {
     super.initState();
-  }
-
-  String text = '';
-  String subject = '';
-  String imgPath = '';
-  List<String> imagePaths = [];
-
-  @override
-  Widget build(BuildContext context) {
-    TextEditingController controllerText = TextEditingController()
+    controllerText = TextEditingController()
       ..text = "Word:   " +
           widget.wordShare.word +
           "\n\n" +
@@ -47,8 +41,18 @@ class _ShareScreenState extends State<ShareScreen> {
           "Quotes Example: " +
           "\n" +
           widget.wordShare.quotes[0];
-    TextEditingController controllerSubject = TextEditingController()
+    controllerSubject = TextEditingController()
       ..text = "New word:     " + widget.wordShare.word;
+  }
+
+  String text = '';
+  String subject = '';
+  String imgPath = '';
+  List<String> imagePaths = [];
+
+  @override
+  Widget build(BuildContext context) {
+
     _onShare(BuildContext context) async {
       final RenderBox box = context.findRenderObject();
       if (text.isEmpty) text = controllerText.text;

@@ -53,23 +53,7 @@ class DatabaseServerHandler {
       10,
       12,
       15
-    ], wordLearning: [
-      WordLearning(
-        wordId: 2,
-        reviewDate: 3,
-        reviewTimes: 0,
-      ),
-      WordLearning(
-        wordId: 3,
-        reviewDate: 3,
-        reviewTimes: 1,
-      ),
-      WordLearning(
-        wordId: 6,
-        reviewDate: 3,
-        reviewTimes: 2,
-      ),
-    ]);
+    ],);
     // Doc duoc cai currentLearningProgress.
     // => Put current len firebase.
     // child...child(currentLearningProgress.idFirebase);
@@ -77,6 +61,43 @@ class DatabaseServerHandler {
     http.put(
       linkTo,
       body: jsonEncode(currentLearningProgress.toJson()),
+    );
+  }
+  void updateWordToLearn(idUser){
+  // code
+    print("update WordToLearn");
+    List<int> wordToLearn = [1,2,3];
+    Map<String, dynamic> toJson() => {
+    'wordToLearn': wordToLearn,
+    };
+    print(toJson());
+    String linkTo = firebaseLink + idUser + '/learningProgress/wordToLearn';
+    http.put(
+      linkTo,
+      body: jsonEncode(toJson()),
+    );
+  }
+  void updateWordKnew(idUser){
+    // code
+  }
+  void updateWordFavorite(idUser){
+    //code
+  }
+  void updateWordLearning(idUser){
+    //code
+    print("update WordLearning");
+    WordLearning wordLearning = WordLearning(wordId: 2,
+      reviewDate: 15,
+      reviewTimes: 1,);
+    List<WordLearning>  currentLearningProgress = [
+      wordLearning];
+    Map<String, dynamic> toJson() => {
+      'wordLearning': currentLearningProgress,
+    };
+    String linkTo = firebaseLink + idUser + '/learningProgress/wordLearning.json';
+    http.put(
+      linkTo,
+      body: jsonEncode(toJson()),
     );
   }
 }
