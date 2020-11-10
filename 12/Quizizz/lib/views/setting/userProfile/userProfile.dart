@@ -87,11 +87,9 @@ class UserProfile extends StatelessWidget {
                               ),
                             );
                           } else if (snapshot.hasError) {
-                            return SpinKitDualRing(
-                              color: Colors.blue,
-                            );
+                            return Text(snapshot.error);
                           } else
-                            return CircularProgressIndicator();
+                            return SpinKitDualRing(color: Colors.blue,);
                         }),
                     SettingInfo(
                       title: "Grade",

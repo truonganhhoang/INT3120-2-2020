@@ -8,7 +8,6 @@ class API_Manager {
   Future<List<Topic>> fetchTopic() async {
     var urlGetTopic = url + "/v1/topic/GetAll";
     print("fetch topic");
-    print(urlGetTopic);
     final response = await http.get(urlGetTopic);
     List<Topic> topics = List<Topic>();
     if (response.statusCode == 200) {
@@ -18,8 +17,6 @@ class API_Manager {
         topics.add(Topic.fromJson(value, key));
       });
       return topics;
-    } else {
-      print("error");
     }
   }
 
@@ -83,7 +80,6 @@ class API_Manager {
       return responseJson["UserName"];
     }
   }
-
   Future<String> getHostCode(String quizId) async {
     var urlPost = url + "/v1/host/PostHost";
     final headers = {'Content-Type': 'application/json'};
@@ -99,18 +95,17 @@ class API_Manager {
       return hostCode['Id'];
     }
   }
-
-  // Future<SaveGame> postGame(int doneQ, dynamic mapQ, bool isDone, String quizID,
-  //     String userID) async {
-  //   var urlPostGame = url + "/v1/save-game/PostSaveGame";
-  //   final headers = {'Content-Type': 'application/json'};
-  //   Map<String, dynamic> body = {
-  //     "DoneQuest": doneQ,
-  //     "QuizDone": isDone,
-  //     "QuizID": quizID,
-  //     "UserID": userID,
-  //     "MapQuest": mapQ
-  //   };
-  //   String jsonBody = json.encode(body);
-  // }
+  Future<SaveGame> postGame(int doneQ, dynamic mapQ, bool isDone, String quizID,
+      String userID) async {
+    var urlPostGame = url + "/v1/save-game/PostSaveGame";
+    final headers = {'Content-Type': 'application/json'};
+    Map<String, dynamic> body = {
+      "DoneQuest": doneQ,
+      "QuizDone": isDone,
+      "QuizID": quizID,
+      "UserID": userID,
+      "MapQuest": mapQ
+    };
+    String jsonBody = json.encode(body);
+  }
 }

@@ -10,6 +10,7 @@ import 'package:quiztest/bloC/topic/topic_bloc.dart';
 import 'package:quiztest/bloC/topic/topic_event.dart';
 import 'package:quiztest/bloC/topic/topic_state.dart';
 
+bool isAPICall = false;
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -21,8 +22,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    topicBloc = BlocProvider.of<TopicBloc>(context);
-    topicBloc.add(FetchTopicEvent());
+    if (!isAPICall) {
+      topicBloc = BlocProvider.of<TopicBloc>(context);
+      topicBloc.add(FetchTopicEvent());
+      isAPICall = true;
+    }
   }
 
   @override
@@ -36,30 +40,6 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(children: [
             EnterCode(),
-            // FutureBuilder<List<Topic>>(
-            //     future: _topics,
-            //     builder: (context, snapshot) {
-            //       if (snapshot.hasData) {
-            //         List<Topic> topics = snapshot.data ?? [];
-            //         return ListView.builder(
-            //             physics: NeverScrollableScrollPhysics(),
-            //             itemCount: topics.length,
-            //             shrinkWrap: true,
-            //             itemBuilder: (context, index) {
-            //               Topic topic = topics[index];
-            //               return ListQuiz(
-            //                 topic: topic,
-            //                 size: size,
-            //               );
-            //             });
-            //       } else if (snapshot.hasError) {
-            //         return Text("${snapshot.error}");
-            //       }
-
-            //       return SpinKitDualRing(
-            //         color: Colors.blue,
-            //       );
-            //     }),
             BlocListener(
               cubit: topicBloc,
               listener: (context, state) {

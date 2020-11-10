@@ -31,6 +31,7 @@ class _ListRunningState extends State<ListRunning> {
   @override
   void initState() {
     _quizzes = API_Manager().fetchQuizByTopic("2wZYm3a7hLcOyFnB0tEC");
+    print("OK runn");
     super.initState();
   }
 
@@ -57,7 +58,9 @@ class _ListRunningState extends State<ListRunning> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           } else
-            return SpinKitDualRing(color: Colors.blue,);
+            return SpinKitDualRing(
+              color: Colors.blue,
+            );
         },
       ),
     );
