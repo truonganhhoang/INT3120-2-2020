@@ -205,7 +205,7 @@ class DatabaseLocalHelper {
   Future<List<Word>> getWord(int id) async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
-        'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord WHERE $columnIdWord = ?',
+        'SELECT * FROM $tableWord w JOIN $tableWordType wt ON wt.$columnIdWord = w.$columnIdWord WHERE w.$columnIdWord = ?',
         [id]);
     //Word word = new Word.map(result);
     List<Word> words = new List();
@@ -219,6 +219,10 @@ class DatabaseLocalHelper {
       words[j].printThisWord();
     }
     return words;
+  }
+
+  Future<String> getDefintionWordId(int id){
+
   }
 
   // Get N Words

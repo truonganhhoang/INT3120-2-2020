@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:word_up_application/app_manager.dart';
 import 'package:word_up_application/firebase/firebase_handler.dart';
+import 'package:word_up_application/loading.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/search_screen/search_word_screen.dart';
 import 'package:word_up_application/selection_screen/finish_selection_screen.dart';
@@ -13,6 +14,7 @@ import 'package:word_up_application/services/authentication_screen.dart';
 import 'package:word_up_application/services/database_server_handler.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/user.dart';
+import 'games/fish_tank_game/fish_tank_game.dart';
 import 'home/home_screen.dart';
 import 'introduction_screen/introduction_screen.dart';
 import 'learn_a_word_screen/learn_a_word_screen.dart';
@@ -24,8 +26,6 @@ import 'package:device_preview/device_preview.dart';
 bool isTestResponsiveMode = false;
 
 void main() {
-  DateTime dateTime = new DateTime(2020, 10, 10);
-  print(dateTime.add(Duration(days: 40)));
   runApp(
     (isTestResponsiveMode)
         ? DevicePreview(
@@ -41,22 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     AppManager.instance.init();
     FirebaseHandler.initializeFirebase();
-    DatabaseServerHandler.instance.getAllUsers();
-    DatabaseServerHandler.instance.updateLearnProgress('822817271');
     DatabaseLocalHelper.instance.databaseInit();
-
-    //DatabaseHelper.instance.getListFarvoriteWords();
-    // DatabaseHelper.instance.getExamplesWithId(1);
-
-    //DatabaseHelper.instance.databaseInit();
-    //DatabaseLocalHelper.instance.getNWords(5);
-    //DatabaseLocalHelper.instance.getListLearningWords();
-
-    //DatabaseHelper.instance.getListFarvoriteWords();
-    //  DatabaseLocalHelper.instance.insertToLearnWord(5);
-    // DatabaseLocalHelper.instance.getListToLearnWords();
-    //DatabaseLocalHelper.instance.getWord(1);
-    print('runMain');
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -87,7 +72,8 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: IntroductionScreen(),
+              home: Loading(),
+            //  home: FishTankGame(),
             );
           }
         });

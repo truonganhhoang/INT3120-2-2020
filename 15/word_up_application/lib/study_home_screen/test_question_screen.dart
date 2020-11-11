@@ -31,7 +31,7 @@ class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerPro
   @override
   void initState() {
     loadFinished = false;
-    _correctAnswer = Random().nextInt(5) + 1;
+    _correctAnswer = Random().nextInt(4) + 1;
     super.initState();
     _controller = AnimationController(
       vsync: this,
@@ -57,18 +57,26 @@ class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerPro
     listAnswers[_correctAnswer - 1] = widget.word.definition;
     int numberWords = await DatabaseLocalHelper.instance.getCount();
 
-    List<int> listIds = new List<int>(3);
-
     int id1 = Random().nextInt(numberWords);
-    while(id1 == widget.word.id) int id1 = Random().nextInt(numberWords);
+    while(id1 == widget.word.id)  id1 = Random().nextInt(numberWords);
     int id2 = Random().nextInt(numberWords);
-    while(id2 == widget.word.id || id2 == id1) int id2 = Random().nextInt(numberWords);
+    while(id2 == widget.word.id || id2 == id1) id2 = Random().nextInt(numberWords);
     int id3 = Random().nextInt(numberWords);
-    while(id3 == widget.word.id || id3 == id1 ||id3 == id2) int id3 = Random().nextInt(numberWords);
+    while(id3 == widget.word.id || id3 == id1 ||id3 == id2) id3 = Random().nextInt(numberWords);
 
+    List<String> ops = new List<String>();
+    String w1 = await DatabaseLocalHelper.instance.getDefinitionWithId(id1);
+    ops.add(w1);
+    String w2 = await DatabaseLocalHelper.instance.getDefinitionWithId(id2);;
+    ops.add(w2);
+    String w3 = await DatabaseLocalHelper.instance.getDefinitionWithId(id3);;
+    ops.add(w3);
+
+    int x = 0;
     for(int i = 0; i < 4; i ++){
       if(i == _correctAnswer - 1) continue;
-      listAnswers[i] = "testing";
+      listAnswers[i] = ops[x];
+      x++;
     }
   }
 
@@ -165,13 +173,6 @@ class _TestQuestionScreen extends State<TestQuestionScreen> with SingleTickerPro
             )),
       ),
     );
-  }
-
-  bool answerCorrectly(int index) {
-      if (_chosenAnswer == _correctAnswer && index == _chosenAnswer) {
-        return true;
-      } else
-       return false;
   }
 
   void checkTheAnswer() {

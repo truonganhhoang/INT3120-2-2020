@@ -55,7 +55,8 @@ class _ShowExamplesState extends State<ShowExamples>
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 2.5 * SizeConfig.heightMultiplier,
-                        color: Colors.black54,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w300,
                         fontStyle: FontStyle.italic),
                   ),
                 ),

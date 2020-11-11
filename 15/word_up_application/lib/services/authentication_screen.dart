@@ -221,7 +221,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     return Center(
       child: Container(
         child: LoadingBouncingGrid.square(
-          size: 8 * SizeConfig.heightMultiplier,
+          size: 6 * SizeConfig.heightMultiplier,
           backgroundColor: Colors.blue,
           inverted: true,
         ),

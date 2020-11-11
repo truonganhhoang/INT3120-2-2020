@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:word_up_application/user.dart';
 
 class AppManager {
-  static bool firstTimeUse = false;
+  static bool firstTimeUse = true;
   static final AppManager instance = AppManager._internal();
 
   AppUser appUser;
@@ -13,13 +13,13 @@ class AppManager {
 
   AppManager._internal();
 
-  void init(){
-    print(122);
+  Future<void> init() async{
     _loadCounter();
   }
 
   _loadCounter() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    firstTimeUse = prefs.getBool('firstTimeUse') ?? false;
+    firstTimeUse = prefs.getBool('firstTimeUse');
+    await prefs.setBool('firstTimeUse', false);
   }
 }

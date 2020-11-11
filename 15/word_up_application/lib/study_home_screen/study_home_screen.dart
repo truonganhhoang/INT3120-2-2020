@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:word_up_application/components/common_components.dart';
+import 'package:word_up_application/home/home_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/selection_screen/selection_screen.dart';
 import 'package:word_up_application/size_config.dart';
@@ -13,8 +14,8 @@ import 'word_box.dart';
 
 // ignore: must_be_immutable
 class StudyHomeScreen extends StatefulWidget {
-  int _numberReviewedWordsRemainToday;
-  int _numberToLearnWordsRemain;
+  int numberReviewedWordsRemainToday = -1;
+  int _numberToLearnWordsRemain = -1;
   int _currentIndex;
   AppBar appBar;
   static final StudyHomeScreen instance = StudyHomeScreen._internal();
@@ -30,13 +31,20 @@ class StudyHomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _StudyHomeScreenState();
 
-  void updateBoxWord() {
-    listBoxWords[_currentIndex].reminderReview = true;
+  void updateBoxWord(int reviewDays) {
+    listBoxWords[_currentIndex].reminderReviewDays = reviewDays;
+  }
+
+  void updateReviewNumber(){
+    if(numberReviewedWordsRemainToday > 0) {
+      numberReviewedWordsRemainToday --;
+    }
   }
 }
 
 class _StudyHomeScreenState extends State<StudyHomeScreen> {
   bool isLoading;
+  bool studyFinished = false;
   List<Word> listWordsAreReviewed;
   List<Word> listWordsNeedToLearn;
   List<Word> listWords;
@@ -57,6 +65,8 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
 
   @override
   void setState(fn) {
+    if(widget.numberReviewedWordsRemainToday != 0) Home.titleHome.changeHomeTitle('Review ' + widget.numberReviewedWordsRemainToday.toString());
+    else Home.titleHome.changeHomeTitle('Learning');
     super.setState(fn);
   }
 
@@ -66,27 +76,57 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
     widget._numberToLearnWordsRemain = listWordsNeedToLearn.length;
     listWordsAreReviewed =
         await DatabaseLocalHelper.instance.getListReviewWords();
-    widget._numberReviewedWordsRemainToday = listWordsAreReviewed.length;
+    // widget.numberReviewedWordsRemainToday = listWordsAreReviewed.length;
     widget.listBoxWords.clear();
     for (int i = 0; i < listWordsAreReviewed.length; i++) {
-      widget.listBoxWords.add(
-        WordBox(
-          word: listWordsAreReviewed[i],
-          isLearningWord: true,
-        ),
-      );
-      listWords.add(listWordsAreReviewed[i]);
+      if(listWordsAreReviewed[i].reviewTimes > 0) {
+        widget.listBoxWords.add(
+          WordBox(
+            word: listWordsAreReviewed[i],
+            isLearningWord: true,
+          ),
+        );
+        listWords.add(listWordsAreReviewed[i]);
+      }
     }
+    for (int i = 0; i < listWordsAreReviewed.length; i++) {
+      if(listWordsAreReviewed[i].reviewTimes == 0) {
+        widget.listBoxWords.add(
+          WordBox(
+            word: listWordsAreReviewed[i],
+            isLearningWord: true,
+          ),
+        );
+        listWords.add(listWordsAreReviewed[i]);
+      }
+    }
+
     for (int i = 0; i < listWordsNeedToLearn.length; i++) {
       widget.listBoxWords.add(
         WordBox(word: listWordsNeedToLearn[i], isLearningWord: false),
       );
       listWords.add(listWordsNeedToLearn[i]);
     }
+
+    widget.numberReviewedWordsRemainToday = 0;
+    for(int i = 0; i < widget.listBoxWords.length; i ++){
+      if(widget.listBoxWords[i].word.reviewTimes != null){
+        if(widget.listBoxWords[i].word.reviewTimes > 0){
+          widget.numberReviewedWordsRemainToday++;
+        }
+      }
+    }
+    widget._numberToLearnWordsRemain = widget.listBoxWords.length - widget.numberReviewedWordsRemainToday;
   }
 
   @override
   Widget build(BuildContext context) {
+    if(widget.numberReviewedWordsRemainToday +
+        widget._numberToLearnWordsRemain == 0 && studyFinished == false){
+      studyFinished = true;
+      print('xx');
+      widget.listBoxWords.add(_showSelectWordsOption());
+    }
     widget._currentIndex = _current;
     return Scaffold(
       //resizeToAvoidBottomInset: true,
@@ -94,10 +134,7 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
         decoration: CommonComponents.background,
         child: (isLoading)
             ? _loading()
-            : (widget._numberReviewedWordsRemainToday +
-                        widget._numberToLearnWordsRemain !=
-                    0)
-                ? Container(
+            : Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,15 +160,15 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
                           margin: EdgeInsets.only(
                               top: 3 * SizeConfig.heightMultiplier),
                           padding: EdgeInsets.only(left: 15, right: 15),
-                          child: (widget.listBoxWords.length > 0)
+                          child: (widget.numberReviewedWordsRemainToday +
+                              widget._numberToLearnWordsRemain != 0)
                               ? new ShowExamples(
                                   listExamples: listWords[_current].examples)
                               : Container(),
                         )
                       ],
                     ),
-                  )
-                : _showSelectWordsOption(),
+                  ),
       ),
     );
   }
@@ -141,7 +178,7 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
       child: Container(
         margin: EdgeInsets.only(bottom: 15 * SizeConfig.heightMultiplier),
         child: LoadingBouncingGrid.square(
-          size: 8 * SizeConfig.heightMultiplier,
+          size: 6 * SizeConfig.heightMultiplier,
           backgroundColor: Colors.blue,
           inverted: true,
         ),
@@ -150,43 +187,8 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
   }
 
   Widget _showSelectWordsOption() {
-    return Center(
-      child: Card(
-        margin: EdgeInsets.only(bottom: 100),
-        child: Container(
-          height: 40 * SizeConfig.heightMultiplier,
-          width: 30 * SizeConfig.heightMultiplier,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'No Words',
-                  style: TextStyle(fontSize: 2.3 * SizeConfig.heightMultiplier),
-                ),
-                SizedBox(height: 20,),
-                MaterialButton(
-                  color: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        PageTransition(type: PageTransitionType.fade, child: SelectionScreen()));
-                  },
-                  child: Text(
-                    'Continue',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 2 * SizeConfig.heightMultiplier,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    return WordBox(isWord: false,);
   }
 }
+
+

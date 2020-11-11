@@ -1,12 +1,16 @@
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_up_application/components/star_favorite.dart';
-import 'package:word_up_application/learn_a_word_screen/fake_data.dart';
+import 'package:word_up_application/firebase/firebase_handler.dart';
+import 'package:word_up_application/home/home_screen.dart';
 import 'package:word_up_application/learn_a_word_screen/learn_a_word_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
+import 'package:word_up_application/selection_screen/selection_screen.dart';
+import 'package:word_up_application/services/database_server_handler.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/study_home_screen.dart';
 import 'package:word_up_application/study_home_screen/test_question_screen.dart';
@@ -15,28 +19,35 @@ import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class WordBox extends StatefulWidget {
+  bool isWord = true;
   final assetsAudioPlayer = AssetsAudioPlayer();
-  bool reminderReview = false;
+  int reminderReviewDays = 0;
   final bool isLearningWord;
   final Word word;
 
   WordBox({
-    @required this.word,
+    this.word,
     this.isLearningWord,
-  }) : assert(word != null);
+    this.isWord,
+  });
 
   @override
   State<StatefulWidget> createState() => WordBoxState();
 }
 
 class WordBoxState extends State<WordBox> {
-  bool _reminderReview;
+  int _reminderReviewDays;
   bool _isLearningWord;
+  int daysReviewLater;
 
   @override
   void initState() {
-    _isLearningWord = widget.isLearningWord;
-    _reminderReview = widget.reminderReview;
+    if(widget.isWord == null) widget.isWord = true;
+    if(widget.isWord) {
+      daysReviewLater = widget.reminderReviewDays;
+      _isLearningWord = widget.isLearningWord;
+      _reminderReviewDays = widget.reminderReviewDays;
+    }
     super.initState();
   }
 
@@ -57,7 +68,7 @@ class WordBoxState extends State<WordBox> {
           ),
         ],
       ),
-      child: Column(
+      child: (widget.isWord) ? Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,7 +143,7 @@ class WordBoxState extends State<WordBox> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                if (_reminderReview)
+                if (_reminderReviewDays != 0)
                   Container(
                     width: 51 * SizeConfig.widthMultiplier,
                     child: Column(
@@ -145,7 +156,8 @@ class WordBoxState extends State<WordBox> {
                             size: 5 * SizeConfig.heightMultiplier,
                           ),
                           Text(
-                            'Review in 3 days',
+                            (daysReviewLater == 1) ? 'Review Tomorrow' : ((daysReviewLater != 1000) ? ('Review in ' + daysReviewLater.toString()  + ' days')
+                            : 'Excellent! You remember this word forever!'),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 2.5 * SizeConfig.heightMultiplier,
@@ -154,7 +166,7 @@ class WordBoxState extends State<WordBox> {
                           ),
                         ]),
                   ),
-                if (!_reminderReview)
+                if (_reminderReviewDays == 0)
                   MaterialButton(
                     elevation: 0,
                     onPressed: () {
@@ -173,7 +185,7 @@ class WordBoxState extends State<WordBox> {
                           fontSize: 2 * SizeConfig.heightMultiplier),
                     ),
                   ),
-                if (!_reminderReview)
+                if (_reminderReviewDays == 0)
                   MaterialButton(
                     elevation: 0,
                     height: 50,
@@ -214,17 +226,43 @@ class WordBoxState extends State<WordBox> {
             ),
           )),
         ],
+      )
+      : Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+         Padding(
+           padding: const EdgeInsets.all(20),
+           child: MaterialButton(
+             color: Colors.red,
+             padding: EdgeInsets.all(0),
+             shape: RoundedRectangleBorder(
+               borderRadius: BorderRadius.circular(10),
+             ),
+             onPressed: (){
+               Navigator.push(context,
+                   PageTransition(type: PageTransitionType.fade, child: SelectionScreen()));
+             },
+             child: Container(
+               width:  30 * SizeConfig.heightMultiplier,
+               child: Text('Continue',
+               style: TextStyle(color: Colors.white),
+               textAlign: TextAlign.center,),
+             ),
+           ),
+         )
+        ],
       ),
     );
   }
 
   Widget _status() {
-    print('X' + widget.word.reviewTimes.toString());
-    int _reviewTimes = 3;
-    if (_reviewTimes == 0) {
+    int _reviewTimes =  widget.word.reviewTimes;
+
+    if (_reviewTimes == null || _reviewTimes == 0) {
       return Text(
         'New!',
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(color: Colors.red,
+        fontSize: 2 * SizeConfig.heightMultiplier,),
       );
     } else
       return Row(
@@ -251,21 +289,59 @@ class WordBoxState extends State<WordBox> {
   }
 
   void userKnewThisWord() {
-    setReviewThisWord(3);
+    int reviewT;
+    if(widget.word.reviewTimes != null) reviewT = widget.word.reviewTimes;
+    else reviewT = 0;
+    daysReviewLater = 1000;
+    reviewT ++;
+    switch(reviewT){
+      case 1:
+        daysReviewLater = 1;
+        break;
+      case 2:
+        daysReviewLater = 3;
+        break;
+      case 3:
+        daysReviewLater = 7;
+        break;
+      case 4:
+        daysReviewLater = 30;
+        break;
+    }
+    setReviewThisWord(daysReviewLater, reviewT);
   }
 
-  void setReviewThisWord(int days) {
-    StudyHomeScreen.instance.updateBoxWord();
-    DateTime now = new DateTime.now();
-    DateTime dateReview = now.add(Duration(days: days));
-    var formatter = new DateFormat('yyyy-MM-dd');
-    String formattedDate = formatter.format(dateReview);
-    print(formattedDate);
-    DatabaseLocalHelper.instance
-        .updateReviewWord(widget.word.id, formattedDate, 2);
-    setState(() {
-      _reminderReview = true;
-    });
+  void setReviewThisWord(int days, int times) {
+    if(widget.word.reviewTimes != null) if(widget.word.reviewTimes > 0) {
+      StudyHomeScreen.instance.updateReviewNumber();
+      if(StudyHomeScreen.instance.numberReviewedWordsRemainToday > 0)
+        Home.titleHome.changeHomeTitle('Review ' + StudyHomeScreen.instance.numberReviewedWordsRemainToday.toString());
+      else Home.titleHome.changeHomeTitle('Learning');
+    }
+
+    StudyHomeScreen.instance.updateBoxWord(days);
+    if(days != 1000) {
+      DateTime now = new DateTime.now();
+      DateTime dateReview = now.add(Duration(days: days));
+      var formatter = new DateFormat('yyyy-MM-dd');
+      String formattedDate = formatter.format(dateReview);
+      print(formattedDate);
+      DatabaseLocalHelper.instance
+          .updateReviewWord(widget.word.id, formattedDate, times);
+      setState(() {
+        daysReviewLater = days;
+        _reminderReviewDays = days;
+      });
+    }
+    else {
+      DatabaseLocalHelper.instance.deleteLearningWord(widget.word.id);
+      DatabaseLocalHelper.instance.insertKnewWord(widget.word.id);
+
+      setState(() {
+        daysReviewLater = days;
+        _reminderReviewDays = days;
+      });
+    }
   }
 
   void userWantToLearnThisWord() {
@@ -285,9 +361,7 @@ class WordBoxState extends State<WordBox> {
   }
 
   void userAnswerCorrect() {
-    setState(() {
-      _reminderReview = true;
-    });
+    userKnewThisWord();
   }
 
   void userWantToHaveATest() {

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +21,7 @@ class SelectionScreen extends StatefulWidget {
 
 class _SelectionScreenState extends State<SelectionScreen> {
   List<Word> listWordToSelect = new List<Word>();
+  List<String> listTestDefinition = new List(4);
   int numberWordNotKnow = 0;
   final assetsAudioPlayer = AssetsAudioPlayer();
   int index;
@@ -141,10 +144,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
                           if (!waitingForNotification)
-                            setState(() {
-                              isTesting = true;
-                              chosenIndex = 0;
-                            });
+                            loadTest();
                         },
                         child: Container(
                             alignment: Alignment.center,
@@ -325,6 +325,41 @@ class _SelectionScreenState extends State<SelectionScreen> {
         ));
   }
 
+  Future<void> spawnAnswers(Word w) async{
+    listTestDefinition[correctIndex - 1] = w.definition;
+    int numberWords = await DatabaseLocalHelper.instance.getCount();
+
+    int id1 = Random().nextInt(numberWords);
+    while(id1 == w.id)  id1 = Random().nextInt(numberWords);
+    int id2 = Random().nextInt(numberWords);
+    while(id2 == w.id || id2 == id1) id2 = Random().nextInt(numberWords);
+    int id3 = Random().nextInt(numberWords);
+    while(id3 == w.id || id3 == id1 ||id3 == id2) id3 = Random().nextInt(numberWords);
+
+    List<String> ops = new List<String>();
+    String w1 = await DatabaseLocalHelper.instance.getDefinitionWithId(id1);
+    ops.add(w1);
+    String w2 = await DatabaseLocalHelper.instance.getDefinitionWithId(id2);
+    ops.add(w2);
+    String w3 = await DatabaseLocalHelper.instance.getDefinitionWithId(id3);
+    ops.add(w3);
+
+    int x = 0;
+    for(int i = 0; i < 4; i ++){
+      if(i == correctIndex - 1) continue;
+      listTestDefinition[i] = ops[x];
+      x++;
+    }
+  }
+
+  void loadTest() async{
+    correctIndex = Random().nextInt(4) + 1;
+    await spawnAnswers(listWordToSelect[index]);
+    setState(() {
+      isTesting = true;
+      chosenIndex = 0;
+    });
+  }
   Widget _answerBox(int index) {
     return RaisedButton(
       padding: EdgeInsets.all(0),
@@ -388,7 +423,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                   padding:
                       EdgeInsets.only(bottom: 20, top: 20, left: 10, right: 10),
                   child: Text(
-                    'provide money to pay(a cost or expense',
+                    listTestDefinition[index - 1],
                     style: TextStyle(
                         fontSize: 2 * SizeConfig.heightMultiplier,
                         color: Colors.black87,
@@ -432,11 +467,12 @@ class _SelectionScreenState extends State<SelectionScreen> {
         duration: 0);
   }
 
-  void _userKnewThisWord() {
+  void _userKnewThisWord() async{
     waitingForNotification = true;
     _showKnewNotification();
     DatabaseLocalHelper.instance.insertKnewWord(listWordToSelect[index].id);
     if (index == numberWords - 1) {
+      await Future.delayed(const Duration(milliseconds: 1000));
       finishSelect();
     } else {
       Future.delayed(const Duration(milliseconds: 1000), () {
