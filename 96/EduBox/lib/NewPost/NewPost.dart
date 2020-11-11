@@ -195,14 +195,6 @@ class _NewPostState extends State<NewPost> {
                       ],
                     ),
                     divider,
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     LabelText(text: 'Số điện thoại'),
-                    //     PostPhoneNumber(),
-                    //   ],
-                    // ),
-                    // divider,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

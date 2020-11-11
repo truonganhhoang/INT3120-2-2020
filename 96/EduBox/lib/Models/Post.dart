@@ -17,7 +17,20 @@ class Post {
   double salary;
   Timestamp postDate;
 
-  Post.fromJson(Map<String, dynamic>json){
+  List<bool> fetchDays(dynamic json) {
+    Map<String, dynamic> data = json;
+    var days = List<bool>();
+    days.add(data['Mon']);
+    days.add(data['Tue']);
+    days.add(data['Wed']);
+    days.add(data['Thus']);
+    days.add(data['Fri']);
+    days.add(data['Sat']);
+    days.add(data['Sun']);
+    return days;
+  }
+
+  Post.fromJson(Map<String, dynamic> json) {
     this.id = json['DocumentID'];
     this.type = json['Type'];
     this.accepted = json['Accepted'];
@@ -26,18 +39,16 @@ class Post {
     this.grade = json['Grade'];
     this.subject = json['Subject'];
     this.address = json['Address'];
-    this.days = json['Days'].values.toList().cast<bool>();
+    this.days = fetchDays(json['Days']);
     this.session = json['Session'];
     this.course = json['Course'];
     this.gender = json['Gender'];
     this.requiredComment = json['RequiredComment'];
     this.salary = json['Salary'];
     this.postDate = json['PostDate'];
-
   }
 
-  Map toJson() =>
-      {
+  Map toJson() => {
         'DocumentID': this.id,
         'Type': this.type,
         'Accepted': this.accepted,
@@ -53,7 +64,6 @@ class Post {
         'Salary': this.salary,
         'PostDate': this.postDate
       };
-
 
 // all must be not null except requiredComment
 }
