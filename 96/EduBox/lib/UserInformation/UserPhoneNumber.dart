@@ -2,6 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+Color _color = Color(0xff00854c);
+var _border = OutlineInputBorder(
+  borderSide: BorderSide(color: _color, width: 1.5),
+  borderRadius: BorderRadius.circular(15),
+);
+
 class UserPhoneNumber extends StatefulWidget {
   final text;
 
@@ -13,12 +19,12 @@ class UserPhoneNumber extends StatefulWidget {
 
 class _UserPhoneNumberState extends State<UserPhoneNumber> {
   var textController = TextEditingController();
-  String errorText ='';
+  String errorText = '';
   bool error = false;
 
   @override
   void initState() {
-    textController.text = widget.text;
+    textController.text = widget.text??'';
     textController.selection = TextSelection.fromPosition(
         TextPosition(offset: textController.text.length));
     super.initState();
@@ -37,37 +43,35 @@ class _UserPhoneNumberState extends State<UserPhoneNumber> {
         Container(
           height: 50,
           width: 300,
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-          decoration: BoxDecoration(
-            border:
-            Border.all(color: Theme.of(context).primaryColor, width: 1.5),
-            borderRadius: BorderRadius.circular(9),
-          ),
+          // alignment: Alignment.centerLeft,
+          // padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+          // decoration: BoxDecoration(
+          //   border:
+          //   Border.all(color: Theme.of(context).primaryColor, width: 1.5),
+          //   borderRadius: BorderRadius.circular(9),
+          // ),
           child: TextField(
             controller: textController,
             keyboardType: TextInputType.phone,
             style: TextStyle(fontSize: 17),
             decoration: InputDecoration(
               border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              errorText: error? errorText:null,
+              focusedBorder: _border,
+              enabledBorder: _border,
+              disabledBorder: _border,
+              errorText: error ? errorText : null,
             ),
-
             onSubmitted: (text) {
-              if(text.length!=10){
+              if (text.length != 10) {
                 setState(() {
                   errorText = 'Chiều dài không hợp lệ';
                   error = true;
                 });
               } else {
-                if(text.substring(0,1) != '0'){
+                if (text.substring(0, 1) != '0') {
                   error = true;
                   errorText = 'Không phải số điện thoại';
-                }else{
+                } else {
                   setState(() {
                     error = false;
                   });

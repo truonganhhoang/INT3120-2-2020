@@ -29,7 +29,7 @@ class _DateOfBirthState extends State<DateOfBirth> {
 
   @override
   Widget build(BuildContext context) {
-    List<BoxShadow> boxShadow = [
+    List<BoxShadow> _boxShadow = [
       BoxShadow(
         spreadRadius: 3,
         blurRadius: 10,
@@ -48,72 +48,72 @@ class _DateOfBirthState extends State<DateOfBirth> {
           context: context,
           barrierDismissible: true,
           builder: (context) => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 100,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: _boxShadow,
+                ),
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: widget.dateTime,
+                  onDateTimeChanged: (DateTime newDateTime) {
+                    setState(() {
+                      bufferedDate = newDateTime;
+                    });
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    height: 100,
-                    width: 300,
+                    margin: EdgeInsets.symmetric(vertical: 20),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: boxShadow,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: _boxShadow,
                     ),
-                    child: CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.date,
-                      initialDateTime: widget.dateTime,
-                      onDateTimeChanged: (DateTime newDateTime) {
-                        setState(() {
-                          bufferedDate = newDateTime;
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        db.doc(user.uid).update({
+                          'Birth': bufferedDate,
                         });
                       },
+                      child: Text(
+                        'Xong',
+                        style:
+                        TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
+                      ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: boxShadow,
-                        ),
-                        child: FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            db.doc(user.uid).update({
-                              'Birth': bufferedDate,
-                            });
-                          },
-                          child: Text(
-                            'Xong',
-                            style:
-                                TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
-                          ),
-                        ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: _boxShadow,
+                    ),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Thoát',
+                        style:
+                        TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: boxShadow,
-                        ),
-                        child: FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            'Thoát',
-                            style:
-                                TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ],
-              )),
+              ),
+            ],
+          )),
       child: Row(
         children: [
           Container(
@@ -123,7 +123,7 @@ class _DateOfBirthState extends State<DateOfBirth> {
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
               border: Border.all(color: _color, width: 1.5),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
               DateFormat('dd-MM-yyyy').format(widget.dateTime),
@@ -136,3 +136,4 @@ class _DateOfBirthState extends State<DateOfBirth> {
     );
   }
 }
+

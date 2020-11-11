@@ -40,7 +40,7 @@ class _UserAddressState extends State<UserAddress> {
           decoration: BoxDecoration(
             border:
             Border.all(color: Theme.of(context).primaryColor, width: 1.5),
-            borderRadius: BorderRadius.circular(9),
+            borderRadius: BorderRadius.circular(15),
           ),
           child: TextField(
             controller: textController,

@@ -49,16 +49,3 @@ class _MyAnimatedIconState extends State<MyAnimatedIcon> {
               ));
   }
 }
-// _artBoard != null
-// ? Container(
-// height: MediaQuery.of(context).size.width / 2,
-// width: MediaQuery.of(context).size.width / 2,
-// child: Rive(
-// artboard: _artBoard,
-// fit: BoxFit.cover,
-// ),
-// )
-// : Container(
-// height: MediaQuery.of(context).size.width / 2,
-// width: MediaQuery.of(context).size.width / 2,
-// );

@@ -138,7 +138,7 @@ class StaticInfoBox extends StatelessWidget {
           decoration: BoxDecoration(
             border:
                 Border.all(color: Theme.of(context).primaryColor, width: 1.5),
-            borderRadius: BorderRadius.circular(9),
+            borderRadius: BorderRadius.circular(15),
           ),
           // child: Text(widget.text, style: TextStyle(fontSize: 17)),
           child: Text(

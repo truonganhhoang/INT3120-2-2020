@@ -42,7 +42,7 @@ class _UserGenderState extends State<UserGender> {
           padding: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             border: Border.all(color: _color, width: 1.5),
-            borderRadius: BorderRadius.circular(9),
+            borderRadius: BorderRadius.circular(15),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton(

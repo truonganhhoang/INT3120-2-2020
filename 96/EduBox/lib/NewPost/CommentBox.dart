@@ -32,11 +32,11 @@ class _CommentBoxState extends State<CommentBox> {
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           isDense: true,
-          hintText: 'Yêu cầu của bạn \n Hãy liệt kê chi tiết nếu có',
+          hintText: 'Yêu cầu của bạn \nHãy liệt kê chi tiết nếu có',
           focusedBorder: border,
           enabledBorder: border,
         ),
-        onSubmitted: (String text) {
+        onChanged: (String text) {
           submitForm.requirement = text;
         },
 

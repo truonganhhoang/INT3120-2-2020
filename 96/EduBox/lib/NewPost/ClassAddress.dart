@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Color _color = Color(0xff00854c);
-var border = OutlineInputBorder(
+var _border = OutlineInputBorder(
   borderSide: BorderSide(color: _color, width: 1.5),
   borderRadius: BorderRadius.circular(15),
 );
@@ -17,7 +17,6 @@ class ClassAddress extends StatefulWidget {
 class _ClassAddressState extends State<ClassAddress> {
   TextEditingController _text = TextEditingController();
   bool _validate = false;
-  String valueToDatabase;
 
   @override
   void dispose() {
@@ -35,9 +34,9 @@ class _ClassAddressState extends State<ClassAddress> {
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           isDense: true,
-          hintText: 'Địa chỉ lớp học',
-          focusedBorder: border,
-          enabledBorder: border,
+          hintText: 'Địa chỉ lớp học\n*Không được để trống',
+          focusedBorder: _border,
+          enabledBorder: _border,
           errorText: _validate ? 'Không được để trống' : null,
         ),
         onChanged: (String text) {
