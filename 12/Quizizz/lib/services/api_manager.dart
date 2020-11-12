@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/constants/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class API_Manager {
   Future<List<Topic>> fetchTopic() async {
@@ -45,7 +46,7 @@ class API_Manager {
   }
 
   Future<List<Quiz>> searchQuiz(String name) async {
-    var urlGetQuiz = url + "/v1/quiz/SearchQuiz/" + name;
+    var urlGetQuiz = url + "/v1/quiz/SearchQuiz?key=" + name;
     final response = await http.get(urlGetQuiz);
     List<Quiz> quizzes = List<Quiz>();
     if (response.statusCode == 200) {
