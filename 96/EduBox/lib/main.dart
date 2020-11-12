@@ -1,5 +1,5 @@
 import 'package:EduBox/LandingPage.dart';
-import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +13,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -36,7 +35,9 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: LandingPage(),
-        //HomeInterface(),
+        //     Scaffold(
+        //   body: AllMyClassList(),
+        // ),
       ),
     );
   }

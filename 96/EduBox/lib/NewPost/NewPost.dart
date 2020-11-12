@@ -1,29 +1,27 @@
 import 'dart:ui';
-
-import 'BeginDatePicker.dart';
-import 'ClassAddress.dart';
-import 'CommentBox.dart';
-import 'EndDatePicker.dart';
-import 'EndTimePicker.dart';
-import 'GradePicker.dart';
-import 'InputSalaryBox.dart';
-import 'NewPostTemplate.dart';
-import 'BeginTimePicker.dart';
+import 'package:EduBox/IntermediateWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../NewPost/DaysOfWeek.dart';
+import 'BeginAndEndDatePicker.dart';
+import 'BeginAndEndTimePicker.dart';
+import 'ClassAddress.dart';
+import 'CommentBox.dart';
+import 'GradePicker.dart';
+import 'InputSalaryBox.dart';
 import 'LabelText.dart';
+import '../Models/NewPostTemplate.dart';
 import 'RequiredGender.dart';
 import 'SubjectPicker.dart';
 
 enum classType { findTeacher, findStudent }
 
-class Label extends StatelessWidget {
+class ClassTypeLabel extends StatelessWidget {
   final Image image;
   final String text;
 
-  const Label({Key key, this.image, this.text}) : super(key: key);
+  const ClassTypeLabel({Key key, this.image, this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +66,12 @@ class Label extends StatelessWidget {
 class FindStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Label(
-        image: Image.asset('lib/assets/student.png', height: 30, width: 30),
+    return ClassTypeLabel(
+        image: Image.asset(
+          'lib/assets/student.png',
+          height: 30,
+          width: 30,
+        ),
         text: 'Tìm học sinh');
   }
 }
@@ -77,7 +79,7 @@ class FindStudent extends StatelessWidget {
 class FindTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Label(
+    return ClassTypeLabel(
         image: Image.asset(
           'lib/assets/teacher.png',
           height: 30,
@@ -115,42 +117,13 @@ class _NewPostState extends State<NewPost> {
                   borderRadius: BorderRadius.circular(9)),
               onPressed: !form.canBeSubmit.contains(false)
                   ? () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: Text('Xác nhận?'),
-                          actions: [
-                            FlatButton(
-                              child: Container(
-                                child: Text('Có'),
-                                height: 20,
-                              ),
-                              onPressed: () {
-                                FirebaseFirestore.instance
-                                    .collection('Post')
-                                    .add(Provider.of<SubmitForm>(context,
-                                            listen: false)
-                                        .toJson());
-                                // print(Provider.of<SubmitForm>(context,
-                                //         listen: false)
-                                //     .toJson());
-                                Navigator.of(context)
-                                    .popUntil((route) => route.isFirst);
-                              },
-                            ),
-                            FlatButton(
-                              child: Container(
-                                child: Text('Không'),
-                                height: 20,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                        barrierDismissible: true,
-                      );
+                      submitYesOrNo(context, function: () {
+                        FirebaseFirestore.instance.collection('Post').add(
+                            Provider.of<SubmitForm>(context, listen: false)
+                                .toJson());
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                      });
                     }
                   : () {},
               backgroundColor: !form.canBeSubmit.contains(false)

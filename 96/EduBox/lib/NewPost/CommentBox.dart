@@ -1,4 +1,4 @@
-import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +16,7 @@ class CommentBox extends StatefulWidget {
 
 class _CommentBoxState extends State<CommentBox> {
   TextEditingController _text = TextEditingController();
+
   @override
   void dispose() {
     _text.dispose();
@@ -39,8 +40,6 @@ class _CommentBoxState extends State<CommentBox> {
         onChanged: (String text) {
           submitForm.requirement = text;
         },
-
-
       ),
     );
   }

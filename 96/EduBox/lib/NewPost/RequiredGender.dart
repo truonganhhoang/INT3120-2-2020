@@ -1,6 +1,4 @@
-
-
-import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +11,8 @@ class RequiredGender extends StatefulWidget {
 
 class _RequiredGenderState extends State<RequiredGender> {
   int _value = 0;
-var listOfItems = ['(Nam/Nữ)', 'Nam', 'Nữ'] ;
+  var listOfItems = ['(Nam/Nữ)', 'Nam', 'Nữ'];
+
   @override
   Widget build(BuildContext context) {
     final form = Provider.of<SubmitForm>(context);

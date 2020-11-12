@@ -1,14 +1,14 @@
-import 'dart:ui';
+import 'package:EduBox/IntermediateWidget.dart';
 import 'package:EduBox/NewPost/NewPost.dart';
-import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
 import 'package:EduBox/PostManagement/ClassList.dart';
 import 'package:EduBox/PostManagement/ClassPageRoute.dart';
 import 'package:EduBox/UserInformation/UserInformation.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:clay_containers/clay_containers.dart';
-import 'package:flutter/material.dart';
 import 'Button.dart';
 
 Color _color = Color(0xff00854c);
@@ -28,16 +28,11 @@ class HomeInterface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var user = FirebaseAuth.instance.currentUser;
     var submitForm = Provider.of<SubmitForm>(context);
     return SafeArea(
       child: Scaffold(
         appBar: appbar,
-        drawer: HamburgerMenu(
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-        ),
+        drawer: HamburgerMenu(),
         body: ListView(
           children: [
             Container(
@@ -57,7 +52,7 @@ class HomeInterface extends StatelessWidget {
               children: [
                 Button(
                   name: 'Đăng bài',
-                  icondata: Icon(Icons.class_, size: 55),
+                  iconData: Icon(Icons.class_, size: 55),
                   navigatePage: SafeArea(
                     child: Scaffold(
                       appBar: AppBar(
@@ -115,20 +110,20 @@ class HomeInterface extends StatelessWidget {
                 ),
                 Button(
                     name: 'Yêu cầu gần đây',
-                    icondata: Icon(Icons.near_me, size: 55),
+                    iconData: Icon(Icons.near_me, size: 55),
                     navigatePage: OtherUnacceptedClassPage()),
                 Button(
                   name: 'Bản đồ',
-                  icondata: Icon(Icons.map, size: 55),
+                  iconData: Icon(Icons.map, size: 55),
                 ),
                 Button(
                   name: 'Bài đăng của bạn',
-                  icondata: Icon(Icons.library_books, size: 55),
+                  iconData: Icon(Icons.library_books, size: 55),
                   navigatePage: AllMyClassPage(),
                 ),
                 Button(
                   name: 'Lịch học',
-                  icondata: Icon(Icons.schedule, size: 55),
+                  iconData: Icon(Icons.schedule, size: 55),
                   navigatePage: MyOnScheduleClassPage(),
                 ),
               ],
@@ -197,21 +192,16 @@ class HomeInterface extends StatelessWidget {
 }
 
 class HamburgerMenu extends StatelessWidget {
-  final String name;
-  final String email;
-  final String photoURL;
-
-  const HamburgerMenu({Key key, this.name, this.email, this.photoURL})
-      : super(key: key);
-
   Future<void> signOutGoogle() async {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
-
   }
-
   @override
   Widget build(BuildContext context) {
+    var user  = FirebaseAuth.instance.currentUser;
+    final String name = user.displayName;
+    final String email = user.email;
+    final String photoURL = user.photoURL;
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -240,33 +230,12 @@ class HamburgerMenu extends StatelessWidget {
             trailing: Icon(Icons.do_not_disturb),
             enabled: true,
             onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: Text('Đăng xuất?'),
-                  actions: [
-                    FlatButton(
-                        child: Container(
-                          child: Text('Có'),
-                          height: 20,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .popUntil((route) => route.isFirst);
-                          signOutGoogle();
-                        }),
-                    FlatButton(
-                      child: Container(
-                        child: Text('Không'),
-                        height: 20,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-                barrierDismissible: true,
+              submitYesOrNo(
+                context,
+                function: () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  signOutGoogle();
+                },
               );
             },
           ),

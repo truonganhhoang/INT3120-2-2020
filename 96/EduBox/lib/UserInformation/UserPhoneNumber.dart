@@ -24,7 +24,7 @@ class _UserPhoneNumberState extends State<UserPhoneNumber> {
 
   @override
   void initState() {
-    textController.text = widget.text??'';
+    textController.text = widget.text ?? '';
     textController.selection = TextSelection.fromPosition(
         TextPosition(offset: textController.text.length));
     super.initState();
@@ -61,16 +61,21 @@ class _UserPhoneNumberState extends State<UserPhoneNumber> {
               disabledBorder: _border,
               errorText: error ? errorText : null,
             ),
-            onSubmitted: (text) {
-              if (text.length != 10) {
-                setState(() {
-                  errorText = 'Chiều dài không hợp lệ';
-                  error = true;
-                });
+            onChanged: (text) {
+              if (text[0] != '0') {
+                error = true;
+                errorText = 'Không phải số điện thoại';
               } else {
-                if (text.substring(0, 1) != '0') {
-                  error = true;
-                  errorText = 'Không phải số điện thoại';
+                if (text.length < 10) {
+                  setState(() {
+                    errorText = 'Chiều dài quá ngắn';
+                    error = true;
+                  });
+                } else if (text.length > 10) {
+                  setState(() {
+                    errorText = 'Chiều dài quá dài';
+                    error = true;
+                  });
                 } else {
                   setState(() {
                     error = false;

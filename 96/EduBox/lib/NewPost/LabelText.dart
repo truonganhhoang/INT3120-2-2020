@@ -4,7 +4,6 @@ class LabelText extends StatelessWidget {
   final String text;
   final double size;
 
-
   const LabelText({Key key, this.text, this.size = 15}) : super(key: key);
 
   @override
@@ -13,7 +12,7 @@ class LabelText extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 7),
       alignment: Alignment.centerLeft,
       child: Text(
-        text +':',
+        text + ':',
         style: TextStyle(
           color: Colors.red,
           fontSize: size,

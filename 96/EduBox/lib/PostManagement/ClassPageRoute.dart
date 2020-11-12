@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'ClassList.dart';
 
 class MyPostFilter extends StatelessWidget {
@@ -52,7 +51,7 @@ class _AllMyClassPageState extends State<AllMyClassPage> {
               child: Row(
                 children: List.generate(
                   3,
-                      (index) => Expanded(
+                  (index) => Expanded(
                     child: MyPostFilter(
                       function: () {
                         setState(() {
@@ -63,8 +62,8 @@ class _AllMyClassPageState extends State<AllMyClassPage> {
                       name: index == 0
                           ? 'Tất cả'
                           : index == 1
-                          ? 'Đã được chấp nhận'
-                          : 'Chưa được chấp nhận',
+                              ? 'Đã được chấp nhận'
+                              : 'Chưa được chấp nhận',
                       clicked: clicked == index,
                     ),
                   ),
@@ -76,8 +75,8 @@ class _AllMyClassPageState extends State<AllMyClassPage> {
               child: num == 0
                   ? AllMyClassList()
                   : num == 1
-                  ? MyClassAndBeAcceptedList()
-                  : MyClassAndNotBeAcceptedList(),
+                      ? MyClassAndBeAcceptedList()
+                      : MyClassAndNotBeAcceptedList(),
             )
           ],
         ),
@@ -109,7 +108,7 @@ class _MyOnScheduleClassPageState extends State<MyOnScheduleClassPage> {
               child: Row(
                 children: List.generate(
                   3,
-                      (index) => Expanded(
+                  (index) => Expanded(
                     child: MyPostFilter(
                       function: () {
                         setState(() {
@@ -120,8 +119,8 @@ class _MyOnScheduleClassPageState extends State<MyOnScheduleClassPage> {
                       name: index == 0
                           ? 'Tất cả'
                           : index == 1
-                          ? 'Lớp đã nhận'
-                          : 'Lớp đã được nhận',
+                              ? 'Lớp đã nhận'
+                              : 'Lớp đã được nhận',
                       clicked: clicked == index,
                     ),
                   ),
@@ -133,8 +132,8 @@ class _MyOnScheduleClassPageState extends State<MyOnScheduleClassPage> {
               child: num == 0
                   ? MyOnScheduleClassList()
                   : num == 1
-                  ? ClassIAcceptedList()
-                  : MyClassAndBeAcceptedList(),
+                      ? ClassIAcceptedList()
+                      : MyClassAndBeAcceptedList(),
             )
           ],
         ),
@@ -144,18 +143,20 @@ class _MyOnScheduleClassPageState extends State<MyOnScheduleClassPage> {
 }
 
 class OtherUnacceptedClassPage extends StatefulWidget {
-
   final Axis scrollDirection;
 
-  const OtherUnacceptedClassPage({Key key, this.scrollDirection}) : super(key: key);
+  const OtherUnacceptedClassPage({Key key, this.scrollDirection})
+      : super(key: key);
 
   @override
-  _OtherUnacceptedClassPageState createState() => _OtherUnacceptedClassPageState();
+  _OtherUnacceptedClassPageState createState() =>
+      _OtherUnacceptedClassPageState();
 }
 
 class _OtherUnacceptedClassPageState extends State<OtherUnacceptedClassPage> {
   int num = 0;
   int clicked = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -170,7 +171,7 @@ class _OtherUnacceptedClassPageState extends State<OtherUnacceptedClassPage> {
               child: Row(
                 children: List.generate(
                   3,
-                      (index) => Expanded(
+                  (index) => Expanded(
                     child: MyPostFilter(
                       function: () {
                         setState(() {
@@ -181,8 +182,8 @@ class _OtherUnacceptedClassPageState extends State<OtherUnacceptedClassPage> {
                       name: index == 0
                           ? 'Tất cả'
                           : index == 1
-                          ? 'Tìm học sinh'
-                          : 'Tìm gia sư',
+                              ? 'Tìm học sinh'
+                              : 'Tìm gia sư',
                       clicked: clicked == index,
                     ),
                   ),
@@ -194,8 +195,8 @@ class _OtherUnacceptedClassPageState extends State<OtherUnacceptedClassPage> {
               child: num == 0
                   ? OtherUnacceptedClassList()
                   : num == 1
-                  ? UnacceptedFindStudentClassList()
-                  : UnacceptedFindTeacherClassList(),
+                      ? UnacceptedFindStudentClassList()
+                      : UnacceptedFindTeacherClassList(),
             )
           ],
         ),

@@ -8,6 +8,7 @@ class UserGender extends StatefulWidget {
   final String gender;
 
   const UserGender({Key key, this.gender}) : super(key: key);
+
   @override
   _UserGenderState createState() => _UserGenderState();
 }
@@ -18,7 +19,6 @@ class _UserGenderState extends State<UserGender> {
   var user = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance;
   var gender;
-
 
   @override
   void initState() {
@@ -64,7 +64,10 @@ class _UserGenderState extends State<UserGender> {
                   setState(() {
                     _value = value;
                   });
-                  db.collection('User').doc(user.uid).update({'Gender': listOfGenders[value]});
+                  db
+                      .collection('User')
+                      .doc(user.uid)
+                      .update({'Gender': listOfGenders[value]});
                 }),
           ),
         ),

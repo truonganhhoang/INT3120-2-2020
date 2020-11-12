@@ -1,7 +1,6 @@
-import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 Color _color = Color(0xff00854c);
 
@@ -12,8 +11,7 @@ class SubjectPicker extends StatefulWidget {
 
 class _SubjectPickerState extends State<SubjectPicker> {
   int _value = 0;
-  final List<String> listOfItems =
-  [
+  final List<String> listOfItems = [
     'Toán',
     'Lý',
     'Hóa',
@@ -38,7 +36,7 @@ class _SubjectPickerState extends State<SubjectPicker> {
             value: _value,
             items: List.generate(
               listOfItems.length,
-                  (index) => DropdownMenuItem(
+              (index) => DropdownMenuItem(
                 child: Text(
                   listOfItems[index],
                   style: TextStyle(

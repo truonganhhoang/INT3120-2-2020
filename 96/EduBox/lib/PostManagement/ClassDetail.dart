@@ -1,3 +1,4 @@
+import 'package:EduBox/IntermediateWidget.dart';
 import 'package:EduBox/Models/Post.dart';
 import 'package:EduBox/NewPost/LabelText.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 
 String uid = FirebaseAuth.instance.currentUser.uid;
 var database = FirebaseFirestore.instance;
+Color _color = Color(0xff00854c);
 
 abstract class FloatButton extends StatelessWidget {
   final String label;
@@ -19,31 +21,11 @@ abstract class FloatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: (){
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: Info('Xác nhận?'),
-            actions: [
-              FlatButton(
-                child: Container(
-                  child: Info('Có'),
-                  height: 30,
-                ),
-                onPressed: function,
-              ),
-              FlatButton(
-                child: Container(
-                  child: Info('Không'),
-                  height: 30,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-          barrierDismissible: true,
+      backgroundColor: _color,
+      onPressed: () {
+        submitYesOrNo(
+          context,
+          function: function,
         );
       },
       shape: RoundedRectangleBorder(
@@ -68,12 +50,12 @@ class SubmitButton extends FloatButton {
 
   @override
   void function() {
-      FirebaseFirestore.instance
-          .collection('Post')
-          .doc(postId)
-          .update({'Accepted': true, 'Acceptor': uid});
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+    FirebaseFirestore.instance
+        .collection('Post')
+        .doc(postId)
+        .update({'Accepted': true, 'Acceptor': uid});
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 }
 
@@ -85,16 +67,13 @@ class DeleteButton extends FloatButton {
 
   @override
   void function() {
-    FirebaseFirestore.instance
-        .collection('Post')
-        .doc(postId)
-        .delete();
+    FirebaseFirestore.instance.collection('Post').doc(postId).delete();
     Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 }
 
-class CancelButton extends FloatButton{
+class CancelButton extends FloatButton {
   final String postId;
   final BuildContext context;
 
@@ -196,7 +175,7 @@ class MyClassAndBeAcceptedDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     var divider = Divider(height: 10, color: Colors.transparent);
     return Detail(
-      button: DeleteButton(postId: post.id,context: context),
+      button: DeleteButton(postId: post.id, context: context),
       label: 'Chi tiết lớp đã được nhận',
       content: StreamBuilder(
           stream:
@@ -211,7 +190,8 @@ class MyClassAndBeAcceptedDetail extends StatelessWidget {
                         Info(post.type == 0 ? 'Tìm học sinh' : 'Tìm gia sư'),
                         divider,
                         LabelText(text: 'Ngày đăng'),
-                        Info(DateFormat('dd-MM-yyyy').format(post.postDate.toDate())),
+                        Info(DateFormat('dd-MM-yyyy')
+                            .format(post.postDate.toDate())),
                         divider,
                         LabelText(text: 'Người nhận lớp'),
                         Info(snapshot.data['Name']),
@@ -249,7 +229,10 @@ class MyClassAndBeAcceptedDetail extends StatelessWidget {
                         divider,
                         LabelText(text: 'Học phí / buổi'),
                         Info('${(post.salary * 10000).toInt()} VND'),
-                        Divider(height: 75,color: Colors.transparent,),
+                        Divider(
+                          height: 75,
+                          color: Colors.transparent,
+                        ),
                       ],
                     )
                   : CircularProgressIndicator();
@@ -273,7 +256,7 @@ class ClassIAcceptedDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     var divider = Divider(height: 10, color: Colors.transparent);
     return Detail(
-      button: CancelButton(postId: post.id,context: context),
+      button: CancelButton(postId: post.id, context: context),
       label: 'Chi tiết lớp đã nhận',
       content: StreamBuilder(
           stream: database.collection('User').doc(post.whoPostUid).snapshots(),
@@ -285,8 +268,10 @@ class ClassIAcceptedDetail extends StatelessWidget {
                       children: [
                         LabelText(text: 'Kiểu lớp'),
                         Info(post.type == 0 ? 'Tìm học sinh' : 'Tìm gia sư'),
-                        divider,LabelText(text: 'Ngày đăng'),
-                        Info(DateFormat('dd-MM-yyyy').format(post.postDate.toDate())),
+                        divider,
+                        LabelText(text: 'Ngày đăng'),
+                        Info(DateFormat('dd-MM-yyyy')
+                            .format(post.postDate.toDate())),
                         divider,
                         LabelText(text: 'Người tìm lớp'),
                         Info(snapshot.data['Name']),
@@ -321,7 +306,10 @@ class ClassIAcceptedDetail extends StatelessWidget {
                         divider,
                         LabelText(text: 'Học phí / buổi'),
                         Info('${(post.salary * 10000).toInt()} VND'),
-                        Divider(height: 75,color: Colors.transparent,),
+                        Divider(
+                          height: 75,
+                          color: Colors.transparent,
+                        ),
                       ],
                     )
                   : CircularProgressIndicator();
@@ -385,7 +373,10 @@ class MyClassAndBeNotAcceptedDetail extends StatelessWidget {
           divider,
           LabelText(text: 'Học phí / buổi'),
           Info('${(post.salary * 10000).toInt()} VND'),
-          Divider(height: 75,color: Colors.transparent,),
+          Divider(
+            height: 75,
+            color: Colors.transparent,
+          ),
         ],
       ),
     );
@@ -415,7 +406,8 @@ class OtherUnacceptedClassDetail extends StatelessWidget {
                         Info(post.type == 0 ? 'Tìm học sinh' : 'Tìm gia sư'),
                         divider,
                         LabelText(text: 'Ngày đăng'),
-                        Info(DateFormat('dd-MM-yyyy').format(post.postDate.toDate())),
+                        Info(DateFormat('dd-MM-yyyy')
+                            .format(post.postDate.toDate())),
                         divider,
                         LabelText(text: 'Người tìm lớp'),
                         Info(snapshot.data['Name']),
@@ -467,4 +459,3 @@ class OtherUnacceptedClassDetail extends StatelessWidget {
     );
   }
 }
-

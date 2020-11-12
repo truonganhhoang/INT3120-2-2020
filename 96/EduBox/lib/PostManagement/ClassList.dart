@@ -1,5 +1,4 @@
-import 'package:EduBox/Models/Post.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:EduBox/IntermediateWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,35 +9,12 @@ class AllMyClassList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) => element['Owner'] == uid)
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return post.accepted
-                  ? MyClassAndBeAcceptedBox(post: post)
-                  : MyClassAndBeNotAcceptedBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-                    shrinkWrap: true,
-                    children: list,
-                  )
-                : Center(
-                    child: Text(
-                    'Không có bài nào',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ));
-          } else
-            return Text('Error');
-        });
+    return IntermediateClassList(
+      function: (element) => element['Owner'] == uid,
+      widget: (post) => post.accepted
+          ? MyClassAndBeAcceptedBox(post: post)
+          : MyClassAndBeNotAcceptedBox(post: post),
+    );
   }
 }
 
@@ -46,33 +22,11 @@ class MyClassAndNotBeAcceptedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) =>
-                    element['Accepted'] == false && element['Owner'] == uid)
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return MyClassAndBeNotAcceptedBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-                    children: list,
-                  )
-                : Center(
-                    child: Text(
-                    'Không có bài nào',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ));
-          } else
-            return Text('Error');
-        });
+    return IntermediateClassList(
+      function: (element) =>
+          element['Accepted'] == false && element['Owner'] == uid,
+      widget: (post) => MyClassAndBeNotAcceptedBox(post: post),
+    );
   }
 }
 
@@ -80,140 +34,58 @@ class MyClassAndBeAcceptedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) =>
-                    element['Accepted'] == true && element['Owner'] == uid)
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return MyClassAndBeAcceptedBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-                    children: list,
-                  )
-                : Center(
-                    child: Text(
-                    'Không có bài nào',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ));
-          } else
-            return Text('Error');
-        });
+    return IntermediateClassList(
+      function: (element) =>
+          element['Accepted'] == true && element['Owner'] == uid,
+      widget: (post) => MyClassAndBeAcceptedBox(post: post),
+    );
   }
 }
 
 class OtherUnacceptedClassList extends StatelessWidget {
   final Axis scrollDirection;
 
-  const OtherUnacceptedClassList({Key key, this.scrollDirection = Axis.vertical}) : super(key: key);@override
-  Widget build(BuildContext context) {
-    String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').orderBy('PostDate').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) =>
-                    element['Accepted'] == false && element['Owner'] != uid)
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return OtherUnacceptedClassBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-              scrollDirection: scrollDirection,
-                    children: list,
-                  )
-                : Center(
-                    child: Text(
-                    'Không có bài nào',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ));
-          } else
-            return Text('Error');
-        });
-  }
-}
-
-class UnacceptedFindStudentClassList extends StatelessWidget {
-
-@override
-  Widget build(BuildContext context) {
-    String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').orderBy('PostDate').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) =>
-            element['Accepted'] == false && element['Owner'] != uid && element['Type']==0)
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return OtherUnacceptedClassBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-              children: list,
-            )
-                : Center(
-                child: Text(
-                  'Không có bài nào',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ));
-          } else
-            return Text('Error');
-        });
-  }
-}
-
-class UnacceptedFindTeacherClassList extends StatelessWidget {
+  const OtherUnacceptedClassList(
+      {Key key, this.scrollDirection = Axis.vertical})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').orderBy('PostDate').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) =>
-            element['Accepted'] == false && element['Owner'] != uid && element['Type']==1)
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return OtherUnacceptedClassBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-              children: list,
-            )
-                : Center(
-                child: Text(
-                  'Không có bài nào',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ));
-          } else
-            return Text('Error');
-        });
+    return IntermediateClassList(
+      scrollDirection: scrollDirection,
+      function: (element) =>
+          element['Accepted'] == false && element['Owner'] != uid,
+      widget: (post) => OtherUnacceptedClassBox(post: post),
+    );
+  }
+}
+
+class UnacceptedFindStudentClassList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    return IntermediateClassList(
+      function: (element) =>
+          element['Accepted'] == false &&
+          element['Owner'] != uid &&
+          element['Type'] == 0,
+      widget: (post) => OtherUnacceptedClassBox(post: post),
+    );
+  }
+}
+
+class UnacceptedFindTeacherClassList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    return IntermediateClassList(
+      function: (element) =>
+          element['Accepted'] == false &&
+          element['Owner'] != uid &&
+          element['Type'] == 1,
+      widget: (post) => OtherUnacceptedClassBox(post: post),
+    );
   }
 }
 
@@ -221,36 +93,14 @@ class MyOnScheduleClassList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) =>
-                    element['Accepted'] == true &&
-                    (element['Acceptor'] == uid || element['Owner'] == uid))
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return post.whoPostUid == uid
-                  ? MyClassAndBeAcceptedBox(post: post)
-                  : ClassIAcceptedBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-                    children: list,
-                  )
-                : Center(
-                    child: Text(
-                    'Không có bài nào',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ));
-          } else
-            return Text('Error');
-        });
+    return IntermediateClassList(
+      function: (element) =>
+          element['Accepted'] == true &&
+          (element['Acceptor'] == uid || element['Owner'] == uid),
+      widget: (post) => post.whoPostUid == uid
+          ? MyClassAndBeAcceptedBox(post: post)
+          : ClassIAcceptedBox(post: post),
+    );
   }
 }
 
@@ -258,34 +108,10 @@ class ClassIAcceptedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser.uid;
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('Post').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasError) {
-            if (snapshot.connectionState != ConnectionState.active)
-              return CircularProgressIndicator();
-            List<Widget> list = snapshot.data.docs
-                .where((element) =>
-                    element['Accepted'] == true && element['Acceptor'] == uid)
-                .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return ClassIAcceptedBox(post: post);
-            }).toList();
-            return list.length != 0
-                ? ListView(
-                    children: list,
-                  )
-                : Center(
-                    child: Text(
-                    'Không có bài nào',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ));
-          } else
-            return Text('Error');
-        });
+    return IntermediateClassList(
+      function: (element) =>
+          element['Accepted'] == true && element['Acceptor'] == uid,
+      widget: (post) => ClassIAcceptedBox(post: post),
+    );
   }
 }
-
-

@@ -17,13 +17,13 @@ BoxDecoration decoration = BoxDecoration(
 class Button extends StatelessWidget {
   final String name;
 
-  final Widget icondata;
+  final Widget iconData;
   final Widget navigatePage;
 
   const Button({
     Key key,
     this.name = 'Add later, be patient',
-    this.icondata,
+    this.iconData,
     this.navigatePage,
   }) : super(key: key);
 
@@ -55,7 +55,7 @@ class Button extends StatelessWidget {
                 padding: EdgeInsets.all(5),
                 decoration: decoration,
                 child: Container(
-                  child: icondata,
+                  child: iconData,
                 ),
               ),
             ),

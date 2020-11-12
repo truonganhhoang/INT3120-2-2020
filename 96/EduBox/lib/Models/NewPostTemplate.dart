@@ -21,8 +21,8 @@ class SubmitForm with ChangeNotifier {
   DateTime _postDate = DateTime.now();
   String _whoPost = FirebaseAuth.instance.currentUser.uid;
 
-
   String get whoPost => _whoPost;
+
   set whoPost(String value) {
     _whoPost = value;
     notifyListeners();
@@ -58,7 +58,6 @@ class SubmitForm with ChangeNotifier {
         'RequiredComment': requirement,
         'Salary': salary,
         'PostDate': Timestamp.fromDate(postDate),
-        'AcceptorPhoneNumber': '',
         'Owner': whoPost,
         'Acceptor': whoAccept,
         'Accepted': false,
@@ -70,8 +69,6 @@ class SubmitForm with ChangeNotifier {
     _postDate = value;
     notifyListeners();
   }
-
-
 
   void reset() {
     type;
@@ -194,7 +191,7 @@ class SubmitForm with ChangeNotifier {
 
   set endDate(DateTime value) {
     _endDate = value;
-    if (_beginDate.difference(_endDate).inDays > -30)
+    if (_beginDate.difference(_endDate).inDays > -29)
       canBeSubmit[3] = false;
     else
       canBeSubmit[3] = true;

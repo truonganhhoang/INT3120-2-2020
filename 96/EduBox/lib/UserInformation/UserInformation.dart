@@ -40,76 +40,81 @@ class UserInformation extends StatelessWidget {
                           ),
                         ),
                       );
-                    return snapshot.hasData?ListView(
-                      children: [
-                        Container(
-                          height: 70,
-                          margin: EdgeInsets.only(
-                              top: 15,
-                              bottom: 10,
-                              right: MediaQuery.of(context).size.width / 2 -
-                                  150),
-                          alignment: Alignment.bottomCenter,
-                          child: Text('Ảnh đại diện',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              right: MediaQuery.of(context).size.width / 2 -
-                                  150),
-                          alignment: Alignment.center,
-                          //height: 350,
-                          decoration: BoxDecoration(),
-                          child: ClipOval(
-                            child: snapshot.connectionState ==
-                                    ConnectionState.active
-                                ? Image.network(
-                                    snapshot.data['Avatar'],
-                                  )
-                                : Center(child: CircularProgressIndicator()),
-                          ),
-                        ),
-                        divider,
-                        LabelText(
-                          text: 'Tên',
-                          size: 17,
-                        ),
-                        snapshot.connectionState == ConnectionState.active
-                            ? StaticInfoBox(
-                                text: snapshot.data['Name'],
-                              )
-                            : Center(child: CircularProgressIndicator()),
-                        divider,
-                        LabelText(text: 'Email', size: 17),
-                        snapshot.connectionState == ConnectionState.active
-                            ? StaticInfoBox(
-                                text: snapshot.data['Email'] ?? '')
-                            : Center(child: CircularProgressIndicator()),
-                        divider,
-                        LabelText(text: 'Số điện thoại', size: 17),
-                        UserPhoneNumber(
-                          text: snapshot.data['PhoneNumber'],
-                        ),
-                        divider,
-                        LabelText(text: 'Giới tính', size: 17),
-                        UserGender(
-                          gender: snapshot.data['Gender'],
-                        ),
-                        divider,
-                        LabelText(text: 'Ngày sinh', size: 17),
-                        DateOfBirth(
-                          dateTime: snapshot.data['Birth'].toDate(),
-                        ),
-                        divider,
-                        LabelText(text: 'Địa chỉ', size: 17),
-                        UserAddress(
-                          text: snapshot.data['Address'],
-                        ),
-                        divider,
-                        divider,
-                        divider,
-                      ],
-                    ): Center(child: CircularProgressIndicator());
+                    return snapshot.hasData
+                        ? ListView(
+                            children: [
+                              Container(
+                                height: 70,
+                                margin: EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 10,
+                                    right:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            150),
+                                alignment: Alignment.bottomCenter,
+                                child: Text('Ảnh đại diện',
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    right:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            150),
+                                alignment: Alignment.center,
+                                //height: 350,
+                                decoration: BoxDecoration(),
+                                child: ClipOval(
+                                  child: snapshot.connectionState ==
+                                          ConnectionState.active
+                                      ? Image.network(
+                                          snapshot.data['Avatar'],
+                                        )
+                                      : Center(
+                                          child: CircularProgressIndicator()),
+                                ),
+                              ),
+                              divider,
+                              LabelText(
+                                text: 'Tên',
+                                size: 17,
+                              ),
+                              snapshot.connectionState == ConnectionState.active
+                                  ? StaticInfoBox(
+                                      text: snapshot.data['Name'],
+                                    )
+                                  : Center(child: CircularProgressIndicator()),
+                              divider,
+                              LabelText(text: 'Email', size: 17),
+                              snapshot.connectionState == ConnectionState.active
+                                  ? StaticInfoBox(
+                                      text: snapshot.data['Email'] ?? '')
+                                  : Center(child: CircularProgressIndicator()),
+                              divider,
+                              LabelText(text: 'Số điện thoại', size: 17),
+                              UserPhoneNumber(
+                                text: snapshot.data['PhoneNumber'],
+                              ),
+                              divider,
+                              LabelText(text: 'Giới tính', size: 17),
+                              UserGender(
+                                gender: snapshot.data['Gender'],
+                              ),
+                              divider,
+                              LabelText(text: 'Ngày sinh', size: 17),
+                              DateOfBirth(
+                                dateTime: snapshot.data['Birth'].toDate(),
+                              ),
+                              divider,
+                              LabelText(text: 'Địa chỉ', size: 17),
+                              UserAddress(
+                                text: snapshot.data['Address'],
+                              ),
+                              divider,
+                              divider,
+                              divider,
+                            ],
+                          )
+                        : Center(child: CircularProgressIndicator());
                   } else
                     return Text('Error');
                 }),

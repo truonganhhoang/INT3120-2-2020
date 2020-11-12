@@ -39,7 +39,7 @@ class _UserAddressState extends State<UserAddress> {
           padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
           decoration: BoxDecoration(
             border:
-            Border.all(color: Theme.of(context).primaryColor, width: 1.5),
+                Border.all(color: Theme.of(context).primaryColor, width: 1.5),
             borderRadius: BorderRadius.circular(15),
           ),
           child: TextField(
@@ -53,12 +53,11 @@ class _UserAddressState extends State<UserAddress> {
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
             ),
-
             onSubmitted: (text) {
-                  FirebaseFirestore.instance
-                      .collection('User')
-                      .doc(FirebaseAuth.instance.currentUser.uid)
-                      .update({'Address': text});
+              FirebaseFirestore.instance
+                  .collection('User')
+                  .doc(FirebaseAuth.instance.currentUser.uid)
+                  .update({'Address': text});
             },
           ),
         ),

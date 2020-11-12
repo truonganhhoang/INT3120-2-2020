@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'NewPostTemplate.dart';
+import '../Models/NewPostTemplate.dart';
 
 Color _color = Color(0xff00854c);
 

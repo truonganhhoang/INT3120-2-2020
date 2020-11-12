@@ -1,6 +1,6 @@
+import 'package:EduBox/IntermediateWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,103 +17,22 @@ class DateOfBirth extends StatefulWidget {
 }
 
 class _DateOfBirthState extends State<DateOfBirth> {
-  var user = FirebaseAuth.instance.currentUser;
-  var db = FirebaseFirestore.instance.collection('User');
-  DateTime bufferedDate;
-
-  @override
-  void initState() {
-    bufferedDate = widget.dateTime;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<BoxShadow> _boxShadow = [
-      BoxShadow(
-        spreadRadius: 3,
-        blurRadius: 10,
-        offset: Offset(2, 2),
-        color: Colors.black54,
-      ),
-      BoxShadow(
-        spreadRadius: 3,
-        blurRadius: 10,
-        offset: Offset(-2, -2),
-        color: Colors.white54,
-      ),
-    ];
-    return GestureDetector(
-      onTap: () => showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (context) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 100,
-                width: 300,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: _boxShadow,
-                ),
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  initialDateTime: widget.dateTime,
-                  onDateTimeChanged: (DateTime newDateTime) {
-                    setState(() {
-                      bufferedDate = newDateTime;
-                    });
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: _boxShadow,
-                    ),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        db.doc(user.uid).update({
-                          'Birth': bufferedDate,
-                        });
-                      },
-                      child: Text(
-                        'Xong',
-                        style:
-                        TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: _boxShadow,
-                    ),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        'Thoát',
-                        style:
-                        TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )),
+    var user = FirebaseAuth.instance.currentUser;
+    var db = FirebaseFirestore.instance.collection('User');
+    DateTime bufferedDate = widget.dateTime;
+    return MyDateTimePicker(
+      dateTime: widget.dateTime,
+      onChange: (time) {
+        bufferedDate = time;
+      },
+      onSubmit: () {
+        Navigator.of(context).pop();
+        db.doc(user.uid).update({
+          'Birth': bufferedDate,
+        });
+      },
       child: Row(
         children: [
           Container(
@@ -136,4 +55,3 @@ class _DateOfBirthState extends State<DateOfBirth> {
     );
   }
 }
-

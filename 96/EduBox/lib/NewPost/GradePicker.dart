@@ -1,4 +1,4 @@
-import 'package:EduBox/NewPost/NewPostTemplate.dart';
+import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,7 @@ class GradePicker extends StatefulWidget {
 class _GradePickerState extends State<GradePicker> {
   int _value = 0;
   final List<String> listOfItems =
-      List.generate(12, (index) => 'Lớp ' + (index+1).toString());
+      List.generate(12, (index) => 'Lớp ' + (index + 1).toString());
 
   @override
   Widget build(BuildContext context) {
