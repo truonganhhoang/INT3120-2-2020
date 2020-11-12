@@ -65,18 +65,17 @@ class User {
 
 class SaveGame {
   final String quizID;
-  final int doneQ;
+  final List<int> listAns;
   final bool isDone;
   final String userID;
-  final Map<String, AnswerData> ansData;
 
-  SaveGame({this.quizID, this.doneQ, this.isDone, this.userID, this.ansData});
+  SaveGame({this.quizID, this.listAns, this.isDone, this.userID});
   factory SaveGame.fromJson(Map<String, dynamic> json) {
     return SaveGame(
         quizID: json["QuizID"],
-        doneQ: json["DoneQuest"],
+        listAns: json["ListAnsweredQuest"],
         isDone: json["QuizDone"],
-        ansData: jsonDecode(json["MapQuest"]));
+        userID: json["UserID"]);
   }
 }
 

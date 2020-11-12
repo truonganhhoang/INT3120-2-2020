@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
             backgroundColor: Colors.white),
-        home: Challenge());
+        home: Home());
   }
 }
 

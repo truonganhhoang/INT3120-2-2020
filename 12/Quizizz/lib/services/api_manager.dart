@@ -10,7 +10,6 @@ class API_Manager {
     final response = await http.get(urlGetTopic);
     List<Topic> topics = List<Topic>();
     if (response.statusCode == 200) {
-      print("manh");
       Map list = json.decode(response.body);
       list.forEach((key, value) {
         topics.add(Topic.fromJson(value, key));
@@ -80,17 +79,24 @@ class API_Manager {
     }
   }
 
-  Future<SaveGame> postGame(int doneQ, dynamic mapQ, bool isDone, String quizID,
-      String userID) async {
+  Future<SaveGame> postGame(
+      String quizID, List<int> listAns, bool isDone, String userID) async {
     var urlPostGame = url + "/v1/save-game/PostSaveGame";
     final headers = {'Content-Type': 'application/json'};
     Map<String, dynamic> body = {
-      "DoneQuest": doneQ,
+      "ListAnsweredQuest": listAns,
       "QuizDone": isDone,
       "QuizID": quizID,
-      "UserID": userID,
-      "MapQuest": mapQ
+      "UserID": userID
     };
     String jsonBody = json.encode(body);
+    final encoding = Encoding.getByName('utf-8');
+
+    final response = await http.post(urlPostGame,
+        headers: headers, body: jsonBody, encoding: encoding);
+    print("post game");
+    if (response.statusCode == 200) {
+      print("post save game ok");
+    }
   }
 }

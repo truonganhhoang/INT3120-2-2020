@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/models/models.dart';
+import 'package:quiztest/services/user.dart';
 import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 import 'dart:async';
 import 'end_quiz.dart';
@@ -13,6 +14,8 @@ int _correctChoose;
 Future<List<Questional>> quest;
 Topic _topic;
 Quiz _quiz;
+List<int> answer = new List<int>();
+String _userID;
 
 class QuizPage extends StatefulWidget {
   QuizPage({this.quiz, this.topic});
@@ -30,9 +33,10 @@ class _QuizPageState extends State<QuizPage> {
     _totalQs = widget.quiz.numberOfQuestion;
     _currentQs = 0;
     _correctChoose = 0;
-    _correctChoose = 0;
     _topic = widget.topic;
     _quiz = widget.quiz;
+    UserSave().getUserID().then((value) => print(value));
+    print(_userID);
     super.initState();
   }
 
@@ -79,6 +83,9 @@ class _QuizGameState extends State<QuizGame> {
                     Pause(
                       currentQs: _currentQs + 1,
                       totalQs: _totalQs,
+                      quizID: widget.quiz.key,
+                      answered: answer,
+                      userID: _userID,
                     ),
                     Question(
                       size: size,
@@ -178,6 +185,7 @@ class _ListChoicesState extends State<ListChoices> {
             setState(() {
               _isChoose[0] = true;
               _checkChoose = true;
+              answer.add(0);
               nextQs();
             });
           },
@@ -194,6 +202,7 @@ class _ListChoicesState extends State<ListChoices> {
             setState(() {
               _isChoose[1] = true;
               _checkChoose = true;
+              answer.add(1);
               nextQs();
             });
           },
@@ -210,6 +219,7 @@ class _ListChoicesState extends State<ListChoices> {
             setState(() {
               _isChoose[2] = true;
               _checkChoose = true;
+              answer.add(2);
               nextQs();
             });
           },
@@ -226,6 +236,7 @@ class _ListChoicesState extends State<ListChoices> {
             setState(() {
               _isChoose[3] = true;
               _checkChoose = true;
+              answer.add(3);
               nextQs();
             });
           },
@@ -405,11 +416,20 @@ class Question extends StatelessWidget {
 }
 
 class Pause extends StatelessWidget {
-  const Pause({Key key, @required this.currentQs, @required this.totalQs})
+  const Pause(
+      {Key key,
+      @required this.currentQs,
+      @required this.totalQs,
+      this.answered,
+      this.quizID,
+      this.userID})
       : super(key: key);
 
   final int currentQs;
   final int totalQs;
+  final List<int> answered;
+  final String quizID;
+  final String userID;
 
   @override
   Widget build(BuildContext context) {
@@ -425,6 +445,9 @@ class Pause extends StatelessWidget {
                       builder: (context) => PauseWhilePlaying(
                             questionsRemaining: currentQs,
                             totalQuestions: totalQs,
+                            answered: answered,
+                            quizID: quizID,
+                            userID: userID,
                           )));
             },
             child: Image(

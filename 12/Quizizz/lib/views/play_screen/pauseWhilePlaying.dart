@@ -2,18 +2,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:quiztest/main.dart';
+import 'package:quiztest/models/models.dart';
+import 'package:quiztest/services/user.dart';
 import 'package:quiztest/views/setting/setting_music.dart';
+import 'package:quiztest/services/api_manager.dart';
 
 class PauseWhilePlaying extends StatefulWidget {
-  PauseWhilePlaying({Key key, this.questionsRemaining, this.totalQuestions})
+  PauseWhilePlaying(
+      {Key key,
+      this.questionsRemaining,
+      this.totalQuestions,
+      this.answered,
+      this.quizID,
+      this.userID})
       : super(key: key);
   final int questionsRemaining;
   final int totalQuestions;
+  final List<int> answered;
+  final String quizID;
+  final String userID;
   @override
   _PauseWhilePlayingState createState() => _PauseWhilePlayingState();
 }
 
 class _PauseWhilePlayingState extends State<PauseWhilePlaying> {
+  @override
+  void initState() {
+    // TODO: implement initState
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -43,7 +60,11 @@ class _PauseWhilePlayingState extends State<PauseWhilePlaying> {
                             context: context,
                             barrierDismissible: false,
                             builder: (context) {
-                              return AlertWhilePlaying();
+                              return AlertWhilePlaying(
+                                answered: widget.answered,
+                                quizID: widget.quizID,
+                                userID: widget.userID,
+                              );
                             });
                       },
                       child: Container(
@@ -186,7 +207,11 @@ class _SettingWhilePlayingState extends State<SettingWhilePlaying> {
 }
 
 class AlertWhilePlaying extends StatelessWidget {
-  const AlertWhilePlaying({Key key}) : super(key: key);
+  const AlertWhilePlaying({Key key, this.answered, this.userID, this.quizID})
+      : super(key: key);
+  final List<int> answered;
+  final String quizID;
+  final String userID;
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +227,8 @@ class AlertWhilePlaying extends StatelessWidget {
             child: Text("Cancel")),
         TextButton(
           onPressed: () {
+            API_Manager().postGame(quizID, answered, false, userID);
+            print("API_Manager().postGame(quizID, answered, false, userID)");
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => Home()),
                 (Route<dynamic> route) => false);
