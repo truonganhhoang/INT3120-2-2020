@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
     AppManager.instance.init();
     FirebaseHandler.initializeFirebase();
     DatabaseLocalHelper.instance.databaseInit();
+    //DatabaseServerHandler().updateUserPrivateInformation("822817271");
 
     return LayoutBuilder(
       builder: (context, constraints) {
