@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/bloC/topic/topic_bloc.dart';
 import 'package:quiztest/services/api_manager.dart';
-import 'package:quiztest/views/play_screen/enterChallengeRoom.dart';
 import 'package:quiztest/views/setting/setting.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
             backgroundColor: Colors.white),
-        home: Challenge());
+        home: Home());
   }
 }
 
@@ -33,7 +31,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  final tabs = [HomePageBloc(), Search(), Activity(), Setting()];
+  final tabs = [HomePage(), Search(), Activity(), Setting()];
 
   @override
   void initState() {
@@ -96,20 +94,6 @@ class _HomeState extends State<Home> {
               ),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-}
-
-class HomePageBloc extends StatelessWidget {
-  const HomePageBloc({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TopicBloc(api: API_Manager()),
-      child: HomePage(),
     );
   }
 }
