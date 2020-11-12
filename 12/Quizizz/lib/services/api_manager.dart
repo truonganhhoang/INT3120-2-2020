@@ -80,6 +80,22 @@ class API_Manager {
     }
   }
 
+    Future<String> getHostCode(String quizId) async {
+    var urlPost = url + "/v1/host/PostHost";
+    final headers = {'Content-Type': 'application/json'};
+    final pref = await SharedPreferences.getInstance();
+    final userId = pref.getString("userId");
+    final encoding = Encoding.getByName('utf-8');
+    Map<String, String> postBody = {"Owner": userId, "QuizID": quizId};
+    String body = json.encode(postBody);
+    final response = await http.post(urlPost,
+        headers: headers, body: body, encoding: encoding);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> hostCode = json.decode(response.body);
+      return hostCode['Id'];
+    }
+  }
+
   Future<SaveGame> postGame(
       String quizID, List<int> listAns, bool isDone, String userID) async {
     var urlPostGame = url + "/v1/save-game/PostSaveGame";
