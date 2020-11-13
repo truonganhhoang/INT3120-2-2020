@@ -13,12 +13,12 @@ const VideoScreen = () => {
 
   return (
     <Row>
-      <Col style={styles.collums}>
+      <Col style={styles.column_left}>
         {dataItemLeft.map((item, index) => (
         <ItemMedia label={`Video Unit ${item}`} key={index} onClick={() => navigation.navigate('Video Unit')} />
         ))}
       </Col>
-      <Col style={styles.collums}>
+      <Col style={styles.column_right}>
         {dataItemRight.map((item, index) => (
         <ItemMedia label={`Video Unit ${item}`} key={index} onClick={() => navigation.navigate('Video Unit')} />
         ))}
@@ -28,8 +28,13 @@ const VideoScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  collums: {
+  column_left: {
     marginLeft: 20,
+    marginRight: 10,
+  },
+  column_right: {
+    marginRight: 20,
+    marginLeft: 10
   },
 });
 

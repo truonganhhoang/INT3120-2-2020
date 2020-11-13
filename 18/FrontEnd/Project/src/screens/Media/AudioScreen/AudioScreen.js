@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Spinner } from 'native-base';
+import { View, Row, Col, Spinner } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -24,10 +24,10 @@ const AudioScreen = () => {
   }, []);
 
   return (
-    <Container>
+    <View>
       {loading && <Spinner />}
       <Row>
-        <Col style={styles.collums}>
+        <Col style={styles.column_left}>
           {!!data &&
             data.data
               .map((item, index) => {
@@ -42,29 +42,34 @@ const AudioScreen = () => {
                 />
               ))}
         </Col>
-        <Col style={styles.collums}>
+        <Col style={styles.column_right}>
           {!!data &&
             data.data
               .map((item, index) => {
-                return index % 2 == 1 ? item.name : null;
+                return index % 2 == 1 ? item : null;
               })
               .filter((n) => n)
               .map((item, index) => (
                 <ItemMedia
-                  label={`Audio ${item}`}
+                  label={`Audio ${item.name}`}
                   key={index}
                   onClick={() => navigation.navigate('Audio Unit', { id: item.id })}
                 />
               ))}
         </Col>
       </Row>
-    </Container>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  collums: {
+  column_left: {
     marginLeft: 20,
+    marginRight: 10,
+  },
+  column_right: {
+    marginRight: 20,
+    marginLeft: 10
   },
 });
 

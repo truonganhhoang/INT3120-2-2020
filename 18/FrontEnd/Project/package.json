@@ -28,6 +28,7 @@
     "react": "16.13.1",
     "react-art": "^16.13.1",
     "react-dom": "16.13.1",
+    "react-input-slider": "^6.0.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-reanimated": "^1.13.1",
