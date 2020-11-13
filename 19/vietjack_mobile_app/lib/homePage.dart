@@ -96,8 +96,8 @@ class _homePageState extends State<homePage> {
                                           data[i]["nameSubject"],
                                           textAlign: TextAlign.center,
                                           style: new TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700,
+                                              fontSize: 15,
+                                              //fontWeight: FontWeight.w700,
                                               height: 1
                                           ),
                                         ),
