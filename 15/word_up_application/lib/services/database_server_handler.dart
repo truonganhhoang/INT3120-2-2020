@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
+import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/user.dart';
+
 
 class DatabaseServerHandler {
   final String firebaseLink = "https://worduptest-af6ce.firebaseio.com/Users/";
@@ -33,9 +35,9 @@ class DatabaseServerHandler {
     );
   }
 
-  void updateWordToLearn(idUser){
+  void updateWordToLearn(idUser) async{
     print("update WordToLearn");
-    List<int> wordToLearn = [1,2,3,4,5];
+    List<dynamic> wordToLearn = await DatabaseLocalHelper.instance.getToLearnWords();
     Map<String, dynamic> toJson() => {
     'wordToLearn': wordToLearn,
     };
@@ -46,9 +48,9 @@ class DatabaseServerHandler {
       body: jsonEncode(toJson()),
     );
   }
-  void updateWordKnew(idUser){
+  void updateWordKnew(idUser) async{
     print("update WordKnew");
-    List<int> wordKnew = [6,7,8,9,10,15];
+    List<dynamic> wordKnew = await DatabaseLocalHelper.instance.getKnewWords();
     Map<String, dynamic> toJson() => {
       'wordKnew': wordKnew,
     };
@@ -59,9 +61,9 @@ class DatabaseServerHandler {
       body: jsonEncode(toJson()),
     );
   }
-  void updateWordFavorite(idUser){
+  void updateWordFavorite(idUser) async{
     print("update WordFavorite");
-    List<int> wordFavorite = [1,4,6,7,8,9,10,15];
+    List<dynamic> wordFavorite = await DatabaseLocalHelper.instance.getFavoriteWords();
     Map<String, dynamic> toJson() => {
       'wordFavorite': wordFavorite,
     };
@@ -72,15 +74,11 @@ class DatabaseServerHandler {
       body: jsonEncode(toJson()),
     );
   }
-  void updateWordLearning(idUser){
+  void updateWordLearning(idUser) async{
     print("update WordLearning");
-    WordLearning wordLearning = WordLearning(wordId: 1,
-      reviewDate: 15,
-      reviewTimes: 7,);
-    List<WordLearning>  currentLearningProgress = [
-      wordLearning];
+    List<dynamic> wordLearning = await DatabaseLocalHelper.instance.getLearningWords();
     Map<String, dynamic> toJson() => {
-      'wordLearning': currentLearningProgress,
+      'wordLearning': wordLearning,
     };
     String linkTo = firebaseLink + idUser + '/learningProgress.json';
     http.patch(
@@ -89,17 +87,20 @@ class DatabaseServerHandler {
     );
   }
 
-  void updateLearnSetting(idUser){
+  void updateLearnSetting(idUser) async{
     print("update LearningSetting");
+    //LearnSetting learnSetting;
     Time reminder = Time(hour: 6, minute: 10);
-    LearnSetting learnSetting = LearnSetting(accent: "Vietnamese",
+    LearnSetting learnSetting1 = LearnSetting(accent: "Vietnamese",
       practiceGoal: 15,
       reminder: reminder,
       translation: "Vietnamese",
       );
-    Map<String, dynamic> toJson() => {
-      'learnSetting': learnSetting,
-    };
+    List<dynamic> learnSetting2 = await DatabaseLocalHelper.instance.getLearningSetting();
+    Map<String, dynamic> toJson() =>
+        {
+          'learnSetting': learnSetting1,
+        };
     String linkTo = firebaseLink + idUser + ".json" ;
     http.patch(
       linkTo,
@@ -107,14 +108,15 @@ class DatabaseServerHandler {
     );
   }
 
-  void updateUserPrivateInformation(idUser){
+  void updateUserPrivateInformation(idUser) async{
     print("update UserPrivateInformation");
-    UserPrivateInformation userPrivateInformation = UserPrivateInformation(age: 21,
-      avatarUrl: "https://ibb.co/T0BPtr9",
-      email: "kisibongdem@gmail.com",
-      nativeLanguage: "Vietnamese",
-      userName: "Kị Sĩ Bóng Đêm",
-    );
+    // UserPrivateInformation userPrivateInformation = UserPrivateInformation(age: 21,
+    //   avatarUrl: "https://ibb.co/T0BPtr9",
+    //   email: "kisibongdem@gmail.com",
+    //   nativeLanguage: "Vietnamese",
+    //   userName: "Kị Sĩ Bóng Đêm",
+    // );
+    List<dynamic> userPrivateInformation = await DatabaseLocalHelper.instance.getUserPrivateInformation();
     Map<String, dynamic> toJson() => {
       'userPrivateInformation': userPrivateInformation,
     };

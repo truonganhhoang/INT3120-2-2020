@@ -135,8 +135,12 @@ class AuthService {
             reminder: Time(hour: 0, minute: 0),
           ),
         );
+        // Up data to Firebase
         DatabaseServerHandler.instance.postUser(newUser);
-        // Now we add newUser
+        // Get data to DB local
+        rawJson = jsonEncode(newUser.toJson());
+        print(rawJson);
+        AppManager.instance.setAppUser(newUser, rawJson);
       }
     });
   }

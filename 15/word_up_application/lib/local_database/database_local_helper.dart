@@ -14,6 +14,7 @@ class DatabaseLocalHelper {
   static final tableExamples = 'examples';
   static final tableImages = 'images';
   static final tableUsers = 'users';
+  static final tableUserLearing = 'user_learning';
   static final tableQuoteExamples = 'quote_examples';
   static final tableWordKnew = 'word_knew';
   static final tableWordFarvorite = 'word_favorite';
@@ -460,6 +461,101 @@ class DatabaseLocalHelper {
     for (int i = 0; i < resultMapList.length; i++) {
       words.add(Word.fromMapObject(resultMapList[i]));
     }
+    return words;
+  }
+
+  // Trinh Xuan Trinh thêm truy vấn lấy danh sách id
+
+  // Get Learn To Words
+  Future <List<dynamic>> getToLearnWords() async {
+    Database db = await instance.database;
+    var resultMapList = await db.rawQuery(
+      'SELECT * FROM $tableWordToLearn ',
+    );
+
+    List<dynamic> words = new List();
+    words.add(0);
+    for (int i = 0; i < resultMapList.length; i++) {
+      words.add(resultMapList[i]["id_word"]);
+    }
+    //print(words);
+    return words;
+  }
+
+  // Get Knew Words
+  Future <List<dynamic>> getKnewWords() async {
+    Database db = await instance.database;
+    var resultMapList = await db.rawQuery(
+      'SELECT * FROM $tableWordKnew ',
+    );
+
+    List<dynamic> words = new List();
+    words.add(0);
+    for (int i = 0; i < resultMapList.length; i++) {
+      words.add(resultMapList[i]["id_word"]);
+    }
+    //print(words);
+    return words;
+  }
+
+  // Get To Favorite Words
+  Future <List<dynamic>> getFavoriteWords() async {
+    Database db = await instance.database;
+    var resultMapList = await db.rawQuery(
+      'SELECT * FROM $tableWordFarvorite WHERE $columnIsFavorite = 1',
+    );
+    List<dynamic> words = new List();
+    words.add(0);
+    for (int i = 0; i < resultMapList.length; i++) {
+        words.add(resultMapList[i]["id_word"]);
+    }
+    //print(words);
+    return words;
+  }
+
+  // Get To Learning Words
+  Future <List<dynamic>> getLearningWords() async {
+    Database db = await instance.database;
+    var resultMapList = await db.rawQuery(
+      'SELECT * FROM $tableWordLearning ',
+    );
+
+    List<dynamic> words = new List();
+    words.add(0);
+    for (int i = 0; i < resultMapList.length; i++) {
+      words.add(resultMapList[i]);
+    }
+    print(words);
+    return words;
+  }
+
+  // Get Learning Setting
+  Future <List<dynamic>> getLearningSetting() async {
+    Database db = await instance.database;
+    var resultMapList = await db.rawQuery(
+      'SELECT * FROM $tableUserLearing ',
+    );
+
+    List<dynamic> words = new List();
+    for (int i = 0; i < resultMapList.length; i++) {
+      words.add(resultMapList[i]);
+    }
+    print(words);
+    return words;
+  }
+
+  // Get UserPrivateInformation
+  Future <List<dynamic>> getUserPrivateInformation() async {
+    Database db = await instance.database;
+    var resultMapList = await db.rawQuery(
+      'SELECT * FROM $tableUsers ',
+    );
+
+    List<dynamic> words = new List();
+    for (int i = 0; i < resultMapList.length; i++) {
+      words.add(resultMapList[i]);
+    }
+    print(words);
     return words;
   }
 }

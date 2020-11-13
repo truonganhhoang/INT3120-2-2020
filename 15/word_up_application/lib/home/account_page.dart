@@ -3,12 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:word_up_application/services/auth_service.dart';
+import 'package:word_up_application/services/authentication_screen.dart';
 import 'package:word_up_application/size_config.dart';
+import 'package:word_up_application/user.dart';
 import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
+import '../app_manager.dart';
+import '../loading.dart';
 
 class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AppUser user = AppManager.instance.appUser;
+    if(user == null){
+      user = AppUser(
+        userPrivateInformation: UserPrivateInformation(
+            email: 'englishvocab@gmail.com',
+            userName: 'English Vocab'
+        ),
+      );
+    }
+
     return Material(
       child: Container(
         width: SizeConfig.screenWidth / 3 * 2.3,
@@ -20,13 +34,13 @@ class AccountPage extends StatelessWidget {
               children: <Widget>[
                 new UserAccountsDrawerHeader(
                   accountName: new Text(
-                    "E Vocab",
+                    user.userPrivateInformation.userName,
                     style: TextStyle(
                         fontSize: 2.4 * SizeConfig.textMultiplier,
                         color: Colors.white),
                   ),
                   accountEmail: new Text(
-                    "evocab15@gmail.com",
+                    user.userPrivateInformation.email,
                     style: TextStyle(
                         fontSize: 1.8 * SizeConfig.textMultiplier,
                         color: Colors.white),
@@ -40,7 +54,7 @@ class AccountPage extends StatelessWidget {
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.lightBlueAccent,
                     child: Text(
-                      'E',
+                      user.userPrivateInformation.userName[0],
                       style: TextStyle(
                           fontSize: 4 * SizeConfig.textMultiplier,
                           color: Colors.black),
