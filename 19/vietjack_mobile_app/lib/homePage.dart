@@ -74,7 +74,7 @@ class _homePageState extends State<homePage> {
                             child: new  Container(
                               decoration: new BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white
+                                  color: Colors.green[50]
                               ),
                               child: new Column(
                                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -90,6 +90,9 @@ class _homePageState extends State<homePage> {
                                   new Expanded(
                                     flex: 4,
                                     child: new Container(
+                                      decoration: new BoxDecoration(
+                                        color: Colors.green[50]
+                                      ),
                                       margin: EdgeInsets.fromLTRB(7,0,7,7),
                                       child: Center(
                                         child: new Text(

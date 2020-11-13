@@ -11,7 +11,7 @@ void main() {
   runApp(new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.green,
           buttonColor: Colors.yellow,
           scaffoldBackgroundColor: Colors.brown[50],
       ),

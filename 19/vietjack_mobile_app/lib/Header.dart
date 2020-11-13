@@ -76,7 +76,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'GoodDog',
                           fontSize: 45,
-                          color: Colors.pink[200]),
+                          color: Colors.green[400]),
                     ),
                   )),
             ),
