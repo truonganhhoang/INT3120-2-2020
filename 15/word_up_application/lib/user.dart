@@ -7,11 +7,12 @@ class AppUser {
   LearnSetting learnSetting;
   LearningProgress learningProgress;
 
-  AppUser(
-      {this.idUser,
-      this.userPrivateInformation,
-      this.learningProgress,
-      this.learnSetting});
+  AppUser({
+    this.idUser,
+    this.userPrivateInformation,
+    this.learningProgress,
+    this.learnSetting,
+  });
 
   Map<String, dynamic> toJson() => {
         'idUser': this.idUser,
@@ -156,7 +157,7 @@ class Time {
 
 // This is an example
 void main(List<String> args) {
- /* This is a test */
+  /* This is a test */
   // Define a User
   AppUser user = new AppUser(
     idUser: '822817271',
@@ -165,31 +166,40 @@ void main(List<String> args) {
         avatarUrl: 'https://ibb.co/T0BPtr9',
         email: 'truong@gmail.com',
         nativeLanguage: 'Vietnamese',
-        userName: 'Truong'
-    ),
-
-    learningProgress: LearningProgress(
-        wordFavorite: [1,2,9,10],
-        wordToLearn: [1,4,5,7,8,9],
-        wordKnew: [10,12,15],
-        wordLearning: [
-          WordLearning(
-            wordId: 2,
-            reviewDate: 3,
-            reviewTimes: 0,
-          ),
-          WordLearning(
-            wordId: 3,
-            reviewDate: 3,
-            reviewTimes: 1,
-          ),
-          WordLearning(
-            wordId: 6,
-            reviewDate: 3,
-            reviewTimes: 0,
-          ),
-        ]
-    ),
+        userName: 'Truong'),
+    learningProgress: LearningProgress(wordFavorite: [
+      1,
+      2,
+      9,
+      10
+    ], wordToLearn: [
+      1,
+      4,
+      5,
+      7,
+      8,
+      9
+    ], wordKnew: [
+      10,
+      12,
+      15
+    ], wordLearning: [
+      WordLearning(
+        wordId: 2,
+        reviewDate: 3,
+        reviewTimes: 0,
+      ),
+      WordLearning(
+        wordId: 3,
+        reviewDate: 3,
+        reviewTimes: 1,
+      ),
+      WordLearning(
+        wordId: 6,
+        reviewDate: 3,
+        reviewTimes: 0,
+      ),
+    ]),
     learnSetting: LearnSetting(
       accent: 'British',
       practiceGoal: 20, // 20 words per day.
@@ -202,7 +212,8 @@ void main(List<String> args) {
   print(json.toString());
 
   // From json to object:
-  String jsonString = '{"idUser":"12","userPrivateInformation":{"age":15,"avatarUrl":"https://ibb.co/T0BPtr9","email":"truong@gmail.com","nativeLanguage":"Vietnamese","userName":"Truong"},"learnSetting":{"accent":"British","practiceGoal":20,"reminder":{"hour":6,"minute":0},"translation":null},"learningProgress":{"wordFavorite":[1,2,9,10],"wordToLearn":[1,4,5,7,8,9],"wordKnew":[{"reviewDays":3,"reviewTimes":0,"wordId":2},{"reviewDays":3,"reviewTimes":1,"wordId":3},{"reviewDays":3,"reviewTimes":0,"wordId":6}]}}';
+  String jsonString =
+      '{"idUser":"12","userPrivateInformation":{"age":15,"avatarUrl":"https://ibb.co/T0BPtr9","email":"truong@gmail.com","nativeLanguage":"Vietnamese","userName":"Truong"},"learnSetting":{"accent":"British","practiceGoal":20,"reminder":{"hour":6,"minute":0},"translation":null},"learningProgress":{"wordFavorite":[1,2,9,10],"wordToLearn":[1,4,5,7,8,9],"wordKnew":[{"reviewDays":3,"reviewTimes":0,"wordId":2},{"reviewDays":3,"reviewTimes":1,"wordId":3},{"reviewDays":3,"reviewTimes":0,"wordId":6}]}}';
   Map jsonMap = jsonDecode(jsonString);
   AppUser user1;
   user1 = AppUser.fromJson(jsonMap);

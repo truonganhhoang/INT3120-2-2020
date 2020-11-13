@@ -18,6 +18,8 @@ import 'package:word_up_application/user_profile_screen/select_name_screen.dart'
 import 'package:word_up_application/user_profile_screen/select_practice_goal_screen.dart';
 import 'package:word_up_application/user_profile_screen/select_reminder_screen.dart';
 
+import '../app_manager.dart';
+
 class UserProfileScreen extends StatefulWidget {
   //AppUser user;
 
@@ -32,59 +34,62 @@ int numberOfLearningWords;
 bool isSelectImage = false;
 String imagePath;
 
-AppUser user = new AppUser(
-  idUser: AuthService.instance.auth.currentUser.uid,
-  userPrivateInformation: UserPrivateInformation(
-      age: 15,
-      avatarUrl: AuthService.instance.auth.currentUser.photoURL,
-      email: 'truong@gmail.com',
-      nativeLanguage: 'Vietnamese',
-      userName: 'Truong'),
-  learningProgress: LearningProgress(wordFavorite: [
-    1,
-    2,
-    9,
-    10
-  ], wordToLearn: [
-    1,
-    4,
-    5,
-    7,
-    8,
-    9
-  ], wordKnew: [
-    10,
-    12,
-    15
-  ], wordLearning: [
-    WordLearning(
-      wordId: 2,
-      reviewDate: 3,
-      reviewTimes: 0,
-    ),
-    WordLearning(
-      wordId: 3,
-      reviewDate: 3,
-      reviewTimes: 1,
-    ),
-    WordLearning(
-      wordId: 6,
-      reviewDate: 3,
-      reviewTimes: 0,
-    ),
-  ]),
-  learnSetting: LearnSetting(
-    accent: 'British',
-    practiceGoal: 20, // 20 words per day.
-    reminder: Time(hour: 6, minute: 0),
-  ),
-);
+AppUser user;
+
+// AppUser user = new AppUser(
+//   idUser: AuthService.instance.auth.currentUser.uid,
+//   userPrivateInformation: UserPrivateInformation(
+//       age: 15,
+//       avatarUrl: AuthService.instance.auth.currentUser.photoURL,
+//       email: 'truong@gmail.com',
+//       nativeLanguage: 'Vietnamese',
+//       userName: 'Truong'),
+//   learningProgress: LearningProgress(wordFavorite: [
+//     1,
+//     2,
+//     9,
+//     10
+//   ], wordToLearn: [
+//     1,
+//     4,
+//     5,
+//     7,
+//     8,
+//     9
+//   ], wordKnew: [
+//     10,
+//     12,
+//     15
+//   ], wordLearning: [
+//     WordLearning(
+//       wordId: 2,
+//       reviewDate: 3,
+//       reviewTimes: 0,
+//     ),
+//     WordLearning(
+//       wordId: 3,
+//       reviewDate: 3,
+//       reviewTimes: 1,
+//     ),
+//     WordLearning(
+//       wordId: 6,
+//       reviewDate: 3,
+//       reviewTimes: 0,
+//     ),
+//   ]),
+//   learnSetting: LearnSetting(
+//     accent: 'British',
+//     practiceGoal: 20, // 20 words per day.
+//     reminder: Time(hour: 6, minute: 0),
+//   ),
+// );
 
 class _UserProfileScreen extends State<UserProfileScreen> {
   bool isLogin;
 
   @override
   void initState() {
+    user = AppManager.instance.appUser;
     super.initState();
     dbHelper.getCountKnewWords().then((res) {
       setState(() {
@@ -115,8 +120,14 @@ class _UserProfileScreen extends State<UserProfileScreen> {
   }
 
   @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
   // ignore: missing_return
   Widget build(BuildContext context) {
+  //  print(user.idUser);
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -392,7 +403,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                                   color: Colors.white),
                               child: MaterialButton(
                                 onPressed: () {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>

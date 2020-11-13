@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:word_up_application/app_manager.dart';
 import 'package:word_up_application/services/database_server_handler.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -49,7 +50,7 @@ class AuthService {
 
       print('signInWithGoogle succeeded: $user');
 
-      syncDataUser(user);
+      loginSuccessful();
       return '$user';
     }
     return null;
@@ -57,7 +58,7 @@ class AuthService {
 
   Future<void> signOutGoogle() async {
     await googleSignIn.signOut();
-
+    AppManager.instance.appUser = null;
     print("User Signed Out");
   }
 
@@ -82,24 +83,29 @@ class AuthService {
       assert(user.uid == currentUser.uid);
 
       print('signInWithFacebook succeeded: $user');
-      syncDataUser(user);
+      loginSuccessful();
       return '$user';
     }
     return null;
   }
 
-  void syncDataUser(user) {
+  void loginSuccessful(){
+    syncDataUser();
+  }
+  void syncDataUser() {
+    String rawJson;
+    var user = auth.currentUser;
     final ref =
         FirebaseDatabase.instance.reference().child("Users").child(user.uid);
     ref.once().then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> values = snapshot.value;
       if (values != null) {
         print("Exist");
-        String rawJson = jsonEncode(values);
-        print(rawJson);
+        rawJson = jsonEncode(values);
         Map map = jsonDecode(rawJson);
-        AppUser currentUser;
-        currentUser = AppUser.fromJson(map);
+        AppUser currentAppUser;
+        currentAppUser = AppUser.fromJson(map);
+        AppManager.instance.setAppUser(currentAppUser, rawJson);
         // Now we have currentUser
       } else {
         print("Not Exist");
