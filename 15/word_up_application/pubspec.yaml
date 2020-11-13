@@ -75,6 +75,7 @@ flutter:
     - assets/sprites/
     - assets/images/
     - assets/audios/
+    - assets/audios_games/
     - assets/credentials.json
     - assets/WordUpDB2020.db
 

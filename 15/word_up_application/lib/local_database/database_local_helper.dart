@@ -450,4 +450,16 @@ class DatabaseLocalHelper {
     await db.rawQuery('DELETE FROM $tableWordToLearn');
     await db.rawQuery('DELETE FROM $tableWordLearning');
   }
+
+  Future<List<Word>> getWordsForGame(int numbersWords) async {
+    Database db = await instance.database;
+    var resultMapList = await db.rawQuery(
+        'SELECT w.$columnIdWord, $columnWord, $columnType, $columnPronunUK, $columnSoundUK, $columnPronunUS, $columnSoundUS, $columnDefinition, $columnMeanCard FROM $tableWord w JOIN $tableWordType wt ON w.$columnIdWord = wt.$columnIdWord  LIMIT ?',
+        [numbersWords]);
+    List<Word> words = new List();
+    for (int i = 0; i < resultMapList.length; i++) {
+      words.add(Word.fromMapObject(resultMapList[i]));
+    }
+    return words;
+  }
 }

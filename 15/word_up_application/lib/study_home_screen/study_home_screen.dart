@@ -70,6 +70,10 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
     super.setState(fn);
   }
 
+  @override dispose(){
+    super.dispose();
+  }
+
   Future<void> _readData() async {
     listWordsNeedToLearn =
         await DatabaseLocalHelper.instance.getListToLearnWords();
@@ -121,11 +125,13 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.numberReviewedWordsRemainToday +
-        widget._numberToLearnWordsRemain == 0 && studyFinished == false){
-      studyFinished = true;
-      print('xx');
-      widget.listBoxWords.add(_showSelectWordsOption());
+    if(!isLoading) {
+      if (widget.numberReviewedWordsRemainToday +
+          widget._numberToLearnWordsRemain == 0 && studyFinished == false) {
+        studyFinished = true;
+        print('xx');
+        widget.listBoxWords.add(_showSelectWordsOption());
+      }
     }
     widget._currentIndex = _current;
     return Scaffold(
