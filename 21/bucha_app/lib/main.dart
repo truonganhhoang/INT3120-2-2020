@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/widgets/dictionary/dictionary.dart';
 import 'widgets/dictionary/dictionary.dart';
+import 'widgets/sentence/sentence.dart';
 import 'widgets/Grammar/GrammarPage.dart';
 import 'widgets/options/OptionClass.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -161,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                 SmailOntionButton(
                   imageBackground: 0xffF1B73C,
                   image_caption: "Mẫu Câu",
-                  linkPage: Dictionary(),
+                  linkPage: Sentence(),
                 ),
                 SmailOntionButton(
                   imageBackground: 0xffFF3D00,
