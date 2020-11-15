@@ -19,23 +19,27 @@ class KienThucScreen extends StatefulWidget {
   KienThucScreen(this.calculation);
 
   @override
-  _KienThucScreen createState() => _KienThucScreen();
+  _KienThucScreen createState() => _KienThucScreen(calculation);
 }
 
 class _KienThucScreen extends State<KienThucScreen> {
   int chosenSection;
+  String calculation;
 
+  _KienThucScreen(String cal) {
+    this.calculation = cal;
+  }
   void _navigateBack(BuildContext context) {
     if (Navigator.of(context).canPop()) {
       Navigator.of(context).pop();
     }
     Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) =>
-            new GameModeScreen(widget.calculation)));
+            new GameModeScreen(this.calculation)));
   }
 
   Section(int number1) {
-    getData(number1, widget.calculation).then((val) => setState(() {
+    getData(number1, this.calculation).then((val) => setState(() {
           chosenSection = number1;
           maps = val;
         }));
@@ -82,13 +86,13 @@ class _KienThucScreen extends State<KienThucScreen> {
     String Section8 = "images/Book Section 8.png";
     String Section9 = "images/Book Section 9.png";
 
-    if (widget.calculation == "plus") {
+    if (this.calculation == "plus") {
       calculateIcon = " + ";
-    } else if (widget.calculation == 'minus') {
+    } else if (this.calculation == 'minus') {
       calculateIcon = " - ";
-    } else if (widget.calculation == 'duplicate') {
+    } else if (this.calculation == 'duplicate') {
       calculateIcon = " x ";
-    } else if (widget.calculation == 'divide') {
+    } else if (this.calculation == 'divide') {
       calculateIcon = " : ";
     }
 
@@ -111,16 +115,16 @@ class _KienThucScreen extends State<KienThucScreen> {
     });
 
     if (maps.isEmpty) {
-      if (widget.calculation == "plus") {
+      if (this.calculation == "plus") {
         calculationSet =
             "_ + 1 = _   _ + 2 = _ \n\n_ + 3 = _   _ + 4 = _ \n\n_ + 5 = _   _ + 6 = _ \n\n_ + 7 = _   _ + 8 = _ \n\n_ + 9 = _   _ + 10 = _";
-      } else if (widget.calculation == "minus") {
+      } else if (this.calculation == "minus") {
         calculationSet =
             "_ - 1 = _   _ - 2 = _ \n\n_ - 3 = _   _ - 4 = _ \n\n_ - 5 = _   _ - 6 = _ \n\n_ - 7 = _   _ - 8 = _ \n\n_ - 9 = _   _ - 10 = _";
-      } else if (widget.calculation == "duplicate") {
+      } else if (this.calculation == "duplicate") {
         calculationSet =
             "_ x 1 = _   _ x 2 = _ \n\n_ x 3 = _   _ x 4 = _ \n\n_ x 5 = _   _ x 6 = _ \n\n_ x 7 = _   _ x 8 = _ \n\n_ x 9 = _   _ x 10 = _";
-      } else if (widget.calculation == "divide") {
+      } else if (this.calculation == "divide") {
         calculationSet =
             "_ : 1 = _   _ : 2 = _ \n\n_ : 3 = _   _ : 4 = _ \n\n_ : 5 = _   _ : 6 = _ \n\n_ : 7 = _   _ : 8 = _ \n\n_ : 9 = _   _ : 10 = _";
       }
