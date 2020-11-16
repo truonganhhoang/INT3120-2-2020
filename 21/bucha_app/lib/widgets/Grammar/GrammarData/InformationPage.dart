@@ -1,40 +1,28 @@
 import 'package:bucha_app/ButtonBack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/InformationTitle.dart';
 
 class InformationPage extends StatefulWidget {
   final String name;
-  final List<String> rule;
-  final List<String> usage;
+  final List<InformationTitle> title;
 
-  InformationPage({this.name, this.rule, this.usage});
+  InformationPage({this.name, this.title});
 
   @override
   _InformationPageState createState() => _InformationPageState();
 }
 
 class _InformationPageState extends State<InformationPage> {
-  Widget getTextWidgets(List<String> stringList) {
-    List<Widget> widgetList = new List<Widget>();
-    for (var i = 0; i < stringList.length; i++) {
-      widgetList.add(new Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          stringList[i],
-          textAlign: TextAlign.justify,
-          style: TextStyle(
-            color: Colors.yellow,
-            fontSize: 16.0,
-          ),
-        ),
-      ));
-    }
-    return new Align(
-        alignment: Alignment.centerLeft,
-        child: new Column(
-          children: widgetList
-        ),
+  ListView listView = ListView();
+
+  @override
+  void initState() {
+    listView = ListView.builder(
+      itemBuilder: (BuildContext context, int index) => widget.title[index],
+      itemCount: widget.title.length,
     );
+    super.initState();
   }
 
   @override
@@ -74,31 +62,8 @@ class _InformationPageState extends State<InformationPage> {
                   Container(
                     margin: EdgeInsets.all(10.0),
                     child: SizedBox(
-                      height: 550.0,
-                      child: ListView(
-                        children: <Widget>[
-                          Text(
-                            '1. Công thức',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                              fontSize: 18.0,
-                              color: Colors.lightBlueAccent,
-                            ),
-                          ),
-                          getTextWidgets(widget.rule),
-                          Text(
-                            '2. Cách dùng',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                              fontSize: 18.0,
-                              color: Colors.lightBlueAccent,
-                            ),
-                          ),
-                          getTextWidgets(widget.usage),
-                        ],
-                      ),
+                      height: 480.0,
+                      child: listView,
                     ),
                   ),
                 ],

@@ -3,9 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/widgets/dictionary/dictionary.dart';
 import 'widgets/dictionary/dictionary.dart';
-import 'widgets/Grammar/GrammarPage.dart';
+import 'widgets/Grammar/GrammarData/GrammarPage.dart';
 import 'widgets/options/OptionClass.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +24,6 @@ class OptionButton extends StatelessWidget {
   final int colorBackgorund;
   final String textButton;
   final StatefulWidget linkPage;
-
-
 
   OptionButton({this.colorBackgorund, this.textButton,this.linkPage});
 
