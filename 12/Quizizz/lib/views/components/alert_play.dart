@@ -34,7 +34,55 @@ class PopUp extends StatelessWidget {
             Buttons(
               size: size,
               quiz: quiz,
+              topic: topic
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Resume extends StatelessWidget {
+  Resume(
+      {this.imagePath,
+      this.size,
+      @required this.quiz,
+      this.topic,
+      this.answered,
+      this.saveGameID});
+
+  final Quiz quiz;
+  final String imagePath;
+  final Size size;
+  final Topic topic;
+  final String saveGameID;
+  final List<int> answered;
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      child: Container(
+        height: size.height * 2 / 3,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Title(
+              size: size,
+              imagePath: imagePath,
+              quiz: quiz,
+            ),
+            Buttons(
+              size: size,
+              quiz: quiz,
               topic: topic,
+              saveGameID: saveGameID,
+              answered: answered,
             ),
           ],
         ),
@@ -44,12 +92,20 @@ class PopUp extends StatelessWidget {
 }
 
 class Buttons extends StatelessWidget {
-  const Buttons({Key key, @required this.size, this.quiz, this.topic})
+  const Buttons(
+      {Key key,
+      @required this.size,
+      this.quiz,
+      this.topic,
+      this.saveGameID,
+      this.answered})
       : super(key: key);
 
   final Size size;
   final Quiz quiz;
   final Topic topic;
+  final String saveGameID;
+  final List<int> answered;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +125,8 @@ class Buttons extends StatelessWidget {
                             builder: (context) => QuizPage(
                                   quiz: quiz,
                                   topic: topic,
+                                  ans: answered,
+                                  saveGameID: saveGameID,
                                 )));
                   },
                   padding: EdgeInsets.all(0),
@@ -87,7 +145,7 @@ class Buttons extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Let's play!",
+                          saveGameID != null ? "Resume Game" : "Let's play!",
                           style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                         Image.asset("assets/icons/play-button.png")
@@ -134,22 +192,25 @@ class Buttons extends StatelessWidget {
                               );
                           })));
             },
-            child: Container(
-              width: size.width * 2 / 5,
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: Colors.purple, borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Challenge \nFriends",
-                    style: TextStyle(fontSize: 14, color: Colors.white),
+            child: saveGameID != null
+                ? SizedBox()
+                : Container(
+                    width: size.width * 2 / 5,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.purple,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Challenge \nFriends",
+                          style: TextStyle(fontSize: 14, color: Colors.white),
+                        ),
+                        Image.asset("assets/icons/friends.png")
+                      ],
+                    ),
                   ),
-                  Image.asset("assets/icons/friends.png")
-                ],
-              ),
-            ),
           ),
         ],
       ),

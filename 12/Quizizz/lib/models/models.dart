@@ -65,17 +65,17 @@ class User {
 
 class SaveGame {
   final String quizID;
-  final List<int> listAns;
-  final bool isDone;
+  final List<dynamic> listAns;
   final String userID;
+  final String key;
 
-  SaveGame({this.quizID, this.listAns, this.isDone, this.userID});
-  factory SaveGame.fromJson(Map<String, dynamic> json) {
+  SaveGame({this.quizID, this.listAns, this.userID, this.key});
+  factory SaveGame.fromJson(Map<String, dynamic> json, String key) {
     return SaveGame(
         quizID: json["QuizID"],
         listAns: json["ListAnsweredQuest"],
-        isDone: json["QuizDone"],
-        userID: json["UserID"]);
+        userID: json["UserID"],
+        key: key);
   }
 }
 
@@ -83,4 +83,23 @@ class AnswerData {
   final int chooseAns;
   final int correctAns;
   AnswerData({this.chooseAns, this.correctAns});
+}
+
+class DoneQuiz {
+  final String quizID;
+  final int wrongAns;
+  final int correctAns;
+  final String userID;
+  final String key;
+  DoneQuiz(
+      {this.quizID, this.wrongAns, this.correctAns, this.userID, this.key});
+
+  factory DoneQuiz.fromJson(Map<String, dynamic> json, String key) {
+    return DoneQuiz(
+        quizID: json["QuizID"],
+        wrongAns: json["WrongAns"],
+        correctAns: json["RightAns"],
+        userID: json["UserID"],
+        key: key);
+  }
 }

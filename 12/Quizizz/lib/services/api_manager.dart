@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class API_Manager {
   Future<List<Topic>> fetchTopic() async {
     var urlGetTopic = url + "/v1/topic/GetAll";
-    print(urlGetTopic);
     final response = await http.get(urlGetTopic);
     List<Topic> topics = List<Topic>();
     if (response.statusCode == 200) {
@@ -96,7 +95,7 @@ class API_Manager {
     }
   }
 
-  Future<SaveGame> postGame(
+  Future<void> postGame(
       String quizID, List<int> listAns, bool isDone, String userID) async {
     var urlPostGame = url + "/v1/save-game/PostSaveGame";
     final headers = {'Content-Type': 'application/json'};
@@ -114,6 +113,81 @@ class API_Manager {
     print("post game");
     if (response.statusCode == 200) {
       print("post save game ok");
+    }
+  }
+
+  Future<List<SaveGame>> fetchSaveGame(String userID) async {
+    var urlGetSaveGame = url + "/v1/save-game/GetAllSaveGameOfUser/" + userID;
+    final response = await http.get(urlGetSaveGame);
+    List<SaveGame> games = List<SaveGame>();
+    if (response.statusCode == 200) {
+      Map list = json.decode(response.body);
+      list.forEach((key, value) {
+        games.add(SaveGame.fromJson(value, key));
+        print(key);
+      });
+      return games;
+    }
+  }
+
+  Future<Quiz> fetchQuizByID(String quizID) async {
+    var urlGetQuiz = url + "/v1/quiz/GetAQuiz/" + quizID;
+    final response = await http.get(urlGetQuiz);
+    print("fetch quiz by id");
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Quiz.fromJson(json.decode(response.body), quizID);
+    }
+  }
+
+  Future<void> postCompletedQuiz(
+      String quizID, String userID, int correctAns, int wrongAns) async {
+    var urlPostQuiz = url + "/v1/quiz/PostDoneQuiz";
+    final headers = {'Content-Type': 'application/json'};
+    Map<String, dynamic> body = {
+      "WrongAns": wrongAns,
+      "RightAns": correctAns,
+      "QuizID": quizID,
+      "UserID": userID
+    };
+    String jsonBody = json.encode(body);
+    final encoding = Encoding.getByName('utf-8');
+
+    final response = await http.post(urlPostQuiz,
+        headers: headers, body: jsonBody, encoding: encoding);
+    print("post quiz done");
+    if (response.statusCode == 200) {
+      print("post quiz done ok");
+    }
+  }
+
+  Future<List<DoneQuiz>> fetchDoneQuiz(String userID) async {
+    var urlGetDoneQuiz = url + "/v1/quiz/GetAllDoneQuizOfUser/" + userID;
+    final response = await http.get(urlGetDoneQuiz);
+    print("fetch done quiz game");
+    List<DoneQuiz> quiz = List<DoneQuiz>();
+    if (response.statusCode == 200) {
+      Map list = json.decode(response.body);
+      list.forEach((key, value) {
+        quiz.add(DoneQuiz.fromJson(value, key));
+      });
+      return quiz;
+    }
+  }
+
+  Future<void> updateRunQuiz(List<int> ans, String key) async {
+    var urlPutRunQuiz = url + "/v1/user/UpdateSaveGame/" + key;
+    final headers = {'Content-Type': 'application/json'};
+    Map<String, dynamic> body = {
+      "ListAnsweredQuest": ans,
+    };
+    String jsonBody = json.encode(body);
+    final encoding = Encoding.getByName('utf-8');
+    final response = await http.put(urlPutRunQuiz,
+        headers: headers, body: jsonBody, encoding: encoding);
+    print("update run quiz");
+    if (response.statusCode == 200) {
+      print("update success");
     }
   }
 }

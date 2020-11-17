@@ -13,7 +13,10 @@ class AllQuiz extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar(namePage: "Home", height: size.height),
-      body: ListAllQuiz(topic: topic, size: size,),
+      body: ListAllQuiz(
+        topic: topic,
+        size: size,
+      ),
     );
   }
 }
@@ -28,24 +31,39 @@ class ListAllQuiz extends StatefulWidget {
 }
 
 class _ListAllQuizState extends State<ListAllQuiz> {
-  Future<List<Quiz>> _quizzes;
+  var _init = true;
+  var _isLoading = false;
+  List<Quiz> quizzes;
   @override
   void initState() {
-    _quizzes = API_Manager().fetchQuizByTopic(widget.topic.key);
+    // TODO: implement didChangeDependencies
     super.initState();
+    if (_init) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
+    API_Manager()
+        .fetchQuizByTopic(widget.topic.key)
+        .then((value) => quizzes = value)
+        .then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    _init = false;
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: FutureBuilder(
-        future: _quizzes,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Quiz> quizzes = snapshot.data ?? [];
-            return GridView.builder(
+        padding: const EdgeInsets.only(top: 10),
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : GridView.builder(
                 shrinkWrap: true,
                 // physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,15 +73,6 @@ class _ListAllQuizState extends State<ListAllQuiz> {
                       size: widget.size,
                       imagePath: "assets/images/solar.png",
                       quiz: quizzes[index],
-                    ));
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          } else
-            return SpinKitDualRing(
-              color: Colors.blue,
-            );
-        },
-      ),
-    );
+                    )));
   }
 }

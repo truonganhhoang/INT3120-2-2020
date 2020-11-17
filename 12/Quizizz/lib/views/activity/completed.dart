@@ -3,6 +3,7 @@ import 'package:quiztest/models/models.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quiztest/services/user.dart';
 
 class Completed extends StatelessWidget {
   @override
@@ -26,24 +27,51 @@ class ListCompleted extends StatefulWidget {
 }
 
 class _ListCompletedState extends State<ListCompleted> {
-  Future<List<Quiz>> _quizzes;
+  List<DoneQuiz> quizDones = List<DoneQuiz>();
+  List<Quiz> quizzes = List<Quiz>();
+  var _init = true;
+  var _isLoadingQuiz = false;
 
   @override
   void initState() {
-    _quizzes = API_Manager().fetchQuizByTopic("2wZYm3a7hLcOyFnB0tEC");
-    super.initState();
+    if (_init) {
+      setState(() {
+        _isLoadingQuiz = true;
+      });
+      UserSave().getUserID().then((userID) {
+        API_Manager().fetchDoneQuiz(userID).then((value) {
+          quizDones = value;
+          int i = 0;
+          quizDones.forEach((game) async {
+            await API_Manager()
+                .fetchQuizByID(game.quizID)
+                .then((quiz) => quizzes.add(quiz))
+                .then((_) => i++)
+                .then((_) {
+              if (i == quizDones.length) {
+                print(i);
+                setState(() {
+                  _isLoadingQuiz = false;
+                });
+              }
+            });
+            print(quizzes.length);
+          });
+        });
+      });
+    }
+    _init = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: FutureBuilder(
-        future: _quizzes,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Quiz> quizzes = snapshot.data ?? [];
-            return GridView.builder(
+    return _isLoadingQuiz
+        ? SpinKitDualRing(
+            color: Colors.blue,
+          )
+        : Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: GridView.builder(
                 shrinkWrap: true,
                 // physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -54,13 +82,6 @@ class _ListCompletedState extends State<ListCompleted> {
                       imagePath: "assets/images/solar.png",
                       quiz: quizzes[index],
                       percent: 0.2 + index * 0.2,
-                    ));
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          } else
-            return SpinKitDualRing(color: Colors.blue,);
-        },
-      ),
-    );
+                    )));
   }
 }
