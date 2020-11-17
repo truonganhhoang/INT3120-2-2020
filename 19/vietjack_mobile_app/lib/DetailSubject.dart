@@ -8,7 +8,15 @@ class DetailSubject extends StatefulWidget {
   _DetailSubjectState createState() => _DetailSubjectState();
   String grade;
   String nameSubject;
-
+  static String getTitle(String fullname){
+    int length = (fullname.indexOf('(')!=-1) ? fullname.indexOf('(') : fullname.length;
+    return fullname.substring(0,length).trim();
+  }
+  static String getSubtitle(String fullname){
+    int start = (fullname.indexOf('(') != -1) ? fullname.indexOf('(')+1 : 0;
+    int end = (fullname.indexOf(')') != -1) ? fullname.indexOf(')') : 0;
+    return fullname.substring(start,end).trim();
+  }
   DetailSubject({Key key, this.grade, this.nameSubject}) : super(key: key);
 }
 
@@ -20,15 +28,7 @@ class _DetailSubjectState extends State<DetailSubject> {
         await API.getListContent(widget.grade, widget.nameSubject);
     return listContent;
   }
-  String getTitle(String fullname){
-    int length = (fullname.indexOf('(')!=-1) ? fullname.indexOf('(') : fullname.length;
-    return fullname.substring(0,length);
-  }
-  String getSubtitle(String fullname){
-    int start = (fullname.indexOf('(') != -1) ? fullname.indexOf('(')+1 : 0;
-    int end = (fullname.indexOf(')') != -1) ? fullname.indexOf(')') : 0;
-    return fullname.substring(start,end);
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,14 +72,14 @@ class _DetailSubjectState extends State<DetailSubject> {
                               ),
                               title: new Text(
                                 //snapshot.data.docs[index].id,
-                                this.getTitle(snapshot.data.docs[index].id.toString()),
+                                DetailSubject.getTitle(snapshot.data.docs[index].id.toString()),
                                 style: new TextStyle(
                                     fontSize: 25,
                                     color: Colors.orange,
                                     fontWeight: FontWeight.w600),
                               ),
                               subtitle: new Text(
-                                this.getSubtitle(snapshot.data.docs[index].id.toString())
+                                  DetailSubject.getSubtitle(snapshot.data.docs[index].id.toString())
                               ),
                               trailing: Container(
                                   decoration: new BoxDecoration(
