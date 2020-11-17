@@ -1,6 +1,5 @@
-import 'dart:wasm';
-
 import 'package:flutter/material.dart';
+import 'package:vietjack_mobile_app/UI/ExamOnline.dart';
 
 class ExamsCard extends StatefulWidget {
   @override
@@ -39,26 +38,35 @@ class _ExamsCardState extends State<ExamsCard> {
                       style: TextStyle(fontSize: 20, color: Colors.black)),
                 ),
                 children: <Widget>[
-                  Container(
-                    height: 150,
-                    child: Row(
-                      children: [
-                        Container(
-                            width: cardWidth * 0.7,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text("TEST",
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.grey)),
-                            )),
-                        Container(
-                            width: cardWidth * 0.3,
-                            child: FlatButton(
-                              onPressed: () {},
-                              child: Text("Bắt đầu",
-                                  style: TextStyle(color: Colors.orange)),
-                            ))
-                      ],
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      height: 150,
+                      child: Row(
+                        children: [
+                          Container(
+                              width: cardWidth * 0.7,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                    "Khái quát văn học Việt Nam đầu cách mạng tháng 8 1945 đến thế kỉ XX",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey)),
+                              )),
+                          Container(
+                              width: cardWidth * 0.3,
+                              child: FlatButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ExamOnline()));
+                                },
+                                child: Text("Bắt đầu",
+                                    style: TextStyle(color: Colors.orange)),
+                              ))
+                        ],
+                      ),
                     ),
                   )
                 ],

@@ -41,8 +41,8 @@ class MakeCard extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          ExamsPicker(currentSubject: currentSubject)));
+                      builder: (context) => ExamsPicker(
+                          currentSubject: currentSubject, id: this.index + 1)));
             },
             child: Container(
               height: 75,
