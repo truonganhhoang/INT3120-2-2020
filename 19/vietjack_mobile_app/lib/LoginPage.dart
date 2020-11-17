@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 300,
                     height: 70,
                     child: new GoogleSignInButton(
+                      key: new Key("loginButton"),
                       onPressed: signIn,
                       darkMode: true,
                       centered: true,
@@ -79,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      key: new Key("test"),
       future: app,
       builder: (context, snapshot) {
         Widget w;

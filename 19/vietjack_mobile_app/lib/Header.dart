@@ -48,6 +48,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: new Key('contain'),
       decoration: BoxDecoration(
         color: Colors.brown[50],
         borderRadius: BorderRadius.only(
@@ -67,6 +68,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
             new Opacity(
               opacity: myOpacity,
               child: new Container(
+                  key: new Key('name'),
                   width: left,
                   height: 200,
                   child: Center(

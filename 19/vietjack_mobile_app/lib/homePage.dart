@@ -37,6 +37,7 @@ class _homePageState extends State<homePage> {
           centerTitle: true,
         ),
         body: CustomScrollView(
+          key: new Key('customScrollView'),
           slivers: <Widget>[
             new SliverList(
               delegate: new SliverChildListDelegate([
@@ -114,6 +115,7 @@ class _homePageState extends State<homePage> {
                         );
                       }
                       Widget gridSubject = new SliverPadding(
+                        key: new Key('grid view'),
                         padding: EdgeInsets.fromLTRB(10,30,10,0),
                         sliver: new SliverGrid.count(
                           crossAxisSpacing: 50,
