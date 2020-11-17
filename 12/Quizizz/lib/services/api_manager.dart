@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class API_Manager {
   Future<List<Topic>> fetchTopic() async {
     var urlGetTopic = url + "/v1/topic/GetAll";
-    print("fetch topic");
+    print(urlGetTopic);
     final response = await http.get(urlGetTopic);
     List<Topic> topics = List<Topic>();
     if (response.statusCode == 200) {
@@ -80,7 +80,7 @@ class API_Manager {
     }
   }
 
-    Future<String> getHostCode(String quizId) async {
+  Future<String> getHostCode(String quizId) async {
     var urlPost = url + "/v1/host/PostHost";
     final headers = {'Content-Type': 'application/json'};
     final pref = await SharedPreferences.getInstance();
