@@ -1,21 +1,20 @@
-import 'package:bucha_app/widgets/Grammar/InformationPage.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/InformationPage.dart';
 import 'package:flutter/material.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/InformationTitle.dart';
 
 class GrammarUnit extends StatelessWidget{
   final String name;
   final Color color;
-  final List<String> rule;
-  final List<String> usage;
+  final List<InformationTitle> title;
 
-  GrammarUnit({this.name, this.color, this.rule, this.usage});
+  GrammarUnit({this.name, this.color, this.title});
 
   void _navigateToInformationPage(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
       return InformationPage(
         name: this.name,
-        rule: this.rule,
-        usage: this.usage,
+        title: this.title,
       );
     }));
   }

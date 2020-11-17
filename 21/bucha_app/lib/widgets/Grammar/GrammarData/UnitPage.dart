@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bucha_app/widgets/Grammar/GrammarUnit.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarUnit.dart';
 import 'package:bucha_app/ButtonBack.dart';
 
 class UnitPage extends StatefulWidget {

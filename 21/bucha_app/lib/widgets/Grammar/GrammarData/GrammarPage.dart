@@ -1,12 +1,17 @@
-import 'package:bucha_app/widgets/Grammar/GrammarUnit.dart';
-import 'package:bucha_app/widgets/Grammar/GrammarOption.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarUnit.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarOption.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/Subtitle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bucha_app/Database.dart';
 import 'package:bucha_app/ButtonBack.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/InformationTitle.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/Information.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/Example.dart';
 
 class GrammarPage extends StatefulWidget {
+
   @override
   _GrammarPageState createState() => _GrammarPageState();
 }
@@ -47,12 +52,52 @@ class _GrammarPageState extends State<GrammarPage> {
   List<GrammarUnit> _retrieveUnitList(DocumentSnapshot document) {
     List units = List<GrammarUnit>();
     for (var grammar in document.get('grammar')) {
+      List<InformationTitle> informationTitles = new List<InformationTitle>();
+      for(var title in grammar['title']) {
+        List<Subtitle> subtitles = new List<Subtitle>();
+        for (var subtitle in title['subtitle']) {
+          List<Information> informations = new List<Information>();
+          for (var information in subtitle['information']) {
+            List<String> notes = new List<String>();
+            for (var note in information['note']) {
+              notes.add(note);
+            }
+            List<Example> examples = new List<Example>();
+            for (var example in information['example']) {
+              examples.add(
+                Example(
+                  name: example['name'],
+                  meaning: example['meaning'],
+                ),
+              );
+            }
+            informations.add(
+              Information(
+                name: information['name'],
+                example: examples,
+                note: notes,
+              ),
+            );
+          }
+          subtitles.add(
+            Subtitle(
+              name: subtitle['name'],
+              information: informations,
+            ),
+          );
+        }
+        informationTitles.add(
+          InformationTitle(
+            name: title['name'],
+            subtitle: subtitles,
+          ),
+        );
+      }
       units.add(
         GrammarUnit(
           name: grammar['name'],
           color: _optionColors[grammar['color_id']],
-          rule: grammar['rule'].cast<String>().toList(),
-          usage: grammar['usage'].cast<String>().toList(),
+          title: informationTitles,
         )
       );
     }
