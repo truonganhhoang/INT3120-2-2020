@@ -386,27 +386,32 @@ class Question extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      width: size.width * 0.8,
+      height: size.height * 0.4,
       padding: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          Container(
-              constraints: BoxConstraints(
-                  maxWidth: size.width * 2 / 3, maxHeight: size.height * 0.2),
-              child: Image(
-                image: NetworkImage(imagePath),
-                fit: BoxFit.cover,
-              )),
+          if (Image.network(imagePath) != null)
+            Container(
+                width: size.width * 0.8,
+                height: size.height * 0.2,
+                child: Image(
+                  image: NetworkImage(imagePath),
+                  fit: BoxFit.cover,
+                )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Text(
-              question,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            child: Center(
+              child: Text(
+                question,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           )
         ],

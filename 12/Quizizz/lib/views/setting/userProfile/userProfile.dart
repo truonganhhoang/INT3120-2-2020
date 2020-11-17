@@ -87,9 +87,11 @@ class UserProfile extends StatelessWidget {
                               ),
                             );
                           } else if (snapshot.hasError) {
-                            return Text(snapshot.error);
+                            return Text("${snapshot.error}");
                           } else
-                            return SpinKitDualRing(color: Colors.blue,);
+                            return SpinKitDualRing(
+                              color: Colors.blue,
+                            );
                         }),
                     SettingInfo(
                       title: "Grade",
