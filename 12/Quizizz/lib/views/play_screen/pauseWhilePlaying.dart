@@ -4,8 +4,11 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:quiztest/main.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/services/user.dart';
+import 'package:quiztest/views/play_screen/quiz_game.dart';
 import 'package:quiztest/views/setting/setting_music.dart';
 import 'package:quiztest/services/api_manager.dart';
+
+String _saveGameID;
 
 class PauseWhilePlaying extends StatefulWidget {
   PauseWhilePlaying(
@@ -14,13 +17,15 @@ class PauseWhilePlaying extends StatefulWidget {
       this.totalQuestions,
       this.answered,
       this.quizID,
-      this.userID})
+      this.userID,
+      this.saveGameID})
       : super(key: key);
   final int questionsRemaining;
   final int totalQuestions;
   final List<int> answered;
   final String quizID;
   final String userID;
+  final String saveGameID;
   @override
   _PauseWhilePlayingState createState() => _PauseWhilePlayingState();
 }
@@ -29,6 +34,9 @@ class _PauseWhilePlayingState extends State<PauseWhilePlaying> {
   @override
   void initState() {
     // TODO: implement initState
+    _saveGameID = widget.saveGameID;
+    print(widget.answered);
+    print(_saveGameID);
   }
 
   @override
@@ -226,12 +234,27 @@ class AlertWhilePlaying extends StatelessWidget {
             },
             child: Text("Cancel")),
         TextButton(
-          onPressed: () {
-            API_Manager().postGame(quizID, answered, false, userID);
-            print("API_Manager().postGame(quizID, answered, false, userID)");
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => Home()),
-                (Route<dynamic> route) => false);
+          onPressed: () async {
+            if (_saveGameID != null) {
+              print("answer update" + answered.toString());
+              await API_Manager()
+                  .updateRunQuiz(answered, _saveGameID)
+                  .then((_) {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Home()),
+                    (Route<dynamic> route) => false);
+              });
+              print("update");
+            } else {
+              await API_Manager()
+                  .postGame(quizID, answered, false, userID)
+                  .then((_) {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Home()),
+                    (Route<dynamic> route) => false);
+              });
+              print("post");
+            }
           },
           child: Text("Exit"),
         )

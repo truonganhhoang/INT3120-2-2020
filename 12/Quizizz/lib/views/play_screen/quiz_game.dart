@@ -10,33 +10,60 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 bool _checkChoose;
 int _currentQs;
 int _totalQs;
-int _correctChoose;
-Future<List<Questional>> quest;
+List<Questional> quest;
 Topic _topic;
 Quiz _quiz;
 List<int> answer = new List<int>();
+List<int> correctAns = new List<int>();
 String _userID;
+String _saveGameID;
+var _isLoading = false;
 
 class QuizPage extends StatefulWidget {
-  QuizPage({this.quiz, this.topic});
+  QuizPage({this.quiz, this.topic, this.ans, this.saveGameID});
 
   final Quiz quiz;
   final Topic topic;
+  final List<int> ans;
+  final String saveGameID;
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
+  var _init = true;
+
   @override
   void initState() {
-    quest = API_Manager().fetchQuestionByQuiz(widget.quiz.key);
+    // quest = API_Manager().fetchQuestionByQuiz(widget.quiz.key);
+    if (_init) {
+      setState(() {
+        _isLoading = true;
+      });
+      API_Manager()
+          .fetchQuestionByQuiz(widget.quiz.key)
+          .then((questional) => quest = questional)
+          .then((_) {
+        quest.forEach((element) {
+          correctAns.add(element.answer);
+        });
+      }).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _init = false;
     _totalQs = widget.quiz.numberOfQuestion;
     _currentQs = 0;
-    _correctChoose = 0;
     _topic = widget.topic;
     _quiz = widget.quiz;
-    UserSave().getUserID().then((value) => print(value));
-    print(_userID);
+    if (widget.ans != null) {
+      answer = widget.ans;
+      _currentQs = widget.ans.length;
+      _saveGameID = widget.saveGameID;
+    }
+    UserSave().getUserID().then((value) => _userID = value);
     super.initState();
   }
 
@@ -71,14 +98,10 @@ class _QuizGameState extends State<QuizGame> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Material(
-        color: Colors.black,
-        child: FutureBuilder<List<Questional>>(
-            future: quest,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<Questional> questions = snapshot.data ?? [];
-                Questional question = questions[_currentQs];
-                return Column(
+          color: Colors.black,
+          child: _isLoading
+              ? SpinKitHourGlass(color: Colors.white)
+              : Column(
                   children: [
                     Pause(
                       currentQs: _currentQs + 1,
@@ -89,7 +112,7 @@ class _QuizGameState extends State<QuizGame> {
                     ),
                     Question(
                       size: size,
-                      question: question.question,
+                      question: quest[_currentQs].question,
                       imagePath:
                           "https://storage.googleapis.com/quiz-010.appspot.com/" +
                               widget.quiz.key +
@@ -97,8 +120,8 @@ class _QuizGameState extends State<QuizGame> {
                     ),
                     ListChoices(
                       size: size,
-                      question: question,
-                      qsCount: _totalQs,
+                      question: quest[_currentQs],
+                      quiz: widget.quiz,
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 20, top: 10),
@@ -106,24 +129,18 @@ class _QuizGameState extends State<QuizGame> {
                       child: Image.asset("assets/icons/music.png"),
                     )
                   ],
-                );
-              } else if (snapshot.hasError)
-                return Text("${snapshot.error}");
-              else
-                return SpinKitHourGlass(color: Colors.white);
-            }),
-      ),
+                )),
     );
   }
 }
 
 class ListChoices extends StatefulWidget {
-  const ListChoices({Key key, @required this.size, this.question, this.qsCount})
+  const ListChoices({Key key, @required this.size, this.question, this.quiz})
       : super(key: key);
 
   final Size size;
   final Questional question;
-  final int qsCount;
+  final Quiz quiz;
 
   @override
   _ListChoicesState createState() => _ListChoicesState();
@@ -147,7 +164,7 @@ class _ListChoicesState extends State<ListChoices> {
   }
 
   void nextQs() {
-    if (_currentQs < widget.qsCount - 1) {
+    if (_currentQs < widget.quiz.numberOfQuestion - 1) {
       setState(() {
         Timer(Duration(seconds: 1), () {
           _currentQs++;
@@ -162,14 +179,18 @@ class _ListChoicesState extends State<ListChoices> {
     } else {
       setState(() {
         Timer(Duration(seconds: 1), () {
-          print(_topic.key);
+          int correctCount = 0;
+          for (int i = 0; i < correctAns.length; i++) {
+            if (answer[i] == correctAns[i]) correctCount++;
+          }
           Navigator.pushReplacement(
               context,
               new MaterialPageRoute(
                   builder: (context) => EndQuiz(
-                        correctAns: _correctChoose,
-                        incorrectAns: _totalQs - _correctChoose,
+                        correctAns: correctCount,
+                        incorrectAns: _totalQs - correctCount,
                         topic: _topic,
+                        quizID: widget.quiz.key,
                       )));
         });
       });
@@ -289,7 +310,6 @@ class Choice extends StatelessWidget {
       );
     } else {
       if (_isCorrect && _isChoose) {
-        _correctChoose++;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           child: Container(
@@ -422,7 +442,7 @@ class Pause extends StatelessWidget {
       @required this.totalQs,
       this.answered,
       this.quizID,
-      this.userID})
+      this.userID,})
       : super(key: key);
 
   final int currentQs;
@@ -448,6 +468,7 @@ class Pause extends StatelessWidget {
                             answered: answered,
                             quizID: quizID,
                             userID: userID,
+                            saveGameID: _saveGameID,
                           )));
             },
             child: Image(

@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiztest/main.dart';
 import 'package:quiztest/models/models.dart';
+import 'package:quiztest/services/user.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
 import 'package:quiztest/services/api_manager.dart';
 
 class EndQuiz extends StatefulWidget {
-  EndQuiz({@required this.correctAns, @required this.incorrectAns, this.topic});
+  EndQuiz(
+      {@required this.correctAns,
+      @required this.incorrectAns,
+      this.topic,
+      this.quizID});
   final int correctAns;
   final int incorrectAns;
   final Topic topic;
+  final String quizID;
 
   @override
   _EndQuizState createState() => _EndQuizState();
@@ -21,6 +27,10 @@ class _EndQuizState extends State<EndQuiz> {
   @override
   void initState() {
     _quizzes = API_Manager().fetchQuizByTopic(widget.topic.key);
+    UserSave().getUserID().then((value) {
+      API_Manager().postCompletedQuiz(
+          widget.quizID, value, widget.correctAns, widget.incorrectAns);
+    });
     super.initState();
   }
 

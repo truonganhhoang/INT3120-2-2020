@@ -12,12 +12,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<List<Topic>> listTopic;
+  var _init = true;
+  var _isLoading = false;
+  List<Topic> listTopic;
 
   @override
-  void initState() {
-    super.initState();
-    listTopic = API_Manager().fetchTopic();
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    if (_init) {
+      setState(() {
+        _isLoading = true;
+      });
+      API_Manager().fetchTopic().then((value) => listTopic = value).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _init = false;
   }
 
   @override
@@ -31,28 +45,21 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(children: [
             EnterCode(),
-            FutureBuilder(
-              future: listTopic,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  print("Loaded state");
-                  return ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        Topic topic = snapshot.data[index];
-                        return ListQuiz(
-                          topic: topic,
-                          size: size,
-                        );
-                      });
-                } else if (snapshot.hasError) {
-                  return Text(snapshot.error);
-                }
-                return SpinKitDualRing(color: Colors.blue);
-              },
-            )
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: listTopic.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      Topic topic = listTopic[index];
+                      return ListQuiz(
+                        topic: topic,
+                        size: size,
+                      );
+                    }),
           ]),
         ));
   }
