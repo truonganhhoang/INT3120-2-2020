@@ -1,55 +1,76 @@
-import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-// import 'package:firebase_database/firebase_database.dart';
-
+import 'package:bucha_app/Database.dart';
 import '../../main.dart';
 
-// 3DDAFD  0A1A52  27AE60  41A4A1  668EA7  CFBB24
 class Dictionary extends StatefulWidget {
-  static String tag = 'contactlist-page';
-
   @override
   State<StatefulWidget> createState() {
     return _DictionaryState();
   }
 }
 
-List<Vocabulary> vocabulary = loadWord() as List<Vocabulary>;
 
 class _DictionaryState extends State<Dictionary> {
+  List<Vocabulary> vocabulary = [];
+  // final databaseRefrence = FirebaseFirestore.instance;
   TextEditingController searchController = TextEditingController();
   String filter;
-  String result1 = "";
-  String result2 = "";
+  String word = "";
+  String meaning = "";
+  String pronunciation = "";
   bool showResult = false;
 
   @override
   initState() {
+    getVocabulary();
     searchController.addListener(() {
       setState(() {
         filter = searchController.text;
       });
-      // readData();
     });
   }
+  // setFilter() {
+  //   searchController.addListener(() {
+  //     setState(() {
+  //       filter = searchController.text;
+  //     });
+  //   });
+  // }
 
   @override
   void dispose() {
     searchController.dispose();
     super.dispose();
   }
-
+  void getVocabulary() {
+    try {
+      // databaseRefrence
+      database
+          .collection("Vocabulary")
+          .where('caseSearch',arrayContains: filter)
+          .get()
+          .then((QuerySnapshot snapshot) {
+        snapshot.docs.forEach((element) => {
+          vocabulary.add(
+              Vocabulary(
+                  element.data()["word"],
+                  element.data()["meaning"],
+                  element.data()["pronunciation"]
+              )
+          )
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        // appBar: AppBar(
-        //     title: Text('Contacts',
-        //         style: TextStyle(
-        //             color: Colors.white, fontWeight: FontWeight.bold))),
         body: SafeArea(
           child: Container(
             color: Color(
@@ -58,8 +79,7 @@ class _DictionaryState extends State<Dictionary> {
               Container(
                   width: 350,
                   margin: EdgeInsets.only(
-                      top: 20.0, left: 20.0, right: 20.0, bottom: 80.0
-                  ),
+                      top: 20.0, left: 20.0, right: 20.0, bottom: 80.0),
                   decoration: BoxDecoration(
                     color: Color(0xff0A1A52),
                     border: Border.all(color: Color(0xff27AE60), width: 20.0),
@@ -68,12 +88,12 @@ class _DictionaryState extends State<Dictionary> {
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(
-                        top: 60.0, left: 10.0, right: 10.0),
+                    padding:
+                    EdgeInsets.only(top: 60.0, left: 10.0, right: 10.0),
                     child: Column(
                       children: [
                         Offstage(
-                          offstage: result1 == "" ? true : false,
+                          offstage: word == "" ? true : false,
                           child: Container(
                             height: 150,
                             width: 310,
@@ -84,19 +104,31 @@ class _DictionaryState extends State<Dictionary> {
                               borderRadius:
                               BorderRadius.all(Radius.circular(5.0)),
                             ),
-                            child: Center(
-                                child: Text(
-                                  '$result1'.toUpperCase(),
-                                  style: TextStyle(
-                                      color: Colors.amber,
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic),
+                            child: Padding(
+                                padding: EdgeInsets.only(top:30),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 20),
+                                      child: Text(
+                                        '$word'.toUpperCase(),
+                                        style: TextStyle(
+                                            color: Colors.amber,
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                    ),
+                                    Text(
+                                      '$pronunciation',
+                                      style: TextStyle(color: Colors.white54),
+                                    )
+                                  ],
                                 )),
                           ),
                         ),
                         Offstage(
-                          offstage: result2 == "" ? true : false,
+                          offstage: meaning == "" ? true : false,
                           child: Container(
                             height: 285,
                             width: 310,
@@ -109,7 +141,7 @@ class _DictionaryState extends State<Dictionary> {
                             ),
                             child: Center(
                               child: Text(
-                                '$result2',
+                                '$meaning',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 24),
                               ),
@@ -178,160 +210,8 @@ class _DictionaryState extends State<Dictionary> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: 20/*
-                      vocabulary.length*/,
-                      itemBuilder: (context, index) {
-                        print("-----------");
-                        print(vocabulary);
-                        return filter == null || filter == ""
-                            ? new Container()
-                            : '${vocabulary[index].English}'
-                            .toLowerCase()
-                            .contains(filter.toLowerCase())
-                            ? Container(
-                          margin: EdgeInsets.only(
-                              left: 90.0, right: 50.0, bottom: 10.0),
-                          height: 40.0,
-                          decoration: BoxDecoration(
-                            color: Color(0xff668EA7),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.0),
-                            ),
-                          ),
-                          child: ListTile(
-                              title: Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 15.0),
-                                child: Text(
-                                  '${vocabulary[index].English}',
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              // subtitle:
-                              //     Text('${vocabulary[index].VietNamese}'),
-                              // leading: CircleAvatar(
-                              //     backgroundColor: Colors.blue,
-                              //     child: Text(
-                              //         '${vocabulary[index].English.substring(0, 1)}')),
-                              onTap: () {
-                                // filter = "";
-                                searchController.text = "";
-                                result1 =
-                                '${vocabulary[index].English}';
-                                result2 =
-                                '${vocabulary[index].VietNamese}';
-                                FocusScopeNode currentFocus =
-                                FocusScope.of(context);
-                                if (!currentFocus.hasPrimaryFocus &&
-                                    currentFocus.focusedChild !=
-                                        null) {
-                                  currentFocus.focusedChild.unfocus();
-                                }
-                              }
-                            // _onTapItem(context, vocabulary[index]),
-                          ),
-                        )
-                            : '${vocabulary[index].VietNamese}'
-                            .toLowerCase()
-                            .contains(filter.toLowerCase())
-                            ? Container(
-                          margin: EdgeInsets.only(
-                              left: 90.0,
-                              right: 50.0,
-                              bottom: 10.0),
-                          height: 40.0,
-                          decoration: BoxDecoration(
-                            color: Color(0xff668EA7),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.0),
-                            ),
-                          ),
-                          child: ListTile(
-                              title: GestureDetector(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 15.0),
-                                  child: Text(
-                                    '${vocabulary[index].VietNamese}',
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // subtitle:
-                              //     Text('${vocabulary[index].VietNamese}'),
-                              // leading: CircleAvatar(
-                              //     backgroundColor: Colors.blue,
-                              //     child: Text(
-                              //         '${vocabulary[index].English.substring(0, 1)}')),
-                              onTap: () {
-                                // filter = "";
-                                searchController.text = "";
-                                result2 =
-                                '${vocabulary[index].English}';
-                                result1 =
-                                '${vocabulary[index].VietNamese}';
-                                FocusScopeNode currentFocus =
-                                FocusScope.of(context);
-                                if (!currentFocus
-                                    .hasPrimaryFocus &&
-                                    currentFocus.focusedChild !=
-                                        null) {
-                                  currentFocus.focusedChild
-                                      .unfocus();
-                                }
-                              }),
-                        )
-                            : Container();
-                      },
-                    ),
+                    child: buildListView(),
                   ),
-                  // Column(
-                  //   children: [
-                  //     Offstage(
-                  //       offstage: result1 == "" ? true : false,
-                  //       child: Container(
-                  //         height: 150,
-                  //         width: 310,
-                  //         decoration: BoxDecoration(
-                  //           color: Color(0xff154673),
-                  //           border: Border.all(width: 10, color: Colors.amber),
-                  //           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  //         ),
-                  //         child: Center(
-                  //             child: Text(
-                  //               '$result1'.toUpperCase(),
-                  //               style: TextStyle(
-                  //                   color: Colors.amber,
-                  //                   fontSize: 30.0,
-                  //                   fontWeight: FontWeight.bold,
-                  //                   fontStyle: FontStyle.italic),
-                  //             )),
-                  //       ),
-                  //     ),
-                  //     Offstage(
-                  //       offstage: result2 == "" ? true : false,
-                  //       child: Container(
-                  //         height: 285,
-                  //         width: 310,
-                  //         margin: EdgeInsets.only(top: 10.0),
-                  //         decoration: BoxDecoration(
-                  //           color: Color(0xff154673),
-                  //           // border: Border.all(width: 10,color: Colors.amber),
-                  //           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  //         ),
-                  //         child: Center(child: Text('$result2',style: TextStyle(color: Colors.white, fontSize: 24),),),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
@@ -358,28 +238,60 @@ class _DictionaryState extends State<Dictionary> {
           ),
         ));
   }
+
+  ListView buildListView() {
+    return ListView.builder(
+      itemCount: vocabulary.length,
+      itemBuilder: (context, index) {
+        return filter == null || filter == ""
+            ? new Container()
+            : '${vocabulary[index].English}'
+            .toLowerCase()
+            .contains(filter.toLowerCase())
+            ? Container(
+          margin:
+          EdgeInsets.only(left: 90.0, right: 50.0, bottom: 10.0),
+          height: 40.0,
+          decoration: BoxDecoration(
+            color: Color(0xff668EA7),
+            borderRadius: BorderRadius.all(
+              Radius.circular(5.0),
+            ),
+          ),
+          child: ListTile(
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 15.0),
+                child: Text(
+                  '${vocabulary[index].English}',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              onTap: () {
+                searchController.text = "";
+                word = '${vocabulary[index].English}';
+                meaning = '${vocabulary[index].VietNamese}';
+                pronunciation = '${vocabulary[index].pronunciation}';
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus &&
+                    currentFocus.focusedChild != null) {
+                  currentFocus.focusedChild.unfocus();
+                }
+              }),
+        )
+            : Container();
+      },
+    );
+  }
+
+
 }
 
 class Vocabulary {
   final String English;
   final String VietNamese;
-
-  const Vocabulary(this.English, this.VietNamese);
-}
-
-List<Vocabulary> _parseJsonForWord(String jsonString){
-  Map decoded = jsonDecode(jsonString);
-  List<Vocabulary> ls = new List<Vocabulary>();
-  for(var word in decoded["vocabulary"]){
-    ls.add(new Vocabulary(word['English'],word['VietNamese']));
-  }
-  return ls;
-}
-Future<String> _loadWordAsset() async {
-  return await rootBundle.loadString('assets/dictionary.json');
-}
-Future<List<Vocabulary>> loadWord() async {
-  String jsonString = await _loadWordAsset();
-  print(_parseJsonForWord(jsonString));
-  return _parseJsonForWord(jsonString);
+  final String pronunciation;
+  const Vocabulary(this.English, this.VietNamese, this.pronunciation);
 }
