@@ -1,13 +1,7 @@
-import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
+import 'package:EduBox/Models/NewPostTemplate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-Color _color = Color(0xff00854c);
-var border = OutlineInputBorder(
-  borderSide: BorderSide(color: _color, width: 1.5),
-  borderRadius: BorderRadius.circular(15),
-);
 
 class CommentBox extends StatefulWidget {
   @override
@@ -25,7 +19,12 @@ class _CommentBoxState extends State<CommentBox> {
 
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     var submitForm = Provider.of<SubmitForm>(context);
+    var border = OutlineInputBorder(
+      borderSide: BorderSide(color: _color, width: 1.5),
+      borderRadius: BorderRadius.circular(15),
+    );
     return Container(
       child: TextField(
         controller: _text,

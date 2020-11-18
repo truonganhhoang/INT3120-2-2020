@@ -2,12 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-Color _color = Color(0xff00854c);
-var _border = OutlineInputBorder(
-  borderSide: BorderSide(color: _color, width: 1.5),
-  borderRadius: BorderRadius.circular(15),
-);
-
 class UserPhoneNumber extends StatefulWidget {
   final text;
 
@@ -38,18 +32,16 @@ class _UserPhoneNumberState extends State<UserPhoneNumber> {
 
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
+    var _border = OutlineInputBorder(
+      borderSide: BorderSide(color: _color, width: 1.5),
+      borderRadius: BorderRadius.circular(15),
+    );
     return Row(
       children: [
         Container(
           height: 50,
           width: 300,
-          // alignment: Alignment.centerLeft,
-          // padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-          // decoration: BoxDecoration(
-          //   border:
-          //   Border.all(color: Theme.of(context).primaryColor, width: 1.5),
-          //   borderRadius: BorderRadius.circular(9),
-          // ),
           child: TextField(
             controller: textController,
             keyboardType: TextInputType.phone,
@@ -63,8 +55,10 @@ class _UserPhoneNumberState extends State<UserPhoneNumber> {
             ),
             onChanged: (text) {
               if (text[0] != '0') {
-                error = true;
-                errorText = 'Không phải số điện thoại';
+                setState(() {
+                  error = true;
+                  errorText = 'Không phải số điện thoại';
+                });
               } else {
                 if (text.length < 10) {
                   setState(() {

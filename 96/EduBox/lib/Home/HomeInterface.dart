@@ -1,34 +1,46 @@
 import 'package:EduBox/IntermediateWidget.dart';
-import 'package:EduBox/NewPost/NewPost.dart';
-import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
+import 'package:EduBox/NewPost/FindTeacherOrStudent.dart';
 import 'package:EduBox/PostManagement/ClassList.dart';
 import 'package:EduBox/PostManagement/ClassPageRoute.dart';
 import 'package:EduBox/UserInformation/UserInformation.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'Button.dart';
 
-Color _color = Color(0xff00854c);
-
 class HomeInterface extends StatelessWidget {
-  final appbar = AppBar(
-    backgroundColor: _color,
-    title: Text(
-      'Waiting Wisdom',
-      style: TextStyle(
-        fontSize: 20,
-        color: Colors.white,
-        fontWeight: FontWeight.w300,
-      ),
-    ),
-  );
+  final int background;
 
+  const HomeInterface({Key key, this.background}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var submitForm = Provider.of<SubmitForm>(context);
+    final appbar = AppBar(
+      title: Text(
+        'Waiting Wisdom',
+        style: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+          fontWeight: FontWeight.w300,
+        ),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (_) => BackgroundColor(color: background,),
+              barrierDismissible: true,
+            );
+          },
+        )
+      ],
+    );
     return SafeArea(
       child: Scaffold(
         appBar: appbar,
@@ -53,60 +65,7 @@ class HomeInterface extends StatelessWidget {
                 Button(
                   name: 'Đăng bài',
                   iconData: Icon(Icons.class_, size: 55),
-                  navigatePage: SafeArea(
-                    child: Scaffold(
-                      appBar: AppBar(
-                        title: Text('Thêm yêu cầu mới'),
-                      ),
-                      body: Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                submitForm.reset();
-                                submitForm.type = 0;
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewPost()));
-                              },
-                              child: ClayContainer(
-                                height: 60,
-                                width: 300,
-                                child: Center(
-                                    child: Text(
-                                  'Tìm học sinh',
-                                  style: TextStyle(fontSize: 30),
-                                )),
-                              ),
-                            ),
-                            Divider(
-                              height: 10,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                submitForm.reset();
-                                submitForm.type = 1;
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewPost()));
-                              },
-                              child: ClayContainer(
-                                height: 60,
-                                width: 300,
-                                child: Center(
-                                    child: Text(
-                                  'Tìm gia sư',
-                                  style: TextStyle(fontSize: 30),
-                                )),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  navigatePage: FindTeacherOrStudent(),
                 ),
                 Button(
                     name: 'Yêu cầu gần đây',
@@ -196,9 +155,10 @@ class HamburgerMenu extends StatelessWidget {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
   }
+
   @override
   Widget build(BuildContext context) {
-    var user  = FirebaseAuth.instance.currentUser;
+    var user = FirebaseAuth.instance.currentUser;
     final String name = user.displayName;
     final String email = user.email;
     final String photoURL = user.photoURL;
@@ -206,7 +166,7 @@ class HamburgerMenu extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            decoration: BoxDecoration(color: _color),
+            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             accountName: Text(name ?? ''),
             accountEmail: Text(email ?? ''),
             currentAccountPicture: CircleAvatar(
@@ -249,6 +209,88 @@ class HamburgerMenu extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class BackgroundColor extends StatefulWidget {
+  final int color;
+
+  const BackgroundColor({Key key, this.color = 3}) : super(key: key);
+
+  @override
+  _BackgroundColorState createState() => _BackgroundColorState();
+}
+
+class _BackgroundColorState extends State<BackgroundColor> {
+  int checked;
+  bool changed = false;
+  @override
+  void initState() {
+    super.initState();
+    checked = widget.color;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> _name = ['Hồng', 'Xanh dương', 'Xanh lá', 'Tím'];
+    List<Color> _color = [
+      Colors.pink,
+      Colors.blue[600],
+      Colors.green[600],
+      Colors.purple[400]
+    ];
+    return Stack(
+      children: [
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+                4,
+                (index) => Container(
+                      width: 300,
+                      child: Card(
+                        color: Colors.blue[50],
+                        child: ListTile(
+                          leading: Icon(Icons.circle, color: _color[index]),
+                          title: Text(
+                            _name[index],
+                          ),
+                          trailing: checked == index ? Icon(Icons.done) : null,
+                          selected: checked == index,
+                          onTap: () async {
+                            setState(() {
+                              if(checked == index) return;
+                              checked = index;
+                              changed = true;
+                            });
+                            var prefs = await SharedPreferences.getInstance();
+                            prefs.setInt('backgroundColor', index);
+                          },
+                        ),
+                      ),
+                    )),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Visibility(
+            visible: changed,
+            child: Card(
+              child: ListTile(
+                trailing: Icon(Icons.check_circle, color: Theme.of(context).primaryColor,),
+                title: Text(
+                  'Thay đổi sẽ được cập nhật sau khi khởi động lại',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

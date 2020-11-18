@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Color _color = Color(0xff00854c);
 
 class DateOfBirth extends StatefulWidget {
   final DateTime dateTime;
@@ -19,6 +18,7 @@ class DateOfBirth extends StatefulWidget {
 class _DateOfBirthState extends State<DateOfBirth> {
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     var user = FirebaseAuth.instance.currentUser;
     var db = FirebaseFirestore.instance.collection('User');
     DateTime bufferedDate = widget.dateTime;

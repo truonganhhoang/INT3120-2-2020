@@ -1,13 +1,15 @@
 import 'package:EduBox/IntermediateWidget.dart';
-import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
+import 'package:EduBox/Models/NewPostTemplate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-Color _color = Color(0xff00854c);
-
 class BeginTimePicker extends StatefulWidget {
+  final int hour, minute;
+
+  const BeginTimePicker(this.hour, this.minute, {Key key}) : super(key: key);
+
   @override
   _BeginTimePickerState createState() => _BeginTimePickerState();
 }
@@ -15,10 +17,12 @@ class BeginTimePicker extends StatefulWidget {
 class _BeginTimePickerState extends State<BeginTimePicker> {
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     int bufferedHour = DateTime.now().hour;
     int bufferedMinute = DateTime.now().minute;
     final form = Provider.of<SubmitForm>(context);
     return MyDateTimePicker(
+      dateTime: DateTime(1,1,1,widget.hour,widget.minute),
       mode: PickerType.time,
       onChange: (time) {
         bufferedMinute = time.minute;
@@ -51,6 +55,9 @@ class _BeginTimePickerState extends State<BeginTimePicker> {
 }
 
 class EndTimePicker extends StatefulWidget {
+  final int hour, minute;
+
+  const EndTimePicker(this.hour, this.minute, {Key key}) : super(key: key);
   @override
   _EndTimePickerState createState() => _EndTimePickerState();
 }
@@ -58,11 +65,13 @@ class EndTimePicker extends StatefulWidget {
 class _EndTimePickerState extends State<EndTimePicker> {
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     int bufferedHour = DateTime.now().hour;
     int bufferedMinute = DateTime.now().minute;
     final form = Provider.of<SubmitForm>(context);
     return MyDateTimePicker(
       mode: PickerType.time,
+      dateTime: DateTime(1,1,1,widget.hour,widget.minute),
       onChange: (time) {
         bufferedMinute = time.minute;
         bufferedHour = time.hour;

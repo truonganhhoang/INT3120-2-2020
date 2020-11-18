@@ -48,7 +48,7 @@ class Post {
     this.postDate = json['PostDate'];
   }
 
-  Map toJson() => {
+  Map<String, dynamic> toJson() => {
         'DocumentID': this.id,
         'Type': this.type,
         'Accepted': this.accepted,

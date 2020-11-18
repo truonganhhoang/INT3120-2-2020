@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Models/NewPostTemplate.dart';
 
-Color _color = Color(0xff00854c);
-
 class DaysOfWeek extends StatefulWidget {
   @override
   _DaysOfWeekState createState() => _DaysOfWeekState();
@@ -16,7 +14,7 @@ class _DaysOfWeekState extends State<DaysOfWeek> {
   @override
   Widget build(BuildContext context) {
     var submitForm = Provider.of<SubmitForm>(context);
-
+    var _color = Theme.of(context).primaryColor;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(

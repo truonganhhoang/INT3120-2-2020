@@ -1,8 +1,6 @@
-import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
+import 'package:EduBox/Models/NewPostTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-Color _color = Color(0xff00854c);
 
 class SubjectPicker extends StatefulWidget {
   @override
@@ -10,7 +8,6 @@ class SubjectPicker extends StatefulWidget {
 }
 
 class _SubjectPickerState extends State<SubjectPicker> {
-  int _value = 0;
   final List<String> listOfItems = [
     'Toán',
     'Lý',
@@ -23,6 +20,8 @@ class _SubjectPickerState extends State<SubjectPicker> {
 
   @override
   Widget build(BuildContext context) {
+    int _value = 0;
+    var _color = Theme.of(context).primaryColor;
     var submitForm = Provider.of<SubmitForm>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),

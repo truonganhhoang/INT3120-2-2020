@@ -1,13 +1,14 @@
 import 'package:EduBox/IntermediateWidget.dart';
-import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
+import 'package:EduBox/Models/NewPostTemplate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-Color _color = Color(0xff00854c);
-
 class BeginDatePicker extends StatefulWidget {
+  final DateTime dateTime;
+
+  const BeginDatePicker(this.dateTime, {Key key }) : super(key: key);
   @override
   _BeginDatePickerState createState() => _BeginDatePickerState();
 }
@@ -15,9 +16,11 @@ class BeginDatePicker extends StatefulWidget {
 class _BeginDatePickerState extends State<BeginDatePicker> {
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     final form = Provider.of<SubmitForm>(context);
     DateTime bufferedDate = DateTime.now();
     return MyDateTimePicker(
+      dateTime: widget.dateTime,
       onChange: (time) {
         bufferedDate = time;
       },
@@ -45,6 +48,9 @@ class _BeginDatePickerState extends State<BeginDatePicker> {
 }
 
 class EndDatePicker extends StatefulWidget {
+  final DateTime dateTime;
+
+  const EndDatePicker(this.dateTime, {Key key }) : super(key: key);
   @override
   _EndDatePickerState createState() => _EndDatePickerState();
 }
@@ -52,9 +58,11 @@ class EndDatePicker extends StatefulWidget {
 class _EndDatePickerState extends State<EndDatePicker> {
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     final form = Provider.of<SubmitForm>(context);
     DateTime bufferedDate = DateTime.now();
     return MyDateTimePicker(
+      dateTime: widget.dateTime,
       onChange: (time) {
         bufferedDate = time;
       },

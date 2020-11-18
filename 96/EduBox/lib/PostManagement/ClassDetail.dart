@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 
 String uid = FirebaseAuth.instance.currentUser.uid;
 var database = FirebaseFirestore.instance;
-Color _color = Color(0xff00854c);
 
 abstract class FloatButton extends StatelessWidget {
   final String label;
@@ -20,6 +19,7 @@ abstract class FloatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     return FloatingActionButton.extended(
       backgroundColor: _color,
       onPressed: () {

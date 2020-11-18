@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-Color _color = Color(0xff00854c);
-
 class UserGender extends StatefulWidget {
   final String gender;
 
@@ -34,6 +32,7 @@ class _UserGenderState extends State<UserGender> {
 
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     return Row(
       children: [
         Container(

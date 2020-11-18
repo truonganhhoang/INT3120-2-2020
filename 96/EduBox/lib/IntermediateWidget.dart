@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'Models/Post.dart';
 
-Color _color = Color(0xff00854c);
 List<BoxShadow> _boxShadow = [
   BoxShadow(
     spreadRadius: 3,
@@ -254,6 +254,7 @@ class IntermediateClassBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _divider = Divider(height: 5, color: Colors.transparent);
+    var _color = Theme.of(context).primaryColor;
     String uid = FirebaseAuth.instance.currentUser.uid;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 10),

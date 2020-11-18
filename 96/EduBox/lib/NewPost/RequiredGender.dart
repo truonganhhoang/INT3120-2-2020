@@ -1,8 +1,7 @@
-import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
+
+import 'package:EduBox/Models/NewPostTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-Color _color = Color(0xff00854c);
 
 class RequiredGender extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class _RequiredGenderState extends State<RequiredGender> {
 
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
     final form = Provider.of<SubmitForm>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),

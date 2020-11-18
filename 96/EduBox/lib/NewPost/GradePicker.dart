@@ -1,8 +1,6 @@
-import 'file:///E:/Code/AndroidStudioProjects/INT3120-2-2020/96/EduBox/lib/Models/NewPostTemplate.dart';
+import 'package:EduBox/Models/NewPostTemplate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-Color _color = Color(0xff00854c);
 
 class GradePicker extends StatefulWidget {
   @override
@@ -17,6 +15,7 @@ class _GradePickerState extends State<GradePicker> {
   @override
   Widget build(BuildContext context) {
     var submitForm = Provider.of<SubmitForm>(context);
+    var _color = Theme.of(context).primaryColor;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(

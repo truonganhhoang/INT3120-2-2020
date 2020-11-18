@@ -3,17 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Color _color = Color(0xff00854c);
-
-BoxDecoration decoration = BoxDecoration(
-  border: Border.all(
-    color: _color,
-    width: 2,
-    style: BorderStyle.solid,
-  ),
-  borderRadius: BorderRadius.circular(50),
-);
-
 class Button extends StatelessWidget {
   final String name;
 
@@ -29,6 +18,14 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BoxDecoration decoration = BoxDecoration(
+      border: Border.all(
+        color: Theme.of(context).primaryColor,
+        width: 2,
+        style: BorderStyle.solid,
+      ),
+      borderRadius: BorderRadius.circular(50),
+    );
     return Container(
       height: 130,
       width: 110,

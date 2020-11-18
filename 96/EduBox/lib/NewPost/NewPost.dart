@@ -1,8 +1,11 @@
 import 'dart:ui';
+
 import 'package:EduBox/IntermediateWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../Models/NewPostTemplate.dart';
 import '../NewPost/DaysOfWeek.dart';
 import 'BeginAndEndDatePicker.dart';
 import 'BeginAndEndTimePicker.dart';
@@ -11,7 +14,6 @@ import 'CommentBox.dart';
 import 'GradePicker.dart';
 import 'InputSalaryBox.dart';
 import 'LabelText.dart';
-import '../Models/NewPostTemplate.dart';
 import 'RequiredGender.dart';
 import 'SubjectPicker.dart';
 
@@ -90,6 +92,10 @@ class FindTeacher extends StatelessWidget {
 }
 
 class NewPost extends StatefulWidget {
+  final int type;
+
+  const NewPost({Key key, this.type}) : super(key: key);
+
   @override
   _NewPostState createState() => _NewPostState();
 }
@@ -146,9 +152,7 @@ class _NewPostState extends State<NewPost> {
           },
           child: ListView(
             children: [
-              Provider.of<SubmitForm>(context, listen: false).type == 0
-                  ? FindStudent()
-                  : FindTeacher(),
+              widget.type == 0 ? FindStudent() : FindTeacher(),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: width / 2 - 150),
                 child: Column(
@@ -195,7 +199,11 @@ class _NewPostState extends State<NewPost> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               LabelText(text: 'Thời gian'),
-                              BeginTimePicker(),
+                              Consumer<SubmitForm>(
+                                builder: (context, submitForm, _) =>
+                                    BeginTimePicker(submitForm.beginHour,
+                                        submitForm.beginMinute),
+                              ),
                             ],
                           ),
                         ),
@@ -204,7 +212,10 @@ class _NewPostState extends State<NewPost> {
                           //height: 80,
                           width: 124,
                           alignment: Alignment.bottomCenter,
-                          child: EndTimePicker(),
+                          child: Consumer<SubmitForm>(
+                            builder: (context, submitForm, _) => EndTimePicker(
+                                submitForm.endHour, submitForm.endMinute),
+                          ),
                         ),
                       ],
                     ),
@@ -229,7 +240,10 @@ class _NewPostState extends State<NewPost> {
                           child: Column(
                             children: [
                               LabelText(text: 'Thời gian bắt đầu'),
-                              BeginDatePicker(),
+                              Consumer<SubmitForm>(
+                                builder: (context, submitForm, _) =>
+                                    BeginDatePicker(submitForm.beginDate),
+                              ),
                             ],
                           ),
                         ),
@@ -241,7 +255,10 @@ class _NewPostState extends State<NewPost> {
                           child: Column(
                             children: [
                               LabelText(text: 'Thời gian kết thúc'),
-                              EndDatePicker(),
+                              Consumer<SubmitForm>(
+                                builder: (context, submitForm, _) =>
+                                    EndDatePicker(submitForm.endDate),
+                              ),
                             ],
                           ),
                         ),
