@@ -176,7 +176,7 @@ class API_Manager {
   }
 
   Future<void> updateRunQuiz(List<int> ans, String key) async {
-    var urlPutRunQuiz = url + "/v1/user/UpdateSaveGame/" + key;
+    var urlPutRunQuiz = url + "/v1/save-game/UpdateSaveGame/" + key;
     final headers = {'Content-Type': 'application/json'};
     Map<String, dynamic> body = {
       "ListAnsweredQuest": ans,
@@ -185,7 +185,7 @@ class API_Manager {
     final encoding = Encoding.getByName('utf-8');
     final response = await http.put(urlPutRunQuiz,
         headers: headers, body: jsonBody, encoding: encoding);
-    print("update run quiz");
+    print("Update" + key);
     if (response.statusCode == 200) {
       print("update success");
     }
