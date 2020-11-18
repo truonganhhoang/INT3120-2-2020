@@ -149,12 +149,23 @@ class ListChoices extends StatefulWidget {
 class _ListChoicesState extends State<ListChoices> {
   var _isCorrect;
   var _isChoose;
+  var choices = [];
+  var numberOfChoices = 0;
+  List<Color> colors = [Colors.blue, Colors.green, Colors.teal, Colors.pink];
 
   @override
   void initState() {
     _isCorrect = [false, false, false, false];
     _isChoose = [false, false, false, false];
     _isCorrect[widget.question.answer - 1] = true;
+    choices.add(widget.question.choice1);
+    choices.add(widget.question.choice2);
+    choices.add(widget.question.choice3);
+    choices.add(widget.question.choice4);
+    for (var i = 0; i < 4; i++) {
+      if (choices[i] != " ") numberOfChoices++;
+    }
+    print(numberOfChoices);
     super.initState();
   }
 
@@ -199,77 +210,100 @@ class _ListChoicesState extends State<ListChoices> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isChoose[0] = true;
-              _checkChoose = true;
-              answer.add(0);
-              nextQs();
-            });
-          },
-          child: Choice(
-            size: widget.size,
-            choice: widget.question.choice1,
-            color: Colors.blue,
-            isCorrect: _isCorrect[0],
-            isChoose: _isChoose[0],
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isChoose[1] = true;
-              _checkChoose = true;
-              answer.add(1);
-              nextQs();
-            });
-          },
-          child: Choice(
-            size: widget.size,
-            choice: widget.question.choice2,
-            color: Colors.green,
-            isCorrect: _isCorrect[1],
-            isChoose: _isChoose[1],
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isChoose[2] = true;
-              _checkChoose = true;
-              answer.add(2);
-              nextQs();
-            });
-          },
-          child: Choice(
-            size: widget.size,
-            choice: widget.question.choice3,
-            color: Colors.teal,
-            isCorrect: _isCorrect[2],
-            isChoose: _isChoose[2],
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isChoose[3] = true;
-              _checkChoose = true;
-              answer.add(3);
-              nextQs();
-            });
-          },
-          child: Choice(
-            size: widget.size,
-            choice: widget.question.choice4,
-            color: Colors.pink,
-            isCorrect: _isCorrect[3],
-            isChoose: _isChoose[3],
-          ),
-        ),
-      ],
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: numberOfChoices,
+      itemBuilder: (context, index) {
+        if (choices[index] != "")
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                _isChoose[index] = true;
+                _checkChoose = true;
+                answer.add(index);
+                nextQs();
+              });
+            },
+            child: Choice(
+              size: widget.size,
+              choice: choices[index],
+              color: colors[index],
+              isCorrect: _isCorrect[index],
+              isChoose: _isChoose[index],
+            ),
+          );
+      },
+      // children: [
+      //   GestureDetector(
+      //     onTap: () {
+      //       setState(() {
+      //         _isChoose[0] = true;
+      //         _checkChoose = true;
+      //         answer.add(0);
+      //         nextQs();
+      //       });
+      //     },
+      //     child: Choice(
+      //       size: widget.size,
+      //       choice: widget.question.choice1,
+      //       color: Colors.blue,
+      //       isCorrect: _isCorrect[0],
+      //       isChoose: _isChoose[0],
+      //     ),
+      //   ),
+      //   GestureDetector(
+      //     onTap: () {
+      //       setState(() {
+      //         _isChoose[1] = true;
+      //         _checkChoose = true;
+      //         answer.add(1);
+      //         nextQs();
+      //       });
+      //     },
+      //     child: Choice(
+      //       size: widget.size,
+      //       choice: widget.question.choice2,
+      //       color: Colors.green,
+      //       isCorrect: _isCorrect[1],
+      //       isChoose: _isChoose[1],
+      //     ),
+      //   ),
+      //   GestureDetector(
+      //     onTap: () {
+      //       setState(() {
+      //         _isChoose[2] = true;
+      //         _checkChoose = true;
+      //         answer.add(2);
+      //         nextQs();
+      //       });
+      //     },
+      //     child: Choice(
+      //       size: widget.size,
+      //       choice: widget.question.choice3,
+      //       color: Colors.teal,
+      //       isCorrect: _isCorrect[2],
+      //       isChoose: _isChoose[2],
+      //     ),
+      //   ),
+      //   GestureDetector(
+      //     onTap: () {
+      //       setState(() {
+      //         _isChoose[3] = true;
+      //         _checkChoose = true;
+      //         answer.add(3);
+      //         nextQs();
+      //       });
+      //     },
+      //     child: Choice(
+      //       size: widget.size,
+      //       choice: widget.question.choice4,
+      //       color: Colors.pink,
+      //       isCorrect: _isCorrect[3],
+      //       isChoose: _isChoose[3],
+      //     ),
+      //   ),
+      // ],
     );
   }
 }
@@ -412,15 +446,17 @@ class Question extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          if (Image.network(imagePath) != null)
-            Container(
-                width: size.width * 0.8,
-                height: size.height * 0.2,
-                child: Image(
-                  image: NetworkImage(imagePath),
-                  fit: BoxFit.cover,
-                )),
-          Padding(
+          Image.network(imagePath) != null
+              ? Container()
+              : Container(
+                  width: size.width * 0.8,
+                  height: size.height * 0.2,
+                  child: Image(
+                    image: NetworkImage(imagePath),
+                    fit: BoxFit.cover,
+                  )),
+          Container(
+            alignment: Alignment.bottomRight,
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Center(
               child: Text(
@@ -441,14 +477,14 @@ class Question extends StatelessWidget {
 }
 
 class Pause extends StatelessWidget {
-  const Pause(
-      {Key key,
-      @required this.currentQs,
-      @required this.totalQs,
-      this.answered,
-      this.quizID,
-      this.userID,})
-      : super(key: key);
+  const Pause({
+    Key key,
+    @required this.currentQs,
+    @required this.totalQs,
+    this.answered,
+    this.quizID,
+    this.userID,
+  }) : super(key: key);
 
   final int currentQs;
   final int totalQs;
