@@ -24,7 +24,7 @@ class GrammarOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350.0,
+      width: 650.0,
       height: 50.0,
       decoration: BoxDecoration(
         color: this.color,

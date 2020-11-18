@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bucha_app/widgets/dictionary/dictionary.dart';
 import 'widgets/dictionary/dictionary.dart';
 import 'widgets/sentence/sentence.dart';
-import 'widgets/Grammar/GrammarPage.dart';
+import 'widgets/Grammar/GrammarData/GrammarPage.dart';
 import 'widgets/options/OptionClass.dart';
 
 void main() async {

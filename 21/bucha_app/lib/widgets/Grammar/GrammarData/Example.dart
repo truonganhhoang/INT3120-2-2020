@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
 
-class Bullet extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      height: 7.0,
-      width: 7.0,
-      decoration: new BoxDecoration(
-        color: Colors.purple[200],
-        shape: BoxShape.circle,
-      ),
-    );
-  }
-}
-
 class Example extends StatelessWidget {
   final String name;
   final String meaning;

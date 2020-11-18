@@ -27,23 +27,24 @@ class _InformationPageState extends State<InformationPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
+        width: queryData.size.width,
+        height: queryData.size.height,
         color: Colors.pinkAccent,
         child: new Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 20.0, bottom: 10.0),
-              height: 650.0,
+              margin: EdgeInsets.only(top: 20.0),
+              height: queryData.size.height * 0.88,
               decoration: BoxDecoration(
                 color: Colors.indigo[900],
               ),
               child: new Column(
                 children: <Widget>[
                   Container(
-                    height: 60.0,
+                    height: queryData.size.height * 0.85 * 0.092,
                     decoration: BoxDecoration(
                       color: Colors.orange[400],
                     ),
@@ -62,7 +63,7 @@ class _InformationPageState extends State<InformationPage> {
                   Container(
                     margin: EdgeInsets.all(10.0),
                     child: SizedBox(
-                      height: 480.0,
+                      height: queryData.size.height * (0.88 - 0.85 * 0.092) - 20.0,
                       child: listView,
                     ),
                   ),
@@ -70,7 +71,7 @@ class _InformationPageState extends State<InformationPage> {
               ),
             ),
             Container(
-              height: 50.0,
+              height: queryData.size.height * 0.12 - 20.0,
               child: Center(
                 child: ButtonBack(),
               ),
