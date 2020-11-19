@@ -174,20 +174,4 @@ class API_Manager {
       return quiz;
     }
   }
-
-  Future<void> updateRunQuiz(List<int> ans, String key) async {
-    var urlPutRunQuiz = url + "/v1/user/UpdateSaveGame/" + key;
-    final headers = {'Content-Type': 'application/json'};
-    Map<String, dynamic> body = {
-      "ListAnsweredQuest": ans,
-    };
-    String jsonBody = json.encode(body);
-    final encoding = Encoding.getByName('utf-8');
-    final response = await http.put(urlPutRunQuiz,
-        headers: headers, body: jsonBody, encoding: encoding);
-    print("update run quiz");
-    if (response.statusCode == 200) {
-      print("update success");
-    }
-  }
 }
