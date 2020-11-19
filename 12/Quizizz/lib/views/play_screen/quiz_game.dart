@@ -6,6 +6,7 @@ import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 import 'dart:async';
 import 'end_quiz.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_image/network.dart';
 
 bool _checkChoose;
 int _currentQs;
@@ -35,7 +36,6 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   void initState() {
-    // quest = API_Manager().fetchQuestionByQuiz(widget.quiz.key);
     if (_init) {
       setState(() {
         _isLoading = true;
@@ -70,7 +70,6 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void dispose() {
     super.dispose();
-    print("dispose");
     if (widget.ans != null) {
       widget.ans.clear();
     }
@@ -113,6 +112,7 @@ class _QuizGameState extends State<QuizGame> {
               : Column(
                   children: [
                     Pause(
+                      key: const Key("pause"),
                       currentQs: _currentQs + 1,
                       totalQs: _totalQs,
                       quizID: widget.quiz.key,
@@ -131,12 +131,7 @@ class _QuizGameState extends State<QuizGame> {
                       size: size,
                       question: quest[_currentQs],
                       quiz: widget.quiz,
-                    ),
-                    // Container(
-                    //   padding: EdgeInsets.only(left: 20, top: 10),
-                    //   alignment: Alignment.topLeft,
-                    //   child: Image.asset("assets/icons/music.png"),
-                    // )
+                    )
                   ],
                 )),
     );
@@ -207,6 +202,7 @@ class _ListChoicesState extends State<ListChoices> {
               context,
               new MaterialPageRoute(
                   builder: (context) => EndQuiz(
+                        key: const Key("endQuiz"),
                         correctAns: correctCount,
                         incorrectAns: _totalQs - correctCount,
                         topic: _topic,
@@ -227,6 +223,7 @@ class _ListChoicesState extends State<ListChoices> {
       itemBuilder: (context, index) {
         if (choices[index] != "")
           return GestureDetector(
+            key: const Key("Choice"),
             onTap: () {
               setState(() {
                 _isChoose[index] = true;
@@ -244,76 +241,6 @@ class _ListChoicesState extends State<ListChoices> {
             ),
           );
       },
-      // children: [
-      //   GestureDetector(
-      //     onTap: () {
-      //       setState(() {
-      //         _isChoose[0] = true;
-      //         _checkChoose = true;
-      //         answer.add(0);
-      //         nextQs();
-      //       });
-      //     },
-      //     child: Choice(
-      //       size: widget.size,
-      //       choice: widget.question.choice1,
-      //       color: Colors.blue,
-      //       isCorrect: _isCorrect[0],
-      //       isChoose: _isChoose[0],
-      //     ),
-      //   ),
-      //   GestureDetector(
-      //     onTap: () {
-      //       setState(() {
-      //         _isChoose[1] = true;
-      //         _checkChoose = true;
-      //         answer.add(1);
-      //         nextQs();
-      //       });
-      //     },
-      //     child: Choice(
-      //       size: widget.size,
-      //       choice: widget.question.choice2,
-      //       color: Colors.green,
-      //       isCorrect: _isCorrect[1],
-      //       isChoose: _isChoose[1],
-      //     ),
-      //   ),
-      //   GestureDetector(
-      //     onTap: () {
-      //       setState(() {
-      //         _isChoose[2] = true;
-      //         _checkChoose = true;
-      //         answer.add(2);
-      //         nextQs();
-      //       });
-      //     },
-      //     child: Choice(
-      //       size: widget.size,
-      //       choice: widget.question.choice3,
-      //       color: Colors.teal,
-      //       isCorrect: _isCorrect[2],
-      //       isChoose: _isChoose[2],
-      //     ),
-      //   ),
-      //   GestureDetector(
-      //     onTap: () {
-      //       setState(() {
-      //         _isChoose[3] = true;
-      //         _checkChoose = true;
-      //         answer.add(3);
-      //         nextQs();
-      //       });
-      //     },
-      //     child: Choice(
-      //       size: widget.size,
-      //       choice: widget.question.choice4,
-      //       color: Colors.pink,
-      //       isCorrect: _isCorrect[3],
-      //       isChoose: _isChoose[3],
-      //     ),
-      //   ),
-      // ],
     );
   }
 }
@@ -435,6 +362,7 @@ class Choice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Key("Choose");
     return choice_quiz(isCorrect, isChoose);
   }
 }
@@ -462,7 +390,7 @@ class Question extends StatelessWidget {
                   width: size.width * 0.8,
                   height: size.height * 0.2,
                   child: Image(
-                    image: NetworkImage(imagePath),
+                    image: NetworkImageWithRetry(imagePath),
                     fit: BoxFit.cover,
                   )),
           Container(
@@ -509,11 +437,13 @@ class Pause extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
+            key: const Key("pauseButton"),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => PauseWhilePlaying(
+                        key: const Key("pauseScr"),
                             questionsRemaining: currentQs,
                             totalQuestions: totalQs,
                             answered: answered,
