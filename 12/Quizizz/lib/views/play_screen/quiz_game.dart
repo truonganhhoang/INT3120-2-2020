@@ -132,7 +132,7 @@ class _QuizGameState extends State<QuizGame> {
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 20, top: 10),
-                      alignment: Alignment.topLeft,
+                      alignment: Alignment.bottomLeft,
                       child: Image.asset("assets/icons/music.png"),
                     )
                   ],
@@ -454,7 +454,7 @@ class Question extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          Image.network(imagePath) != null
+          Image.network(imagePath) == null
               ? Container()
               : Container(
                   width: size.width * 0.8,
