@@ -456,7 +456,7 @@ class Question extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          Image.network(imagePath) != null
+          Image.network(imagePath) == null
               ? Container()
               : Container(
                   width: size.width * 0.8,
