@@ -11,15 +11,13 @@ class Topic {
 }
 
 class Quiz {
-  final String creator;
   final String name;
   final int numberOfQuestion;
   final String key;
-  Quiz({this.creator, this.name, this.key, this.numberOfQuestion});
+  Quiz({this.name, this.key, this.numberOfQuestion});
 
   factory Quiz.fromJson(Map<String, dynamic> json, String key) {
     return Quiz(
-        creator: json['Creator'],
         name: json['Name'],
         numberOfQuestion: json['NumberOfQuestion'],
         key: key);

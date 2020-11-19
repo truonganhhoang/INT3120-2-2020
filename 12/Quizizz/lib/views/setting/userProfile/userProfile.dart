@@ -5,9 +5,6 @@ import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
 import 'package:quiztest/views/setting/popUpSetting/userName.dart';
 import '../settingInfo.dart';
 import '../setting_category.dart';
-import 'package:quiztest/models/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:quiztest/services/api_manager.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({

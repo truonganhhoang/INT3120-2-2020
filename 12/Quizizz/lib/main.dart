@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/setting/setting.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
 import 'views/activity/activity.dart';
 import 'package:quiztest/services/user.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'views/challenge/challenge_screen.dart';
 
 void main() {
   runApp(MyApp());

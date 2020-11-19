@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiztest/services/user.dart';
 
 class Running extends StatelessWidget {
@@ -42,29 +41,30 @@ class _ListRunningState extends State<ListRunning> {
         await API_Manager().fetchSaveGame(userID).then((value) async {
           games = value;
           int i = 0;
-          games.forEach((game) async {
+          for (int tmp = 0; tmp < games.length; tmp++) {
             await API_Manager()
-                .fetchQuizByID(game.quizID)
-                .then((quiz) => quizzes.add(quiz))
+                .fetchQuizByID(games[tmp].quizID)
+                .then((quiz) {
+                  quizzes.add(quiz);
+                })
                 .then((_) => i++)
                 .then((_) {
-              if (i == games.length) {
-                print(i);
-                setState(() {
-                  _isLoadingQuiz = false;
+                  if (i == games.length) {
+                    setState(() {
+                      _isLoadingQuiz = false;
+                    });
+                  }
                 });
-              }
-            });
-          });
+          }
         });
       });
     }
     _init = false;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(games);
     return Padding(
         padding: const EdgeInsets.only(top: 10),
         child: _isLoadingQuiz

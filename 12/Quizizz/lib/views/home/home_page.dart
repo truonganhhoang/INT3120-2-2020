@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiztest/views/components/quiz_list.dart';
 import '../components/appbar.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/models/models.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   @override
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     if (_init) {
       setState(() {

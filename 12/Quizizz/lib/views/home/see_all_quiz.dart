@@ -3,7 +3,6 @@ import 'package:quiztest/models/models.dart';
 import 'package:quiztest/views/components/appbar.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/components/quiz_card.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AllQuiz extends StatelessWidget {
   AllQuiz({@required this.topic});
@@ -36,7 +35,6 @@ class _ListAllQuizState extends State<ListAllQuiz> {
   List<Quiz> quizzes;
   @override
   void initState() {
-    // TODO: implement didChangeDependencies
     super.initState();
     if (_init) {
       setState(() {
@@ -56,7 +54,6 @@ class _ListAllQuizState extends State<ListAllQuiz> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
         padding: const EdgeInsets.only(top: 10),
         child: _isLoading

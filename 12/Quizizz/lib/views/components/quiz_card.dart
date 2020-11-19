@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'dart:math';
 import 'alert_play.dart';
 import 'package:quiztest/models/models.dart';
 
@@ -26,7 +25,6 @@ class QuizCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(saveGameID);
     return GestureDetector(
       onTap: () {
         showDialog(
