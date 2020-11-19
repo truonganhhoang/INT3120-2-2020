@@ -124,7 +124,7 @@ class AuthService {
             wordLearning: [
               WordLearning(
                 wordId: 0,
-                reviewDate: 0,
+                reviewDate: '2020-11-28',
                 reviewTimes: 0,
               ),
             ],

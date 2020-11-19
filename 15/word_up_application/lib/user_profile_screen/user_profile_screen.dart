@@ -27,107 +27,64 @@ class UserProfileScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _UserProfileScreen();
 }
 
-DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
-int numberOfKnewWords;
-int numberOfToLearnWords;
-int numberOfLearningWords;
-bool isSelectImage = false;
-String imagePath;
-
 AppUser user;
-
-// AppUser user = new AppUser(
-//   idUser: AuthService.instance.auth.currentUser.uid,
-//   userPrivateInformation: UserPrivateInformation(
-//       age: 15,
-//       avatarUrl: AuthService.instance.auth.currentUser.photoURL,
-//       email: 'truong@gmail.com',
-//       nativeLanguage: 'Vietnamese',
-//       userName: 'Truong'),
-//   learningProgress: LearningProgress(wordFavorite: [
-//     1,
-//     2,
-//     9,
-//     10
-//   ], wordToLearn: [
-//     1,
-//     4,
-//     5,
-//     7,
-//     8,
-//     9
-//   ], wordKnew: [
-//     10,
-//     12,
-//     15
-//   ], wordLearning: [
-//     WordLearning(
-//       wordId: 2,
-//       reviewDate: 3,
-//       reviewTimes: 0,
-//     ),
-//     WordLearning(
-//       wordId: 3,
-//       reviewDate: 3,
-//       reviewTimes: 1,
-//     ),
-//     WordLearning(
-//       wordId: 6,
-//       reviewDate: 3,
-//       reviewTimes: 0,
-//     ),
-//   ]),
-//   learnSetting: LearnSetting(
-//     accent: 'British',
-//     practiceGoal: 20, // 20 words per day.
-//     reminder: Time(hour: 6, minute: 0),
-//   ),
-// );
 
 class _UserProfileScreen extends State<UserProfileScreen> {
   bool isLogin;
+  DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
+  int numberOfKnewWords;
+  int numberOfToLearnWords;
+  int numberOfLearningWords;
+  bool isSelectImage = false;
+  String imagePath;
 
   @override
   void initState() {
-    user = AppManager.instance.appUser;
     super.initState();
-    dbHelper.getCountKnewWords().then((res) {
-      setState(() {
-        numberOfKnewWords = res;
-      });
-    });
-    dbHelper.getCountToLearnWord().then((res) {
-      setState(() {
-        numberOfToLearnWords = res;
-      });
-    });
-    dbHelper.getCountLearningWord().then((res) {
-      setState(() {
-        numberOfLearningWords = res;
-      });
-    });
+    user = AppManager.instance.appUser;
+
     if (user == null) {
       setState(() {
         isLogin = false;
-        print(user);
+
+        dbHelper.getCountKnewWords().then((res) {
+          setState(() {
+            numberOfKnewWords = res;
+          });
+        });
+
+        dbHelper.getCountToLearnWord().then((res) {
+          setState(() {
+            numberOfToLearnWords = res;
+          });
+        });
+
+        dbHelper.getCountLearningWord().then((res) {
+          setState(() {
+            numberOfLearningWords = res;
+          });
+        });
       });
     } else {
       setState(() {
         isLogin = true;
-        print(user);
+
+        numberOfKnewWords = user.learningProgress.wordKnew.length;
+        numberOfLearningWords = user.learningProgress.wordLearning.length;
+        numberOfToLearnWords = user.learningProgress.wordToLearn.length;
       });
     }
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
   @override
   // ignore: missing_return
   Widget build(BuildContext context) {
-  //  print(user.idUser);
+    //  print(user.idUser);
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -151,92 +108,98 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                       bottom: 0),
                   height: 20 * SizeConfig.heightMultiplier,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      MaterialButton(
-                        onPressed: () async {
-                          if (isLogin == true) {
-                            final pickerFile = await ImagePicker()
-                                .getImage(source: ImageSource.gallery);
-                            if (pickerFile != null) {
-                              imagePath = pickerFile.path;
-                              setState(() {
-                                isSelectImage = true;
-                              });
+                      Padding(
+                        padding: EdgeInsets.only(left: 3*SizeConfig.widthMultiplier),
+                        child: MaterialButton(
+                          onPressed: () async {
+                            if (isLogin == true) {
+                              final pickerFile = await ImagePicker()
+                                  .getImage(source: ImageSource.gallery);
+                              if (pickerFile != null) {
+                                imagePath = pickerFile.path;
+                                setState(() {
+                                  isSelectImage = true;
+                                });
+                              }
                             }
-                          }
-                        },
-                        child: isSelectImage
-                            ? CircleAvatar(
-                                radius: 6 * SizeConfig.heightMultiplier,
-                                backgroundColor: Colors.white,
-                                backgroundImage: AssetImage(imagePath),
-                              )
-                            : (isLogin
-                                ? CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        user.userPrivateInformation.avatarUrl),
-                                    radius: 6 * SizeConfig.heightMultiplier,
-                                    backgroundColor: Colors.white,
-                                  )
-                                : MaterialButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AuthenticationScreen(
-                                                  noGuest: true,
-                                                )),
-                                      );
-                                    },
-                                    child: CircleAvatar(
-                                      child: Icon(
-                                        Icons.camera_enhance,
-                                        size: 6 * SizeConfig.heightMultiplier,
-                                      ),
-                                      backgroundColor: Colors.white,
+                          },
+                          child: isSelectImage
+                              ? CircleAvatar(
+                                  radius: 6 * SizeConfig.heightMultiplier,
+                                  backgroundColor: Colors.white,
+                                  backgroundImage: AssetImage(imagePath),
+                                )
+                              : (isLogin
+                                  ? CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          user.userPrivateInformation.avatarUrl),
                                       radius: 6 * SizeConfig.heightMultiplier,
-                                    ),
-                                  )),
+                                      backgroundColor: Colors.white,
+                                    )
+                                  : MaterialButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AuthenticationScreen(
+                                                    noGuest: true,
+                                                  )),
+                                        );
+                                      },
+                                      child: CircleAvatar(
+                                        child: Icon(
+                                          Icons.camera_enhance,
+                                          size: 6 * SizeConfig.heightMultiplier,
+                                        ),
+                                        backgroundColor: Colors.white,
+                                        radius: 6 * SizeConfig.heightMultiplier,
+                                      ),
+                                    )),
+                        ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                                right: 5 * SizeConfig.widthMultiplier),
-                            child: Text(
-                              'Estimated total knowledge',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 2.5 * SizeConfig.heightMultiplier,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    right: 2 * SizeConfig.widthMultiplier),
-                                child: Text('5933',
-                                    style: TextStyle(
-                                        color: Color(0xFF0032E3),
-                                        fontSize:
-                                            3 * SizeConfig.heightMultiplier)),
-                              ),
-                              Text(
-                                ' words',
+                      Padding(
+                        padding: EdgeInsets.only(right: 5*SizeConfig.widthMultiplier),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: 0 * SizeConfig.widthMultiplier),
+                              child: Text(
+                                'Estimated total knowledge',
                                 style: TextStyle(
-                                    color: Color(0xFF28576B),
-                                    fontSize:
-                                        2.5 * SizeConfig.heightMultiplier),
-                              )
-                            ],
-                          )
-                        ],
+                                    color: Colors.black,
+                                    fontSize: 2.2 * SizeConfig.textMultiplier,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      right: 2 * SizeConfig.widthMultiplier),
+                                  child: Text('5933',
+                                      style: TextStyle(
+                                          color: Color(0xFF0032E3),
+                                          fontSize:
+                                              3 * SizeConfig.heightMultiplier)),
+                                ),
+                                Text(
+                                  ' words',
+                                  style: TextStyle(
+                                      color: Color(0xFF28576B),
+                                      fontSize:
+                                          2.5 * SizeConfig.heightMultiplier),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       )
                     ],
                   )),

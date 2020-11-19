@@ -115,7 +115,7 @@ class LearningProgress {
 }
 
 class WordLearning {
-  int reviewDate; // So ngay can review
+  String reviewDate; // So ngay can review
   int reviewTimes; // So lan da review
   int wordId;
 
@@ -186,17 +186,17 @@ void main(List<String> args) {
     ], wordLearning: [
       WordLearning(
         wordId: 2,
-        reviewDate: 3,
+        reviewDate: '2020-11-28',
         reviewTimes: 0,
       ),
       WordLearning(
         wordId: 3,
-        reviewDate: 3,
+        reviewDate: '2020-11-28',
         reviewTimes: 1,
       ),
       WordLearning(
         wordId: 6,
-        reviewDate: 3,
+        reviewDate: '2020-11-28',
         reviewTimes: 0,
       ),
     ]),

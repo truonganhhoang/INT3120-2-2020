@@ -7,7 +7,9 @@ import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
+import 'package:word_up_application/user.dart';
 import 'dart:async';
+import '../app_manager.dart';
 import '../size_config.dart';
 import '../word.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -30,9 +32,8 @@ class ListWordsScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _ListWordsScreenState();
 }
 
-DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
-
 class _ListWordsScreenState extends State<ListWordsScreen> {
+  DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
   int colorIndex = 0;
 
   void _onChanged(int index) {
@@ -53,9 +54,11 @@ class _ListWordsScreenState extends State<ListWordsScreen> {
   @override
   void initState() {
     super.initState();
+
     if (widget.viewIndex == 0) colorIndex = 0;
     if (widget.viewIndex == 1) colorIndex = 1;
     if (widget.viewIndex == 2) colorIndex = 2;
+
     if (widget.wordsToLearn.length == 0) {
       dbHelper.getListToLearnWords().then((rows) {
         setState(() {

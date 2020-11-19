@@ -91,10 +91,10 @@ class DatabaseLocalHelper {
     //print(checkExist[0]['TOTAL'].toString());
     var result;
     if (checkExist[0]['TOTAL'].toString() != '0') {
-      print('Exist Word');
+      print('Exist To Learn Word');
       return;
     } else {
-      print('Insert OK');
+      print('Insert To Learn word OK');
       result = await db.rawQuery(
           'SELECT $columnIdWord FROM $tableWord WHERE $columnIdWord = ?', [id]);
       await db.insert(tableWordToLearn, result[0]);
@@ -111,13 +111,13 @@ class DatabaseLocalHelper {
     //print(checkExist[0]['TOTAL'].toString());
     var result;
     if (checkExist[0]['TOTAL'].toString() != '0') {
-      print('Exist Word');
+      print('Exist Knew Word');
       return;
     } else {
-      print('Insert OK');
+      print('Insert Knew word OK');
       result = await db.rawQuery(
           'SELECT $columnIdWord FROM $tableWord WHERE $columnIdWord = ?', [id]);
-      await db.insert(tableWordToLearn, result[0]);
+      await db.insert(tableWordKnew, result[0]);
     }
   }
 
@@ -132,10 +132,10 @@ class DatabaseLocalHelper {
     //print(checkExist[0]['TOTAL'].toString());
     //var result;
     if (checkExist[0]['TOTAL'].toString() != '0') {
-      print('Exist Word');
+      print('Exist Learning Word');
       return;
     } else {
-      print('Insert OK');
+      print('Insert Learning word OK');
       await db.rawQuery(
           'INSERT INTO $tableWordLearning ($columnIdWord, $columnReviewDate, $columnReviewTime) VALUES (?, ?, ?)',
           [id, reviewDate, reviewTime]);
@@ -148,6 +148,8 @@ class DatabaseLocalHelper {
     await db.rawQuery(
         'UPDATE $tableWordFarvorite SET $columnIsFavorite = 1 WHERE $columnIdWord = ?',
         [id]);
+
+    print('Insert favorite word OK');
   }
 
   // Get the Map List Object
@@ -222,9 +224,7 @@ class DatabaseLocalHelper {
     return words;
   }
 
-  Future<String> getDefintionWordId(int id){
-
-  }
+  Future<String> getDefintionWordId(int id) {}
 
   // Get N Words
   Future<List<Word>> getNWords(int numbersWords) async {
@@ -467,7 +467,7 @@ class DatabaseLocalHelper {
   // Trinh Xuan Trinh thêm truy vấn lấy danh sách id
 
   // Get Learn To Words
-  Future <List<dynamic>> getToLearnWords() async {
+  Future<List<dynamic>> getToLearnWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
       'SELECT * FROM $tableWordToLearn ',
@@ -483,7 +483,7 @@ class DatabaseLocalHelper {
   }
 
   // Get Knew Words
-  Future <List<dynamic>> getKnewWords() async {
+  Future<List<dynamic>> getKnewWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
       'SELECT * FROM $tableWordKnew ',
@@ -499,7 +499,7 @@ class DatabaseLocalHelper {
   }
 
   // Get To Favorite Words
-  Future <List<dynamic>> getFavoriteWords() async {
+  Future<List<dynamic>> getFavoriteWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
       'SELECT * FROM $tableWordFarvorite WHERE $columnIsFavorite = 1',
@@ -507,14 +507,14 @@ class DatabaseLocalHelper {
     List<dynamic> words = new List();
     words.add(0);
     for (int i = 0; i < resultMapList.length; i++) {
-        words.add(resultMapList[i]["id_word"]);
+      words.add(resultMapList[i]["id_word"]);
     }
     //print(words);
     return words;
   }
 
   // Get To Learning Words
-  Future <List<dynamic>> getLearningWords() async {
+  Future<List<dynamic>> getLearningWords() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
       'SELECT * FROM $tableWordLearning ',
@@ -530,7 +530,7 @@ class DatabaseLocalHelper {
   }
 
   // Get Learning Setting
-  Future <List<dynamic>> getLearningSetting() async {
+  Future<List<dynamic>> getLearningSetting() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
       'SELECT * FROM $tableUserLearing ',
@@ -545,7 +545,7 @@ class DatabaseLocalHelper {
   }
 
   // Get UserPrivateInformation
-  Future <List<dynamic>> getUserPrivateInformation() async {
+  Future<List<dynamic>> getUserPrivateInformation() async {
     Database db = await instance.database;
     var resultMapList = await db.rawQuery(
       'SELECT * FROM $tableUsers ',

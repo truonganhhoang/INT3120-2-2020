@@ -9,25 +9,26 @@ import 'package:word_up_application/components/star_favorite.dart';
 import 'package:word_up_application/local_database/database_local_helper.dart';
 import 'package:word_up_application/study_home_screen/show_examples.dart';
 import 'dart:async';
+import '../app_manager.dart';
 import '../size_config.dart';
+import '../user.dart';
 import '../word.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class FavoriteWordsScreen extends StatefulWidget {
   List<Word> wordsFarvorite = new List();
 
-  @override 
+  @override
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
 
-DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
-
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
-  bool isLoading = true;
+  DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
 
   @override
   void initState() {
     super.initState();
+
     if (widget.wordsFarvorite.length == 0) {
       dbHelper.getListFavoriteWords().then((rows) {
         setState(() {
@@ -36,7 +37,6 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
           });
         });
       });
-      isLoading = false;
     }
   }
 
@@ -50,9 +50,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: isLoading
-                      ? CircularProgressIndicator()
-                      : listWord(widget.wordsFarvorite, Colors.blueAccent),
+                  child: listWord(widget.wordsFarvorite, Colors.blueAccent),
                 )
               ],
             ),
@@ -222,10 +220,11 @@ void showDetailsOfWord(context, position, words) {
             ),
             Container(
               padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
-              width: 20 * SizeConfig.widthMultiplier,
+              width: 40 * SizeConfig.widthMultiplier,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.grey)),
+                borderRadius: BorderRadius.circular(8.0),
+                //border: Border.all(color: Colors.grey)
+              ),
               child: Center(
                 child: Text('${words[position].meanCard}',
                     style:
@@ -238,10 +237,10 @@ void showDetailsOfWord(context, position, words) {
                   style: TextStyle(fontSize: 2.5 * SizeConfig.textMultiplier)),
             ),
             Expanded(
-                          child: Padding(
+              child: Padding(
                 padding: EdgeInsets.only(top: 0 * SizeConfig.heightMultiplier),
-                child:
-                    Image.asset('assets/images/' + words[position].imagePaths[0]),
+                child: Image.asset(
+                    'assets/images/' + words[position].imagePaths[0]),
               ),
             ),
             Padding(
