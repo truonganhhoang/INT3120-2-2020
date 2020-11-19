@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bucha_app/widgets/Grammar/GrammarUnit.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarUnit.dart';
 import 'package:bucha_app/ButtonBack.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarGame/GrammarGamePage.dart';
 
 class UnitPage extends StatefulWidget {
   final String name;
@@ -17,15 +18,30 @@ class UnitPage extends StatefulWidget {
 class PlayButton extends StatelessWidget {
   PlayButton();
 
+  void _navigateToGame(BuildContext context) {
+    Navigator.of(context).push(
+        MaterialPageRoute<Null>(builder: (BuildContext context){
+          return GrammarGamePage();
+        })
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120.0,
-      height: 50.0,
-      decoration: BoxDecoration(
+        width: 120.0,
+        height: 50.0,
+        decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/PlayGameButton.png'),
-              fit: BoxFit.fill)),
+              fit: BoxFit.fill
+          ),
+        ),
+        child: InkWell(
+          onTap: () {
+            _navigateToGame(context);
+          },
+        )
     );
   }
 }
@@ -45,16 +61,17 @@ class _UnitPageState extends State<UnitPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
+        width: queryData.size.width,
+        height: queryData.size.height,
         color: Colors.pinkAccent,
         child: new Column(
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-              height: 650.0,
+              height: queryData.size.height * 0.88,
               decoration: BoxDecoration(
                   color: Colors.yellow[200],
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -67,7 +84,7 @@ class _UnitPageState extends State<UnitPage> {
                 child: new Column(
                   children: [
                     Container(
-                      height: 60.0,
+                      height: queryData.size.height * 0.092 * 0.85,
                       decoration: BoxDecoration(
                         color: Colors.orange[400],
                         borderRadius: BorderRadius.only(
@@ -87,7 +104,6 @@ class _UnitPageState extends State<UnitPage> {
                       ),
                     ),
                     new Container(
-                      height: 550.0,
                       margin: EdgeInsets.only(
                           right: 5.0, left: 5.0, bottom: 10.0, top: 10.0),
                       decoration: BoxDecoration(
@@ -97,7 +113,7 @@ class _UnitPageState extends State<UnitPage> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height: 50.0,
+                            height: queryData.size.height * 0.85 * 0.076,
                             decoration: BoxDecoration(
                               color: widget.color,
                               borderRadius:
@@ -117,7 +133,7 @@ class _UnitPageState extends State<UnitPage> {
                           ),
                           new Container(
                             child: SizedBox(
-                              height: 480.0,
+                              height: queryData.size.height * (0.88 - 0.092 * 0.85 - 0.076 * 0.85) - 40.0,
                               child: listView,
                             ),
                           ),
@@ -129,13 +145,17 @@ class _UnitPageState extends State<UnitPage> {
               ),
             ),
             Container(
-              width: 330.0,
-              height: 70.0,
+              margin: EdgeInsets.only(left: 10.0, right: 10.0),
+              height: queryData.size.height * 0.12 - 10.0,
               child: new Row(
                 children: [
                   ButtonBack(),
-                  new Padding(padding: EdgeInsets.only(left: 70.0)),
-                  PlayButton(),
+                  Container(
+                    width: queryData.size.width - 100.0,
+                    child: Center(
+                      child: PlayButton(),
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -1,8 +1,7 @@
-import 'package:bucha_app/widgets/Grammar/GrammarUnit.dart';
-import 'package:bucha_app/widgets/Grammar/GrammarPage.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarUnit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bucha_app/widgets/Grammar/UnitPage.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/UnitPage.dart';
 
 class GrammarOption extends StatelessWidget {
   final String name;
@@ -25,7 +24,7 @@ class GrammarOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350.0,
+      width: 650.0,
       height: 50.0,
       decoration: BoxDecoration(
         color: this.color,
