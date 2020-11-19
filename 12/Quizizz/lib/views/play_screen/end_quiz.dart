@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiztest/main.dart';
@@ -13,7 +12,9 @@ class EndQuiz extends StatefulWidget {
       @required this.incorrectAns,
       this.topic,
       this.quizID,
-      this.saveGameID});
+      this.saveGameID,
+      this.key});
+  final Key key;
   final int correctAns;
   final int incorrectAns;
   final Topic topic;

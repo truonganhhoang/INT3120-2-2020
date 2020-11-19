@@ -28,6 +28,8 @@ class API_Manager {
         quizzes.add(Quiz.fromJson(value, key));
       });
       return quizzes;
+    } else {
+      return null;
     }
   }
 
@@ -41,7 +43,8 @@ class API_Manager {
         questions.add(Questional.fromJson(value, key));
       });
       return questions;
-    }
+    } else
+      return null;
   }
 
   Future<List<Quiz>> searchQuiz(String name) async {
