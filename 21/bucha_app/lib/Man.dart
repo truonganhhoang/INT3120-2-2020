@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bucha_app/VocabularyGame.dart';
 import 'package:bucha_app/widgets/options/OptionClass.dart';
 
 import 'package:flutter/material.dart';
@@ -131,7 +132,7 @@ class _ManChoiState extends State<ManChoi> {
                         Navigator.push(
                             context,
                             new MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                                builder: (context) => vocabulary_game()));
                       },
                       child: Text(
                         "Chơi Game",
