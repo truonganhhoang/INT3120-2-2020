@@ -68,6 +68,13 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    print("dispose");
+    widget.ans.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return QuizGame(
       quiz: widget.quiz,
@@ -190,6 +197,7 @@ class _ListChoicesState extends State<ListChoices> {
                         correctAns: correctCount,
                         incorrectAns: _totalQs - correctCount,
                         topic: _topic,
+                        saveGameID: _saveGameID,
                         quizID: widget.quiz.key,
                       )));
         });
@@ -406,27 +414,32 @@ class Question extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      width: size.width * 0.8,
+      height: size.height * 0.4,
       padding: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          Container(
-              constraints: BoxConstraints(
-                  maxWidth: size.width * 2 / 3, maxHeight: size.height * 0.2),
-              child: Image(
-                image: NetworkImage(imagePath),
-                fit: BoxFit.cover,
-              )),
+          if (Image.network(imagePath) != null)
+            Container(
+                width: size.width * 0.8,
+                height: size.height * 0.2,
+                child: Image(
+                  image: NetworkImage(imagePath),
+                  fit: BoxFit.cover,
+                )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Text(
-              question,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            child: Center(
+              child: Text(
+                question,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           )
         ],
@@ -436,14 +449,14 @@ class Question extends StatelessWidget {
 }
 
 class Pause extends StatelessWidget {
-  const Pause(
-      {Key key,
-      @required this.currentQs,
-      @required this.totalQs,
-      this.answered,
-      this.quizID,
-      this.userID,})
-      : super(key: key);
+  const Pause({
+    Key key,
+    @required this.currentQs,
+    @required this.totalQs,
+    this.answered,
+    this.quizID,
+    this.userID,
+  }) : super(key: key);
 
   final int currentQs;
   final int totalQs;

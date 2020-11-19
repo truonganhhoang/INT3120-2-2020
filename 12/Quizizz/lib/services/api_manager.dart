@@ -101,7 +101,6 @@ class API_Manager {
     final headers = {'Content-Type': 'application/json'};
     Map<String, dynamic> body = {
       "ListAnsweredQuest": listAns,
-      "QuizDone": isDone,
       "QuizID": quizID,
       "UserID": userID
     };
@@ -110,7 +109,6 @@ class API_Manager {
 
     final response = await http.post(urlPostGame,
         headers: headers, body: jsonBody, encoding: encoding);
-    print("post game");
     if (response.statusCode == 200) {
       print("post save game ok");
     }
@@ -133,9 +131,7 @@ class API_Manager {
   Future<Quiz> fetchQuizByID(String quizID) async {
     var urlGetQuiz = url + "/v1/quiz/GetAQuiz/" + quizID;
     final response = await http.get(urlGetQuiz);
-    print("fetch quiz by id");
     if (response.statusCode == 200) {
-      print(response.body);
       return Quiz.fromJson(json.decode(response.body), quizID);
     }
   }
@@ -155,7 +151,6 @@ class API_Manager {
 
     final response = await http.post(urlPostQuiz,
         headers: headers, body: jsonBody, encoding: encoding);
-    print("post quiz done");
     if (response.statusCode == 200) {
       print("post quiz done ok");
     }
@@ -164,7 +159,6 @@ class API_Manager {
   Future<List<DoneQuiz>> fetchDoneQuiz(String userID) async {
     var urlGetDoneQuiz = url + "/v1/quiz/GetAllDoneQuizOfUser/" + userID;
     final response = await http.get(urlGetDoneQuiz);
-    print("fetch done quiz game");
     List<DoneQuiz> quiz = List<DoneQuiz>();
     if (response.statusCode == 200) {
       Map list = json.decode(response.body);
@@ -178,16 +172,20 @@ class API_Manager {
   Future<void> updateRunQuiz(List<int> ans, String key) async {
     var urlPutRunQuiz = url + "/v1/save-game/UpdateSaveGame/" + key;
     final headers = {'Content-Type': 'application/json'};
-    Map<String, dynamic> body = {
-      "ListAnsweredQuest": ans,
-    };
-    String jsonBody = json.encode(body);
     final encoding = Encoding.getByName('utf-8');
+    final body = json.encode(ans);
     final response = await http.put(urlPutRunQuiz,
-        headers: headers, body: jsonBody, encoding: encoding);
-    print("Update" + key);
+        headers: headers, body: body, encoding: encoding);
     if (response.statusCode == 200) {
-      print("update success");
+      print("update success" + response.body);
+    }
+  }
+
+  Future<void> deleteSaveGame(String saveGameID) async {
+    var urlDeleteSaveGame = url + "/v1/save-game/DeleteSaveGame/" + saveGameID;
+    final response = await http.delete(urlDeleteSaveGame);
+    if (response.statusCode == 200) {
+      print("delete success");
     }
   }
 }

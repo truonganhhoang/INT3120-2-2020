@@ -48,29 +48,43 @@ class ListCategory extends StatefulWidget {
 }
 
 class _ListCategoryState extends State<ListCategory> {
-  Future<List<Quiz>> _quizzes;
+  List<Quiz> _quizzes;
+  var _init = true;
+  var _isLoadingQuiz = false;
 
   @override
   void initState() {
-    _quizzes = API_Manager().fetchQuizByTopic(widget.topic.key);
-    super.initState();
+    if (_init) {
+      setState(() {
+        _isLoadingQuiz = true;
+      });
+      API_Manager()
+          .fetchQuizByTopic(widget.topic.key)
+          .then((value) => _quizzes = value)
+          .then((_) {
+        setState(() {
+          _isLoadingQuiz = false;
+        });
+      });
+      super.initState();
+    }
+    _init = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: widget.size.width * 0.5,
-      child: FutureBuilder(
-          future: _quizzes,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<Quiz> quizzes = snapshot.data ?? [];
-              return ListView.builder(
+        height: widget.size.width * 0.5,
+        child: _isLoadingQuiz
+            ? SpinKitDualRing(
+                color: Colors.blue,
+              )
+            : ListView.builder(
                 shrinkWrap: true,
-                itemCount: quizzes.length > 5 ? 5 : quizzes.length,
+                itemCount: _quizzes.length > 5 ? 5 : _quizzes.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  Quiz quiz = quizzes[index];
+                  Quiz quiz = _quizzes[index];
                   return QuizCard(
                     size: widget.size,
                     imagePath: "assets/images/solar.png",
@@ -78,15 +92,7 @@ class _ListCategoryState extends State<ListCategory> {
                     topic: widget.topic,
                   );
                 },
-              );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else
-              return SpinKitDualRing(
-                color: Colors.blue,
-              );
-          }),
-    );
+              ));
   }
 }
 

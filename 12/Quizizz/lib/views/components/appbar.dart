@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiztest/views/setting/setting.dart';
 
 const List<Map> choices = [
   {"name": "Setting", "icon": "settings"},

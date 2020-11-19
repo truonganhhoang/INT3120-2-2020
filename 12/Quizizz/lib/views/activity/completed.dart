@@ -49,18 +49,17 @@ class _ListCompletedState extends State<ListCompleted> {
                 .then((_) => i++)
                 .then((_) {
               if (i == quizDones.length) {
-                print(i);
                 setState(() {
                   _isLoadingQuiz = false;
                 });
               }
             });
-            print(quizzes.length);
           });
         });
       });
     }
     _init = false;
+    super.initState();
   }
 
   @override
