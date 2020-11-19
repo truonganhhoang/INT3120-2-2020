@@ -245,41 +245,6 @@ class ListFilter extends StatefulWidget {
   _ListFilterState createState() => _ListFilterState();
 }
 
-class _ListFilterState extends State<ListFilter> {
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: widget.onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            color: widget.isSelected ? activeColor[1] : activeColor[0]),
-        alignment: Alignment.centerLeft,
-        height: 50,
-        padding: EdgeInsets.only(left: 10, top: 5),
-        child: Row(children: [
-          Expanded(
-            child: Text(
-              widget.title,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          if (widget.isChosen)
-            Icon(
-              Icons.check_circle,
-              color: Colors.greenAccent,
-            )
-        ]),
-      ),
-    );
-  }
-}
-
-class SearchFilter extends StatefulWidget {
-  const SearchFilter({
-    Key key,
-    this.onTap,
-  }) : super(key: key);
-  final Function onTap;
 
   @override
   _SearchFilterState createState() => _SearchFilterState();
