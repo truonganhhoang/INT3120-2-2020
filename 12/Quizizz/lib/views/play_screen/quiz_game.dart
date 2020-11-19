@@ -71,7 +71,9 @@ class _QuizPageState extends State<QuizPage> {
   void dispose() {
     super.dispose();
     print("dispose");
-    widget.ans.clear();
+    if (widget.ans != null) {
+      widget.ans.clear();
+    }
   }
 
   @override
@@ -130,11 +132,11 @@ class _QuizGameState extends State<QuizGame> {
                       question: quest[_currentQs],
                       quiz: widget.quiz,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20, top: 10),
-                      alignment: Alignment.topLeft,
-                      child: Image.asset("assets/icons/music.png"),
-                    )
+                    // Container(
+                    //   padding: EdgeInsets.only(left: 20, top: 10),
+                    //   alignment: Alignment.topLeft,
+                    //   child: Image.asset("assets/icons/music.png"),
+                    // )
                   ],
                 )),
     );
