@@ -1,4 +1,4 @@
-import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiztest/main.dart';
@@ -12,25 +12,70 @@ class EndQuiz extends StatefulWidget {
       {@required this.correctAns,
       @required this.incorrectAns,
       this.topic,
-      this.quizID});
+      this.quizID,
+      this.saveGameID});
   final int correctAns;
   final int incorrectAns;
   final Topic topic;
   final String quizID;
+  final String saveGameID;
 
   @override
   _EndQuizState createState() => _EndQuizState();
 }
 
 class _EndQuizState extends State<EndQuiz> {
-  Future<List<Quiz>> _quizzes;
+  List<Quiz> _quizzes;
+  var _init = true;
+  var _isLoadingQuiz = false;
+
   @override
   void initState() {
-    _quizzes = API_Manager().fetchQuizByTopic(widget.topic.key);
-    UserSave().getUserID().then((value) {
-      API_Manager().postCompletedQuiz(
-          widget.quizID, value, widget.correctAns, widget.incorrectAns);
-    });
+    if (_init && widget.saveGameID == null) {
+      print(widget.saveGameID);
+      setState(() {
+        _isLoadingQuiz = true;
+      });
+      UserSave().getUserID().then((value) {
+        API_Manager().postCompletedQuiz(
+            widget.quizID, value, widget.correctAns, widget.incorrectAns);
+      }).then((_) {
+        API_Manager()
+            .fetchQuizByTopic(widget.topic.key)
+            .then((value) => _quizzes = value)
+            .then((_) {
+          print(_quizzes);
+        }).then((_) {
+          setState(() {
+            _isLoadingQuiz = false;
+          });
+        });
+      });
+    }
+    if (widget.saveGameID != null && _init) {
+      setState(() {
+        _isLoadingQuiz = true;
+      });
+      print("save game id" + widget.saveGameID);
+      API_Manager().deleteSaveGame(widget.saveGameID).then((_) {
+        UserSave().getUserID().then((value) {
+          API_Manager().postCompletedQuiz(
+              widget.quizID, value, widget.correctAns, widget.incorrectAns);
+        }).then((_) {
+          API_Manager()
+              .fetchQuizByTopic("GglUDmMF6BVuVjaZQOMD")
+              .then((value) => _quizzes = value)
+              .then((_) {
+            print(_quizzes);
+          }).then((_) {
+            setState(() {
+              _isLoadingQuiz = false;
+            });
+          });
+        });
+      });
+    }
+    _init = false;
     super.initState();
   }
 
@@ -65,32 +110,23 @@ class _EndQuizState extends State<EndQuiz> {
                     ),
                   ),
                   SizedBox(
-                    height: 200,
-                    child: FutureBuilder(
-                        future: _quizzes,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<Quiz> quizzes = snapshot.data ?? [];
-                            return ListView.builder(
+                      height: 200,
+                      child: _isLoadingQuiz
+                          ? SpinKitDualRing(color: Colors.white)
+                          : ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               itemCount:
-                                  quizzes.length > 3 ? 3 : quizzes.length,
+                                  _quizzes.length > 3 ? 3 : _quizzes.length,
                               itemBuilder: (context, index) {
-                                Quiz quiz = quizzes[index];
+                                Quiz quiz = _quizzes[index];
                                 return QuizCard(
                                   quiz: quiz,
                                   imagePath: "assets/images/solar.png",
                                   size: size,
                                 );
                               },
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text("${snapshot.error}");
-                          } else
-                            return SpinKitDualRing(color: Colors.white);
-                        }),
-                  )
+                            ))
                 ],
               ),
             )

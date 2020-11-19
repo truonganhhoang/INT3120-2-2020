@@ -2,10 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:quiztest/main.dart';
-import 'package:quiztest/models/models.dart';
-import 'package:quiztest/services/user.dart';
-import 'package:quiztest/views/play_screen/quiz_game.dart';
-import 'package:quiztest/views/setting/setting_music.dart';
 import 'package:quiztest/services/api_manager.dart';
 
 String _saveGameID;
@@ -33,10 +29,8 @@ class PauseWhilePlaying extends StatefulWidget {
 class _PauseWhilePlayingState extends State<PauseWhilePlaying> {
   @override
   void initState() {
-    // TODO: implement initState
     _saveGameID = widget.saveGameID;
-    print(widget.answered);
-    print(_saveGameID);
+    super.initState();
   }
 
   @override

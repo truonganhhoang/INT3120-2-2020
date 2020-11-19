@@ -68,6 +68,13 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    print("dispose");
+    widget.ans.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return QuizGame(
       quiz: widget.quiz,
@@ -201,6 +208,7 @@ class _ListChoicesState extends State<ListChoices> {
                         correctAns: correctCount,
                         incorrectAns: _totalQs - correctCount,
                         topic: _topic,
+                        saveGameID: _saveGameID,
                         quizID: widget.quiz.key,
                       )));
         });

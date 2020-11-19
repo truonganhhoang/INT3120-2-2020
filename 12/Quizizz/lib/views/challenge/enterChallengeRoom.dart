@@ -6,7 +6,6 @@ class EnterChallengeRoom extends StatelessWidget {
   final String hostCode;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Material(
         color: Colors.black,
