@@ -111,7 +111,9 @@ class QuizCard extends StatelessWidget {
                       lineHeight: 20.0,
                       animationDuration: 2500,
                       percent: percent,
-                      center: Text("${(percent * 100).round()}% accuracy"),
+                      center: saveGameID != null
+                          ? Text("${(percent * 100).round()}% accuracy")
+                          : Text("${(percent * 100).round()}% correct"),
                       linearStrokeCap: LinearStrokeCap.roundAll,
                       progressColor: Colors.redAccent,
                     ),

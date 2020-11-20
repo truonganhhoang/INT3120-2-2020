@@ -80,7 +80,7 @@ class _ListCompletedState extends State<ListCompleted> {
                       size: widget.size,
                       imagePath: "assets/images/solar.png",
                       quiz: quizzes[index],
-                      percent: 0.2 + index * 0.2,
+                      percent: num.parse((quizDones[index].correctAns/(quizDones[index].correctAns + quizDones[index].wrongAns)).toStringAsFixed(2)),
                     )));
   }
 }

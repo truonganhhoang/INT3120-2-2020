@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
         _isLoading = true;
       });
       API_Manager().fetchTopic().then((value) => listTopic = value).then((_) {
+        print("length topic" + listTopic.length.toString());
         setState(() {
           _isLoading = false;
         });
