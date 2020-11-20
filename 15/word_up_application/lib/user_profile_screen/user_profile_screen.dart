@@ -213,6 +213,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
+                      key: Key('buttonIKnew'),
                       onTap: () {
                         Navigator.push(
                             context,
@@ -427,6 +428,7 @@ class _AboutMeState extends State<AboutMe> {
                   style: TextStyle(fontSize: 2.5 * SizeConfig.heightMultiplier),
                 ),
                 InkWell(
+                  key: Key('name'),
                   splashColor: Colors.green[200],
                   focusColor: Colors.red,
                   onTap: () async {
