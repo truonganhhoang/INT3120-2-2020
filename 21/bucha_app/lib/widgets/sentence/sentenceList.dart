@@ -28,8 +28,12 @@ class _sentenceList extends State<sentenceList> {
 
   void handleTap(int index) {
       setState(() {
-        currentSentence = index;
-        isShowDetail = !isShowDetail;
+        if(currentSentence == index){
+          isShowDetail = !isShowDetail;
+        }else{
+          currentSentence = index;
+          isShowDetail = true;
+        }
       });
   }
 
@@ -109,6 +113,7 @@ class _sentenceList extends State<sentenceList> {
                                     itemBuilder: (context, index) {
                                       if( currentSentence == index && isShowDetail ){
                                         return GestureDetector(
+                                          key: Key('expandedItem'),
                                           onTap: (){handleTap(index);},
                                           child: Container(
                                           height: MediaQuery.of(context).size.height * 0.18,
@@ -159,7 +164,8 @@ class _sentenceList extends State<sentenceList> {
                                       ),
                                         );}
                                       return GestureDetector(
-                                        onTap: (){handleTap(index);},
+                                          key: Key('initialItem'),
+                                          onTap: (){handleTap(index);},
                                         child:Container(
                                             height:
                                             MediaQuery.of(context).size.height *

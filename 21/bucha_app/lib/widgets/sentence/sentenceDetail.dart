@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../Database.dart';
@@ -18,23 +18,24 @@ class sentenceDetail extends StatefulWidget {
 // ignore: camel_case_types
 class _sentenceDetail extends State<sentenceDetail> {
   int currentSentence;
-  bool isVietNameseShow;
+  bool isVietNameseShowing;
 
   void initState() {
     super.initState();
     currentSentence = 0;
-    isVietNameseShow = false;
+    isVietNameseShowing = false;
+    Firebase.initializeApp();
   }
 
   void handleNext() {
-    if (isVietNameseShow) {
+    if (isVietNameseShowing) {
       setState(() {
         currentSentence += 1;
-        isVietNameseShow = false;
+        isVietNameseShowing = false;
       });
     } else {
       setState(() {
-        isVietNameseShow = true;
+        isVietNameseShowing = true;
       });
     }
   }
@@ -129,7 +130,7 @@ class _sentenceDetail extends State<sentenceDetail> {
                                     ))),
                               ),
                               Visibility(
-                                visible: isVietNameseShow,
+                                visible: isVietNameseShowing,
                                 child: Column(
                                   children: [
                                     Center(
@@ -216,9 +217,10 @@ class _sentenceDetail extends State<sentenceDetail> {
                                   width: 40.0,
                                   height: 40.0,
                                   child: RaisedButton(
+                                      child: Icon(Icons.arrow_forward,size: 20,),
                                       color: Colors.yellow,
                                       onPressed: () {
-                                    if (currentSentence < snapshot.data.documents.length-1 || !isVietNameseShow) {
+                                    if (currentSentence < snapshot.data.documents.length-1 || !isVietNameseShowing) {
                                       handleNext();
                                     }
                                   })),

@@ -31,13 +31,6 @@ class _DictionaryState extends State<Dictionary> {
       });
     });
   }
-  // setFilter() {
-  //   searchController.addListener(() {
-  //     setState(() {
-  //       filter = searchController.text;
-  //     });
-  //   });
-  // }
 
   @override
   void dispose() {

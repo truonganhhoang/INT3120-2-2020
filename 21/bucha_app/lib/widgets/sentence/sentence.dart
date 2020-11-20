@@ -248,9 +248,9 @@ class _SentenceState extends State<Sentence> {
                           .size
                           .width,
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        // color: Color.fromRGBO(51,0,102,150),
-                        backgroundBlendMode: BlendMode.modulate,
+                        // color: Colors.deepPurple,
+                        color: Color.fromRGBO(51,0,102,150),
+                        // backgroundBlendMode: BlendMode.modulate,
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(
