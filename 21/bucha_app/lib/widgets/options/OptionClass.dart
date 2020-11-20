@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../ChonMan.dart';
 import '../../main.dart';
 
 class Class extends StatelessWidget {
   final String name;
 
-  Class({this.name});
+  final StatefulWidget linkpage;
+
+  Class({this.name, this.linkpage});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,10 @@ class Class extends StatelessWidget {
         height: 50,
         margin: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
         child: new RaisedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => linkpage));
+          },
           child: Text(
             name,
             style: TextStyle(
@@ -71,9 +77,8 @@ class _OptionClassState extends State<OptionClass> {
               ),
             ),
             Container(
-
               margin:
-                  const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+                  const EdgeInsets.only(left: 20.0, right: 20.0),
               decoration: BoxDecoration(
                 color: Color(0xff9CF5FE),
                 borderRadius: BorderRadius.only(
@@ -100,9 +105,11 @@ class _OptionClassState extends State<OptionClass> {
                           children: [
                             Class(
                               name: "Lớp 1",
+                              linkpage: ChonMan(scene:"class1",),
                             ),
                             Class(
                               name: "Lớp 2",
+                              linkpage: ChonMan(scene:"class2",),
                             ),
                           ],
                         ),
@@ -112,9 +119,11 @@ class _OptionClassState extends State<OptionClass> {
                           children: [
                             Class(
                               name: "Lớp 3",
+                              linkpage: ChonMan(scene:"class3",),
                             ),
                             Class(
                               name: "Lớp 4",
+                              linkpage: ChonMan(scene:"class4",),
                             ),
                           ],
                         ),
@@ -124,9 +133,11 @@ class _OptionClassState extends State<OptionClass> {
                           children: [
                             Class(
                               name: "Lớp 5",
+                              linkpage: ChonMan(scene:"class5",),
                             ),
                             Class(
                               name: "Lớp 6",
+                              linkpage: ChonMan(scene:"class6",),
                             ),
                           ],
                         ),
@@ -136,9 +147,11 @@ class _OptionClassState extends State<OptionClass> {
                           children: [
                             Class(
                               name: "Lớp 7",
+                              linkpage: ChonMan(scene:"class7",),
                             ),
                             Class(
                               name: "Lớp 8",
+                              linkpage: ChonMan(scene:"class8",),
                             ),
                           ],
                         ),
@@ -148,9 +161,11 @@ class _OptionClassState extends State<OptionClass> {
                           children: [
                             Class(
                               name: "Lớp 9",
+                              linkpage: ChonMan(scene:"class9",),
                             ),
                             Class(
                               name: "Lớp 10",
+                              linkpage: ChonMan(scene:"class10",),
                             ),
                           ],
                         ),
@@ -166,8 +181,7 @@ class _OptionClassState extends State<OptionClass> {
               margin: const EdgeInsets.only(top: 20.0),
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.pop(context);
                 },
                 shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),

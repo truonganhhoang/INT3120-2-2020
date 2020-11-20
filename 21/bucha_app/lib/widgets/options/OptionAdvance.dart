@@ -1,3 +1,4 @@
+import 'package:bucha_app/ChonMan.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -5,39 +6,39 @@ import '../../main.dart';
 class Option extends StatelessWidget {
   final String title;
   final int color;
+  final StatefulWidget linkPage;
 
-
-  Option({this.title,this.color});
+  Option({this.title, this.color, this.linkPage});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         width: 140.0,
         height: 60.0,
-        margin: const EdgeInsets.only(top: 20.0,left: 5.0 , right: 5.0),
+        margin: const EdgeInsets.only(
+            top: 10.0, left: 5.0, right: 5.0, bottom: 10.0),
         child: new RaisedButton(
           onPressed: () {
-
+            Navigator.push(
+                context, new MaterialPageRoute(builder: (context) => linkPage));
           },
           child: Container(
-
             child: Center(
               child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+                title,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
             ),
           ),
           shape: new RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
-            side:  BorderSide(color: Colors.white,width: 3.0)
-          ),
+              side: BorderSide(color: Colors.white, width: 3.0)),
           color: Color(color),
         ));
   }
@@ -59,8 +60,7 @@ class _OptionAdvanceState extends State<OptionAdvance> {
         children: [
           new Padding(padding: const EdgeInsets.only(top: 150)),
           Container(
-            margin: const EdgeInsets.only(
-                left: 20.0, right: 20.0),
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
             height: 80.0,
             decoration: BoxDecoration(
                 color: Color(0xffF76C57),
@@ -82,9 +82,7 @@ class _OptionAdvanceState extends State<OptionAdvance> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(
-                left: 20.0, right: 20.0),
-            height: 400.0,
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
             decoration: BoxDecoration(
                 color: Color(0xffA2FB8F),
                 borderRadius: BorderRadius.only(
@@ -108,12 +106,13 @@ class _OptionAdvanceState extends State<OptionAdvance> {
                       Option(
                         title: "500 TỪ VỰNG PHỔ BIẾN",
                         color: 0xffF16A3F,
+                        linkPage: ChonMan(scene: "1"),
                       ),
                       Option(
                         title: "600 TỪ VỰNG LUYỆN THI TOEIC",
                         color: 0xff56C9D0,
+                        linkPage: ChonMan(scene: "1"),
                       )
-
                     ],
                   ),
                   Row(
@@ -123,12 +122,13 @@ class _OptionAdvanceState extends State<OptionAdvance> {
                       Option(
                         title: "900 TỪ VỰNG LUYỆN THI IELTS",
                         color: 0xff3FF146,
+                        linkPage: ChonMan(scene: "1"),
                       ),
                       Option(
                         title: "900 TỪ VỰNG LUYỆN THI TOEFL",
                         color: 0xffD41F52,
+                        linkPage: ChonMan(scene: "1"),
                       )
-
                     ],
                   ),
                   Row(
@@ -138,12 +138,13 @@ class _OptionAdvanceState extends State<OptionAdvance> {
                       Option(
                         title: "1000 TỪ VỰNG LUYỆN THI SAT",
                         color: 0xffFF3C82,
+                        linkPage: ChonMan(scene: "1"),
                       ),
                       Option(
                         title: "1000 TỪ VỰNG GIAO TIẾP CƠ BẢN",
                         color: 0xffCFBB24,
+                        linkPage: ChonMan(scene: "1"),
                       )
-
                     ],
                   ),
                   Row(
@@ -153,12 +154,13 @@ class _OptionAdvanceState extends State<OptionAdvance> {
                       Option(
                         title: "800 TỪ VỰNG GIAO TIẾP TRUNG CẤP",
                         color: 0xff26B1F3,
+                        linkPage: ChonMan(scene: "1"),
                       ),
                       Option(
                         title: "600 TỪ VỰNG GIAO TIẾP NÂNG CAO",
                         color: 0xff27AE60,
+                        linkPage: ChonMan(scene: "1"),
                       )
-
                     ],
                   ),
                 ],
@@ -170,9 +172,9 @@ class _OptionAdvanceState extends State<OptionAdvance> {
             height: 50.0,
             margin: const EdgeInsets.only(top: 20.0),
             child: RaisedButton(
-              onPressed: () {Navigator.push(context, new MaterialPageRoute(
-                  builder: (context) => HomePage()
-              ));},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               shape: new RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               color: Colors.red,
