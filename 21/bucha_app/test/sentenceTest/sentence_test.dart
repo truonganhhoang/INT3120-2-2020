@@ -17,7 +17,7 @@ void main() {
 
   });
 
-  testWidgets('navigate next sentence test', (WidgetTester tester) async {
+  testWidgets('expanded item test', (WidgetTester tester) async {
     await Firebase.initializeApp();
     await tester.pumpWidget(sentenceList(topic: 'Câu nói thông dụng',));
     expect(find.text('CÂU NÓI THÔNG DỤNG'), findsOneWidget);
