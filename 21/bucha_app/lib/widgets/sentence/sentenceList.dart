@@ -107,7 +107,7 @@ class _sentenceList extends State<sentenceList> {
                               Container(
                                 padding: EdgeInsets.only(top: 10),
                                 height:
-                                    MediaQuery.of(context).size.height * 0.6,
+                                    MediaQuery.of(context).size.height * 0.7,
                                 child: ListView.builder(
                                     itemCount: snapshot.data.documents.length,
                                     itemBuilder: (context, index) {
@@ -134,8 +134,9 @@ class _sentenceList extends State<sentenceList> {
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                           fontWeight: FontWeight.bold,
-                                                          fontSize: 26,
+                                                          fontSize: 18,
                                                           fontStyle: FontStyle.italic),
+                                                          textAlign: TextAlign.center,
                                                     ),
                                                   )),
                                               Center(
@@ -153,8 +154,10 @@ class _sentenceList extends State<sentenceList> {
                                                             ["vietnamese"],
                                                             style: TextStyle(
                                                                 fontWeight: FontWeight.bold,
-                                                                fontSize: 26,
-                                                                fontStyle: FontStyle.italic),
+                                                                fontSize: 18,
+                                                                fontStyle: FontStyle.italic,
+                                                            ),
+                                                            textAlign: TextAlign.center,
                                                           )
                                                       ),
                                                     ),
@@ -186,8 +189,9 @@ class _sentenceList extends State<sentenceList> {
                                                   ["vietnamese"],
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
-                                                      fontSize: 26,
+                                                      fontSize: 24,
                                                       fontStyle: FontStyle.italic),
+                                                  textAlign: TextAlign.center,
                                                 )),
                                           ));
                                       }),
