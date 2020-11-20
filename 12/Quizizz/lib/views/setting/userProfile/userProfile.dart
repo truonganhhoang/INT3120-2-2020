@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiztest/services/user.dart';
 import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
@@ -19,7 +20,6 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future _userName = UserSave().userName();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Align(
@@ -64,31 +64,24 @@ class UserProfile extends StatelessWidget {
                         prop: "Parry Pirate",
                       ),
                     ),
-                    FutureBuilder<String>(
-                        future: _userName,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return UserNameSetting(
-                                        userName: snapshot.data.toString(),
-                                      );
-                                    });
-                              },
-                              child: SettingInfo(
-                                title: "User name",
-                                prop: snapshot.data.toString(),
-                              ),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text("${snapshot.error}");
-                          } else
-                            return SpinKitDualRing(
-                              color: Colors.blue,
-                            );
+                    StoreConnector<String, String>(
+                        converter: (store) => store.state,
+                        builder: (context, store) {
+                          return GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return UserNameSetting(
+                                      userName: store,
+                                    );
+                                  });
+                            },
+                            child: SettingInfo(
+                              title: "User name",
+                              prop: store,
+                            ),
+                          );
                         }),
                     SettingInfo(
                       title: "Grade",

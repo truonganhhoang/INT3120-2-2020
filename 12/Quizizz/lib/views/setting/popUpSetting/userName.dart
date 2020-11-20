@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:quiztest/services/api_manager.dart';
 
 class UserNameSetting extends StatefulWidget {
   UserNameSetting({Key key, @required this.userName}) : super(key: key);
@@ -76,26 +78,32 @@ class _UserNameSettingState extends State<UserNameSetting> {
                         ),
                       ),
                     ),
-                    Container(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                            width: 100,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Color(0xFFF2F492),
-                                borderRadius: BorderRadius.circular(5)),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Save changes",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF903939),
-                              ),
-                            )),
+                    StoreConnector<String, String>(
+                      converter: (store) => store.state,
+                      builder: (context, store) => Container(
+                        child: InkWell(
+                          onTap: () {
+                            StoreProvider.of<String>(context)
+                                .dispatch(_controller.value);
+                            API_Manager().updateUserName(store);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                              width: 100,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Color(0xFFF2F492),
+                                  borderRadius: BorderRadius.circular(5)),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Save changes",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF903939),
+                                ),
+                              )),
+                        ),
                       ),
                     )
                   ],
