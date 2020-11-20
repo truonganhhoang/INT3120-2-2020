@@ -191,4 +191,19 @@ class API_Manager {
       print("delete success");
     }
   }
+
+  Future<void> updateUserName(String userName) async {
+    final pref = await SharedPreferences.getInstance();
+    final userId = pref.getString("userId");
+    var urlPostUser = url + "/v1/user/UpdateUser" + userId;
+    Map<String, String> body = {"Username": userName};
+    String jsonBody = json.encode(body);
+    final encoding = Encoding.getByName('utf-8');
+    final headers = {'Content-Type': 'application/json'};
+    final response = await http.put(urlPostUser,
+        headers: headers, body: jsonBody, encoding: encoding);
+    if (response.statusCode == 200) {
+      print("Update user name");
+    }
+  }
 }

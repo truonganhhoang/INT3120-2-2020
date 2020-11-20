@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:quiztest/services/redux/reducer.dart';
 import 'package:quiztest/views/setting/setting.dart';
+import 'package:redux/redux.dart';
 import 'views/home/home_page.dart';
 import 'views/search/search.dart';
 import 'views/activity/activity.dart';
 import 'package:quiztest/services/user.dart';
 
+const userName = "User Name";
+
 void main() {
-  runApp(MyApp());
+  final store =
+      Store<String>(AppReducer().changeUserName, initialState: userName);
+  runApp(StoreProvider(store: store, child: MyApp(),));
 }
 
 class MyApp extends StatelessWidget {
