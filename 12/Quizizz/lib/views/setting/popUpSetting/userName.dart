@@ -84,7 +84,7 @@ class _UserNameSettingState extends State<UserNameSetting> {
                         child: InkWell(
                           onTap: () {
                             StoreProvider.of<String>(context)
-                                .dispatch(_controller.value);
+                                .dispatch(_controller.text);
                             API_Manager().updateUserName(store);
                             Navigator.pop(context);
                           },
