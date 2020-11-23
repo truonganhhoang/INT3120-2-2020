@@ -7,6 +7,7 @@ class LandingPage extends StatelessWidget {
   final int background;
 
   const LandingPage({Key key, this.background}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User>(

@@ -22,7 +22,7 @@ class _BeginTimePickerState extends State<BeginTimePicker> {
     int bufferedMinute = DateTime.now().minute;
     final form = Provider.of<SubmitForm>(context);
     return MyDateTimePicker(
-      dateTime: DateTime(1,1,1,widget.hour,widget.minute),
+      dateTime: DateTime(1, 1, 1, widget.hour, widget.minute),
       mode: PickerType.time,
       onChange: (time) {
         bufferedMinute = time.minute;
@@ -58,6 +58,7 @@ class EndTimePicker extends StatefulWidget {
   final int hour, minute;
 
   const EndTimePicker(this.hour, this.minute, {Key key}) : super(key: key);
+
   @override
   _EndTimePickerState createState() => _EndTimePickerState();
 }
@@ -71,7 +72,7 @@ class _EndTimePickerState extends State<EndTimePicker> {
     final form = Provider.of<SubmitForm>(context);
     return MyDateTimePicker(
       mode: PickerType.time,
-      dateTime: DateTime(1,1,1,widget.hour,widget.minute),
+      dateTime: DateTime(1, 1, 1, widget.hour, widget.minute),
       onChange: (time) {
         bufferedMinute = time.minute;
         bufferedHour = time.hour;

@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 class BeginDatePicker extends StatefulWidget {
   final DateTime dateTime;
 
-  const BeginDatePicker(this.dateTime, {Key key }) : super(key: key);
+  const BeginDatePicker(this.dateTime, {Key key}) : super(key: key);
+
   @override
   _BeginDatePickerState createState() => _BeginDatePickerState();
 }
@@ -50,7 +51,8 @@ class _BeginDatePickerState extends State<BeginDatePicker> {
 class EndDatePicker extends StatefulWidget {
   final DateTime dateTime;
 
-  const EndDatePicker(this.dateTime, {Key key }) : super(key: key);
+  const EndDatePicker(this.dateTime, {Key key}) : super(key: key);
+
   @override
   _EndDatePickerState createState() => _EndDatePickerState();
 }

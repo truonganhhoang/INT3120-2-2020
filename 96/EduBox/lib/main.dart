@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'Models/NewPostTemplate.dart';
 
 void main() async {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   final SharedPreferences data;
 
   const MyApp({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final List<Color> color = [
@@ -31,22 +33,23 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SubmitForm()),
       ],
-      child:MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'WaitingWisdom',
-          theme: ThemeData(
-            textTheme: TextTheme(
-              headline1: TextStyle(
-                color: Colors.red,
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-              ),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'WaitingWisdom',
+        theme: ThemeData(
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              color: Colors.red,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
             ),
-            primaryColor: color[data.getInt('backgroundColor')??2],//Color(0xff00854c),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: LandingPage(background:data.getInt('backgroundColor')),
+          primaryColor: color[data.getInt('backgroundColor') ?? 2],
+          //Color(0xff00854c),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-      );
+        home: LandingPage(background: data.getInt('backgroundColor')),
+      ),
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:EduBox/IntermediateWidget.dart';
 import 'package:EduBox/Models/Post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'ClassDetail.dart';
 
 class MyClassAndBeAcceptedBox extends StatelessWidget {

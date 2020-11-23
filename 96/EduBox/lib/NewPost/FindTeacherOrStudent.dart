@@ -25,16 +25,18 @@ class FindTeacherOrStudent extends StatelessWidget {
                   submitForm.type = 0;
                   Navigator.of(context).pop();
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => NewPost(type: 0,)));
+                      builder: (context) => NewPost(
+                            type: 0,
+                          )));
                 },
                 child: ClayContainer(
                   height: 60,
                   width: 300,
                   child: Center(
                       child: Text(
-                        'Tìm học sinh',
-                        style: TextStyle(fontSize: 30),
-                      )),
+                    'Tìm học sinh',
+                    style: TextStyle(fontSize: 30),
+                  )),
                 ),
               ),
               Divider(
@@ -46,16 +48,18 @@ class FindTeacherOrStudent extends StatelessWidget {
                   submitForm.type = 1;
                   Navigator.of(context).pop();
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => NewPost(type: 1,)));
+                      builder: (context) => NewPost(
+                            type: 1,
+                          )));
                 },
                 child: ClayContainer(
                   height: 60,
                   width: 300,
                   child: Center(
                       child: Text(
-                        'Tìm gia sư',
-                        style: TextStyle(fontSize: 30),
-                      )),
+                    'Tìm gia sư',
+                    style: TextStyle(fontSize: 30),
+                  )),
                 ),
               ),
             ],
