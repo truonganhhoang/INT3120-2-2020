@@ -13,7 +13,10 @@ const userName = "User Name";
 void main() {
   final store =
       Store<String>(AppReducer().changeUserName, initialState: userName);
-  runApp(StoreProvider(store: store, child: MyApp(),));
+  runApp(StoreProvider(
+    store: store,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
