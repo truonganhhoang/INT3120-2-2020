@@ -192,9 +192,11 @@ class API_Manager {
     }
   }
 
-  Future<void> updateUserName(dynamic userName, String userId) async {
+  Future<void> updateUserName(String userName) async {
+    final pref = await SharedPreferences.getInstance();
+    final userId = pref.getString("userId");
     var urlPostUser = url + "/v1/user/UpdateUser" + userId;
-    Map<String, dynamic> body = {"Username": userName};
+    Map<String, String> body = {"Username": userName};
     String jsonBody = json.encode(body);
     final encoding = Encoding.getByName('utf-8');
     final headers = {'Content-Type': 'application/json'};
