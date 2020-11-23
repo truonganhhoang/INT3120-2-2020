@@ -57,7 +57,18 @@ class LoginScreen extends StatelessWidget {
           stream: googleSignIn.onCurrentUserChanged,
           builder: (context, snapshot) {
             if (snapshot.hasError)
-              return Scaffold(body: Center(child: CircularProgressIndicator()));
+              return Scaffold(
+                body: Center(
+                  child: Text(
+                    'Error',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 60,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
             if (snapshot.hasData)
               return Scaffold(
                 body: Center(child: LinearProgressIndicator()),

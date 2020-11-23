@@ -174,17 +174,18 @@ class IntermediateClassList extends StatelessWidget {
           if (!snapshot.hasError) {
             if (snapshot.connectionState != ConnectionState.active)
               return CircularProgressIndicator();
-            List listOfPost = (snapshot.data.docs
+            List list = (snapshot.data.docs
                   ..sort((a, b) => a['PostDate'].compareTo(b['PostDate'])))
                 .where((element) => function(element))
                 .map((DocumentSnapshot document) {
-              Map map = document.data();
-              map['DocumentID'] = document.id;
-              Post post = Post.fromJson(map);
-              return post;
-            }).toList();
-            List<Widget> list =
-                listOfPost.map((e) => widget(e)).toList().cast<Widget>();
+                  Map<String, dynamic> map = document.data();
+                  map['DocumentID'] = document.id ?? '';
+                  Post post = Post.fromJson(map);
+                  return post;
+                })
+                .map((e) => widget(e))
+                .toList()
+                .cast<Widget>();
             return list.length != 0
                 ? ListView(
                     scrollDirection: scrollDirection,

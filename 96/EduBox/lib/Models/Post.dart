@@ -43,7 +43,7 @@ class Post {
     this.session = json['Session'];
     this.course = json['Course'];
     this.gender = json['Gender'];
-    this.requiredComment = json['RequiredComment'];
+    this.requiredComment = json['RequiredComment'] ?? '';
     this.salary = json['Salary'];
     this.postDate = json['PostDate'];
   }

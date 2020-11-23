@@ -97,7 +97,7 @@ class LearningDaysOfWeek extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color _color = Color.fromRGBO(0, 133, 76, 1);
+    Color _color = Theme.of(context).primaryColor;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
