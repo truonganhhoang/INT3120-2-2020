@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:quiztest/models/models.dart';
 import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 
 class EnterChallengeRoom extends StatelessWidget {
-  const EnterChallengeRoom({Key key, this.hostCode}) : super(key: key);
+  const EnterChallengeRoom({Key key, this.hostCode, this.quiz})
+      : super(key: key);
   final String hostCode;
+  final Quiz quiz;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,10 +23,16 @@ class EnterChallengeRoom extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PauseWhilePlaying(
+                                      totalQuestions: quiz.numberOfQuestion,
+                                      questionsRemaining: 0,
+                                    )));
                       },
                       child: Image(
-                        image: AssetImage('assets/icons/play.png'),
+                        image: AssetImage('assets/icons/pause.png'),
                       ),
                     ),
                     Container(
@@ -111,9 +121,12 @@ class EnterChallengeRoom extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      child: Text(
-                        "Thanh Dat",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      child: StoreConnector<String, String>(
+                        converter: (store) => store.state,
+                        builder: (context, store) => Text(
+                          store,
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
                       ),
                     ),
                     Container(
@@ -125,6 +138,15 @@ class EnterChallengeRoom extends StatelessWidget {
                     )
                   ],
                 ),
+              ),
+              Center(
+                child: IconButton(
+                    icon: Icon(
+                      Icons.refresh,
+                      color: Colors.white,
+                      size: 48,
+                    ),
+                    onPressed: null),
               )
             ],
           ),

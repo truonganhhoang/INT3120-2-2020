@@ -31,11 +31,7 @@ class PopUp extends StatelessWidget {
               imagePath: imagePath,
               quiz: quiz,
             ),
-            Buttons(
-              size: size,
-              quiz: quiz,
-              topic: topic
-            ),
+            Buttons(size: size, quiz: quiz, topic: topic),
           ],
         ),
       ),
@@ -178,6 +174,7 @@ class Buttons extends StatelessWidget {
                             if (snapshot.hasData) {
                               return EnterChallengeRoom(
                                 hostCode: snapshot.data,
+                                quiz: quiz,
                               );
                             } else if (snapshot.hasError) {
                               return Center(

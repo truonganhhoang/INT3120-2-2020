@@ -169,7 +169,6 @@ class _ListChoicesState extends State<ListChoices> {
     for (var i = 0; i < 4; i++) {
       if (choices[i] != " ") numberOfChoices++;
     }
-    print(numberOfChoices);
     super.initState();
   }
 
@@ -443,7 +442,7 @@ class Pause extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => PauseWhilePlaying(
-                        key: const Key("pauseScr"),
+                            key: const Key("pauseScr"),
                             questionsRemaining: currentQs,
                             totalQuestions: totalQs,
                             answered: answered,
