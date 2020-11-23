@@ -6,7 +6,11 @@ import 'package:quiztest/views/play_screen/quiz_game.dart';
 import 'package:quiztest/models/models.dart';
 
 class PopUp extends StatelessWidget {
-  PopUp({this.imagePath, this.size, @required this.quiz, this.topic});
+  PopUp(
+      {this.imagePath,
+      this.size,
+      @required this.quiz,
+      this.topic,});
 
   final Quiz quiz;
   final String imagePath;
@@ -31,11 +35,7 @@ class PopUp extends StatelessWidget {
               imagePath: imagePath,
               quiz: quiz,
             ),
-            Buttons(
-              size: size,
-              quiz: quiz,
-              topic: topic
-            ),
+            Buttons(size: size, quiz: quiz, topic: topic),
           ],
         ),
       ),
@@ -98,7 +98,7 @@ class Buttons extends StatelessWidget {
       this.quiz,
       this.topic,
       this.saveGameID,
-      this.answered})
+      this.answered,})
       : super(key: key);
 
   final Size size;
@@ -178,6 +178,7 @@ class Buttons extends StatelessWidget {
                             if (snapshot.hasData) {
                               return EnterChallengeRoom(
                                 hostCode: snapshot.data,
+                                quiz: quiz,
                               );
                             } else if (snapshot.hasError) {
                               return Center(

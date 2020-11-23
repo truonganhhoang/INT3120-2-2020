@@ -3,13 +3,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 
-class EnterChallengeRoom extends StatelessWidget {
-  const EnterChallengeRoom({Key key, this.hostCode, this.quiz})
-      : super(key: key);
+class JoinScreen extends StatelessWidget {
+  const JoinScreen({Key key, this.hostCode, this.userID}) : super(key: key);
   final String hostCode;
-  final Quiz quiz;
+  final String userID;
   @override
   Widget build(BuildContext context) {
+    print(userID);
     return SafeArea(
       child: Material(
         color: Colors.black,
@@ -21,22 +21,7 @@ class EnterChallengeRoom extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PauseWhilePlaying(
-                                      totalQuestions: quiz.numberOfQuestion,
-                                      questionsRemaining: 0,
-                                    )));
-                      },
-                      child: Image(
-                        image: AssetImage('assets/icons/pause.png'),
-                      ),
-                    ),
                     Container(
-                      margin: EdgeInsets.only(left: 160),
                       width: 107,
                       height: 32,
                       alignment: Alignment.center,
@@ -77,7 +62,7 @@ class EnterChallengeRoom extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: 80),
-                child: Text("Enter the code",
+                child: Text("Please wait the host start game...",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -94,19 +79,6 @@ class EnterChallengeRoom extends StatelessWidget {
                 child: Text(
                   hostCode,
                   style: TextStyle(color: Colors.black, fontSize: 24),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                width: 162,
-                height: 52,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(177, 72, 180, 1),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Text(
-                  "Start game",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
               Container(
