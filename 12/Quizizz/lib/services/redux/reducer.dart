@@ -1,5 +1,5 @@
 class AppReducer {
-  String changeUserName(String state, String newUserName) {
+  String changeUserName(String state, dynamic newUserName) {
     return newUserName;
   }
 }

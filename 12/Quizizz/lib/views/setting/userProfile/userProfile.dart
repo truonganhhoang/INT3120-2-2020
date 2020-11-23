@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:quiztest/services/user.dart';
 import 'package:quiztest/views/setting/popUpSetting/avatarSetting.dart';
 import 'package:quiztest/views/setting/popUpSetting/userName.dart';
 import '../settingInfo.dart';

@@ -85,7 +85,7 @@ class _UserNameSettingState extends State<UserNameSetting> {
                           onTap: () {
                             StoreProvider.of<String>(context)
                                 .dispatch(_controller.value);
-                            API_Manager().updateUserName(store);
+                            API_Manager().updateUserName(store, "1");
                             Navigator.pop(context);
                           },
                           child: Container(
