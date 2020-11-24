@@ -206,4 +206,17 @@ class API_Manager {
       print("Update user name");
     }
   }
+
+  Future<List<dynamic>> getMapParticipants(String code) async {
+    var urlGetMapParticipant = url + "/v1/host/GetAHost/" + code;
+    final response = await http.get(urlGetMapParticipant);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = json.decode(response.body);
+      print(res);
+      Map<String, dynamic> mapParticipants = res['MapParticipant'];
+      print(mapParticipants);
+      print(mapParticipants.values.toList());
+      return mapParticipants.values.toList();
+    }
+  }
 }
