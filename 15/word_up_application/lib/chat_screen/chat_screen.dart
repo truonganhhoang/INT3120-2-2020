@@ -32,6 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
             new Container(
               margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
+                  key: Key('Send'),
                   icon: new Icon(Icons.send),
                   onPressed: () => _handleSubmitted(_textController.text)),
             ),

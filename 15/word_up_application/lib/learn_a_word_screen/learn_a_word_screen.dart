@@ -27,6 +27,7 @@ class _LearnAWordState extends State<LearnAWord> {
           title: new Text('Learning'),
           actions: <Widget>[
             MaterialButton(
+              key: Key('Share'),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               child: Icon(
