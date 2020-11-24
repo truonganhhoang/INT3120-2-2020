@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
             w = new Text("Loading ...");
             break;
           case ConnectionState.done:
-            w = (FirebaseAuth.instance.currentUser == null)
+            w = (FirebaseAuth.instance.currentUser == 1)
                 ? loginScene()
                 : new VietJackNavigationBar();
             break;
