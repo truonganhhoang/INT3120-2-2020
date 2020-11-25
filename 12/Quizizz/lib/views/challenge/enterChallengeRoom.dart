@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:quiztest/models/models.dart';
+import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
 
-class EnterChallengeRoom extends StatelessWidget {
-  const EnterChallengeRoom({Key key, this.hostCode}) : super(key: key);
+class EnterChallengeRoom extends StatefulWidget {
+  const EnterChallengeRoom({Key key, this.hostCode, this.quiz})
+      : super(key: key);
   final String hostCode;
+  final Quiz quiz;
+
+  @override
+  _EnterChallengeRoomState createState() => _EnterChallengeRoomState();
+}
+
+class _EnterChallengeRoomState extends State<EnterChallengeRoom> {
+  List<dynamic> listParticipants = [];
+  @override
+  void initState() {
+    API_Manager().getMapParticipants(widget.hostCode).then((value) {
+      listParticipants = value;
+      print(value.length);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,10 +40,17 @@ class EnterChallengeRoom extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PauseWhilePlaying(
+                                      totalQuestions:
+                                          widget.quiz.numberOfQuestion,
+                                      questionsRemaining: 0,
+                                    )));
                       },
                       child: Image(
-                        image: AssetImage('assets/icons/play.png'),
+                        image: AssetImage('assets/icons/pause.png'),
                       ),
                     ),
                     Container(
@@ -34,7 +62,7 @@ class EnterChallengeRoom extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                           color: Color.fromRGBO(196, 196, 196, 0.24)),
                       child: Text(
-                        hostCode,
+                        widget.hostCode,
                         style: TextStyle(color: Colors.white, fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
@@ -82,7 +110,7 @@ class EnterChallengeRoom extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
                 child: Text(
-                  hostCode,
+                  widget.hostCode,
                   style: TextStyle(color: Colors.black, fontSize: 24),
                 ),
               ),
@@ -111,9 +139,12 @@ class EnterChallengeRoom extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      child: Text(
-                        "Thanh Dat",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      child: StoreConnector<String, String>(
+                        converter: (store) => store.state,
+                        builder: (context, store) => Text(
+                          store,
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
                       ),
                     ),
                     Container(
@@ -125,6 +156,55 @@ class EnterChallengeRoom extends StatelessWidget {
                     )
                   ],
                 ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: listParticipants.length,
+                itemBuilder: (context, index) => Container(
+                  width: 290,
+                  height: 86,
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(196, 196, 196, 0.4),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        child: StoreConnector<String, String>(
+                          converter: (store) => store.state,
+                          builder: (context, store) => Text(
+                            store,
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Image(
+                          image: AssetImage('assets/icons/officer.png'),
+                          width: 45,
+                          height: 45,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Center(
+                child: IconButton(
+                    icon: Icon(
+                      Icons.refresh,
+                      color: Colors.white,
+                      size: 48,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        API_Manager()
+                            .getMapParticipants(widget.hostCode)
+                            .then((value) => listParticipants = value);
+                      });
+                    }),
               )
             ],
           ),

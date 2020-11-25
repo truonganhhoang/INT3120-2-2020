@@ -26,4 +26,7 @@ class UserSave {
     String userID = prefs.getString("userId");
     return userID;
   }
+  void saveUserNameToLocal() {
+    
+  }
 }
