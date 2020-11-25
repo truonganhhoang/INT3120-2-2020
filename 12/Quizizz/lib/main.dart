@@ -7,7 +7,7 @@ import 'views/home/home_page.dart';
 import 'views/search/search.dart';
 import 'views/activity/activity.dart';
 import 'package:quiztest/services/user.dart';
-
+import 'views/challenge/join_screen.dart';
 const userName = "User Name";
 
 void main() {
