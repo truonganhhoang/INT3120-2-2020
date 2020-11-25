@@ -4,8 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 class WordSelectionBar extends StatefulWidget {
   final String word;
-  final int kind; // 0 is selection, 1 is unsure, 2 is already known
-  WordSelectionBar({@required this.word, @required this.kind});
+  WordSelectionBar({@required this.word});
 
   @override
   State<StatefulWidget> createState() => _WordSelectionBarStage();

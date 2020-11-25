@@ -12,7 +12,7 @@ import 'package:word_up_application/user_profile_screen/user_profile_screen.dart
 import '../chat_screen/chat_screen.dart';
 
 class Home extends StatefulWidget {
-  static TitleHome titleHome = new TitleHome(title: 'Learning');
+  static TitleHome titleHome;
   @override
   // Home(Key key):super(key : key);
   State<StatefulWidget> createState() => _HomeState();
@@ -46,6 +46,10 @@ class _HomeState extends State<Home> {
             type: PageTransitionType.bottomToTop, child: ChatScreen()));
   }
 
+  @override initState(){
+    super.initState();
+    Home.titleHome = new TitleHome(title: 'Learning');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

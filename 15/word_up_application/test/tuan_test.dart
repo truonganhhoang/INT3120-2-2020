@@ -7,6 +7,7 @@ import 'package:word_up_application/selection_screen/finish_selection_screen.dar
 import 'package:word_up_application/user_profile_screen/about_me_screen.dart';
 import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
 import 'package:word_up_application/word.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
   /*--- Unit test --- */
