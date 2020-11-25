@@ -1,15 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:quiztest/models/models.dart';
-import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
+import 'package:quiztest/services/api_manager.dart';
+import 'package:quiztest/main.dart';
 
-class JoinScreen extends StatelessWidget {
-  const JoinScreen({Key key, this.hostCode, this.userID}) : super(key: key);
+class JoinScreen extends StatefulWidget {
+  const JoinScreen({Key key, this.hostCode}) : super(key: key);
   final String hostCode;
-  final String userID;
+
+  @override
+  _JoinScreenState createState() => _JoinScreenState();
+}
+
+class _JoinScreenState extends State<JoinScreen> {
+  var _init = true;
+  var _isLoading = false;
+  List<dynamic> listParticipants = new List<dynamic>();
+  @override
+  void initState() {
+    if (_init) {
+      setState(() {
+        _isLoading = true;
+      });
+      API_Manager().getMapParticipants(widget.hostCode).then((value) {
+        listParticipants = value;
+        print(value.length);
+        print("list participant" + listParticipants.toString());
+      }).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _init = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(userID);
     return SafeArea(
       child: Material(
         color: Colors.black,
@@ -29,19 +55,21 @@ class JoinScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                           color: Color.fromRGBO(196, 196, 196, 0.24)),
                       child: Text(
-                        hostCode,
+                        widget.hostCode,
                         style: TextStyle(color: Colors.white, fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) {
-                              return AlertWhilePlaying();
-                            });
+                      onTap: () async {
+                        await API_Manager()
+                            .deleteHost(widget.hostCode)
+                            .then((_) => {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => Home()),
+                                      (Route<dynamic> route) => false)
+                                });
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -77,40 +105,43 @@ class JoinScreen extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
                 child: Text(
-                  hostCode,
+                  widget.hostCode,
                   style: TextStyle(color: Colors.black, fontSize: 24),
                 ),
               ),
-              Container(
-                width: 290,
-                height: 86,
-                margin: EdgeInsets.symmetric(vertical: 10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(196, 196, 196, 0.4),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      child: StoreConnector<String, String>(
-                        converter: (store) => store.state,
-                        builder: (context, store) => Text(
-                          store,
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+              _isLoading
+                  ? CircularProgressIndicator()
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: listParticipants.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                          height: 86,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(196, 196, 196, 0.4),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                  listParticipants[index],
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              Container(
+                                child: Image(
+                                  image: AssetImage('assets/icons/officer.png'),
+                                  width: 80,
+                                  height: 80,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      child: Image(
-                        image: AssetImage('assets/icons/officer.png'),
-                        width: 45,
-                        height: 45,
-                      ),
-                    )
-                  ],
-                ),
-              ),
               Center(
                 child: IconButton(
                     icon: Icon(

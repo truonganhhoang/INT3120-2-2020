@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/services/api_manager.dart';
 import 'package:quiztest/views/play_screen/pauseWhilePlaying.dart';
+import 'package:quiztest/main.dart';
 
 class EnterChallengeRoom extends StatefulWidget {
   const EnterChallengeRoom({Key key, this.hostCode, this.quiz})
@@ -68,13 +69,15 @@ class _EnterChallengeRoomState extends State<EnterChallengeRoom> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) {
-                              return AlertWhilePlaying();
-                            });
+                      onTap: () async {
+                        await API_Manager()
+                            .deleteHost(widget.hostCode)
+                            .then((_) => {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => Home()),
+                                      (Route<dynamic> route) => false)
+                                });
                       },
                       child: Container(
                         alignment: Alignment.center,

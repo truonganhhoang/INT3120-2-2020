@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:quiztest/models/models.dart';
 import 'package:quiztest/constants/constants.dart';
@@ -217,6 +218,28 @@ class API_Manager {
       print(mapParticipants);
       print(mapParticipants.values.toList());
       return mapParticipants.values.toList();
+    }
+  }
+
+  Future<String> joinGame(String code) async {
+    final pref = await SharedPreferences.getInstance();
+    final userId = pref.getString("userId");
+    var urlPostJoin = url + "/v1/host/" + code + "/join?userID=" + userId;
+    final headers = {'Content-Type': 'application/json'};
+    final encoding = Encoding.getByName('utf-8');
+    final response =
+        await http.post(urlPostJoin, headers: headers, encoding: encoding);
+    print(urlPostJoin);
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+  }
+
+  Future<void> deleteHost(String code) async {
+    var urlDeleteHost = url + "/v1/host/DeleteAHost/" + code;
+    final response = await http.delete(urlDeleteHost);
+    if (response.statusCode == 200) {
+      print("delete host success");
     }
   }
 }

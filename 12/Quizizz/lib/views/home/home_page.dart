@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _isLoading = true;
       });
-      UserSave().getUserID().then((value) => userID = value);
       API_Manager().fetchTopic().then((value) => listTopic = value).then((_) {
         print("length topic" + listTopic.length.toString());
         setState(() {
@@ -46,9 +45,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            EnterCode(
-              userID: userID,
-            ),
+            EnterCode(),
             _isLoading
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -70,8 +67,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 class EnterCode extends StatefulWidget {
-  const EnterCode({Key key, this.userID}) : super(key: key);
-  final String userID;
+  const EnterCode({Key key}) : super(key: key);
 
   @override
   _EnterCodeState createState() => _EnterCodeState();
@@ -119,14 +115,18 @@ class _EnterCodeState extends State<EnterCode> {
                 color: Color.fromRGBO(146, 61, 199, 1),
                 borderRadius: BorderRadius.circular(5)),
             child: FlatButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => JoinScreen(
-                              userID: widget.userID,
-                              hostCode: _controller.text,
-                            )));
+              onPressed: () async {
+                await API_Manager().joinGame(_controller.text).then((value) {
+                  print(value);
+                  if (value == "success") {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => JoinScreen(
+                                  hostCode: _controller.text,
+                                )));
+                  }
+                }).catchError((e) => print(e));
               },
               child: Text(
                 "Join a game",
