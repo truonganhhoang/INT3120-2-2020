@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:vietjack_mobile_app/Auth.dart';
 import 'package:vietjack_mobile_app/main.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:vietjack_mobile_app/ChoseClassPage.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -12,15 +13,21 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   User user;
-
   void signIn() {
     print("aaaaaaaaaaaa");
-    signInWithUser().then((user) {
+    signInWithUser().then((user) async{
       this.user = user;
-      print(user.displayName);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return new VietJackNavigationBar();
-      }));
+      QuerySnapshot test = await FirebaseFirestore.instance.collection("Users").where("UserId",isEqualTo: user.uid).get();
+      bool isFirstTimeSignIn = test.docs.length == 0;
+      if(isFirstTimeSignIn){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return new ChoseClassPage();
+        }));
+      }else{
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return new VietJackNavigationBar();
+        }));
+      }
     });
   }
   Widget loginScene(){
@@ -43,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 300,
                     height: 70,
                     child: new GoogleSignInButton(
+                      key: new Key("loginButton"),
                       onPressed: signIn,
                       darkMode: true,
                       centered: true,
@@ -72,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      key: new Key("test"),
       future: app,
       builder: (context, snapshot) {
         Widget w;

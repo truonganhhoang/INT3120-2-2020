@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:vietjack_mobile_app/Header.dart';
@@ -6,22 +5,20 @@ import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
-  static int firstRun = 0;
-  static int weeksNumber = 0;
-  ThiOnline({Key key}) : super(key: key) {
-    FirebaseFirestore.instance
-        .collection("ThiOnline")
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {});
-    });
+  int firstRun = 0;
+
+  void notFirstRun() {
+    this.firstRun++;
   }
+
+  ThiOnline({Key key}) : super(key: key);
   @override
   _ThiOnlineState createState() => _ThiOnlineState();
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
-  static String currentSubject = "Ngữ Văn";
+  String currentSubject = "Ngữ văn";
+  final GlobalKey<MyCustomCardState> _key = GlobalKey();
   final List<String> subjectArray = [
     'Ngữ văn',
     'Toán',
@@ -43,46 +40,23 @@ class _ThiOnlineState extends State<ThiOnline> {
   void initState() {
     super.initState();
     myScroll();
-    if (_isShowingModal && ThiOnline.firstRun < 1) {
+    if (_isShowingModal && widget.firstRun < 1) {
       Future.delayed(Duration(seconds: 1)).then((_) {
         _onButtonPress();
       });
     }
-    if (ThiOnline.firstRun < 1) {
-      FirebaseFirestore.instance
-          .collection("ThiOnline")
-          .doc("Class 12")
-          .collection("Subject")
-          .doc(currentSubject)
-          .get()
-          .then((value) {
-        this.setState(() {
-          ThiOnline.weeksNumber = value.data()["weeks"];
-        });
-      });
-    }
   }
 
-  void _changeSubject(BuildContext context, String subject) async {
+  void changeSubject(BuildContext context, String subject) async {
+    _key.currentState.changeSubject(subject);
+    Navigator.pop(context);
     this.setState(() {
-      currentSubject = subject;
-      Navigator.pop(context);
-    });
-    FirebaseFirestore.instance
-        .collection("ThiOnline")
-        .doc("Class 12")
-        .collection("Subject")
-        .doc(currentSubject)
-        .get()
-        .then((value) {
-      this.setState(() {
-        ThiOnline.weeksNumber = value.data()["weeks"];
-      });
+      this.currentSubject = subject;
     });
   }
 
   void _onButtonPress() {
-    ThiOnline.firstRun++;
+    widget.notFirstRun();
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.white,
@@ -102,7 +76,7 @@ class _ThiOnlineState extends State<ThiOnline> {
                   children: List.generate(subjectArray.length, (index) {
                     return FlatButton(
                         onPressed: () =>
-                            _changeSubject(context, subjectArray[index]),
+                            changeSubject(context, subjectArray[index]),
                         padding: EdgeInsets.all(10.0),
                         child: Row(
                           children: [
@@ -135,26 +109,16 @@ class _ThiOnlineState extends State<ThiOnline> {
     });
   }
 
+  void updateSubject(subject) {
+    this.setState(() {
+      this.currentSubject = subject;
+    });
+  }
+
   @override
   void dispose() {
     _scrollBottomController.removeListener(() {});
     super.dispose();
-  }
-
-  Widget containterContent() {
-    return Container(
-      height: 50.0,
-      color: Colors.cyanAccent,
-      margin: EdgeInsets.all(8.0),
-      width: MediaQuery.of(context).size.width - 100,
-      child: Center(
-          child: Text(
-        'Item 1',
-        style: TextStyle(
-          fontSize: 14.0,
-        ),
-      )),
-    );
   }
 
   Widget body(width, height) {
@@ -166,8 +130,10 @@ class _ThiOnlineState extends State<ThiOnline> {
           height: height,
         ),
         MyCustomCard(
-            key: PageStorageKey('MyCustomCard'),
-            weekNumber: ThiOnline.weeksNumber),
+          key: _key,
+          currentSubject: this.currentSubject,
+          function: this.updateSubject,
+        ),
       ],
     );
   }
