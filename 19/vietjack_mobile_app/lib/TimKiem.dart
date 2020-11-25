@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'dart:convert';
 
 class TimKiem extends StatefulWidget {
@@ -116,11 +118,45 @@ class filter extends StatefulWidget {
 class _filter extends State<filter> {
   //dropDown
   Widget searchForClass() {
-    return Container(
-      child: Text('Dropdown'),
+    String dropdownValue = 'Tất cả';
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: Icon(Icons.arrow_drop_down),
+      iconSize: 24,
+      elevation: 16,
+      style: TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: <String>[
+        'Lớp 1',
+        'Lớp 2',
+        'Lớp 3',
+        'Lớp 4',
+        'Lớp 5',
+        'Lớp 6',
+        'Lớp 7',
+        'Lớp 8',
+        'Lớp 9',
+        'Lớp 10',
+        'Lớp 11',
+        'Lớp 12'
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 
+// tìm kiếm theo ôn học
   Widget searchForSubjects() {
     return GridView.builder(
       itemCount: 10,
