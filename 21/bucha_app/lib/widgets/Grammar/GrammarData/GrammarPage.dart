@@ -1,6 +1,7 @@
 import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarUnit.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarOption.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/Subtitle.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

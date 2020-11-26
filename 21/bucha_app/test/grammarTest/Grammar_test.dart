@@ -1,7 +1,9 @@
 import 'package:bucha_app/widgets/Grammar/GrammarData/Example.dart';
+import 'package:bucha_app/widgets/Grammar/GrammarData/GrammarUnit.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/Information.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/InformationTitle.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/Subtitle.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -41,10 +43,15 @@ void main() {
     expect(find.byType(Information), findsOneWidget);
   });
 
-  testWidgets('Example Widget', (WidgetTester tester) async {
+  testWidgets('Title Widget', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget(child: title));
 
     expect(find.text('title'), findsOneWidget);
     expect(find.byType(Subtitle), findsOneWidget);
+  });
+
+  testWidgets('Grammar page test', (WidgetTester tester) async {
+    await Firebase.initializeApp();
+    await tester.pumpWidget(GrammarUnit());
   });
 }
