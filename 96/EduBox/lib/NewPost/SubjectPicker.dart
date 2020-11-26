@@ -17,10 +17,10 @@ class _SubjectPickerState extends State<SubjectPicker> {
     'Anh',
     'Tin'
   ];
+  int _value = 0;
 
   @override
   Widget build(BuildContext context) {
-    int _value = 0;
     var _color = Theme.of(context).primaryColor;
     var submitForm = Provider.of<SubmitForm>(context);
     return Container(
@@ -48,8 +48,8 @@ class _SubjectPickerState extends State<SubjectPicker> {
             onChanged: (value) {
               setState(() {
                 _value = value;
-                submitForm.subject = listOfItems[value];
               });
+              submitForm.subject = listOfItems[value];
             }),
       ),
     );

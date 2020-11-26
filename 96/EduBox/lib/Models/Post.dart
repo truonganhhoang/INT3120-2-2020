@@ -20,32 +20,32 @@ class Post {
   List<bool> fetchDays(dynamic json) {
     Map<String, dynamic> data = json;
     var days = List<bool>();
-    days.add(data['Mon']);
-    days.add(data['Tue']);
-    days.add(data['Wed']);
-    days.add(data['Thus']);
-    days.add(data['Fri']);
-    days.add(data['Sat']);
-    days.add(data['Sun']);
+    days.add(data['Mon']??'');
+    days.add(data['Tue']??'');
+    days.add(data['Wed']??'');
+    days.add(data['Thus']??'');
+    days.add(data['Fri']??'');
+    days.add(data['Sat']??'');
+    days.add(data['Sun']??'');
     return days;
   }
 
   Post.fromJson(Map<String, dynamic> json) {
-    this.id = json['DocumentID'];
-    this.type = json['Type'];
-    this.accepted = json['Accepted'];
-    this.whoPostUid = json['Owner'];
-    this.whoAcceptUid = json['Acceptor'];
-    this.grade = json['Grade'];
-    this.subject = json['Subject'];
-    this.address = json['Address'];
+    this.id = json['DocumentID']??'';
+    this.type = json['Type']??'';
+    this.accepted = json['Accepted']??'';
+    this.whoPostUid = json['Owner']??'';
+    this.whoAcceptUid = json['Acceptor']??'';
+    this.grade = json['Grade']??'';
+    this.subject = json['Subject']??'';
+    this.address = json['Address']??'';
     this.days = fetchDays(json['Days']);
-    this.session = json['Session'];
-    this.course = json['Course'];
-    this.gender = json['Gender'];
-    this.requiredComment = json['RequiredComment'] ?? '';
-    this.salary = json['Salary'];
-    this.postDate = json['PostDate'];
+    this.session = json['Session']??'';
+    this.course = json['Course']??'';
+    this.gender = json['Gender']??'';
+    this.requiredComment = json['RequiredComment']!=null && json['RequiredComment']!=''? json['RequiredComment']:'Không có yêu cầu nào';
+    this.salary = json['Salary']??'';
+    this.postDate = json['PostDate']??'';
   }
 
   Map<String, dynamic> toJson() => {

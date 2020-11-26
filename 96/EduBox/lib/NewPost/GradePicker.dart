@@ -9,7 +9,7 @@ class GradePicker extends StatefulWidget {
 
 class _GradePickerState extends State<GradePicker> {
   int _value = 0;
-  final List<String> listOfItems =
+  final List<String> _listOfItems =
       List.generate(12, (index) => 'Lớp ' + (index + 1).toString());
 
   @override
@@ -24,26 +24,27 @@ class _GradePickerState extends State<GradePicker> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
-            isExpanded: true,
-            value: _value,
-            items: List.generate(
-              listOfItems.length,
-              (index) => DropdownMenuItem(
-                child: Text(
-                  listOfItems[index],
-                  style: TextStyle(
-                    color: _value == index ? null : _color,
-                  ),
+          isExpanded: true,
+          value: _value,
+          items: List.generate(
+            _listOfItems.length,
+            (index) => DropdownMenuItem(
+              child: Text(
+                _listOfItems[index],
+                style: TextStyle(
+                  color: _value == index ? null : _color,
                 ),
-                value: index,
               ),
+              value: index,
             ),
-            onChanged: (value) {
-              setState(() {
-                _value = value;
-                submitForm.grade = value + 1;
-              });
-            }),
+          ),
+          onChanged: (value) {
+            setState(() {
+              _value = value;
+            });
+            submitForm.grade = value + 1;
+          },
+        ),
       ),
     );
   }

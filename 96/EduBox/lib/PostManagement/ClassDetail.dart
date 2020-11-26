@@ -200,6 +200,22 @@ class MyClassAndBeAcceptedDetail extends StatelessWidget {
                             child: ClipOval(
                                 child: Image.network(snapshot.data['Avatar']))),
                         divider,
+                        LabelText(text: 'Giới tính'),
+                        Info(snapshot.data['Gender']),
+                        divider,
+                        Visibility(
+                          child: Column(
+                            children: [
+                              LabelText(text: 'Ngày sinh'),
+                              Info(
+                                DateFormat('dd-MM-yyyy')
+                                    .format(snapshot.data['Birth'].toDate()),
+                              )
+                            ],
+                          ),
+                          visible: post.type == 1,
+                        ),
+                        divider,
                         LabelText(text: 'Số điện thoại'),
                         Info(snapshot.data['PhoneNumber']),
                         divider,
@@ -279,6 +295,22 @@ class ClassIAcceptedDetail extends StatelessWidget {
                         Center(
                             child: ClipOval(
                                 child: Image.network(snapshot.data['Avatar']))),
+                        divider,
+                        LabelText(text: 'Giới tính'),
+                        Info(snapshot.data['Gender']),
+                        divider,
+                        Visibility(
+                          child: Column(
+                            children: [
+                              LabelText(text: 'Ngày sinh'),
+                              Info(
+                                DateFormat('dd-MM-yyyy')
+                                    .format(snapshot.data['Birth'].toDate()),
+                              )
+                            ],
+                          ),
+                          visible: post.type == 0,
+                        ),
                         divider,
                         LabelText(text: 'Số điện thoại'),
                         Info(snapshot.data['PhoneNumber']),
@@ -415,6 +447,22 @@ class OtherUnacceptedClassDetail extends StatelessWidget {
                         Center(
                             child: ClipOval(
                                 child: Image.network(snapshot.data['Avatar']))),
+                        divider,
+                        LabelText(text: 'Giới tính'),
+                        Info(snapshot.data['Gender']),
+                        divider,
+                        Visibility(
+                          child: Column(
+                            children: [
+                              LabelText(text: 'Ngày sinh'),
+                              Info(
+                                DateFormat('dd-MM-yyyy')
+                                    .format(snapshot.data['Birth'].toDate()),
+                              )
+                            ],
+                          ),
+                          visible: post.type == 0,
+                        ),
                         divider,
                         LabelText(text: 'Số điện thoại'),
                         Info(snapshot.data['PhoneNumber']),

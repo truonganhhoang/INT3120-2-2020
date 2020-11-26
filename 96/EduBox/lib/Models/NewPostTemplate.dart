@@ -32,7 +32,7 @@ class SubmitForm with ChangeNotifier {
   String _whoAccept = '';
   List<bool> _canBeSubmit = List.generate(5, (index) => false);
 
-  var formatDateTime = DateFormat('dd-MM-yyyy');
+  var formatDateTime = DateFormat('dd/MM/yyyy');
   var formatNumber = NumberFormat('00');
 
   Map<String, dynamic> toJson() => {

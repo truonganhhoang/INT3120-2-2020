@@ -28,6 +28,7 @@ Future submitYesOrNo(BuildContext context, {Function function}) {
       title: Text('Xác nhận?'),
       actions: [
         FlatButton(
+          color: Theme.of(context).primaryColor,
           child: Container(
             child: Text('Có'),
             height: 20,
@@ -35,8 +36,12 @@ Future submitYesOrNo(BuildContext context, {Function function}) {
           onPressed: function,
         ),
         FlatButton(
+          color: Colors.grey[200],
           child: Container(
-            child: Text('Không'),
+            child: Text(
+              'Không',
+              style: TextStyle(color: Colors.black),
+            ),
             height: 20,
           ),
           onPressed: () {
@@ -64,7 +69,7 @@ class SubmitOrExit extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(vertical: 20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(5),
             boxShadow: _boxShadow,
           ),
@@ -72,14 +77,14 @@ class SubmitOrExit extends StatelessWidget {
             onPressed: function,
             child: Text(
               'Xong',
-              style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ),
         Container(
           margin: EdgeInsets.symmetric(vertical: 20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(5),
             boxShadow: _boxShadow,
           ),
@@ -89,7 +94,7 @@ class SubmitOrExit extends StatelessWidget {
             },
             child: Text(
               'Thoát',
-              style: TextStyle(color: Color.fromRGBO(0, 0, 255, 1)),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ),
