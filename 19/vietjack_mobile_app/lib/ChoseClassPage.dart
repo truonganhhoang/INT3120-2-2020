@@ -392,11 +392,35 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
               ),
             ),
             new SliverPadding(
-              padding: EdgeInsets.only(top: 50),
+              padding: EdgeInsets.only(top: 100),
               sliver: new SliverList(delegate: new SliverChildListDelegate(
                 [
-                  new RaisedButton(
-                    onPressed: this.addUser
+                  new Container(
+                    height: 100,
+                    child: new Stack(
+                      children: [
+                        Center(
+                          child: new Container(
+                            width: 150,
+                            height: 70,
+                            child: new ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: new RaisedButton.icon(
+                                color: Colors.lightGreen[200],
+                                onPressed: this.addUser,
+                                label: new Text("Tiếp tục",
+                                  style: new TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.green
+                                  ),
+                                ),
+                                icon: Icon(Icons.navigate_next,size: 20,color: Colors.pinkAccent),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ]
               )),

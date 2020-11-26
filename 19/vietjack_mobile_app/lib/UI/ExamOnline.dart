@@ -67,7 +67,7 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
           ),
           elevation: 0,
           actions: <Widget>[
-            TextButton(
+            FlatButton(
                 onPressed: () {},
                 child: Text("Nộp bài", style: TextStyle(color: Colors.orange)))
           ],
