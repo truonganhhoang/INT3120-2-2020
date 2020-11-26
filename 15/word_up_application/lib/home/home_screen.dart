@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
 
   @override initState(){
     super.initState();
-    Home.titleHome = new TitleHome(title: 'Learning');
+    if(_currentTab == 0) Home.titleHome = new TitleHome(title: 'Learning');
   }
   @override
   Widget build(BuildContext context) {
@@ -105,10 +105,10 @@ class _HomeState extends State<Home> {
             ],
           ),
           onPressed: () {
+            Home.titleHome.changeHomeTitle('Search');
             setState(() {
               _currentScreen = SearchWordScreen();
               _currentTab = 4;
-              Home.titleHome.changeHomeTitle('Search');
             });
           },
           tooltip: 'Look up',
@@ -143,12 +143,15 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     // Study Icon
                     MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                       minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
+                        Home.titleHome.changeHomeTitle('Learning');
                         setState(() {
                           _currentScreen = StudyHomeScreen();
                           _currentTab = 0;
-                          Home.titleHome.changeHomeTitle('Learning');
                         });
                       },
                       child: Column(
@@ -172,12 +175,15 @@ class _HomeState extends State<Home> {
 
                     // Play Icon
                     MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                       minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
+                        Home.titleHome.changeHomeTitle('Play');
                         setState(() {
                           _currentScreen = PlayGameScreen();
                           _currentTab = 1;
-                          Home.titleHome.changeHomeTitle('Play');
                         });
                       },
                       child: Column(
@@ -207,13 +213,16 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     // Favorite icon
                     MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                       minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
+                        Home.titleHome.changeHomeTitle('Favorite');
                         setState(() {
                           _currentScreen =
                               FavoriteWordsScreen(); // if user taps on this dashboard tab will be active
                           _currentTab = 2;
-                          Home.titleHome.changeHomeTitle('Favorite');
                         });
                       },
                       child: Column(
@@ -237,7 +246,7 @@ class _HomeState extends State<Home> {
                     //Chat icon
                     MaterialButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(50.0),
                       ),
                       minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {

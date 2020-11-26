@@ -24,6 +24,7 @@ class WordBox extends StatefulWidget {
   int reminderReviewDays = 0;
   final bool isLearningWord;
   final Word word;
+  bool isDeleted = false;
 
   WordBox({
     this.word,
@@ -53,6 +54,29 @@ class WordBoxState extends State<WordBox> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.isDeleted) return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 0,
+            blurRadius: 5,
+            offset: Offset(0, 4), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Center(child:
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Deleted',
+          style: TextStyle(fontSize: 3.5 * SizeConfig.heightMultiplier, color: Colors.green),),
+        Icon(Icons.check_circle_outline, color: Colors.green,)],
+      )),
+    );
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       //margin: EdgeInsets.only(left: 10, right: 10, bottom: 15),
@@ -77,7 +101,7 @@ class WordBoxState extends State<WordBox> {
               StarFavorite(
                 wordId: widget.word.id,
                 size: 25,
-                isFavorite: false,
+                isFavorite: widget.word.isFavorite,
               ),
               _status(),
               MaterialButton(
@@ -230,6 +254,12 @@ class WordBoxState extends State<WordBox> {
       : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Icon(Icons.pets, color: Colors.green,),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text('Discover new words',
+            style: TextStyle(fontSize: 2.3 * SizeConfig.heightMultiplier),),
+          ),
          Padding(
            padding: const EdgeInsets.all(20),
            child: MaterialButton(
@@ -451,7 +481,15 @@ class WordBoxState extends State<WordBox> {
     ).show();
   }
 
-  void _deleteThisWord() {}
+  void _deleteThisWord() {
+    DatabaseLocalHelper.instance.deleteToLearnWord(widget.word.id);
+    DatabaseLocalHelper.instance.deleteLearningWord(widget.word.id);
+    DatabaseLocalHelper.instance.insertKnewWord(widget.word.id);
+    setState(() {
+      widget.isDeleted = true;
+      StudyHomeScreen.instance.deleteWord();
+    });
+  }
 
   void _moveThisWordToLearning() async {
     _isLearningWord = true;

@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
     AppManager.instance.init();
     FirebaseHandler.initializeFirebase();
     DatabaseLocalHelper.instance.databaseInit();
-    DatabaseServerHandler().updateWordLearning("822817271");
 
     return LayoutBuilder(
       builder: (context, constraints) {

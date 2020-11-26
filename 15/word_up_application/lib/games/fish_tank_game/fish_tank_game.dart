@@ -30,7 +30,7 @@ class _FishTankGameState extends State<FishTankGame> {
   List<double> waveValues = [0, 0, 0, 0];
   List<double> offsetWave = [0.05, 0, 0.03, 0.02];
   double wave = 0;
-  double speedWave = 0.001;
+  double speedWave = 0.002;
   bool isDown = true;
   double posX = 0;
   double posY = -0.6;
@@ -100,6 +100,8 @@ class _FishTankGameState extends State<FishTankGame> {
 
   @override
   void dispose() {
+    widget.assetsAudioPlayer.dispose();
+    widget.assetsMusicPlayer.dispose();
     timer.cancel();
     super.dispose();
   }

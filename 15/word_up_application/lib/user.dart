@@ -111,7 +111,8 @@ class LearningProgress {
       : wordFavorite = json['wordFavorite'].cast<int>(),
         wordToLearn = json['wordToLearn'].cast<int>(),
         wordKnew = json['wordKnew'].cast<int>(),
-        wordLearning = json['wordLearning'].cast<WordLearning>();
+        wordLearning = (json['wordLearning'] as List).map((data) => new
+        WordLearning.fromJson(data)).toList();
 }
 
 class WordLearning {
@@ -126,7 +127,7 @@ class WordLearning {
   });
 
   Map<String, dynamic> toJson() => {
-        'reviewDays': this.reviewDate,
+        'reviewDate': this.reviewDate,
         'reviewTimes': this.reviewTimes,
         'wordId': this.wordId,
       };

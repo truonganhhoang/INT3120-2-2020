@@ -444,7 +444,7 @@ class DatabaseLocalHelper {
   }
 
   // Reset local database
-  Future<void> resetDatabase() async {
+    void resetDatabase() async {
     Database db = await instance.database;
     await db.rawQuery('UPDATE $tableWordFarvorite SET $columnIsFavorite = 0');
     await db.rawQuery('DELETE FROM $tableWordKnew');

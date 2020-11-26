@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:word_up_application/main.dart';
+import 'package:word_up_application/size_config.dart';
 
 import 'app_manager.dart';
 import 'home/home_screen.dart';
@@ -34,8 +35,9 @@ class _LoadingState extends State<Loading>{
   @override
   Widget build(BuildContext context) {
     return (!loadFinished) ? Scaffold(
+      backgroundColor: Colors.blueAccent,
       body: Center(
-        child: Text('Loading...'),
+        child: Text('EVocab', style: TextStyle(fontSize: 4 * SizeConfig.heightMultiplier, color: Colors.white),),
       ),
     ) : ((AppManager.firstTimeUse) ? IntroductionScreen() : Home());
   }

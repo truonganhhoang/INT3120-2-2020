@@ -117,6 +117,8 @@ class _SelectionScreenState extends State<SelectionScreen> {
                       ),
                     ),
                     MaterialButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onPressed: () {
                         assetsAudioPlayer.open(
                           Audio('assets/audios/' +

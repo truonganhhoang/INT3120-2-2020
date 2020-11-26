@@ -15,12 +15,13 @@ class AppManager {
   }
 
   void setAppUser(AppUser appUser, String json) {
-    print('xxx');
+    print('PPP' + appUser.learningProgress.wordLearning[0].wordId.toString());
     this.appUser = appUser;
     print(json);
     String appUserJson = this.appUser.toJson().toString();
     saveAppUser(json);
     print(appUserJson);
+    syncDataToLocal();
   }
 
   void saveAppUser(String data) async {
@@ -38,18 +39,23 @@ class AppManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     firstTimeUse = prefs.getBool('firstTimeUse');
     await prefs.setBool('firstTimeUse', false);
-
     if (AuthService.instance.auth.currentUser != null) {
       String appUserStr = prefs.getString('appUser');
       Map<String, dynamic> appUserJson = json.decode(appUserStr.trim());
       appUser = AppUser.fromJson(appUserJson);
+    }
+  }
+
+  void syncDataToLocal() {
       DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
       dbHelper.resetDatabase();
       List<int> firebaseWordFavorite = appUser.learningProgress.wordFavorite;
       List<int> firebaseWordKnew = appUser.learningProgress.wordKnew;
-      List<WordLearning> firebaseWordLearning = appUser.learningProgress.wordLearning;
+      List<WordLearning> firebaseWordLearning = appUser.learningProgress
+          .wordLearning;
       List<int> firebaseWordToLearn = appUser.learningProgress.wordToLearn;
 
+      print('AAA' + firebaseWordLearning.toString());
       for (int i = 0; i < firebaseWordFavorite.length; i++) {
         dbHelper.updateInsertFavoriteWord(firebaseWordFavorite[i]);
       }
@@ -58,14 +64,14 @@ class AppManager {
         dbHelper.insertToLearnWord(firebaseWordToLearn[i]);
       }
 
+      for (int i = 0; i < firebaseWordLearning.length; i++){
+        print(firebaseWordLearning[i].wordId);
+        dbHelper.insertLearningWord(firebaseWordLearning[i].wordId, firebaseWordLearning[i].reviewDate
+            , firebaseWordLearning[i].reviewTimes);
+      }
+
       for (int i = 0; i < firebaseWordKnew.length; i++) {
         dbHelper.insertKnewWord(firebaseWordKnew[i]);
       }
-
-      // for (int i = 0; i < firebaseWordLearning.length; i++) {
-      //   dbHelper.insertLearningWord(firebaseWordLearning[i].wordId, firebaseWordLearning[i].reviewDate, firebaseWordLearning[i].reviewTimes);
-      // }
-      
-    }
   }
 }

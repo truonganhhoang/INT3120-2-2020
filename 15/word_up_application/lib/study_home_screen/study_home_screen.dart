@@ -40,6 +40,10 @@ class StudyHomeScreen extends StatefulWidget {
       numberReviewedWordsRemainToday --;
     }
   }
+
+  void deleteWord(){
+    listBoxWords[_currentIndex].isDeleted = true;
+  }
 }
 
 class _StudyHomeScreenState extends State<StudyHomeScreen> {
@@ -49,17 +53,19 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
   List<Word> listWordsNeedToLearn;
   List<Word> listWords;
   int _current = 0;
+  bool isDisposed;
 
   @override
   void initState() {
+    isDisposed = false;
     listWords = new List<Word>();
     isLoading = true;
     _readData().then((value) async => {
           await Future.delayed(const Duration(milliseconds: 1000)),
-          setState(() {
+          (!this.isDisposed) ?setState(() {
             isLoading = false;
-          })
-        });
+          }): (){}
+        }) ;
     super.initState();
   }
 
@@ -72,6 +78,7 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
 
   @override dispose(){
     super.dispose();
+    this.isDisposed = true;
   }
 
   Future<void> _readData() async {
@@ -129,7 +136,6 @@ class _StudyHomeScreenState extends State<StudyHomeScreen> {
       if (widget.numberReviewedWordsRemainToday +
           widget._numberToLearnWordsRemain == 0 && studyFinished == false) {
         studyFinished = true;
-        print('xx');
         widget.listBoxWords.add(_showSelectWordsOption());
       }
     }
