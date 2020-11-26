@@ -11,9 +11,10 @@ void main() {
   runApp(new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.green,
           buttonColor: Colors.yellow,
-          scaffoldBackgroundColor: Colors.brown[50]),
+          scaffoldBackgroundColor: Colors.brown[50],
+      ),
       color: Colors.red,
       home: new LoginPage()));
 }
