@@ -195,6 +195,7 @@ class IntermediateClassList extends StatelessWidget {
                 ? ListView(
                     scrollDirection: scrollDirection,
                     shrinkWrap: true,
+                    reverse: true,
                     children: list,
                   )
                 : Center(
