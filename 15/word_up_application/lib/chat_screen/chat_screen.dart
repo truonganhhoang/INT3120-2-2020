@@ -4,6 +4,9 @@ import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/components/common_components.dart';
 
+import '../app_manager.dart';
+import '../user.dart';
+
 class ChatScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ChatScreenState();
@@ -61,11 +64,21 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleSubmitted(String text) {
+    AppUser user = AppManager.instance.appUser;
+    bool isLogin = true;
+    if (user == null) {
+      isLogin = false;
+      user = AppUser(
+        userPrivateInformation: UserPrivateInformation(
+            userName: 'You',
+            avatarUrl: ''),
+      );
+    }
     if (text == "") return;
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
-      name: "You",
+      name: user.userPrivateInformation.userName.toString(),
       type: true,
     );
     setState(() {
@@ -122,10 +135,10 @@ class ChatMessage extends StatelessWidget {
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
         child: new CircleAvatar(
-          radius: 3 * SizeConfig.textMultiplier,
+          radius: 4 * SizeConfig.textMultiplier,
           child: new Text('B',
               style: TextStyle(
-                  fontSize: 3 * SizeConfig.textMultiplier,
+                  fontSize: 4 * SizeConfig.textMultiplier,
                   fontWeight: FontWeight.bold)),
         ),
       ),
@@ -160,6 +173,16 @@ class ChatMessage extends StatelessWidget {
   }
 
   List<Widget> myMessage(context) {
+    AppUser user = AppManager.instance.appUser;
+    bool isLogin = true;
+    if (user == null) {
+      isLogin = false;
+      user = AppUser(
+          userPrivateInformation: UserPrivateInformation(
+              userName: 'You',
+              avatarUrl: ''),
+      );
+    }
     return <Widget>[
       new Expanded(
         child: new Column(
@@ -188,14 +211,23 @@ class ChatMessage extends StatelessWidget {
       ),
       new Container(
         margin: const EdgeInsets.only(left: 16.0),
-        child: new CircleAvatar(
-            radius: 3 * SizeConfig.textMultiplier,
-            child: new Text(
-              this.name[0],
-              style: new TextStyle(
-                  fontSize: 3 * SizeConfig.textMultiplier,
-                  fontWeight: FontWeight.bold),
-            )),
+        child: isLogin
+            ? CircleAvatar(
+          backgroundImage: NetworkImage(
+              user.userPrivateInformation.avatarUrl),
+          radius: 4 * SizeConfig.textMultiplier,
+          backgroundColor: Colors.white,
+        )
+            : CircleAvatar(
+          radius: 4 * SizeConfig.textMultiplier,
+          child: Text(
+            user.userPrivateInformation.userName[0],
+            style: new TextStyle(
+              color: Colors.white,
+              fontSize: 4 * SizeConfig.textMultiplier,
+              fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
     ];
   }

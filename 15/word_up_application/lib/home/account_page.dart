@@ -14,12 +14,14 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppUser user = AppManager.instance.appUser;
-    if(user == null){
+    bool isLogin = true;
+    if (user == null) {
+      isLogin = false;
       user = AppUser(
         userPrivateInformation: UserPrivateInformation(
             email: 'englishvocab@gmail.com',
-            userName: 'English Vocab'
-        ),
+            userName: 'English Vocab',
+            avatarUrl: ''),
       );
     }
 
@@ -33,34 +35,41 @@ class AccountPage extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 new UserAccountsDrawerHeader(
-                  accountName: new Text(
-                    user.userPrivateInformation.userName,
-                    style: TextStyle(
-                        fontSize: 2.4 * SizeConfig.textMultiplier,
-                        color: Colors.white),
-                  ),
-                  accountEmail: new Text(
-                    user.userPrivateInformation.email,
-                    style: TextStyle(
-                        fontSize: 1.8 * SizeConfig.textMultiplier,
-                        color: Colors.white),
-                  ),
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new ExactAssetImage('assets/images/wordup.JPG'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.lightBlueAccent,
-                    child: Text(
-                      user.userPrivateInformation.userName[0],
+                    accountName: new Text(
+                      user.userPrivateInformation.userName,
                       style: TextStyle(
-                          fontSize: 4 * SizeConfig.textMultiplier,
-                          color: Colors.black),
+                          fontSize: 2.4 * SizeConfig.textMultiplier,
+                          color: Colors.white),
                     ),
-                  ),
-                ),
+                    accountEmail: new Text(
+                      user.userPrivateInformation.email,
+                      style: TextStyle(
+                          fontSize: 1.8 * SizeConfig.textMultiplier,
+                          color: Colors.white),
+                    ),
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new ExactAssetImage('assets/images/wordup.JPG'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    currentAccountPicture: isLogin
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                user.userPrivateInformation.avatarUrl),
+                            radius: 6 * SizeConfig.heightMultiplier,
+                            backgroundColor: Colors.white,
+                          )
+                        : CircleAvatar(
+                              backgroundColor: Colors.lightBlueAccent,
+                              child: Text(
+                                user.userPrivateInformation.userName[0],
+                                style: TextStyle(
+                                    fontSize: 4 * SizeConfig.textMultiplier,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ),
                 new ListTile(
                     leading: Icon(Icons.person),
                     title: new Text("My Account"),
