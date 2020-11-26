@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_up_application/components/common_components.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
 import 'package:word_up_application/favorite_screen/my_words_screen.dart';
@@ -17,17 +18,12 @@ import 'package:word_up_application/user_profile_screen/select_language_screen.d
 import 'package:word_up_application/user_profile_screen/select_name_screen.dart';
 import 'package:word_up_application/user_profile_screen/select_practice_goal_screen.dart';
 import 'package:word_up_application/user_profile_screen/select_reminder_screen.dart';
-
 import '../app_manager.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  //AppUser user;
-
   @override
   State<StatefulWidget> createState() => _UserProfileScreen();
 }
-
-AppUser user;
 
 class _UserProfileScreen extends State<UserProfileScreen> {
   bool isLogin;
@@ -37,6 +33,7 @@ class _UserProfileScreen extends State<UserProfileScreen> {
   int numberOfLearningWords;
   bool isSelectImage = false;
   String imagePath;
+  AppUser user;
 
   @override
   void initState() {
@@ -68,7 +65,6 @@ class _UserProfileScreen extends State<UserProfileScreen> {
     } else {
       setState(() {
         isLogin = true;
-
         numberOfKnewWords = user.learningProgress.wordKnew.length;
         numberOfLearningWords = user.learningProgress.wordLearning.length;
         numberOfToLearnWords = user.learningProgress.wordToLearn.length;
@@ -112,7 +108,8 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: 3*SizeConfig.widthMultiplier),
+                        padding: EdgeInsets.only(
+                            left: 3 * SizeConfig.widthMultiplier),
                         child: MaterialButton(
                           onPressed: () async {
                             if (isLogin == true) {
@@ -134,8 +131,8 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                                 )
                               : (isLogin
                                   ? CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          user.userPrivateInformation.avatarUrl),
+                                      backgroundImage: NetworkImage(user
+                                          .userPrivateInformation.avatarUrl),
                                       radius: 6 * SizeConfig.heightMultiplier,
                                       backgroundColor: Colors.white,
                                     )
@@ -162,7 +159,8 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 5*SizeConfig.widthMultiplier),
+                        padding: EdgeInsets.only(
+                            right: 5 * SizeConfig.widthMultiplier),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,77 +328,96 @@ class _UserProfileScreen extends State<UserProfileScreen> {
                   ],
                 ),
               ),
-              isLogin
-                  ? Container(
-                      padding: EdgeInsets.only(right: 5, left: 5),
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 53 * SizeConfig.heightMultiplier,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF15B7FF),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              topRight: Radius.circular(15)),
+              // isLogin ?
+              Container(
+                  padding: EdgeInsets.only(right: 5, left: 5),
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: 53 * SizeConfig.heightMultiplier,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF15B7FF),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15)),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        AboutMe(
+                          user: user,
+                          isLogin: isLogin,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[AboutMe(), MyLearning()],
-                        ),
-                      ))
-                  : new Container(
-                      padding: EdgeInsets.only(right: 5, left: 5),
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 55 * SizeConfig.heightMultiplier,
-                        child: MaterialButton(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onPressed: () {},
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 10 * SizeConfig.heightMultiplier,
-                              margin: EdgeInsets.all(
-                                  15 * SizeConfig.widthMultiplier),
-                              //padding: EdgeInsets.all(5.0*SizeConfig.widthMultiplier),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white),
-                              child: MaterialButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AuthenticationScreen(
-                                                noGuest: true,
-                                              )));
-                                },
-                                child: Center(
-                                    child: Text(
-                                  'LOGIN',
-                                  style: TextStyle(
-                                      fontSize: 6 * SizeConfig.textMultiplier),
-                                )),
-                              ),
-                            )),
-                      ),
-                    )
+                        MyLearning(
+                          user: user,
+                          isLogin: isLogin,
+                        )
+                      ],
+                    ),
+                  ))
+              // : new Container(
+              //     padding: EdgeInsets.only(right: 5, left: 5),
+              //     alignment: Alignment.bottomCenter,
+              //     child: Container(
+              //       height: 55 * SizeConfig.heightMultiplier,
+              //       child: MaterialButton(
+              //           splashColor: Colors.transparent,
+              //           highlightColor: Colors.transparent,
+              //           onPressed: () {},
+              //           child: Container(
+              //             alignment: Alignment.center,
+              //             height: 10 * SizeConfig.heightMultiplier,
+              //             margin: EdgeInsets.all(
+              //                 15 * SizeConfig.widthMultiplier),
+              //             //padding: EdgeInsets.all(5.0*SizeConfig.widthMultiplier),
+              //             decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.circular(15),
+              //                 color: Colors.white),
+              //             child: MaterialButton(
+              //               onPressed: () {
+              //                 Navigator.pushReplacement(
+              //                     context,
+              //                     MaterialPageRoute(
+              //                         builder: (context) =>
+              //                             AuthenticationScreen(
+              //                               noGuest: true,
+              //                             )));
+              //               },
+              //               child: Center(
+              //                   child: Text(
+              //                 'LOGIN',
+              //                 style: TextStyle(
+              //                     fontSize: 6 * SizeConfig.textMultiplier),
+              //               )),
+              //             ),
+              //           )),
+              //     ),
+              //   )
             ],
           ),
         ));
   }
 }
 
+// ignore: must_be_immutable
 class AboutMe extends StatefulWidget {
+  final AppUser user;
+  final bool isLogin;
+  AboutMe({this.user, this.isLogin});
+
+  AppUser getUser() {
+    return this.user;
+  }
+
   @override
   _AboutMeState createState() => _AboutMeState();
 }
 
 class _AboutMeState extends State<AboutMe> {
-  var nameChange = user.userPrivateInformation.userName;
+  //var nameChange;
 
   @override
   Widget build(BuildContext context) {
+    //nameChange = widget.user.userPrivateInformation.userName;
     return Container(
       margin: EdgeInsets.only(left: 10, right: 10),
       decoration: new BoxDecoration(
@@ -431,22 +448,28 @@ class _AboutMeState extends State<AboutMe> {
                   key: Key('name'),
                   splashColor: Colors.green[200],
                   focusColor: Colors.red,
-                  onTap: () async {
-                    var res = await Navigator.push(
-                        context,
-                        PageTransition(
-                            child: SelectName(),
-                            type: PageTransitionType.fade));
-                    setState(() {
-                      if (res != null)
-                        user.userPrivateInformation.userName = res;
-                    });
-                  },
+                  onTap: widget.isLogin
+                      ? () async {
+                          var res = await Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: SelectName(),
+                                  type: PageTransitionType.fade));
+                          setState(() {
+                            if (res != null)
+                              widget.user.userPrivateInformation.userName = res;
+                          });
+                        }
+                      : () {
+                          showAlertLoginToChangeInfomation(context);
+                        },
                   child: Padding(
                     padding:
                         EdgeInsets.only(left: 10 * SizeConfig.widthMultiplier),
                     child: Text(
-                      user.userPrivateInformation.userName + ' >',
+                      widget.isLogin
+                          ? widget.user.userPrivateInformation.userName + ' >'
+                          : 'Name',
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -466,20 +489,35 @@ class _AboutMeState extends State<AboutMe> {
                   style: TextStyle(fontSize: 2.5 * SizeConfig.heightMultiplier),
                 ),
                 InkWell(
-                  onTap: () async {
-                    var res = await Navigator.push(
-                        context,
-                        PageTransition(
-                            child: SelectAge(), type: PageTransitionType.fade));
-                    setState(() {
-                      if (res != null) user.userPrivateInformation.age = res;
-                    });
-                  },
+                  onTap: widget.isLogin
+                      ? () async {
+                          var res = await Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: SelectAge(),
+                                  type: PageTransitionType.fade));
+                          setState(() {
+                            if (res != null) {
+                              widget.user.userPrivateInformation.age = res;
+                              // print(widget.user.userPrivateInformation.toJson());
+                              // print(widget.user.learnSetting.toJson());
+                              // print(widget.user.learningProgress.toJson());
+                              // AppManager.instance
+                              //     .saveAppUser(widget.user.toJson().toString());
+                            }
+                          });
+                        }
+                      : () {
+                          showAlertLoginToChangeInfomation(context);
+                        },
                   child: Padding(
                     padding:
                         EdgeInsets.only(left: 20 * SizeConfig.widthMultiplier),
                     child: Text(
-                      user.userPrivateInformation.age.toString() + ' >',
+                      widget.isLogin
+                          ? widget.user.userPrivateInformation.age.toString() +
+                              ' >'
+                          : 'Age',
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -499,22 +537,28 @@ class _AboutMeState extends State<AboutMe> {
                   style: TextStyle(fontSize: 2.5 * SizeConfig.heightMultiplier),
                 ),
                 InkWell(
-                  onTap: () async {
-                    //var res = await
-                    // Navigator.push(
-                    //     context,
-                    //     PageTransition(
-                    //         child: SelectLanguage(),
-                    //         type: PageTransitionType.fade));
-                    // setState(() {
-                    //   user.userPrivateInformation.nativeLanguage = res;
-                    // });
-                  },
+                  onTap: widget.isLogin
+                      ? () async {
+                          //var res = await
+                          // Navigator.push(
+                          //     context,
+                          //     PageTransition(
+                          //         child: SelectLanguage(),
+                          //         type: PageTransitionType.fade));
+                          // setState(() {
+                          //   user.userPrivateInformation.nativeLanguage = res;
+                          // });
+                        }
+                      : () {
+                          showAlertLoginToChangeInfomation(context);
+                        },
                   child: Padding(
                     padding:
                         EdgeInsets.only(left: 6 * SizeConfig.widthMultiplier),
                     child: Text(
-                      user.userPrivateInformation.nativeLanguage,
+                      widget.isLogin
+                          ? widget.user.userPrivateInformation.nativeLanguage
+                          : 'Native Language',
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -531,6 +575,10 @@ class _AboutMeState extends State<AboutMe> {
 }
 
 class MyLearning extends StatefulWidget {
+  final AppUser user;
+  final bool isLogin;
+  MyLearning({this.user, this.isLogin});
+
   @override
   _MyLearningState createState() => _MyLearningState();
 }
@@ -556,15 +604,20 @@ class _MyLearningState extends State<MyLearning> {
             ),
           ),
           InkWell(
-            onTap: () async {
-              var res = await Navigator.push(
-                  context,
-                  PageTransition(
-                      child: SelectAccent(), type: PageTransitionType.fade));
-              setState(() {
-                if (res != null) user.learnSetting.accent = res;
-              });
-            },
+            onTap: widget.isLogin
+                ? () async {
+                    var res = await Navigator.push(
+                        context,
+                        PageTransition(
+                            child: SelectAccent(),
+                            type: PageTransitionType.fade));
+                    setState(() {
+                      if (res != null) widget.user.learnSetting.accent = res;
+                    });
+                  }
+                : () {
+                    showAlertLoginToChangeInfomation(context);
+                  },
             child: Padding(
               padding: EdgeInsets.only(top: 10, left: 5, right: 5),
               child: Row(
@@ -574,7 +627,9 @@ class _MyLearningState extends State<MyLearning> {
                       style: TextStyle(
                           fontSize: 2.5 * SizeConfig.heightMultiplier)),
                   Text(
-                    user.learnSetting.accent + ' >',
+                    widget.isLogin
+                        ? widget.user.learnSetting.accent + ' >'
+                        : 'Accent',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -584,17 +639,22 @@ class _MyLearningState extends State<MyLearning> {
             ),
           ),
           InkWell(
-            onTap: () async {
-              var res = await Navigator.push(
-                  context,
-                  PageTransition(
-                      child: SelectPracticeGoal(),
-                      type: PageTransitionType.fade));
+            onTap: widget.isLogin
+                ? () async {
+                    var res = await Navigator.push(
+                        context,
+                        PageTransition(
+                            child: SelectPracticeGoal(),
+                            type: PageTransitionType.fade));
 
-              setState(() {
-                if (res != null) user.learnSetting.practiceGoal = res;
-              });
-            },
+                    setState(() {
+                      if (res != null)
+                        widget.user.learnSetting.practiceGoal = res;
+                    });
+                  }
+                : () {
+                    showAlertLoginToChangeInfomation(context);
+                  },
             child: Padding(
               padding: EdgeInsets.only(top: 10, left: 5, right: 5),
               child: Row(
@@ -604,7 +664,10 @@ class _MyLearningState extends State<MyLearning> {
                       style: TextStyle(
                           fontSize: 2.5 * SizeConfig.heightMultiplier)),
                   Text(
-                    user.learnSetting.practiceGoal.toString() + ' min/day >',
+                    widget.isLogin
+                        ? widget.user.learnSetting.practiceGoal.toString() +
+                            ' min/day >'
+                        : 'Practice Goal',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -634,22 +697,26 @@ class _MyLearningState extends State<MyLearning> {
             ),
           ),
           InkWell(
-            onTap: () async {
-              var res = await Navigator.push(
-                  context,
-                  PageTransition(
-                      child: SelectReminder(
-                        hour: user.learnSetting.reminder.hour,
-                        minute: user.learnSetting.reminder.minute,
-                      ),
-                      type: PageTransitionType.fade));
-              setState(() {
-                if (res != null) {
-                  user.learnSetting.reminder.hour = res.hour;
-                  user.learnSetting.reminder.minute = res.minute;
-                }
-              });
-            },
+            onTap: widget.isLogin
+                ? () async {
+                    var res = await Navigator.push(
+                        context,
+                        PageTransition(
+                            child: SelectReminder(
+                              hour: widget.user.learnSetting.reminder.hour,
+                              minute: widget.user.learnSetting.reminder.minute,
+                            ),
+                            type: PageTransitionType.fade));
+                    setState(() {
+                      if (res != null) {
+                        widget.user.learnSetting.reminder.hour = res.hour;
+                        widget.user.learnSetting.reminder.minute = res.minute;
+                      }
+                    });
+                  }
+                : () {
+                    showAlertLoginToChangeInfomation(context);
+                  },
             child: Padding(
               padding: EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 10),
               child: Row(
@@ -659,15 +726,22 @@ class _MyLearningState extends State<MyLearning> {
                       style: TextStyle(
                           fontSize: 2.5 * SizeConfig.heightMultiplier)),
                   Text(
-                    ((user.learnSetting.reminder.hour < 10)
-                            ? ('0' + user.learnSetting.reminder.hour.toString())
-                            : user.learnSetting.reminder.hour.toString()) +
-                        ' : ' +
-                        ((user.learnSetting.reminder.minute < 10)
-                            ? ('0' +
-                                user.learnSetting.reminder.minute.toString())
-                            : user.learnSetting.reminder.minute.toString()) +
-                        ' >',
+                    widget.isLogin
+                        ? ((widget.user.learnSetting.reminder.hour < 10)
+                                ? ('0' +
+                                    widget.user.learnSetting.reminder.hour
+                                        .toString())
+                                : widget.user.learnSetting.reminder.hour
+                                    .toString()) +
+                            ' : ' +
+                            ((widget.user.learnSetting.reminder.minute < 10)
+                                ? ('0' +
+                                    widget.user.learnSetting.reminder.minute
+                                        .toString())
+                                : widget.user.learnSetting.reminder.minute
+                                    .toString()) +
+                            ' >'
+                        : 'Reminder',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 2.5 * SizeConfig.heightMultiplier),
@@ -680,4 +754,24 @@ class _MyLearningState extends State<MyLearning> {
       ),
     );
   }
+}
+
+void showAlertLoginToChangeInfomation(context) {
+  Alert(
+    closeIcon: Icon(Icons.close),
+    context: context, 
+    title: 'Login To Change Your Infomation', 
+    buttons: [
+    DialogButton(
+        child: Text('Login'),
+        color: Colors.blue[200],
+        onPressed: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AuthenticationScreen(
+                        noGuest: true,
+                      )));
+        })
+  ]).show();
 }

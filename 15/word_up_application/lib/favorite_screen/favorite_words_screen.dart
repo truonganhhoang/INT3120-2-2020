@@ -16,27 +16,32 @@ import '../word.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class FavoriteWordsScreen extends StatefulWidget {
-  List<Word> wordsFarvorite = new List();
-
   @override
   State<StatefulWidget> createState() => _FavoriteWordsScreenState();
 }
 
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
   DatabaseLocalHelper dbHelper = DatabaseLocalHelper.instance;
-
+  List<Word> wordsFarvorite = new List();
+  bool isLoadList = true;
   @override
   void initState() {
     super.initState();
 
-    if (widget.wordsFarvorite.length == 0) {
+    if (wordsFarvorite.length == 0) {
       dbHelper.getListFavoriteWords().then((rows) {
         setState(() {
           rows.forEach((row) {
-            widget.wordsFarvorite.add(row);
+            wordsFarvorite.add(row);
           });
         });
-      });
+      }).then((value) async => {
+            await Future.delayed(const Duration(milliseconds: 1000), () {
+              setState(() {
+                this.isLoadList = false;
+              });
+            })
+          });
     }
   }
 
@@ -50,7 +55,9 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: listWord(widget.wordsFarvorite, Colors.blueAccent),
+                  child: (isLoadList)
+                      ? loading()
+                      : listWord(wordsFarvorite, Colors.blue[400]),
                 )
               ],
             ),
@@ -91,7 +98,7 @@ Widget listWord(List<Word> words, Color colorText) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: 3 * widthMultiplier),
+                        padding: EdgeInsets.only(left: 0 * widthMultiplier),
                         child: IconButton(
                           onPressed: () => {
                             assetsAudioPlayer.open(Audio(
@@ -114,13 +121,18 @@ Widget listWord(List<Word> words, Color colorText) {
                           ),
                           Text('${words[position].pronounceUK}',
                               style: TextStyle(
-                                  fontSize: 3 * SizeConfig.heightMultiplier))
+                                  fontSize: 3 * SizeConfig.heightMultiplier,
+                                  color: Colors.grey[700]))
                         ],
                       ),
-                      StarFavorite(
-                          wordId: words[position].id,
-                          size: 4 * SizeConfig.heightMultiplier,
-                          isFavorite: words[position].isFavorite)
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 2 * SizeConfig.widthMultiplier),
+                        child: StarFavorite(
+                            wordId: words[position].id,
+                            size: 4 * SizeConfig.heightMultiplier,
+                            isFavorite: words[position].isFavorite),
+                      )
                     ],
                   ),
                 ),
@@ -130,6 +142,16 @@ Widget listWord(List<Word> words, Color colorText) {
         }),
   );
 }
+
+ Widget loading() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.only(bottom: 15 * SizeConfig.heightMultiplier),
+        child: CircularProgressIndicator(
+          //backgroundColor: Colors.yellowAccent,
+        ))
+    );
+  }
 
 void showDetailsOfWord(context, position, words) {
   final assetsAudioPlayer = AssetsAudioPlayer();
