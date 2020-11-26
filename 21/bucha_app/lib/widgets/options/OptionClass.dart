@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../ChonMan.dart';
+import '../animation route/BouncyPageRoute.dart';
+import '../Vocabulary/SceneChoice.dart';
+import '../../constants.dart';
 import '../../main.dart';
 
 class Class extends StatelessWidget {
@@ -14,13 +16,10 @@ class Class extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 90,
-        height: 50,
         margin: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
         child: new RaisedButton(
           onPressed: () {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => linkpage));
+            Navigator.push(context, BouncyPageRoute(widget:linkpage));
           },
           child: Text(
             name,
@@ -44,6 +43,25 @@ class OptionClass extends StatefulWidget {
 }
 
 class _OptionClassState extends State<OptionClass> {
+  final nameList = [
+    "Lớp 1",
+    "Lớp 2",
+    "Lớp 3",
+    "Lớp 4",
+    "Lớp 5",
+    "Lớp 6",
+
+  ];
+  final sceneList = [
+    "class1",
+    "class2",
+    "class3",
+    "class4",
+    "class5",
+    "class6",
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,10 +71,12 @@ class _OptionClassState extends State<OptionClass> {
         decoration: BoxDecoration(color: Color(0xff3fe7f1)),
         child: new Column(
           children: <Widget>[
-            new Padding(padding: const EdgeInsets.only(top: 150)),
+            SizedBox(
+              height: height(context) * 0.15,
+            ),
             Container(
               height: 50.0,
-              margin: const EdgeInsets.only(right: 20.0,left: 20.0),
+              margin: const EdgeInsets.only(right: 20.0, left: 20.0),
               decoration: BoxDecoration(
                   color: Color(0xffCFBB24),
                   borderRadius: BorderRadius.only(
@@ -77,8 +97,7 @@ class _OptionClassState extends State<OptionClass> {
               ),
             ),
             Container(
-              margin:
-                  const EdgeInsets.only(left: 20.0, right: 20.0),
+              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               decoration: BoxDecoration(
                 color: Color(0xff9CF5FE),
                 borderRadius: BorderRadius.only(
@@ -86,99 +105,40 @@ class _OptionClassState extends State<OptionClass> {
                     bottomRight: Radius.circular(20.0)),
               ),
               child: Container(
-                margin: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, bottom: 20.0),
-                decoration: BoxDecoration(
-                  color: Color(0xff0E2D6A),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0)),
-                ),
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 20.0),
-                  child:
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Class(
-                              name: "Lớp 1",
-                              linkpage: ChonMan(scene:"class1",),
-                            ),
-                            Class(
-                              name: "Lớp 2",
-                              linkpage: ChonMan(scene:"class2",),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Class(
-                              name: "Lớp 3",
-                              linkpage: ChonMan(scene:"class3",),
-                            ),
-                            Class(
-                              name: "Lớp 4",
-                              linkpage: ChonMan(scene:"class4",),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Class(
-                              name: "Lớp 5",
-                              linkpage: ChonMan(scene:"class5",),
-                            ),
-                            Class(
-                              name: "Lớp 6",
-                              linkpage: ChonMan(scene:"class6",),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Class(
-                              name: "Lớp 7",
-                              linkpage: ChonMan(scene:"class7",),
-                            ),
-                            Class(
-                              name: "Lớp 8",
-                              linkpage: ChonMan(scene:"class8",),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Class(
-                              name: "Lớp 9",
-                              linkpage: ChonMan(scene:"class9",),
-                            ),
-                            Class(
-                              name: "Lớp 10",
-                              linkpage: ChonMan(scene:"class10",),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-
-                )
-              ),
+                  margin: const EdgeInsets.only(
+                      left: 20.0, right: 20.0, bottom: 20.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xff0E2D6A),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.0),
+                        bottomRight: Radius.circular(20.0)),
+                  ),
+                  child: Container(
+                      child: Column(
+                    children: [
+                      SizedBox(
+                        height: height(context) * 0.5,
+                        child: new GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, childAspectRatio: 2.5),
+                            itemBuilder: (context, index) => Class(
+                                name: nameList[index],
+                                linkpage: SceneChoice(scene: sceneList[index])),
+                            itemCount: nameList.length),
+                      ),
+                      SizedBox(
+                        height: height(context) * 0.07,
+                      )
+                    ],
+                  ))),
+            ),
+            SizedBox(
+              height: height(context) * 0.01,
             ),
             Container(
               width: 50.0,
               height: 50.0,
-              margin: const EdgeInsets.only(top: 20.0),
               child: RaisedButton(
                 onPressed: () {
                   Navigator.pop(context);

@@ -1,6 +1,7 @@
-import 'package:bucha_app/ChonMan.dart';
+import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/SceneChoice.dart';
 import 'package:flutter/material.dart';
 
+import '../animation route/BouncyPageRoute.dart';
 import '../../main.dart';
 
 class Option extends StatelessWidget {
@@ -19,8 +20,7 @@ class Option extends StatelessWidget {
             top: 10.0, left: 5.0, right: 5.0, bottom: 10.0),
         child: new RaisedButton(
           onPressed: () {
-            Navigator.push(
-                context, new MaterialPageRoute(builder: (context) => linkPage));
+            Navigator.push(context, BouncyPageRoute(widget:linkPage));
           },
           child: Container(
             child: Center(
@@ -106,12 +106,12 @@ class _OptionAdvanceState extends State<OptionAdvance> {
                       Option(
                         title: "500 TỪ VỰNG PHỔ BIẾN",
                         color: 0xffF16A3F,
-                        linkPage: ChonMan(scene: "1"),
+                        linkPage: SceneChoice(scene: "1"),
                       ),
                       Option(
                         title: "600 TỪ VỰNG LUYỆN THI TOEIC",
                         color: 0xff56C9D0,
-                        linkPage: ChonMan(scene: "1"),
+                        linkPage: SceneChoice(scene: "1"),
                       )
                     ],
                   ),
@@ -122,44 +122,12 @@ class _OptionAdvanceState extends State<OptionAdvance> {
                       Option(
                         title: "900 TỪ VỰNG LUYỆN THI IELTS",
                         color: 0xff3FF146,
-                        linkPage: ChonMan(scene: "1"),
+                        linkPage: SceneChoice(scene: "1"),
                       ),
                       Option(
                         title: "900 TỪ VỰNG LUYỆN THI TOEFL",
                         color: 0xffD41F52,
-                        linkPage: ChonMan(scene: "1"),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Option(
-                        title: "1000 TỪ VỰNG LUYỆN THI SAT",
-                        color: 0xffFF3C82,
-                        linkPage: ChonMan(scene: "1"),
-                      ),
-                      Option(
-                        title: "1000 TỪ VỰNG GIAO TIẾP CƠ BẢN",
-                        color: 0xffCFBB24,
-                        linkPage: ChonMan(scene: "1"),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Option(
-                        title: "800 TỪ VỰNG GIAO TIẾP TRUNG CẤP",
-                        color: 0xff26B1F3,
-                        linkPage: ChonMan(scene: "1"),
-                      ),
-                      Option(
-                        title: "600 TỪ VỰNG GIAO TIẾP NÂNG CAO",
-                        color: 0xff27AE60,
-                        linkPage: ChonMan(scene: "1"),
+                        linkPage: SceneChoice(scene: "1"),
                       )
                     ],
                   ),

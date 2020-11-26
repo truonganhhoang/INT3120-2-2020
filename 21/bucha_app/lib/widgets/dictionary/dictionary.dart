@@ -215,10 +215,7 @@ class _DictionaryState extends State<Dictionary> {
                       color: Colors.indigo,
                       child: IconButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => HomePage()));
+                          Navigator.pop(context);
                         },
                         icon: Icon(Icons.arrow_back),
                         color: Colors.white,

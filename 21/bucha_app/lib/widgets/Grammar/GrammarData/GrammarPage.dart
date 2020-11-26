@@ -33,10 +33,7 @@ class PlayButton extends StatelessWidget {
       width: 120.0,
       height: 50.0,
       decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/PlayGameButton.png'),
-            fit: BoxFit.fill
-        ),
+
       ),
       child: InkWell(
         onTap: () {

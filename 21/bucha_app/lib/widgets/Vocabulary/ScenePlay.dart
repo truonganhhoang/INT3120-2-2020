@@ -1,29 +1,32 @@
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:bucha_app/VocabularyGame.dart';
+import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/VocabularyGame.dart';
+import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/VocabularyStudy.dart';
 import 'package:bucha_app/widgets/options/OptionClass.dart';
 
 import 'package:flutter/material.dart';
 
-import 'ChonMan.dart';
-import 'Database.dart';
+import '../animation route/BouncyPageRoute.dart';
+import 'SceneChoice.dart';
+import '../../Database.dart';
 import 'Vocabulary.dart';
-import 'main.dart';
+import '../../main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bucha_app/Database.dart';
 
 
-class ManChoi extends StatefulWidget {
+class ScenePlay extends StatefulWidget {
    final String level;
    final String scene;
 
-  ManChoi({this.level,this.scene});
+   ScenePlay({this.level,this.scene});
 
   @override
   _ManChoiState createState() => _ManChoiState();
 }
 
-class _ManChoiState extends State<ManChoi> {
+class _ManChoiState extends State<ScenePlay> {
 
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
@@ -105,10 +108,7 @@ class _ManChoiState extends State<ManChoi> {
                     margin: const EdgeInsets.only(right: 10, left: 10, top: 10),
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                        Navigator.push(context, BouncyPageRoute(widget:vocabularyStudy(level: widget.level,scene: widget.scene,)));
                       },
                       child: Text(
                         "Học Bài",
@@ -129,10 +129,7 @@ class _ManChoiState extends State<ManChoi> {
                     margin: const EdgeInsets.only(right: 10, left: 10, top: 10),
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => vocabulary_game()));
+                        Navigator.push(context, BouncyPageRoute(widget:vocabulary_game(level: widget.level,scene: widget.scene,)));
                       },
                       child: Text(
                         "Chơi Game",
