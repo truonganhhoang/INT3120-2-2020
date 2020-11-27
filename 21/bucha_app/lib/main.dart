@@ -1,13 +1,16 @@
+import 'package:bucha_app/widgets/animation%20route/BouncyPageRoute.dart';
 import 'package:bucha_app/widgets/options/OptionAdvance.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/widgets/dictionary/dictionary.dart';
-
-import 'widgets/Grammar/GrammarUnit.dart';
 import 'widgets/dictionary/dictionary.dart';
-import 'widgets/Grammar/grammar.dart';
-import 'widgets/dictionary/dictionary.dart';
+import 'widgets/sentence/sentence.dart';
+import 'widgets/Grammar/GrammarData/GrammarPage.dart';
 import 'widgets/options/OptionClass.dart';
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: HomePage(),
@@ -24,9 +27,7 @@ class OptionButton extends StatelessWidget {
   final String textButton;
   final StatefulWidget linkPage;
 
-
-
-  OptionButton({this.colorBackgorund, this.textButton,this.linkPage});
+  OptionButton({this.colorBackgorund, this.textButton, this.linkPage});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +37,7 @@ class OptionButton extends StatelessWidget {
         margin: const EdgeInsets.only(top: 20.0),
         child: new RaisedButton(
           onPressed: () {
-            Navigator.push(context, new MaterialPageRoute(
-                builder: (context) => linkPage
-            ));
+            Navigator.push(context, BouncyPageRoute(widget:linkPage));
           },
           child: Text(
             textButton,
@@ -48,16 +47,12 @@ class OptionButton extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
-
           ),
           shape: new RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)
-          ),
+              borderRadius: BorderRadius.circular(10.0)),
           color: Color(colorBackgorund),
         ));
   }
-
-
 }
 
 class SmailOntionButton extends StatelessWidget {
@@ -65,8 +60,7 @@ class SmailOntionButton extends StatelessWidget {
   final String image_caption;
   final StatefulWidget linkPage;
 
-  SmailOntionButton(
-      {this.imageBackground, this.image_caption,this.linkPage});
+  SmailOntionButton({this.imageBackground, this.image_caption, this.linkPage});
 
   @override
   Widget build(BuildContext context) {
@@ -75,15 +69,16 @@ class SmailOntionButton extends StatelessWidget {
         Container(
           width: 50.0,
           height: 50.0,
-          margin: const EdgeInsets.only(top: 20.0,left: 10.0 , right: 10.0),
+          margin: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
           child: RaisedButton(
-            onPressed: () {Navigator.push(context, new MaterialPageRoute(
-                builder: (context) => linkPage
-            ));},
+            onPressed: () {
+             Navigator.push(context, BouncyPageRoute(widget:linkPage));
+            },
             shape: new RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             color: Color(imageBackground),
-          ),),
+          ),
+        ),
         Container(
           margin: const EdgeInsets.only(top: 10.0),
           child: Text(image_caption),
@@ -114,12 +109,15 @@ class _HomePageState extends State<HomePage> {
                       topLeft: Radius.circular(10.0))),
               child: Container(
                 child: Center(
-                  child: Text("Từ Vựng", style: TextStyle(
-                    fontSize: 16.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),),
+                  child: Text(
+                    "Từ Vựng",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -137,7 +135,6 @@ class _HomePageState extends State<HomePage> {
                     colorBackgorund: 0xffC822DA,
                     textButton: "Trường Học",
                     linkPage: OptionClass(),
-
                   ),
                   OptionButton(
                     colorBackgorund: 0xffFC6E64,
@@ -154,12 +151,12 @@ class _HomePageState extends State<HomePage> {
                 SmailOntionButton(
                   imageBackground: 0xff7D75B0,
                   image_caption: "Từ Điển",
-                  linkPage: dictionary(),
+                  linkPage: Dictionary(),
                 ),
                 SmailOntionButton(
                   imageBackground: 0xffF1B73C,
                   image_caption: "Mẫu Câu",
-                  linkPage: dictionary(),
+                  linkPage: Sentence(),
                 ),
                 SmailOntionButton(
                   imageBackground: 0xffFF3D00,
@@ -182,16 +179,9 @@ class _HomePageState extends State<HomePage> {
             child: new Container(
               height: 450.0,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
-                  color: Colors.red
-              ),
+              decoration: new BoxDecoration(color: Colors.red),
             ),
           );
-        }
-    );
+        });
   }
-
-
 }
-
-
