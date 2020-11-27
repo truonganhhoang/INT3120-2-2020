@@ -75,7 +75,7 @@ class _homePageState extends State<homePage> {
                             child: new  Container(
                               decoration: new BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Colors.green[50]
+                                  color: Colors.white
                               ),
                               child: new Column(
                                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -85,14 +85,20 @@ class _homePageState extends State<homePage> {
                                     flex: 6,
                                     child: new Container(
                                       margin: EdgeInsets.fromLTRB(7,7,7,0),
-                                      child: new Image.network(data[i]["linkUrl"]),
+                                      child: new ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                        ),
+                                          child: new Image.network(data[i]["linkUrl"]),
+                                      ),
                                     ),
                                   ),
                                   new Expanded(
                                     flex: 4,
                                     child: new Container(
                                       decoration: new BoxDecoration(
-                                        color: Colors.green[50]
+                                        color: Colors.white
                                       ),
                                       margin: EdgeInsets.fromLTRB(7,0,7,7),
                                       child: Center(
@@ -119,7 +125,7 @@ class _homePageState extends State<homePage> {
                         padding: EdgeInsets.fromLTRB(10,30,10,0),
                         sliver: new SliverGrid.count(
                           crossAxisSpacing: 50,
-                          mainAxisSpacing: 1,
+                          mainAxisSpacing: 10,
                           crossAxisCount: 3,
                           children: listSubject,
                         ),

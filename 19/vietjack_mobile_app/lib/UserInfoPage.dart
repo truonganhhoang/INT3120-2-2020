@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'LoginPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'API.dart';
+import 'HistoryPage.dart';
 class UserInfoPage extends StatefulWidget {
   @override
   _UserInfoPageState createState() => _UserInfoPageState();
@@ -432,6 +433,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     color: Colors.white,
                   ),
                   child: new ListTile(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context){
+                          return new HistoryPage();
+                        }
+                      ));
+                    },
                     leading: Icon(
                       Icons.history,
                       color: Colors.grey,

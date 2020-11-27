@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'API.dart';
 import 'SubjectContent.dart';
-
+import 'Auth.dart';
 class DetailSubject extends StatefulWidget {
   @override
   _DetailSubjectState createState() => _DetailSubjectState();
@@ -65,6 +65,7 @@ class _DetailSubjectState extends State<DetailSubject> {
                                         // new Text(snapshot.data.docs[index]["content"])
                                         new SubjectContent(header: snapshot.data.docs[index].id,content: snapshot.data.docs[index]["content"],)
                                     ));
+                                API.addHistory(auth.currentUser.uid, widget.grade, widget.nameSubject, snapshot.data.docs[index].id.toString(),DateTime.now()).then((value) => print("aaaaaaaaaaaaaa"));
                               },
                               leading: Icon(
                                 Icons.ac_unit,

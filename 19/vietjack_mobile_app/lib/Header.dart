@@ -70,7 +70,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
               child: new Container(
                   key: new Key('name'),
                   width: left,
-                  height: 200,
+                  height: 150,
                   child: Center(
                     child: new Text(
                       auth.currentUser.displayName,
@@ -84,7 +84,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
             ),
             new Container(
               width: right,
-              height: 200,
+              height: 150,
               child: new Opacity(
                 opacity: myOpacity,
                 child: new ClipRRect(
