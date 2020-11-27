@@ -12,6 +12,8 @@ import 'package:bucha_app/widgets/Grammar/GrammarData/Information.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/Example.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarGame/GrammarGamePage.dart';
 
+import '../../../constants.dart';
+
 class GrammarPage extends StatefulWidget {
   @override
   _GrammarPageState createState() => _GrammarPageState();
@@ -34,7 +36,10 @@ class PlayButton extends StatelessWidget {
       width: 120.0,
       height: 50.0,
       decoration: BoxDecoration(
-
+        image: DecorationImage(
+            image: AssetImage('assets/PlayGameButton.png'),
+            fit: BoxFit.fill
+        ),
       ),
       child: InkWell(
         onTap: () {
@@ -134,6 +139,7 @@ class _GrammarPageState extends State<GrammarPage> {
   void initState() {
     _buildStreamList();
     super.initState();
+    Firebase.initializeApp();
   }
 
   void _buildStreamList() async {
@@ -155,13 +161,13 @@ class _GrammarPageState extends State<GrammarPage> {
     MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
       body: Container(
-        width: queryData.size.width,
-        height: queryData.size.height,
+        width: width(context),
+        height: height(context),
         color: Colors.pinkAccent,
         child: new Column(
           children: <Widget>[
             Container(
-              height: queryData.size.height * 0.88,
+              height: height(context) * 0.88,
               margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
               decoration: BoxDecoration(
                   color: Colors.yellow[200],

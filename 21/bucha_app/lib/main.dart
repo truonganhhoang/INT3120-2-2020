@@ -1,4 +1,4 @@
-import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/animation%20route/BouncyPageRoute.dart';
+import 'package:bucha_app/widgets/animation%20route/BouncyPageRoute.dart';
 import 'package:bucha_app/widgets/options/OptionAdvance.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

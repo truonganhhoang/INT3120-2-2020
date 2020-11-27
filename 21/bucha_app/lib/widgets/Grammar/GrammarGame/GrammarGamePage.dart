@@ -1,7 +1,10 @@
-import 'package:bucha_app/widgets/Grammar/GrammarGame/Answer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bucha_app/ButtonBack.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/Database.dart';
+
+import '../../../constants.dart';
 
 class GrammarGamePage extends StatefulWidget{
   @override
@@ -9,44 +12,69 @@ class GrammarGamePage extends StatefulWidget{
 }
 
 class _GrammarGamePageState extends State<GrammarGamePage> {
-
-  List<String> questions = [];
-
-  void _getQuestionList() {
-    try {
-      database.collection('Grammar_question').get().then((QuerySnapshot snapshot) => {
-        snapshot.docs.forEach((document) => {
-          questions.add(document.get('name'))
-        })
-      });
-    } catch(e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  Widget _buildAnswerList(String question) {
-    List<Answer> answers = new List<Answer>();
-    database.collection('Grammar_question').where('name', isEqualTo: question).get().then((snapshot) => {
-      snapshot.docs.forEach((document) => {
-        for (var answer in document.data()['answer']) {
-          answers.add(new Answer(
-            name: answer['name'],
-            isTrue: answer['isTrue'],
-            isChosen: false,
-          )),
-        }
-      })
-    });
-    return Column(
-      children: answers
-    );
-  }
+  var currentQuestion;
 
   @override
   void initState() {
-    _getQuestionList();
     super.initState();
+    currentQuestion = 0;
+    Firebase.initializeApp();
+  }
+
+  Widget Choice(String name, bool isTrue, bool isChosen, BuildContext context) {
+    ColorSwatch colors = ColorSwatch(0xFFFFFFFF, {
+      'gradient': Color(0xFF9E9E9E)
+    });
+    return Container(
+      child: MaterialButton(
+        onPressed: () {
+          setState(() {
+            if (isTrue) {
+              final snackbar = SnackBar(
+                duration: Duration(microseconds: 500),
+                backgroundColor: Colors.green,
+                content: Text("Đúng !"),
+              );
+              Scaffold.of(context).showSnackBar(snackbar);
+            }
+            else {
+              final snackbar = SnackBar(
+                duration: Duration(milliseconds: 500),
+                backgroundColor: Colors.red,
+                content: Text("Sai !"),
+              );
+              Scaffold.of(context).showSnackBar(snackbar);
+            };
+            currentQuestion++;
+          });
+        },
+        child: Container(
+          width: width(context) - 50.0,
+          height: 40.0,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  colors,
+                  colors['gradient']
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(10.0))
+          ),
+          child: Center(
+            child: Text(
+              name,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+        )
+      ),
+    );
   }
 
   @override
@@ -56,100 +84,161 @@ class _GrammarGamePageState extends State<GrammarGamePage> {
       body: Container(
         width: queryData.size.width,
         height: queryData.size.height,
-        child: Column(
-          children: <Widget>[
-            new Container(
-              width: queryData.size.width,
-              height: queryData.size.height * 0.3,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/background.jpg"),
-                    fit: BoxFit.cover,
-                  )
-              ),
-            ),
-            new Container(
-              width: queryData.size.width,
-              height: queryData.size.height * 0.7,
-              decoration: BoxDecoration(
-                color: Colors.brown,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.all(7.0),
-                    height: queryData.size.height * 0.28 - 7.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.brown[900],
-                          Colors.brown[300]
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.all(7.0),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '____ umbrella',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-                    ),
+        child: StreamBuilder(
+          stream: database.collection('Grammar_question').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData)
+              return Center(
+                child: Text(
+                  'COMING SOON!',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Container(
-                    height: queryData.size.height * 0.42 - 21.0,
-                    margin: EdgeInsets.all(7.0),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.brown[900],
-                          Colors.brown[300]
+                ),
+              );
+            return Builder(
+              builder: (BuildContext context) => Container(
+                child: Column(
+                  children: <Widget>[
+                    new Expanded(
+                      flex: 1,
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        fit: StackFit.expand,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/background.jpg"),
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                          Positioned(
+                            top: 1,
+                            left: 1,
+                            child: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              margin: const EdgeInsets.only(top: 20, left: 20),
+                              child: ButtonBack(),
+                            ),
+                          )
                         ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    child: Container(
-                      margin: EdgeInsets.all(7.0),
-                      decoration: BoxDecoration(
-                        color: Colors.brown[900],
-                      ),
-                      child: Center(
+                    new Expanded(
+                      flex: 2,
+                      child: Container(
+                        width: width(context),
+                        height: height(context),
+                        decoration: BoxDecoration(
+                          color: Colors.brown,
+                        ),
                         child: Column(
                           children: <Widget>[
-                            Answer(
-                              name: 'a',
-                              isTrue: false,
-                              isChosen: false,
+                            SizedBox(
+                              height: height(context) * 0.01,
                             ),
-                            Padding(padding: EdgeInsets.only(top: 10.0),),
-                            Answer(
-                              name: 'an',
-                              isTrue: true,
-                              isChosen: false,
-                            )
+                            Container(
+                              height: height(context) * 0.25,
+                              margin: EdgeInsets.all(7.0),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.brown[900],
+                                    Colors.brown[300]
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.all(7.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.all(10.0),
+                                  child: Center(
+                                    child: Text(
+                                      snapshot.data.documents[currentQuestion]['name'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: height(context) * 0.01,
+                            ),
+                            Container(
+                                height: height(context) * 0.35,
+                                margin: EdgeInsets.all(7.0),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.brown[900],
+                                      Colors.brown[300]
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.all(7.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.brown[900],
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Choice(
+                                            snapshot.data.documents[currentQuestion]['answer'][0]['name'],
+                                            snapshot.data.documents[currentQuestion]['answer'][0]['isTrue'],
+                                            false,
+                                            context
+                                        ),
+                                        Choice(
+                                            snapshot.data.documents[currentQuestion]['answer'][1]['name'],
+                                            snapshot.data.documents[currentQuestion]['answer'][1]['isTrue'],
+                                            false,
+                                            context
+                                        ),
+                                        Choice(
+                                            snapshot.data.documents[currentQuestion]['answer'][2]['name'],
+                                            snapshot.data.documents[currentQuestion]['answer'][2]['isTrue'],
+                                            false,
+                                            context
+                                        ),
+                                        Choice(
+                                            snapshot.data.documents[currentQuestion]['answer'][3]['name'],
+                                            snapshot.data.documents[currentQuestion]['answer'][3]['isTrue'],
+                                            false,
+                                            context
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                            ),
                           ],
                         ),
                       ),
                     )
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
+            );
+          },
+        )
       ),
     );
   }

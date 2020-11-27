@@ -1,5 +1,5 @@
-import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/SceneChoice.dart';
-import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/ScenePlay.dart';
+import 'package:bucha_app/widgets/Vocabulary/SceneChoice.dart';
+import 'package:bucha_app/widgets/Vocabulary/ScenePlay.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

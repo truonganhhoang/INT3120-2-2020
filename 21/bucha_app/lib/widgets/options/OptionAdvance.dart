@@ -1,4 +1,4 @@
-import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/SceneChoice.dart';
+import 'package:bucha_app/widgets/Vocabulary/SceneChoice.dart';
 import 'package:flutter/material.dart';
 
 import '../animation route/BouncyPageRoute.dart';

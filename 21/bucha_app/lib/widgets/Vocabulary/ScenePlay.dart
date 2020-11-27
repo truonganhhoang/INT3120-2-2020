@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/VocabularyGame.dart';
-import 'file:///E:/INT3120-2-2020/21/bucha_app/lib/widgets/Vocabulary/VocabularyStudy.dart';
+import 'package:bucha_app/widgets/Vocabulary/VocabularyGame.dart';
+import 'package:bucha_app/widgets/Vocabulary/VocabularyStudy.dart';
 import 'package:bucha_app/widgets/options/OptionClass.dart';
 
 import 'package:flutter/material.dart';
