@@ -29,9 +29,8 @@ class API{
   }
   static Future<QuerySnapshot> getHistory(String userId) async{
     return await FirebaseFirestore.instance.collection("History")
-    //.where("userEmail",isNull: false)
-    .orderBy("createAt",descending: true)
-        .get();
+        //.orderBy("createAt",descending: true)
+    .where("userId",isEqualTo: userId).get();
   }
 
 }

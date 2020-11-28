@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'API.dart';
 import 'Auth.dart';
+import 'package:intl/intl.dart';
 class HistoryPage extends StatefulWidget {
   @override
   _HistoryPageState createState() => _HistoryPageState();
@@ -10,14 +11,27 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   String concatTitle(String nameSubject, String grade, String titleContent){
-    return nameSubject.trim()+" - "+"Lớp "+grade.substring(grade.indexOf('Grade'))+" - "+titleContent.trim();
+    //return auth.currentUser.uid;
+    return nameSubject.trim()+" - "+"Lớp "+grade.substring(grade.indexOf('e')+1) +" - "+titleContent.trim();
+  }
+  String dateConvert(Timestamp date){
+    DateFormat formatter = DateFormat('EEEE dd/MM/yyyy kk:mm');
+    String formatted = formatter.format(date.toDate());
+    return formatted;
+  }
+  List sortData(AsyncSnapshot<dynamic> snapshot){
+    List list = snapshot.data.docs;
+    list.sort((a,b){
+      return -a["createAt"].compareTo(b["createAt"]);
+    });
+    return list;
   }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(title: new Text("Lịch sử học"),centerTitle: true,),
       body: new FutureBuilder(
-        future: API.getHistory(auth.currentUser.uid.toString()),
+        future: API.getHistory(auth.currentUser.uid),
         builder: (context,snapshot){
           switch(snapshot.connectionState){
             case ConnectionState.none:
@@ -37,14 +51,16 @@ class _HistoryPageState extends State<HistoryPage> {
                       child: new ListTile(
                         leading: Icon(Icons.history,size: 30,),
                         title: new Text(
-                          this.concatTitle(snapshot.data.docs[index]["nameSubject"], snapshot.data.docs[index]["grade"], snapshot.data.docs[index]["titleContent"]),
+                          this.concatTitle(sortData(snapshot)[index]["nameSubject"], sortData(snapshot)[index]["grade"], sortData(snapshot)[index]["titleContent"]),
                           style: new TextStyle(
-                              fontSize: 25,
+                              fontSize: 15,
                               color: Colors.orange,
                               fontWeight: FontWeight.w600
                           ),
                         ),
-                        subtitle: new Text(snapshot.data.docs[index]["createAt"].toString()),
+                        subtitle: new Text(
+                            this.dateConvert(sortData(snapshot)[index]["createAt"])
+                        ),
                         trailing: Container(
                             decoration: new BoxDecoration(
                               shape: BoxShape.circle,
