@@ -8,6 +8,7 @@ class DetailSubject extends StatefulWidget {
   _DetailSubjectState createState() => _DetailSubjectState();
   String grade;
   String nameSubject;
+  String translatedNameSubject;
   static String getTitle(String fullname){
     int length = (fullname.indexOf('(')!=-1) ? fullname.indexOf('(') : fullname.length;
     return fullname.substring(0,length).trim();
@@ -17,7 +18,7 @@ class DetailSubject extends StatefulWidget {
     int end = (fullname.indexOf(')') != -1) ? fullname.indexOf(')') : 0;
     return fullname.substring(start,end).trim();
   }
-  DetailSubject({Key key, this.grade, this.nameSubject}) : super(key: key);
+  DetailSubject({Key key, this.grade, this.nameSubject, this.translatedNameSubject}) : super(key: key);
 }
 
 class _DetailSubjectState extends State<DetailSubject> {
@@ -33,7 +34,7 @@ class _DetailSubjectState extends State<DetailSubject> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
-          title: new Text("Subject"),
+          title: new Text(widget.translatedNameSubject),
           centerTitle: true,
         ),
         body: new FutureBuilder(
@@ -65,7 +66,7 @@ class _DetailSubjectState extends State<DetailSubject> {
                                         // new Text(snapshot.data.docs[index]["content"])
                                         new SubjectContent(header: snapshot.data.docs[index].id,content: snapshot.data.docs[index]["content"],)
                                     ));
-                                API.addHistory(auth.currentUser.uid, widget.grade, widget.nameSubject, snapshot.data.docs[index].id.toString(),DateTime.now()).then((value) => print("aaaaaaaaaaaaaa"));
+                                API.addHistory(auth.currentUser.uid, widget.grade, widget.nameSubject, snapshot.data.docs[index].id.toString(),DateTime.now(),widget.translatedNameSubject).then((value) => print("aaaaaaaaaaaaaa"));
                               },
                               leading: Icon(
                                 Icons.ac_unit,

@@ -380,7 +380,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(title: new Text("Login"), centerTitle: true),
+      appBar: new AppBar(title: new Text("Tài khoản"), centerTitle: true),
       body: Padding(
         padding: EdgeInsets.only(top: 20),
         child: Center(

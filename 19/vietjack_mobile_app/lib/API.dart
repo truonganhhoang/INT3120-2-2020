@@ -18,13 +18,14 @@ class API{
         .get();
   }
 
-  static Future<void> addHistory(String userId, String grade, String nameSubject, String titleContent, DateTime createAt) async{
+  static Future<void> addHistory(String userId, String grade, String nameSubject, String titleContent, DateTime createAt,String translatedNameSubject) async{
     return await FirebaseFirestore.instance.collection("History").add({
       "userId": userId,
       "grade": grade,
       "nameSubject":nameSubject,
       "titleContent":titleContent,
-      "createAt": createAt
+      "createAt": createAt,
+      "translatedNameSubject": translatedNameSubject
     });
   }
   static Future<QuerySnapshot> getHistory(String userId) async{
@@ -32,5 +33,8 @@ class API{
         //.orderBy("createAt",descending: true)
     .where("userId",isEqualTo: userId).get();
   }
-
+  static Future<DocumentSnapshot> getContent(String grade, String nameSubject,String idContent) async{
+    return await FirebaseFirestore.instance.collection("Class_Subject").doc(grade).collection("Info")
+        .doc(nameSubject).collection("Content").doc(idContent).get();
+  }
 }

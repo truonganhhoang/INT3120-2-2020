@@ -33,7 +33,7 @@ class _homePageState extends State<homePage> {
     double height = MediaQuery.of(context).size.height;
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text("Home Page"),
+          title: new Text("Trang chủ"),
           centerTitle: true,
         ),
         body: CustomScrollView(
@@ -69,7 +69,7 @@ class _homePageState extends State<homePage> {
                           new GestureDetector(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return new DetailSubject(grade: this.userClass,nameSubject: data[i].id,);
+                                return new DetailSubject(grade: this.userClass,nameSubject: data[i].id,translatedNameSubject: data[i]["nameSubject"],);
                               }));
                             },
                             child: new  Container(

@@ -30,18 +30,38 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
       appBar: new AppBar(title:new Text("Chose Class"),centerTitle: true,),
       body: CustomScrollView(
           slivers: <Widget>[
-            new SliverList(
-              delegate: new SliverChildListDelegate(
-                  [
-                    new CircleAvatar(
-                        radius: 55,
-                        backgroundColor: Colors.yellow,
-                        child: new CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(auth.currentUser.photoURL.toString()),
-                        )
-                    ),
-                  ]
+            new SliverPadding(
+              padding: EdgeInsets.only(top: 20,bottom: 10),
+              sliver: new SliverList(
+                delegate: new SliverChildListDelegate(
+                    [
+                      new CircleAvatar(
+                          radius: 55,
+                          backgroundColor: Colors.yellow,
+                          child: new CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(auth.currentUser.photoURL.toString()),
+                          )
+                      ),
+                    ]
+                ),
+              ),
+            ),
+            new SliverPadding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              sliver: new SliverList(
+                  delegate: new SliverChildListDelegate([
+                    new Center(
+                      child:new Text(
+                        "Chọn lớp của bạn. Bạn có thể thay đổi lớp sau",
+                        style: new TextStyle(
+                          fontSize: 20,
+                          color: Colors.black
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    )
+                  ])
               ),
             ),
             new SliverPadding(

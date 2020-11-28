@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'API.dart';
 import 'Auth.dart';
 import 'package:intl/intl.dart';
+import 'SubjectContent.dart';
 class HistoryPage extends StatefulWidget {
   @override
   _HistoryPageState createState() => _HistoryPageState();
@@ -15,7 +16,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return nameSubject.trim()+" - "+"Lớp "+grade.substring(grade.indexOf('e')+1) +" - "+titleContent.trim();
   }
   String dateConvert(Timestamp date){
-    DateFormat formatter = DateFormat('EEEE dd/MM/yyyy kk:mm');
+    DateFormat formatter = DateFormat('EEEE dd/MM/yyyy - kk:mm');
     String formatted = formatter.format(date.toDate());
     return formatted;
   }
@@ -49,9 +50,21 @@ class _HistoryPageState extends State<HistoryPage> {
                     height: 80,
                     child: new Center(
                       child: new ListTile(
+                        onTap: (){
+                          List l = sortData(snapshot);
+                          API.getContent(l[index]["grade"], l[index]["nameSubject"], l[index]["titleContent"])
+                              .then((value) {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context)=>new SubjectContent(
+                                header: l[index]["titleContent"],
+                                content: value["content"],
+                              )
+                            ));
+                          });
+                        },
                         leading: Icon(Icons.history,size: 30,),
                         title: new Text(
-                          this.concatTitle(sortData(snapshot)[index]["nameSubject"], sortData(snapshot)[index]["grade"], sortData(snapshot)[index]["titleContent"]),
+                          this.concatTitle(sortData(snapshot)[index]["translatedNameSubject"], sortData(snapshot)[index]["grade"], sortData(snapshot)[index]["titleContent"]),
                           style: new TextStyle(
                               fontSize: 15,
                               color: Colors.orange,
