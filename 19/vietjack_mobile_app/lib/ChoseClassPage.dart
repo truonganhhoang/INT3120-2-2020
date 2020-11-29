@@ -24,10 +24,13 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
       print(user.doc())
     });
   }
+  String getUserFirstName(String fullName){
+    return fullName.substring(0,fullName.indexOf(" "));
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title:new Text("Chose Class"),centerTitle: true,),
+      appBar: new AppBar(title:new Text("Chọn lớp"),centerTitle: true,),
       body: CustomScrollView(
           slivers: <Widget>[
             new SliverPadding(
@@ -52,12 +55,26 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
               sliver: new SliverList(
                   delegate: new SliverChildListDelegate([
                     new Center(
-                      child:new Text(
-                        "Chọn lớp của bạn. Bạn có thể thay đổi lớp sau",
-                        style: new TextStyle(
-                          fontSize: 20,
-                          color: Colors.black
+                      child:new RichText(
+                        text: new TextSpan(
+                          style: new TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontFamily:'Sansation'
+                          ),
+                          children: <TextSpan>[
+                            new TextSpan(text:"Chào mừng "),
+                            new TextSpan(
+                                text:this.getUserFirstName( auth.currentUser.displayName),
+                              style: new TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.w700
+                              )
+                            ),
+                            new TextSpan(text: ". Hãy chọn lớp của bạn, bạn có thể thay đổi sau ở mục tài khoản")
+                          ]
                         ),
+
                         textAlign: TextAlign.center,
                       )
                     )
@@ -412,7 +429,7 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
               ),
             ),
             new SliverPadding(
-              padding: EdgeInsets.only(top: 100),
+              padding: EdgeInsets.only(top: 0),
               sliver: new SliverList(delegate: new SliverChildListDelegate(
                 [
                   new Container(

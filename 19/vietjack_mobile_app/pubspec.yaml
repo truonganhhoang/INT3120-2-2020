@@ -65,6 +65,9 @@ flutter:
     - family: GoodDog
       fonts:
         - asset: fonts/GOODDOG.TTF
+    - family: Sansation
+      fonts:
+        - asset: fonts/Sansation.ttf
 #    - family: HiBlack
 #      fonts:
 #        -asset: fonts/HiBlack-n3a1.TTF

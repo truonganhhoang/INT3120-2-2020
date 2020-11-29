@@ -16,6 +16,7 @@ void main() {
           primarySwatch: Colors.green,
           buttonColor: Colors.yellow,
           scaffoldBackgroundColor: Colors.brown[50],
+          fontFamily: 'Sansation'
       ),
       color: Colors.red,
       home: new LoginPage()));
