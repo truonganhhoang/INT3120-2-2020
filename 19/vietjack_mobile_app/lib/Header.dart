@@ -72,13 +72,27 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                   width: left,
                   height: 150,
                   child: Center(
-                    child: new Text(
-                      auth.currentUser.displayName,
-                      style: new TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'GoodDog',
-                          fontSize: 45,
-                          color: Colors.green[400]),
+                    child: new RichText(
+                      text: new TextSpan(
+                        children: [
+                          new TextSpan(
+                            text: "Chào mừng\n",
+                            style: new TextStyle(
+                              fontSize: 20,
+                              color: Colors.orange,
+                              fontFamily: 'Sansation'
+                            )
+                          ),
+                          new TextSpan(
+                            text: auth.currentUser.displayName,
+                            style: new TextStyle(
+                                fontFamily: 'GoodDog',
+                                fontSize: 40,
+                                color: Colors.green[400]
+                            ),
+                          )
+                        ]
+                      ),
                     ),
                   )),
             ),
