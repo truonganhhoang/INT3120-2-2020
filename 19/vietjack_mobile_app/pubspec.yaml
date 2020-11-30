@@ -65,5 +65,11 @@ flutter:
     - family: GoodDog
       fonts:
         - asset: fonts/GOODDOG.TTF
+    - family: Sansation
+      fonts:
+        - asset: fonts/Sansation.ttf
+#    - family: HiBlack
+#      fonts:
+#        -asset: fonts/HiBlack-n3a1.TTF
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget loginScene() {
     return new Scaffold(
         //login scene
-        appBar: new AppBar(title: new Text("Login"), centerTitle: true),
+        appBar: new AppBar(title: new Text("Đăng nhập"), centerTitle: true),
         body: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
