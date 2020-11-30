@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:vietjack_mobile_app/Header.dart';
 import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 
+import 'UI/API.dart';
+
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
   int firstRun = 0;
@@ -17,21 +19,9 @@ class ThiOnline extends StatefulWidget {
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
-  String currentSubject = "Ngữ văn";
+  String currentSubject;
   final GlobalKey<MyCustomCardState> _key = GlobalKey();
-  final List<String> subjectArray = [
-    'Ngữ văn',
-    'Toán',
-    'Vật lí',
-    'Hóa học',
-    'Sinh học',
-    'Địa lí',
-    'Tiếng Anh',
-    'Lịch sử',
-    'Tin học',
-    'Giáo dục công dân',
-    'Công nghệ'
-  ];
+  List<String> subjectArray = [];
   bool _isShowingModal = true;
   bool _showAppbar = false;
   ScrollController _scrollBottomController = new ScrollController();
@@ -39,7 +29,9 @@ class _ThiOnlineState extends State<ThiOnline> {
   @override
   void initState() {
     super.initState();
+    this.subjectArray = ExamAPI.getListSubject();
     myScroll();
+
     if (_isShowingModal && widget.firstRun < 1) {
       Future.delayed(Duration(seconds: 1)).then((_) {
         _onButtonPress();
@@ -131,7 +123,8 @@ class _ThiOnlineState extends State<ThiOnline> {
         ),
         MyCustomCard(
           key: _key,
-          currentSubject: this.currentSubject,
+          currentSubject:
+              this.currentSubject == null ? 'Ngữ văn' : this.currentSubject,
           function: this.updateSubject,
         ),
       ],

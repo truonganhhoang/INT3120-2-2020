@@ -1,6 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ExamOnline extends StatefulWidget {
+  static num correctAnswer = 0;
+  static Map _answers = new Map<int, int>();
+  final String weekID;
+  final String examID;
+  final String currentSubject;
+
+  const ExamOnline({Key key, this.weekID, this.examID, this.currentSubject})
+      : super(key: key);
+
   @override
   _ExamOnlineState createState() => _ExamOnlineState();
 }
@@ -9,6 +19,8 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
   AnimationController _controller;
   TabController _tabController;
   int _tabIndex = 0;
+  List<Widget> listTab = [];
+  List<Widget> listCustomRadio = [];
 
   @override
   void dispose() {
@@ -19,7 +31,63 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
 
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 5);
+    List<Widget> tempListTab = [];
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(widget.currentSubject)
+        .collection("Detail/")
+        .doc(widget.weekID)
+        .collection("Exam")
+        .doc(widget.examID)
+        .collection("DetailQuestion")
+        .get()
+        .then((value) {
+      for (int i = 0; i < value.docs.length; i++) {
+        ExamOnline._answers[i + 1] = 0;
+        tempListTab.add(Tab(text: (i + 1).toString()));
+        List<RadioModel> listRadio = [];
+        FirebaseFirestore.instance
+            .collection("ThiOnline")
+            .doc("Class 12")
+            .collection("Subject")
+            .doc(widget.currentSubject)
+            .collection("Detail/")
+            .doc(widget.weekID)
+            .collection("Exam")
+            .doc(widget.examID)
+            .collection("DetailQuestion")
+            .doc(value.docs[i].id)
+            .collection("Answer")
+            .get()
+            .then((answer) {
+          for (int j = 0; j < answer.docs.length; j++) {
+            listRadio.add(RadioModel(false, (j + 1).toString(),
+                answer.docs[j]['answer'], answer.docs[j]['point']));
+          }
+          this.listCustomRadio.add(
+                Container(
+                  child: Center(
+                      child: CustomRadio(
+                          id: i + 1,
+                          radioData: listRadio,
+                          question: value.docs[i]['question'])),
+                ),
+              );
+          this.setState(() {
+            this.listTab = tempListTab;
+            _tabController =
+                TabController(vsync: this, length: this.listTab.length);
+          });
+        });
+      }
+    });
+
+    // for (int i = 1; i <= 5; i++) {
+    //   ExamOnline._answers[i] = 0;
+    // }
+    _tabController = TabController(vsync: this, length: this.listTab.length);
     _controller =
         AnimationController(vsync: this, duration: Duration(minutes: 15));
     _controller.forward();
@@ -68,7 +136,9 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
           elevation: 0,
           actions: <Widget>[
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(ExamOnline._answers);
+                },
                 child: Text("Nộp bài", style: TextStyle(color: Colors.orange)))
           ],
         ),
@@ -78,7 +148,7 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
               children: <Widget>[
                 SizedBox(height: 20.0),
                 DefaultTabController(
-                    length: 5,
+                    length: this.listTab.length,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
@@ -87,13 +157,8 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
                               isScrollable: true,
                               labelColor: Colors.orange,
                               unselectedLabelColor: Colors.black,
-                              tabs: [
-                                Tab(text: 'Tab 1'),
-                                Tab(text: 'Tab 2'),
-                                Tab(text: 'Tab 3'),
-                                Tab(text: 'Tab 4'),
-                                Tab(text: 'Tab 5'),
-                              ],
+                              tabs:
+                                  this.listTab.length == 0 ? [] : this.listTab,
                               controller: _tabController,
                             ),
                           ),
@@ -105,57 +170,30 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
                                           color: Colors.grey, width: 0.5))),
                               child: TabBarView(
                                   controller: _tabController,
-                                  children: <Widget>[
-                                    Container(
-                                      child: Center(child: CustomRadio()),
-                                    ),
-                                    Container(
-                                      child: Center(
-                                        child: Text('Display Tab 2',
-                                            style: TextStyle(
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Center(
-                                        child: Text('Display Tab 3',
-                                            style: TextStyle(
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Center(
-                                        child: Text('Display Tab 4',
-                                            style: TextStyle(
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Center(
-                                        child: Text('Display Tab 4',
-                                            style: TextStyle(
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                    ),
-                                  ]))
+                                  children: this.listTab.length == 0
+                                      ? []
+                                      : listCustomRadio))
                         ])),
-                Container(
-                  color: Colors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      _tabIndex > 0
-                          ? FlatButton(
-                              onPressed: previousTab, child: Text("Previous"))
-                          : Container(),
-                      _tabIndex < 4
-                          ? FlatButton(onPressed: nextTab, child: Text("Next"))
-                          : Container(),
-                    ],
+                Expanded(
+                  child: Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Container(
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          _tabIndex > 0
+                              ? FlatButton(
+                                  onPressed: previousTab,
+                                  child: Text("Previous"))
+                              : Container(),
+                          _tabIndex < 4
+                              ? FlatButton(
+                                  onPressed: nextTab, child: Text("Next"))
+                              : Container(),
+                        ],
+                      ),
+                    ),
                   ),
                 )
                 // FlatButton(onPressed: null, child: Text("Previous")),
@@ -192,7 +230,18 @@ class Countdown extends AnimatedWidget {
  * 23/11/2020
  */
 
+// ignore: must_be_immutable
 class CustomRadio extends StatefulWidget {
+  final num id;
+  num point = 0;
+  List<RadioModel> radioData;
+  final String question;
+
+  CustomRadio({Key key, @required this.id, this.radioData, this.question})
+      : super(key: key) {
+    print(this.radioData);
+    ExamOnline._answers[this.id] = this.point;
+  }
   @override
   _CustomRadioState createState() => _CustomRadioState();
 }
@@ -200,6 +249,7 @@ class CustomRadio extends StatefulWidget {
 class _CustomRadioState extends State<CustomRadio>
     with AutomaticKeepAliveClientMixin<CustomRadio> {
   List<RadioModel> sampleData = new List<RadioModel>();
+  String correctAnswer = "A";
 
   @override
   bool get wantKeepAlive => true;
@@ -207,10 +257,6 @@ class _CustomRadioState extends State<CustomRadio>
   @override
   void initState() {
     super.initState();
-    sampleData.add(new RadioModel(false, 'A', 'April 18'));
-    sampleData.add(new RadioModel(false, 'B', 'April 17'));
-    sampleData.add(new RadioModel(false, 'C', 'April 16'));
-    sampleData.add(new RadioModel(false, 'D', 'April 15'));
   }
 
   @override
@@ -220,23 +266,24 @@ class _CustomRadioState extends State<CustomRadio>
       Center(
           child: Container(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Text(
-                  'Quá trình phát triển của văn học Việt Nam từ cách mạng tháng 8 năm 1945 đến năm 1975 trải qua mấy chặng đường chính?',
-                  style: TextStyle(fontSize: 17)))),
+              child: Text(widget.question, style: TextStyle(fontSize: 17)))),
       Expanded(
         child: ListView.builder(
-          itemCount: sampleData.length,
+          itemCount: widget.radioData.length,
           itemBuilder: (BuildContext context, int index) {
             return new InkWell(
               //highlightColor: Colors.red,
               splashColor: Colors.orange,
               onTap: () {
+                widget.point = widget.radioData[index].point;
+                ExamOnline._answers[widget.id] = widget.radioData[index].point;
                 setState(() {
-                  sampleData.forEach((element) => element.isSelected = false);
-                  sampleData[index].isSelected = true;
+                  widget.radioData
+                      .forEach((element) => element.isSelected = false);
+                  widget.radioData[index].isSelected = true;
                 });
               },
-              child: new RadioItem(sampleData[index]),
+              child: new RadioItem(widget.radioData[index]),
             );
           },
         ),
@@ -273,9 +320,11 @@ class RadioItem extends StatelessWidget {
               borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
             ),
           ),
-          new Container(
-            margin: new EdgeInsets.only(left: 10.0),
-            child: new Text(_item.text),
+          Expanded(
+            child: new Container(
+              margin: new EdgeInsets.only(left: 10.0),
+              child: new Text(_item.text),
+            ),
           )
         ],
       ),
@@ -287,6 +336,7 @@ class RadioModel {
   bool isSelected;
   final String buttonText;
   final String text;
+  final num point;
 
-  RadioModel(this.isSelected, this.buttonText, this.text);
+  RadioModel(this.isSelected, this.buttonText, this.text, this.point);
 }

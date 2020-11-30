@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vietjack_mobile_app/UI/ExamOnline.dart';
 
+// ignore: must_be_immutable
 class ExamsCard extends StatefulWidget {
+  final QueryDocumentSnapshot testArray;
+  final String weekID;
+  final String currentSubject;
+  ExamsCard({this.testArray, this.weekID, this.currentSubject});
   @override
   _ExamsCardState createState() => _ExamsCardState();
 }
@@ -10,7 +16,6 @@ class _ExamsCardState extends State<ExamsCard> {
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width - 20.0;
-
     return Row(
       children: [
         Expanded(
@@ -32,8 +37,7 @@ class _ExamsCardState extends State<ExamsCard> {
                 trailing: Icon(Icons.add, color: Colors.orange, size: 40),
                 title: Padding(
                   padding: const EdgeInsets.all(1.0),
-                  child: Text(
-                      "Khái quát văn học Việt Nam đầu cách mạng tháng 8 1945 đến thế kỉ XX",
+                  child: Text(widget.testArray['title'],
                       overflow: TextOverflow.fade,
                       style: TextStyle(fontSize: 20, color: Colors.black)),
                 ),
@@ -48,8 +52,7 @@ class _ExamsCardState extends State<ExamsCard> {
                               width: cardWidth * 0.7,
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                    "Khái quát văn học Việt Nam đầu cách mạng tháng 8 1945 đến thế kỉ XX",
+                                child: Text(widget.testArray['title'],
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.grey)),
                               )),
@@ -60,7 +63,11 @@ class _ExamsCardState extends State<ExamsCard> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ExamOnline()));
+                                          builder: (context) => ExamOnline(
+                                              weekID: widget.weekID,
+                                              examID: widget.testArray.id,
+                                              currentSubject:
+                                                  widget.currentSubject)));
                                 },
                                 child: Text("Bắt đầu",
                                     style: TextStyle(color: Colors.orange)),

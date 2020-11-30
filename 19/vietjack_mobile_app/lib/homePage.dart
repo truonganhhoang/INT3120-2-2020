@@ -9,6 +9,7 @@ import 'LoginPage.dart';
 import 'UserInfoPage.dart';
 import 'API.dart';
 import 'DetailSubject.dart';
+
 class homePage extends StatefulWidget {
   String userName = "name";
 
@@ -18,15 +19,18 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   String userClass;
-  Future<QuerySnapshot> getUserClassInfo() async{
+  Future<QuerySnapshot> getUserClassInfo() async {
     userClass = await API.getUser().then((value) {
-      return "Grade"+value.docs[0]["UserClass"].toString();
+      return "Grade" + value.docs[0]["UserClass"].toString();
     });
     QuerySnapshot userClassInfo = await FirebaseFirestore.instance
-        .collection("Class_Subject").doc(userClass)
-        .collection("Info").get();
+        .collection("Class_Subject")
+        .doc(userClass)
+        .collection("Info")
+        .get();
     return userClassInfo;
   }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -61,62 +65,61 @@ class _homePageState extends State<homePage> {
                           delegate: new SliverChildListDelegate(
                               [new Text("Loading...")]));
                     case ConnectionState.done:
-                      List<Widget> listSubject=[];
+                      List<Widget> listSubject = [];
                       List data = snapshot.data.docs;
-                      for(int i=0;i<data.length;i++) {
-                        print(data[i]["nameSubject"]);
-                        listSubject.add(
-                          new GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return new DetailSubject(grade: this.userClass,nameSubject: data[i].id,);
-                              }));
-                            },
-                            child: new  Container(
-                              decoration: new BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.green[50]
-                              ),
-                              child: new Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  new Expanded(
-                                    flex: 6,
-                                    child: new Container(
-                                      margin: EdgeInsets.fromLTRB(7,7,7,0),
-                                      child: new Image.network(data[i]["linkUrl"]),
+                      for (int i = 0; i < data.length; i++) {
+                        listSubject.add(new GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return new DetailSubject(
+                                grade: this.userClass,
+                                nameSubject: data[i].id,
+                              );
+                            }));
+                          },
+                          child: new Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.green[50]),
+                            child: new Column(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                new Expanded(
+                                  flex: 6,
+                                  child: new Container(
+                                    margin: EdgeInsets.fromLTRB(7, 7, 7, 0),
+                                    child:
+                                        new Image.network(data[i]["linkUrl"]),
+                                  ),
+                                ),
+                                new Expanded(
+                                  flex: 4,
+                                  child: new Container(
+                                    decoration: new BoxDecoration(
+                                        color: Colors.green[50]),
+                                    margin: EdgeInsets.fromLTRB(7, 0, 7, 7),
+                                    child: Center(
+                                      child: new Text(
+                                        data[i]["nameSubject"],
+                                        textAlign: TextAlign.center,
+                                        style: new TextStyle(
+                                            fontSize: 15,
+                                            //fontWeight: FontWeight.w700,
+                                            height: 1),
+                                      ),
                                     ),
                                   ),
-                                  new Expanded(
-                                    flex: 4,
-                                    child: new Container(
-                                      decoration: new BoxDecoration(
-                                        color: Colors.green[50]
-                                      ),
-                                      margin: EdgeInsets.fromLTRB(7,0,7,7),
-                                      child: Center(
-                                        child: new Text(
-                                          data[i]["nameSubject"],
-                                          textAlign: TextAlign.center,
-                                          style: new TextStyle(
-                                              fontSize: 15,
-                                              //fontWeight: FontWeight.w700,
-                                              height: 1
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                          )
-                        );
+                          ),
+                        ));
                       }
                       Widget gridSubject = new SliverPadding(
                         key: new Key('grid view'),
-                        padding: EdgeInsets.fromLTRB(10,30,10,0),
+                        padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
                         sliver: new SliverGrid.count(
                           crossAxisSpacing: 50,
                           mainAxisSpacing: 1,

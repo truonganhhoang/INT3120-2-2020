@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:vietjack_mobile_app/UI/API.dart';
+import 'package:vietjack_mobile_app/UI/ExamOnline.dart';
 
 import 'ExamsPicker.dart';
 
@@ -21,8 +23,30 @@ class MyCustomCard extends StatefulWidget {
 
 class MyCustomCardState extends State<MyCustomCard> {
   String currentSubject;
+  QuerySnapshot data;
   List<dynamic> docs = [];
   MyCustomCardState({@required this.currentSubject});
+
+  @override
+  void initState() {
+    super.initState();
+
+    // this.data = await ExamAPI.getSubjectDetail(currentSubject);
+    // this.docs = this.data.docs;
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(this.currentSubject)
+        .collection("Detail")
+        .orderBy("id")
+        .get()
+        .then((data) => {
+              this.setState(() {
+                this.docs = data.docs;
+              }),
+            });
+  }
 
   changeSubject(String subject) async {
     FirebaseFirestore.instance
@@ -35,7 +59,6 @@ class MyCustomCardState extends State<MyCustomCard> {
         .get()
         .then((data) => {
               this.setState(() {
-                print(this.docs.length);
                 this.docs = data.docs;
                 this.currentSubject = subject;
                 widget.updateCurrentSubject(subject);
@@ -102,40 +125,3 @@ class MyCustomCardState extends State<MyCustomCard> {
     );
   }
 }
-
-// class MyCustomCard extends StatelessWidget {
-//   MyCustomCard(
-//       {Key key,
-//       @required this.weekNumber,
-//       @required this.snapshot,
-//       this.currentSubject})
-//       : super(key: key);
-
-//   final int weekNumber;
-//   final List<dynamic> snapshot;
-//   final String currentSubject;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       key: PageStorageKey('MyCustomCard'),
-//       shrinkWrap: true,
-//       physics: ScrollPhysics(),
-//       itemCount: snapshot.length,
-//       itemBuilder: (BuildContext context, int index) {
-//         return MakeCard(index, snapshot, currentSubject);
-//       },
-//     );
-//   }
-// }
-
-// class MakeCard extends StatelessWidget {
-//   final int index;
-//   final dynamic snapshot;
-//   final String currentSubject;
-//   MakeCard(this.index, this.snapshot, this.currentSubject);
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-// }
