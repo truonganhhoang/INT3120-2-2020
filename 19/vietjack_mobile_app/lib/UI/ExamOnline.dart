@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:vietjack_mobile_app/UI/Result.dart';
 
 class ExamOnline extends StatefulWidget {
   static num correctAnswer = 0;
@@ -19,8 +20,9 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
   AnimationController _controller;
   TabController _tabController;
   int _tabIndex = 0;
-  List<Widget> listTab = [];
-  List<Widget> listCustomRadio = [];
+  List<Widget> listTab;
+  List<Widget> listCustomRadio;
+  bool loading = true;
 
   @override
   void dispose() {
@@ -32,6 +34,8 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     List<Widget> tempListTab = [];
+    List<Widget> tempListCustomRadio = [];
+
     FirebaseFirestore.instance
         .collection("ThiOnline")
         .doc("Class 12")
@@ -44,50 +48,33 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
         .collection("DetailQuestion")
         .get()
         .then((value) {
-      for (int i = 0; i < value.docs.length; i++) {
-        ExamOnline._answers[i + 1] = 0;
-        tempListTab.add(Tab(text: (i + 1).toString()));
-        List<RadioModel> listRadio = [];
-        FirebaseFirestore.instance
-            .collection("ThiOnline")
-            .doc("Class 12")
-            .collection("Subject")
-            .doc(widget.currentSubject)
-            .collection("Detail/")
-            .doc(widget.weekID)
-            .collection("Exam")
-            .doc(widget.examID)
-            .collection("DetailQuestion")
-            .doc(value.docs[i].id)
-            .collection("Answer")
-            .get()
-            .then((answer) {
-          for (int j = 0; j < answer.docs.length; j++) {
-            listRadio.add(RadioModel(false, (j + 1).toString(),
-                answer.docs[j]['answer'], answer.docs[j]['point']));
-          }
-          this.listCustomRadio.add(
-                Container(
-                  child: Center(
-                      child: CustomRadio(
-                          id: i + 1,
-                          radioData: listRadio,
-                          question: value.docs[i]['question'])),
-                ),
-              );
-          this.setState(() {
-            this.listTab = tempListTab;
-            _tabController =
-                TabController(vsync: this, length: this.listTab.length);
-          });
+      value.docs.asMap().forEach((index, element) {
+        ExamOnline._answers[index] = 0;
+        tempListTab.add(Tab(text: (index + 1).toString()));
+        List<RadioModel> tempRadioModel = [];
+        element['answer'].forEach((key, value) {
+          tempRadioModel
+              .add(RadioModel(false, key, value['text'], value['point']));
         });
-      }
+        tempListCustomRadio.add(
+          Container(
+            child: Center(
+                child: CustomRadio(
+                    id: index,
+                    radioData: tempRadioModel,
+                    question: element['question'])),
+          ),
+        );
+
+        this.setState(() {
+          this.listTab = tempListTab;
+          this.listCustomRadio = tempListCustomRadio;
+          _tabController =
+              TabController(vsync: this, length: this.listTab.length);
+        });
+      });
     });
 
-    // for (int i = 1; i <= 5; i++) {
-    //   ExamOnline._answers[i] = 0;
-    // }
-    _tabController = TabController(vsync: this, length: this.listTab.length);
     _controller =
         AnimationController(vsync: this, duration: Duration(minutes: 15));
     _controller.forward();
@@ -95,6 +82,27 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
       if (status == AnimationStatus.completed) {
         // custom code here
       }
+    });
+  }
+
+  Map<List<CustomRadio>, List<RadioModel>> testData;
+
+  Future<dynamic> getExam() async {
+    var finalData = {};
+    List<Widget> tempListCustomRadio = [];
+    QuerySnapshot data = await FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(widget.currentSubject)
+        .collection("Detail/")
+        .doc(widget.weekID)
+        .collection("Exam")
+        .doc(widget.examID)
+        .collection("DetailQuestion")
+        .get();
+    data.docs.asMap().forEach((index, element) async {
+      List<RadioModel> listRadio = [];
     });
   }
 
@@ -137,6 +145,8 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
           actions: <Widget>[
             TextButton(
                 onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Result()));
                   print(ExamOnline._answers);
                 },
                 child: Text("Nộp bài", style: TextStyle(color: Colors.orange)))
@@ -148,7 +158,7 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
               children: <Widget>[
                 SizedBox(height: 20.0),
                 DefaultTabController(
-                    length: this.listTab.length,
+                    length: this.listTab == null ? 0 : this.listTab.length,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
@@ -157,8 +167,7 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
                               isScrollable: true,
                               labelColor: Colors.orange,
                               unselectedLabelColor: Colors.black,
-                              tabs:
-                                  this.listTab.length == 0 ? [] : this.listTab,
+                              tabs: this.listTab == null ? [] : this.listTab,
                               controller: _tabController,
                             ),
                           ),
@@ -170,7 +179,7 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
                                           color: Colors.grey, width: 0.5))),
                               child: TabBarView(
                                   controller: _tabController,
-                                  children: this.listTab.length == 0
+                                  children: this.listTab == null
                                       ? []
                                       : listCustomRadio))
                         ])),

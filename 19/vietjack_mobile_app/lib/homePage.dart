@@ -67,62 +67,65 @@ class _homePageState extends State<homePage> {
                     case ConnectionState.done:
                       List<Widget> listSubject = [];
                       List data = snapshot.data.docs;
-                      for(int i=0;i<data.length;i++) {
+                      for (int i = 0; i < data.length; i++) {
                         print(data[i]["nameSubject"]);
                         listSubject.add(
                           new GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return new DetailSubject(grade: this.userClass,nameSubject: data[i].id,translatedNameSubject: data[i]["nameSubject"],);
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return new DetailSubject(
+                                  grade: this.userClass,
+                                  nameSubject: data[i].id,
+                                  translatedNameSubject: data[i]["nameSubject"],
+                                );
                               }));
                             },
-                            child: new  Container(
-                              decoration: new BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white
-                              ),
-                              child: new Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  new Expanded(
-                                    flex: 6,
-                                    child: new Container(
-                                      margin: EdgeInsets.fromLTRB(7,7,7,0),
-                                      child: new ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                        ),
-                                          child: new Image.network(data[i]["linkUrl"]),
-                                      ),
-                                    ),
-                                  ),
-                                  new Expanded(
-                                    flex: 4,
-                                    child: new Container(
-                                      decoration: new BoxDecoration(
-                                        color: Colors.white
-                                      ),
-                                      margin: EdgeInsets.fromLTRB(7,0,7,7),
-                                      child: Center(
-                                        child: new Text(
-                                          data[i]["nameSubject"],
-                                          textAlign: TextAlign.center,
-                                          style: new TextStyle(
-                                              fontSize: 15,
-                                              //fontWeight: FontWeight.w700,
-                                              height: 1
+                            child: new Container(
+                                decoration: new BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white),
+                                child: new Column(
+                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                    // crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      new Expanded(
+                                        flex: 6,
+                                        child: new Container(
+                                          margin:
+                                              EdgeInsets.fromLTRB(7, 7, 7, 0),
+                                          child: new ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10),
+                                              topRight: Radius.circular(10),
+                                            ),
+                                            child: new Image.network(
+                                                data[i]["linkUrl"]),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                                      new Expanded(
+                                        flex: 4,
+                                        child: new Container(
+                                          decoration: new BoxDecoration(
+                                              color: Colors.white),
+                                          margin:
+                                              EdgeInsets.fromLTRB(7, 0, 7, 7),
+                                          child: Center(
+                                            child: new Text(
+                                              data[i]["nameSubject"],
+                                              textAlign: TextAlign.center,
+                                              style: new TextStyle(
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.w700,
+                                                  height: 1),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ])),
                           ),
-                        ));
+                        );
                       }
                       Widget gridSubject = new SliverPadding(
                         key: new Key('grid view'),

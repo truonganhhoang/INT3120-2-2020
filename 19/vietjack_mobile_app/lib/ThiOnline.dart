@@ -76,7 +76,7 @@ class _ThiOnlineState extends State<ThiOnline> {
                               child: Column(children: <Widget>[
                                 Icon(Icons.home),
                                 Text(subjectArray[index],
-                                    style: TextStyle(fontSize: 11),
+                                    style: TextStyle(fontSize: 10),
                                     textAlign: TextAlign.center)
                               ]),
                             ),
