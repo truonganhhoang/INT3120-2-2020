@@ -37,4 +37,41 @@ class API{
     return await FirebaseFirestore.instance.collection("Class_Subject").doc(grade).collection("Info")
         .doc(nameSubject).collection("Content").doc(idContent).get();
   }
+  static Future<QuerySnapshot> getListSubject(String grade) async{
+    return await FirebaseFirestore.instance.collection("Class_Subject")
+    .doc(grade)
+    .collection("Info")
+    .get();
+  }
+  static Future<List<String>> getListSubjectFromAllGrade() async{
+    List<String> listGrade = ["Grade1","Grade2","Grade3","Grade4","Grade5", "Grade6","Grade7","Grade8","Grade9","Grade10","Grade11","Grade12"];
+    List<String> listSubject = new List<String>();//= listGrade;
+    List<String> b;
+    for(String grade in listGrade){
+      var documentSubject = await getListSubject(grade);
+      for (var subject in documentSubject.docs){
+        listSubject.add(subject.id+" - "+subject["nameSubject"]+" - "+grade);
+      }
+    }
+    return Future(()=>listSubject);
+    //return listSubject;
+  }
+  static String getSubjectId(String subjectInfo){
+    return subjectInfo.split("-")[0].trim();
+  }
+  static String getGrade(String subjectInfo){
+
+    return subjectInfo.split("-")[2].trim();
+  }
+  static Future getListContentFromAllSubject() async{
+    List<String> listSubject = await getListSubjectFromAllGrade();
+    List<String> listContent = new List<String>();
+    for(String subject in listSubject){
+      QuerySnapshot listContentDoc = await getListContent(getGrade(subject), getSubjectId(subject));
+      for(var doc in listContentDoc.docs){
+        listContent.add(subject +" - "+ doc.id);
+      }
+    }
+    return listContent;
+  }
 }
