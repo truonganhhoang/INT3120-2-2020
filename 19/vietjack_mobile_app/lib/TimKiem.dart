@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:convert';
+import 'API.dart';
+import 'document.dart';
 
 class TimKiem extends StatefulWidget {
   @override
@@ -14,23 +16,64 @@ class TimKiem extends StatefulWidget {
 
 class _TimKiemState extends State<TimKiem> {
   var controlerSeacrch = TextEditingController();
+  var isShowFilter = false;
 
-  //thử
-  TextEditingController _nameController = TextEditingController();
-  var result;
-  predictGender(String name) async {
-    var url = "https://api.genderize.io/?name=$name";
-    var res = await http.get(url);
-    var body = jsonDecode(res.body);
+  // thử
+  // var result;
+  // predictGender(String name) async {
+  //   var url = "https://api.genderize.io/?name=$name";
+  //   var res = await http.get(url);
+  //   var body = jsonDecode(res.body);
+  //
+  //   result = "Gender: ${body['gender']}, Probability: ${body['probability']}";
+  //   setState(() {});
+  // }
+  Future<QuerySnapshot> getSubject() async {
+    // this will return a future then value will be a user contain email, id, name, class: value.docs[0][item]
+    return await FirebaseFirestore.instance
+        .collection("Class_Subject")
+        .where("nameSubject", arrayContains: 'Toán')
+        .get();
+  }
 
-    result = "Gender: ${body['gender']}, Probability: ${body['probability']}";
-    setState(() {});
+  @override
+  void innitState() {
+    super.initState();
+    controlerSeacrch.addListener(_onSearchChange());
+  }
+
+  @override
+  void dispose() {
+    controlerSeacrch.removeListener(_onSearchChange());
+    controlerSeacrch.dispose();
+    super.dispose();
+  }
+
+  _onSearchChange() {
+    print(controlerSeacrch.text);
+  }
+
+  final tabs = ['Tất cả', 'Tài liệu', 'Video', 'Thi online'];
+  String text = '';
+  // search
+  List listSearch = [];
+  search() {
+    List tam = [];
+    for (int i = 0; i <= document.length; i++) {
+      if (controlerSeacrch.text == document[i].mon ||
+          controlerSeacrch.text == document[i].lop) {
+        tam.add(document[i]);
+      }
+    }
+    setState() {
+      listSearch = tam;
+    }
   }
 
 //appbar
   AppBar buildAppbar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.green,
       elevation: 0,
       title: Container(
         // padding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -38,411 +81,315 @@ class _TimKiemState extends State<TimKiem> {
         height: 40,
         // margin: EdgeInsets.symmetric(vertical: 7.0),
         decoration: BoxDecoration(
-          color: Colors.grey[600],
-          border: Border.all(width: 1, color: Colors.grey[600]),
+          color: Colors.grey[350],
+          border: Border.all(width: 1, color: Colors.grey[350]),
           borderRadius: BorderRadius.circular(60),
         ),
         child: (TextField(
+            // onChanged: (text) {
+            //   text = text.toLowerCase();
+            // },
             controller: controlerSeacrch,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
             decoration: const InputDecoration(
               filled: true,
-              // prefixIcon: Icon(Icons.search, color: Colors.white),
+              prefixIcon: Icon(Icons.search, color: Colors.white),
               hintText: 'Tìm môn học',
-              // border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              // contentPadding: EdgeInsets.all(10.0),
               hintStyle: TextStyle(color: Colors.white),
             ))),
       ),
       actions: [
         IconButton(
-          onPressed: () => predictGender(controlerSeacrch.text),
+          onPressed: () {
+            text = controlerSeacrch.text;
+            setState(() {});
+          },
           icon: Icon(
             Icons.search,
-            color: Colors.black,
+            color: Colors.white,
             size: 35.0,
           ),
         ),
         IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return filter();
-            }));
+            setState() {
+              isShowFilter = true;
+              if (isShowFilter) {
+                // return filter();
+              }
+            }
           },
           icon: Icon(
             Icons.filter_alt_outlined,
-            color: Colors.black,
+            color: Colors.white,
             size: 35.0,
+          ),
+        ),
+      ],
+      bottom: TabBar(
+        isScrollable: true,
+        indicatorColor: Colors.greenAccent[400],
+        tabs: [
+          for (final tab in tabs) Tab(text: tab),
+        ],
+      ),
+    );
+  }
+// chuyển màn hình chi tiet video
+  Widget BuildVideo(String video, String lop) {
+    return GestureDetector(
+      onTap: () {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailVideo(),
+        //     settings: RouteSettings(
+        //       arguments: video,
+        //     ),
+        //   ),
+        // );
+      },
+      child: Column(
+        children: [
+          ListTile(
+            title: Text(video),
+            subtitle: Text('Lớp $lop'),
+            leading: Icon(
+              Icons.airplay_outlined,
+              color: Colors.amber,
+              size: 30.0,
+            ),
+          ),
+          Divider(),
+        ],
+      ),
+    );
+  }
+// chuyển màn hình chi tiết thionline
+  Widget BuildThionline(String thionline, String lop) {
+    return GestureDetector(
+      onTap: () {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailThionline(),
+        //     settings: RouteSettings(
+        //       arguments: thionline,
+        //     ),
+        //   ),
+        // );
+      },
+      child: Column(
+        children: [
+          ListTile(
+            title: Text(thionline),
+            subtitle: Text('Lớp $lop'),
+            leading: Icon(
+              Icons.access_time_outlined,
+              color: Colors.amber,
+              size: 30.0,
+            ),
+          ),
+          Divider(),
+        ],
+      ),
+    );
+  }
+  // chuyển màn hình chi tiết tài liệu
+  Widget BuildDocument(String tailieu, String lop) {
+    return GestureDetector(
+      onTap: () {
+        // navigator.pushbackreplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailDocument(),
+        //     settings: RouteSettings(
+        //       arguments: tailieu,
+        //     ),
+        //   ),
+        // );
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => DetailDocument()),
+        // );
+      },
+      child: Column(
+        children: [
+          ListTile(
+            title: Text(tailieu),
+            subtitle: Text('Lớp $lop'),
+            leading: Icon(
+              Icons.assignment_outlined,
+              color: Colors.amber,
+              size: 30.0,
+            ),
+          ),
+          Divider(),
+        ],
+      ),
+    );
+  }
+
+  Title(String title) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Text(
+        title,
+        style: TextStyle(
+          color: Colors.deepOrange,
+          fontSize: 20.0,
+        ),
+      ),
+    );
+  }
+
+  page() {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: Text(
+          'Xem tiếp',
+          style: TextStyle(color: Colors.amber, fontSize: 19.0),
+        ),
+      ),
+    );
+  }
+
+  Widget AllDocment() {
+    return ListView(
+      children: <Widget>[
+        Title('Tài liệu'),
+        SizedBox(
+          height: 300,
+          child: ListView.builder(
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return BuildDocument(
+                  document[index].tailieu, document[index].lop);
+            },
+          ),
+        ),
+        page(),
+        Title('Video'),
+        SizedBox(
+          height: 300,
+          // child: ListDocument(_reSault),
+          child: ListView.builder(
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return BuildVideo(document[index].video, document[index].lop);
+            },
+          ),
+        ),
+        page(),
+        Title('Thi online'),
+        SizedBox(
+          height: 300,
+          child: ListView.builder(
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return BuildThionline(
+                  document[index].thionline, document[index].lop);
+            },
+          ),
+        ),
+        page(),
+      ],
+    );
+  }
+
+  Widget Video() {
+    return ListView(
+      children: [
+        Title('Tài liêu được tìm thấy'),
+        SizedBox(
+          height: 500,
+          child: ListView.builder(
+            itemCount: document.length,
+            itemBuilder: (context, index) {
+              return BuildVideo(document[index].video, document[index].lop);
+            },
           ),
         ),
       ],
     );
   }
 
-  // giao diện tìm kiếm khi mở lên
-  Widget boxSearch() {
-    return Column(
+  Widget Document() {
+    return ListView(
       children: [
-        ContentSearch(),
-        TaiLieu(),
+        Title('Tài liêu được tìm thấy'),
+        SizedBox(
+          height: 500,
+          child: ListView.builder(
+            itemCount: document.length,
+            itemBuilder: (context, index) {
+              return BuildDocument(
+                  document[index].tailieu, document[index].lop);
+            },
+          ),
+        ),
       ],
     );
   }
 
-// giao diên tiemf kiếm khi tìm kiếm nội dung
-  Widget contentSearch() {
-    return Column(
+  Widget ThiOnline() {
+    return ListView(
       children: [
-        ContentSearch(),
-        TaiLieu(),
+        Title('Tài liêu được tìm thấy'),
+        SizedBox(
+          height: 500,
+          child: ListView.builder(
+            itemCount: document.length,
+            itemBuilder: (context, index) {
+              return BuildThionline(
+                  document[index].thionline, document[index].lop);
+            },
+          ),
+        ),
       ],
+    );
+  }
+
+  notValue(String e) {
+    return Container(
+      child: Center(
+        child: Text(
+          e,
+          style: TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+      ),
     );
   }
 
 // Widget chính
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppbar(),
-      body: controlerSeacrch.text.isNotEmpty ? contentSearch() : boxSearch(),
-    );
-  }
-}
-
-//fillter
-class filter extends StatefulWidget {
-  @override
-  _filter createState() => _filter();
-}
-
-class _filter extends State<filter> {
-  //dropDown
-  Widget searchForClass() {
-    String dropdownValue = 'Tất cả';
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_drop_down),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: <String>[
-        'Lớp 1',
-        'Lớp 2',
-        'Lớp 3',
-        'Lớp 4',
-        'Lớp 5',
-        'Lớp 6',
-        'Lớp 7',
-        'Lớp 8',
-        'Lớp 9',
-        'Lớp 10',
-        'Lớp 11',
-        'Lớp 12'
-      ].map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
-
-// tìm kiếm theo ôn học
-  Widget searchForSubjects() {
-    return GridView.builder(
-      itemCount: 10,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
-          child: InkResponse(
-            splashColor: Colors.red,
-            enableFeedback: true,
-            child: Text('Ngữ Văn'),
-            onTap: () {},
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.white70,
-          title: Text(
-            'Tiềm kiếm theo:',
-            style: TextStyle(
-              fontSize: 26.0,
-              color: Colors.black,
-            ),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.cancel,
-                color: Colors.grey,
-                // size: 35.0,
-              ),
-            ),
-          ]),
-      body: Container(
-        child: Column(
+    return DefaultTabController(
+      length: tabs.length,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: buildAppbar(),
+        // drawer: filter(),
+        // body: controlerSeacrch.text!=null ? contentSearch() : boxSearch(),
+        body: TabBarView(
           children: [
-            Text(
-              '_Lớp',
-              style: TextStyle(
-                color: Colors.deepOrange,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: searchForClass(),
-            ),
-            Text(
-              '_Môn',
-              style: TextStyle(
-                color: Colors.deepOrange,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: searchForSubjects(),
-            ),
-            Center(
-              child: OutlineButton(
-                textColor: Color(0xFF6200EE),
-                highlightedBorderColor: Colors.black.withOpacity(0.12),
-                onPressed: () {
-                  // Respond to button press
-                },
-                child: Text("Xác nhận"),
-              ),
-            ),
+            controlerSeacrch.text != ''
+                ? AllDocment()
+                : notValue('Không có môn nào được tìm thấy'),
+            controlerSeacrch.text != ''
+                ? Document()
+                : notValue('Không có môn nào được tìm thấy'),
+            controlerSeacrch.text != ''
+                ? Video()
+                : notValue('Không có môn nào được tìm thấy'),
+            controlerSeacrch.text != ''
+                ? ThiOnline()
+                : notValue('Không có môn nào được tìm thấy'),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-// giao diện lịch sử tìm kiếm + Hotkey
-class boxHistoryAndHotkey extends StatefulWidget {
-  _boxHistoryAndHotkey createState() => _boxHistoryAndHotkey();
-}
-
-class _boxHistoryAndHotkey extends State<boxHistoryAndHotkey> {
-  List<String> todosHistory = List();
-  List<String> todosHotkey = List();
-  void initState() {
-    super.initState();
-    // Add code after super
-    todosHistory.add('Ngữ văn');
-    todosHistory.add('Toán 8');
-    todosHistory.add('Lịch sử 7');
-    todosHistory.add('Địa lý 8');
-    todosHistory.add('Tiếng anh 10');
-
-    todosHotkey.add('Ngữ văn');
-    todosHotkey.add('Tiếng anh');
-    todosHotkey.add('Hóa học');
-    todosHotkey.add('Toán');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          listHotkeyOrHistory('Lịch sử tìm kiếm', todosHistory),
-          listHotkeyOrHistory('Hotkey', todosHotkey),
-        ],
-      ),
-    );
-  }
-
-  Widget listHotkeyOrHistory(String theme, List<String> history) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
-      child: Column(
-        children: [
-          Container(
-            child: Text(
-              theme,
-              style: TextStyle(
-                color: Colors.deepOrange,
-              ),
-            ),
-          ),
-          itemHotkeyOrHistory('văn'),
-          itemHotkeyOrHistory('văn'),
-          itemHotkeyOrHistory('văn'),
-          itemHotkeyOrHistory('văn'),
-        ],
-      ),
-    );
-  }
-
-  Widget itemHotkeyOrHistory(String text) {
-    return InputChip(
-      avatar: Icon(Icons.remove),
-      label: Text(text),
-      onSelected: (bool value) {},
-    );
-  }
-}
-
-// taps
-class ContentSearch extends StatefulWidget {
-  @override
-  _ContentSearch createState() => _ContentSearch();
-}
-
-class _ContentSearch extends State<ContentSearch> {
-  List<String> contentSearch = ['Tất cả', 'Tài liệu', 'Video', 'Thi online'];
-  int selectedIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0),
-          child: SizedBox(
-              height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: contentSearch.length,
-                itemBuilder: (context, index) {
-                  return BuildSearch(index);
-                },
-              )),
-        ),
-      ],
-    );
-  }
-
-  Widget BuildSearch(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedIndex = index;
-        });
-      },
-      child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                contentSearch[index],
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: selectedIndex == index ? Colors.amber : Colors.black,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 2),
-                height: 2,
-                width: 30,
-                color:
-                    selectedIndex == index ? Colors.amber : Colors.transparent,
-              ),
-            ],
-          )),
-    );
-  }
-}
-
-//khung danh sách tài liệu
-class TaiLieu extends StatefulWidget {
-  @override
-  _TaiLieuState createState() => _TaiLieuState();
-}
-
-class _TaiLieuState extends State<TaiLieu> {
-  List<String> _reSault = [
-    'Bài 8 nhiễm sắc thể',
-    'Bài 9 ADN',
-    'Bài 10 Ôn tập chương 10'
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        KindDocument('Tài liệu', _reSault, _reSault.length),
-        KindDocument('Video', _reSault, _reSault.length),
-        KindDocument('Thi Online', _reSault, _reSault.length),
-      ],
-    );
-  }
-
-  Widget KindDocument(String kindDocument, List<String> _reSault, int length) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            kindDocument,
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: SizedBox(
-              height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: length,
-                itemBuilder: (context, index) {
-                  return BuildDocument(context);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget BuildDocument(var resault) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailDocument(),
-            settings: RouteSettings(
-              arguments: resault,
-            ),
-          ),
-        );
-      },
-      child: ListTile(
-        title: Text(resault),
-        // subtitle: Text('Secondary text'),
-        leading: Icon(
-          Icons.assignment_outlined,
-          color: Colors.amber,
-          size: 30.0,
         ),
       ),
     );
@@ -458,9 +405,296 @@ class DetailDocument extends StatefulWidget {
 class _DetailDocument extends State<DetailDocument> {
   @override
   Widget build(BuildContext context) {
+    // final _resault = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text(
+          'text',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      // body: Text('heno'),
+      body: ContentDetail(),
+    );
+  }
+
+  Widget ContentDetail() {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(14.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 30.0,
+            ),
+            Row(
+              children: [
+                Text('Tập hợp các số tự nhiên',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                    )),
+              ],
+            ),
+            Text(
+              'Bài 8 (trang 8 SGK Toán 6 Tập 1)',
+              style: TextStyle(color: Colors.black, fontSize: 18.0),
+            ),
+            Text(
+                'Viết tập hợp các số tự nhiên không vượt quá 5 bằng hai cách. Biểu diễn trên tia số các phần tử của tập hợp'),
+            Text(
+              'Lời giải',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.black,
+              ),
+            ),
+            Text(
+                '- Các số tự nhiên không vượt quá 5 gồm các phần tử 0,1,2,3,4,5.'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// giao dien video
+class DetailVideo extends StatefulWidget {
+  @override
+  _DetailDocument createState() => _DetailDocument();
+}
+
+class _DetailVideo extends State<DetailVideo> {
+  @override
+  Widget build(BuildContext context) {
     final _resault = ModalRoute.of(context).settings.arguments;
-    return Container(
-      child: Text(_resault),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green[400],
+        title: Text(
+          _resault,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+      // body: ContentVideo('heno'),
+      body: ContentVideo('video'),
+    );
+  }
+
+  Widget ContentVideo(String titel) {
+    return ListView(
+      children: [
+        Container(
+          padding: EdgeInsets.all(14.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: Text('video'),
+              ),
+              Text(
+                'Video liên quan',
+                style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
+              ),
+              Container(
+                child: ListView.builder(
+                  itemCount: document.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailDocument(),
+                            settings: RouteSettings(
+                              arguments: document[index].video,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(document[index].video),
+                            subtitle: Text(document[index].lop),
+                            leading: Icon(
+                              Icons.access_time_outlined,
+                              color: Colors.amber,
+                              size: 30.0,
+                            ),
+                          ),
+                          Divider(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Text(
+                'Các bài thi liên quan',
+                style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
+              ),
+              Container(
+                child: ListView.builder(
+                  itemCount: document.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailDocument(),
+                            settings: RouteSettings(
+                              arguments: document[index].video,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(document[index].video),
+                            subtitle: Text(document[index].lop),
+                            leading: Icon(
+                              Icons.access_time_outlined,
+                              color: Colors.amber,
+                              size: 30.0,
+                            ),
+                          ),
+                          Divider(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// giao diên chi tiết thi online
+class DetailThionline extends StatefulWidget {
+  @override
+  _DetailtThionline createState() => _DetailtThionline();
+}
+
+class _DetailtThionline extends State<DetailThionline> {
+  @override
+  Widget build(BuildContext context) {
+    final _resault = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green[400],
+        title: Text(
+          _resault,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+      // body: ContentVideo('heno'),
+      body: ContentThionline('Tập hộp phần tử có chọn lọc'),
+    );
+  }
+
+  Widget ContentThionline(String titel) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(14.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Tâp hợp. Phần tử của tập hợp chọn lọc có đáp án',
+              style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
+            ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        '12',
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      subtitle: Text('Câu hỏi'),
+                      leading: Icon(
+                        Icons.wb_incandescent,
+                        color: Colors.amber,
+                        size: 30.0,
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        '30',
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      subtitle: Text('Phút'),
+                      leading: Icon(
+                        Icons.wb_incandescent,
+                        color: Colors.amber,
+                        size: 30.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Text(
+              'Hướng dẫn',
+              style: TextStyle(
+                fontSize: 23.0,
+                color: Colors.black,
+              ),
+            ),
+            Container(
+              child: Text(
+                'Vói những câu trả lời đúng bạn giành được 1 điểm, 0 điểm với những câu trả lời sai.'
+                ' Chọn câu trả lời bằng cách Click vào nó. Bỏ qua câu hỏi nếu chưa có đáp án sau đớ quay lại để là lại ',
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Center(
+              child: RaisedButton(
+                child: Text(
+                  'Thi ngay',
+                  style: TextStyle(color: Colors.white, fontSize: 30.0),
+                ),
+                color: Colors.amber,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
