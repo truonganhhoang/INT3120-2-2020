@@ -143,7 +143,7 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
           ),
           elevation: 0,
           actions: <Widget>[
-            TextButton(
+            RaisedButton(
                 onPressed: () {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Result()));

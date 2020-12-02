@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:vietjack_mobile_app/Header.dart';
@@ -8,94 +7,48 @@ import 'UI/API.dart';
 
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
-  static int firstRun = 0;
-  static int weeksNumber = 0;
-  static dynamic detailArray;
-  static String currentSubject;
-  ThiOnline({Key key}) : super(key: key) {
-    FirebaseFirestore.instance
-        .collection("ThiOnline")
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {});
-    });
+  int firstRun = 0;
+
+  void notFirstRun() {
+    this.firstRun++;
   }
+
+  ThiOnline({Key key}) : super(key: key);
   @override
   _ThiOnlineState createState() => _ThiOnlineState();
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
-<<<<<<< HEAD
-  String currentSubject = "Ngữ văn";
-  final List<String> subjectArray = [
-    'Ngữ văn',
-    'Toán',
-    'Vật lí',
-    'Hóa học',
-    'Sinh học',
-    'Địa lí',
-    'Tiếng Anh',
-    'Lịch sử',
-    'Tin học',
-    'Giáo dục công dân',
-    'Công nghệ'
-  ];
-=======
   String currentSubject;
   final GlobalKey<MyCustomCardState> _key = GlobalKey();
   List<String> subjectArray = [];
->>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   bool _isShowingModal = true;
   bool _showAppbar = false;
   ScrollController _scrollBottomController = new ScrollController();
-
-  void getData() {
-    FirebaseFirestore.instance
-        .collection("ThiOnline")
-        .doc("Class 12")
-        .collection("Subject")
-        .doc(this.currentSubject)
-        .collection("Detail")
-        .orderBy("id")
-        .get()
-        .then((data) => {
-              this.setState(() {
-                ThiOnline.detailArray = data.docs;
-                ThiOnline.currentSubject = this.currentSubject;
-              })
-            });
-  }
 
   @override
   void initState() {
     super.initState();
     this.subjectArray = ExamAPI.getListSubject();
     myScroll();
-<<<<<<< HEAD
-    if (_isShowingModal && ThiOnline.firstRun < 1) {
-=======
 
     if (_isShowingModal && widget.firstRun < 1) {
->>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
       Future.delayed(Duration(seconds: 1)).then((_) {
         _onButtonPress();
       });
     }
-    if (ThiOnline.firstRun < 1) {
-      getData();
-    }
   }
 
-  void _changeSubject(BuildContext context, String subject) async {
+  void changeSubject(BuildContext context, String subject) async {
+    _key.currentState.changeSubject(subject);
+    Navigator.pop(context);
     this.setState(() {
       this.currentSubject = subject;
-      Navigator.pop(context);
     });
-    getData();
   }
 
   void _onButtonPress() {
-    ThiOnline.firstRun++;
+    widget.notFirstRun();
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.white,
@@ -115,7 +68,7 @@ class _ThiOnlineState extends State<ThiOnline> {
                   children: List.generate(subjectArray.length, (index) {
                     return FlatButton(
                         onPressed: () =>
-                            _changeSubject(context, subjectArray[index]),
+                            changeSubject(context, subjectArray[index]),
                         padding: EdgeInsets.all(10.0),
                         child: Row(
                           children: [
@@ -148,6 +101,12 @@ class _ThiOnlineState extends State<ThiOnline> {
     });
   }
 
+  void updateSubject(subject) {
+    this.setState(() {
+      this.currentSubject = subject;
+    });
+  }
+
   @override
   void dispose() {
     _scrollBottomController.removeListener(() {});
@@ -163,18 +122,11 @@ class _ThiOnlineState extends State<ThiOnline> {
           height: height,
         ),
         MyCustomCard(
-<<<<<<< HEAD
-            key: PageStorageKey('MyCustomCard'),
-            weekNumber: ThiOnline.weeksNumber,
-            snapshot: ThiOnline.detailArray,
-            currentSubject: ThiOnline.currentSubject),
-=======
           key: _key,
           currentSubject:
-              this.currentSubject == null ? 'Ngữ văn' : this.currentSubject,
+          this.currentSubject == null ? 'Ngữ văn' : this.currentSubject,
           function: this.updateSubject,
         ),
->>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
       ],
     );
   }
@@ -186,16 +138,16 @@ class _ThiOnlineState extends State<ThiOnline> {
     return Scaffold(
         appBar: _showAppbar
             ? AppBar(
-                backgroundColor: Colors.white,
-                centerTitle: true,
-                title:
-                    Text("Thi Online", style: TextStyle(color: Colors.black)),
-              )
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title:
+          Text("Thi Online", style: TextStyle(color: Colors.black)),
+        )
             : PreferredSize(
-                child: Container(),
-                preferredSize: Size(0.0, 0.0),
-              ),
-        body: ThiOnline.detailArray == null ? Scaffold() : body(width, height),
+          child: Container(),
+          preferredSize: Size(0.0, 0.0),
+        ),
+        body: body(width, height),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _onButtonPress();
