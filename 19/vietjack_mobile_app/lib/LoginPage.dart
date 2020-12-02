@@ -6,6 +6,7 @@ import 'package:vietjack_mobile_app/Auth.dart';
 import 'package:vietjack_mobile_app/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:vietjack_mobile_app/ChoseClassPage.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -14,50 +15,55 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   User user;
   void signIn() {
-    print("aaaaaaaaaaaa");
-    signInWithUser().then((user) async{
+    signInWithUser().then((user) async {
       this.user = user;
-      QuerySnapshot test = await FirebaseFirestore.instance.collection("Users").where("UserId",isEqualTo: user.uid).get();
+      QuerySnapshot test = await FirebaseFirestore.instance
+          .collection("Users")
+          .where("UserId", isEqualTo: user.uid)
+          .get();
       bool isFirstTimeSignIn = test.docs.length == 0;
-      if(isFirstTimeSignIn){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      if (isFirstTimeSignIn) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
           return new ChoseClassPage();
         }));
-      }else{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
           return new VietJackNavigationBar();
         }));
       }
     });
   }
-  Widget loginScene(){
-    return new Scaffold(//login scene
-        appBar: new AppBar(title: new Text("Login"), centerTitle: true),
+
+  Widget loginScene() {
+    return new Scaffold(
+        //login scene
+        appBar: new AppBar(title: new Text("Đăng nhập"), centerTitle: true),
         body: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               new Container(
                 child: new Image.asset(
-                    'assets/loginImage.png',
+                  'assets/loginImage.png',
                   fit: BoxFit.fill,
                 ),
               ),
               new Container(
-                padding: EdgeInsets.only(top:50),
+                padding: EdgeInsets.only(top: 50),
                 child: new Center(
                   child: new Container(
                     width: 300,
                     height: 70,
                     child: new GoogleSignInButton(
-                      key: new Key("loginButton"),
-                      onPressed: signIn,
-                      darkMode: true,
-                      centered: true,
-                      borderRadius: 20,
-                      splashColor: Colors.purple,
-                      text: 'Đăng nhập với Google'
-                    ),
+                        key: new Key("loginButton"),
+                        onPressed: signIn,
+                        darkMode: true,
+                        centered: true,
+                        borderRadius: 20,
+                        splashColor: Colors.purple,
+                        text: 'Đăng nhập với Google'),
                   ),
                 ),
               ),
@@ -65,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ));
   }
+
   Future app;
   @override
   void initState() {
@@ -93,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
             w = new Text("Loading ...");
             break;
           case ConnectionState.done:
-            w = (FirebaseAuth.instance.currentUser == 1)
+            w = (FirebaseAuth.instance.currentUser == null)
                 ? loginScene()
                 : new VietJackNavigationBar();
             break;

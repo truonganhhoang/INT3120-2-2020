@@ -24,24 +24,61 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
       print(user.doc())
     });
   }
+  String getUserFirstName(String fullName){
+    return fullName.substring(0,fullName.indexOf(" "));
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title:new Text("Chose Class"),centerTitle: true,),
+      appBar: new AppBar(title:new Text("Chọn lớp"),centerTitle: true,),
       body: CustomScrollView(
           slivers: <Widget>[
-            new SliverList(
-              delegate: new SliverChildListDelegate(
-                  [
-                    new CircleAvatar(
-                        radius: 55,
-                        backgroundColor: Colors.yellow,
-                        child: new CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(auth.currentUser.photoURL.toString()),
-                        )
-                    ),
-                  ]
+            new SliverPadding(
+              padding: EdgeInsets.only(top: 20,bottom: 10),
+              sliver: new SliverList(
+                delegate: new SliverChildListDelegate(
+                    [
+                      new CircleAvatar(
+                          radius: 55,
+                          backgroundColor: Colors.yellow,
+                          child: new CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(auth.currentUser.photoURL.toString()),
+                          )
+                      ),
+                    ]
+                ),
+              ),
+            ),
+            new SliverPadding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              sliver: new SliverList(
+                  delegate: new SliverChildListDelegate([
+                    new Center(
+                      child:new RichText(
+                        text: new TextSpan(
+                          style: new TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontFamily:'Sansation'
+                          ),
+                          children: <TextSpan>[
+                            new TextSpan(text:"Chào mừng "),
+                            new TextSpan(
+                                text:this.getUserFirstName( auth.currentUser.displayName),
+                              style: new TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.w700
+                              )
+                            ),
+                            new TextSpan(text: ". Hãy chọn lớp của bạn, bạn có thể thay đổi sau ở mục tài khoản")
+                          ]
+                        ),
+
+                        textAlign: TextAlign.center,
+                      )
+                    )
+                  ])
               ),
             ),
             new SliverPadding(
@@ -392,11 +429,35 @@ class _ChoseClassPageState extends State<ChoseClassPage> {
               ),
             ),
             new SliverPadding(
-              padding: EdgeInsets.only(top: 50),
+              padding: EdgeInsets.only(top: 0),
               sliver: new SliverList(delegate: new SliverChildListDelegate(
                 [
-                  new RaisedButton(
-                    onPressed: this.addUser
+                  new Container(
+                    height: 100,
+                    child: new Stack(
+                      children: [
+                        Center(
+                          child: new Container(
+                            width: 150,
+                            height: 70,
+                            child: new ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: new RaisedButton.icon(
+                                color: Colors.lightGreen[200],
+                                onPressed: this.addUser,
+                                label: new Text("Tiếp tục",
+                                  style: new TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.green
+                                  ),
+                                ),
+                                icon: Icon(Icons.navigate_next,size: 20,color: Colors.pinkAccent),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ]
               )),

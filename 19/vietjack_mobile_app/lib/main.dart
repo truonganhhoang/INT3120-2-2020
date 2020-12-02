@@ -6,14 +6,17 @@ import 'ThiOnline.dart';
 import 'homePage.dart';
 import 'LoginPage.dart';
 import 'UserInfoPage.dart';
-
+import 'package:flutter/services.dart';
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
           primarySwatch: Colors.green,
           buttonColor: Colors.yellow,
           scaffoldBackgroundColor: Colors.brown[50],
+          fontFamily: 'Sansation'
       ),
       color: Colors.red,
       home: new LoginPage()));

@@ -18,6 +18,7 @@ class ExamsPicker extends StatefulWidget {
 class _ExamsPickerState extends State<ExamsPicker> {
   bool _showAppbar = false;
   final String currentSubject;
+  String weekID;
   ScrollController _scrollBottomController = new ScrollController();
   _ExamsPickerState(this.currentSubject, this.id);
 
@@ -58,10 +59,21 @@ class _ExamsPickerState extends State<ExamsPicker> {
         .where("id", isEqualTo: this.id)
         .get()
         .then((data) => {
-              this.setState(() {
-                this.docArray = data.docs;
-                print(data.docs.length);
-              })
+              FirebaseFirestore.instance
+                  .collection("ThiOnline")
+                  .doc("Class 12")
+                  .collection("Subject")
+                  .doc(this.currentSubject)
+                  .collection("Detail/")
+                  .doc(data.docs[0].id)
+                  .collection("Exam")
+                  .get()
+                  .then((value) => {
+                        this.setState(() {
+                          this.weekID = data.docs[0].id;
+                          this.docArray = value.docs;
+                        })
+                      })
             });
   }
 
@@ -75,18 +87,24 @@ class _ExamsPickerState extends State<ExamsPicker> {
           height: height - 200,
           child: docArray == null
               ? Scaffold()
-              : Expanded(
-                  child: ListView.builder(
-                      itemCount: this.docArray.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ExamsCard();
-                      })))
+              : Column(
+                  children: [
+                    Expanded(
+                        child: ListView.builder(
+                            itemCount: this.docArray.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ExamsCard(
+                                  testArray: this.docArray[index],
+                                  weekID: this.weekID,
+                                  currentSubject: this.currentSubject);
+                            })),
+                  ],
+                ))
     ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(this.currentSubject);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 

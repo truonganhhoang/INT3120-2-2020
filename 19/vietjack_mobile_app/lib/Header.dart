@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'Auth.dart';
 
@@ -71,21 +70,35 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
               child: new Container(
                   key: new Key('name'),
                   width: left,
-                  height: 200,
+                  height: 150,
                   child: Center(
-                    child: new Text(
-                      auth.currentUser.displayName,
-                      style: new TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'GoodDog',
-                          fontSize: 45,
-                          color: Colors.green[400]),
+                    child: new RichText(
+                      text: new TextSpan(
+                        children: [
+                          new TextSpan(
+                            text: "Chào mừng\n",
+                            style: new TextStyle(
+                              fontSize: 20,
+                              color: Colors.orange,
+                              fontFamily: 'Sansation'
+                            )
+                          ),
+                          new TextSpan(
+                            text: auth.currentUser.displayName,
+                            style: new TextStyle(
+                                fontFamily: 'GoodDog',
+                                fontSize: 40,
+                                color: Colors.green[400]
+                            ),
+                          )
+                        ]
+                      ),
                     ),
                   )),
             ),
             new Container(
               width: right,
-              height: 200,
+              height: 150,
               child: new Opacity(
                 opacity: myOpacity,
                 child: new ClipRRect(

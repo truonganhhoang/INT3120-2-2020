@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -9,12 +9,16 @@ import 'dart:convert';
 import 'API.dart';
 import 'document.dart';
 
+=======
+import 'API.dart';
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
 class TimKiem extends StatefulWidget {
   @override
   _TimKiemState createState() => _TimKiemState();
 }
 
 class _TimKiemState extends State<TimKiem> {
+<<<<<<< HEAD
   var controlerSeacrch = TextEditingController();
   var isShowFilter = false;
 
@@ -695,6 +699,69 @@ class _DetailtThionline extends State<DetailThionline> {
           ],
         ),
       ),
+=======
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Tìm Kiếm"),
+      ),
+      body: new FutureBuilder(
+        future: API.getListContentFromAllSubject(),
+        builder: (context,snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return new Text("No Connection");
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return new Text("Loading...");
+            case ConnectionState.done:
+              return new Container(
+                child: new ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (contex, index) {
+                    return new Container(
+                        color: (index % 2 == 0)
+                            ? Colors.white
+                            : Colors.brown[50],
+                        height: 80,
+                        child: Center(
+                          child: new ListTile(
+                            leading: Icon(
+                              Icons.ac_unit,
+                              size: 30,
+                            ),
+                            title: new Text(
+                              //snapshot.data.docs[index].id,
+                              snapshot.data[index],
+                              style: new TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            // subtitle: new Text(
+                            //     DetailSubject.getSubtitle(snapshot.data.docs[index].id.toString())
+                            // ),
+                            trailing: Container(
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      width: 2, color: Colors.brown[100]),
+                                ),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.orange,
+                                )),
+                          ),
+                        )
+                    );
+                  },
+                ),
+              );
+          }
+        }
+        ),
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
     );
   }
 }

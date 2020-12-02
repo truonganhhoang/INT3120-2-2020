@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vietjack_mobile_app/UI/API.dart';
+import 'package:vietjack_mobile_app/UI/ExamOnline.dart';
 
 import 'ExamsPicker.dart';
 
@@ -10,9 +12,69 @@ class MyCustomCard extends StatelessWidget {
       this.currentSubject})
       : super(key: key);
 
+<<<<<<< HEAD
   final int weekNumber;
   final List<dynamic> snapshot;
   final String currentSubject;
+=======
+  String currentSubject;
+  final Function function;
+
+  updateCurrentSubject(subject) {
+    this.currentSubject = subject;
+  }
+
+  @override
+  MyCustomCardState createState() =>
+      MyCustomCardState(currentSubject: this.currentSubject);
+}
+
+class MyCustomCardState extends State<MyCustomCard> {
+  String currentSubject;
+  QuerySnapshot data;
+  List<dynamic> docs = [];
+  MyCustomCardState({@required this.currentSubject});
+
+  @override
+  void initState() {
+    super.initState();
+
+    // this.data = await ExamAPI.getSubjectDetail(currentSubject);
+    // this.docs = this.data.docs;
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(this.currentSubject)
+        .collection("Detail")
+        .orderBy("id")
+        .get()
+        .then((data) => {
+              this.setState(() {
+                this.docs = data.docs;
+              }),
+            });
+  }
+
+  changeSubject(String subject) async {
+    FirebaseFirestore.instance
+        .collection("ThiOnline")
+        .doc("Class 12")
+        .collection("Subject")
+        .doc(subject)
+        .collection("Detail")
+        .orderBy("id")
+        .get()
+        .then((data) => {
+              this.setState(() {
+                this.docs = data.docs;
+                this.currentSubject = subject;
+                widget.updateCurrentSubject(subject);
+                widget.function(subject);
+              }),
+            });
+  }
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +89,7 @@ class MyCustomCard extends StatelessWidget {
     );
   }
 }
+<<<<<<< HEAD
 
 class MakeCard extends StatelessWidget {
   final int index;
@@ -82,3 +145,5 @@ class MakeCard extends StatelessWidget {
             )));
   }
 }
+=======
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447

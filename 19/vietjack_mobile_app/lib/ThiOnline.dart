@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:vietjack_mobile_app/Header.dart';
 import 'package:vietjack_mobile_app/UI/MyCustomCard.dart';
 
+import 'UI/API.dart';
+
 // ignore: must_be_immutable
 class ThiOnline extends StatefulWidget {
   static int firstRun = 0;
@@ -23,6 +25,7 @@ class ThiOnline extends StatefulWidget {
 }
 
 class _ThiOnlineState extends State<ThiOnline> {
+<<<<<<< HEAD
   String currentSubject = "Ngữ văn";
   final List<String> subjectArray = [
     'Ngữ văn',
@@ -37,6 +40,11 @@ class _ThiOnlineState extends State<ThiOnline> {
     'Giáo dục công dân',
     'Công nghệ'
   ];
+=======
+  String currentSubject;
+  final GlobalKey<MyCustomCardState> _key = GlobalKey();
+  List<String> subjectArray = [];
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   bool _isShowingModal = true;
   bool _showAppbar = false;
   ScrollController _scrollBottomController = new ScrollController();
@@ -61,8 +69,14 @@ class _ThiOnlineState extends State<ThiOnline> {
   @override
   void initState() {
     super.initState();
+    this.subjectArray = ExamAPI.getListSubject();
     myScroll();
+<<<<<<< HEAD
     if (_isShowingModal && ThiOnline.firstRun < 1) {
+=======
+
+    if (_isShowingModal && widget.firstRun < 1) {
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
       Future.delayed(Duration(seconds: 1)).then((_) {
         _onButtonPress();
       });
@@ -109,7 +123,7 @@ class _ThiOnlineState extends State<ThiOnline> {
                               child: Column(children: <Widget>[
                                 Icon(Icons.home),
                                 Text(subjectArray[index],
-                                    style: TextStyle(fontSize: 11),
+                                    style: TextStyle(fontSize: 10),
                                     textAlign: TextAlign.center)
                               ]),
                             ),
@@ -149,10 +163,18 @@ class _ThiOnlineState extends State<ThiOnline> {
           height: height,
         ),
         MyCustomCard(
+<<<<<<< HEAD
             key: PageStorageKey('MyCustomCard'),
             weekNumber: ThiOnline.weeksNumber,
             snapshot: ThiOnline.detailArray,
             currentSubject: ThiOnline.currentSubject),
+=======
+          key: _key,
+          currentSubject:
+              this.currentSubject == null ? 'Ngữ văn' : this.currentSubject,
+          function: this.updateSubject,
+        ),
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
       ],
     );
   }

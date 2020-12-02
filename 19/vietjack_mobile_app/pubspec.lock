@@ -63,14 +63,22 @@ packages:
       name: cloud_firestore_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.2.0"
+=======
+    version: "2.1.1"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   cloud_firestore_web:
     dependency: transitive
     description:
       name: cloud_firestore_web
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.2.1"
+=======
+    version: "0.2.0+3"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   collection:
     dependency: transitive
     description:
@@ -140,28 +148,44 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.18.3"
+=======
+    version: "0.18.0+1"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.3"
+=======
+    version: "2.0.1"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.3.2"
+=======
+    version: "0.3.0+1"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   firebase_core:
     dependency: transitive
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.5.2"
+=======
+    version: "0.5.0"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -218,7 +242,7 @@ packages:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.10.0"
+    version: "8.8.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -365,14 +389,29 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.9.2"
+=======
+    version: "1.9.0"
+  percent_indicator:
+    dependency: "direct main"
+    description:
+      name: percent_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.8"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   petitparser:
     dependency: transitive
     description:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.1.0"
+=======
+    version: "3.0.4"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   platform:
     dependency: transitive
     description:
@@ -386,7 +425,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.2"
   process:
     dependency: transitive
     description:
@@ -517,7 +556,11 @@ packages:
       name: xdg_directories
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.1.2"
+=======
+    version: "0.1.0"
+>>>>>>> 1d59fadfb4009f0c7c43a269910468c8a5e4c447
   xml:
     dependency: transitive
     description:
