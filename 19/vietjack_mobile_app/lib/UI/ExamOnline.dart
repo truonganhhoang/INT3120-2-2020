@@ -145,8 +145,18 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
           actions: <Widget>[
             TextButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Result()));
+                  int totalQuestions = 0;
+                  int correctAnswer = 0;
+                  ExamOnline._answers.forEach((k, v) {
+                    totalQuestions++;
+                    correctAnswer += v;
+                  });
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Result(
+                              totalQuestions: totalQuestions,
+                              correctAnswer: correctAnswer)));
                   print(ExamOnline._answers);
                 },
                 child: Text("Nộp bài", style: TextStyle(color: Colors.orange)))

@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class Result extends StatefulWidget {
+  final int totalQuestions;
+  final int correctAnswer;
+
+  const Result(
+      {Key key, @required this.totalQuestions, @required this.correctAnswer})
+      : super(key: key);
   @override
   _ResultState createState() => _ResultState();
 }
@@ -24,12 +30,10 @@ class _ResultState extends State<Result> {
               CircularPercentIndicator(
                   radius: 100.0,
                   lineWidth: 3.0,
-                  percent: 0.8,
-                  center: new Icon(
-                    Icons.person_pin,
-                    size: 50.0,
-                    color: Colors.blue,
-                  ),
+                  percent: widget.correctAnswer / widget.totalQuestions,
+                  center: new Text(
+                      (widget.correctAnswer / widget.totalQuestions)
+                          .toString()),
                   backgroundColor: Colors.grey,
                   progressColor: Colors.blue),
               Expanded(
@@ -40,15 +44,20 @@ class _ResultState extends State<Result> {
                     children: <Widget>[
                       Container(
                         height: 50,
-                        child: Text('Câu đúng'),
+                        child:
+                            Text(widget.correctAnswer.toString() + ' câu đúng'),
                       ),
                       Container(
                         height: 50,
-                        child: Text('Câu sai'),
+                        child: Text(
+                            (widget.totalQuestions - widget.correctAnswer)
+                                    .toString() +
+                                ' câu sai'),
                       ),
                       Container(
                         height: 50,
-                        child: Text('Tổng kết'),
+                        child:
+                            Text(widget.totalQuestions.toString() + ' câu hỏi'),
                       ),
                     ],
                   ),
