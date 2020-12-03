@@ -42,10 +42,10 @@ class MyCustomCardState extends State<MyCustomCard> {
         .orderBy("id")
         .get()
         .then((data) => {
-              this.setState(() {
-                this.docs = data.docs;
-              }),
-            });
+      this.setState(() {
+        this.docs = data.docs;
+      }),
+    });
   }
 
   changeSubject(String subject) async {
@@ -58,13 +58,13 @@ class MyCustomCardState extends State<MyCustomCard> {
         .orderBy("id")
         .get()
         .then((data) => {
-              this.setState(() {
-                this.docs = data.docs;
-                this.currentSubject = subject;
-                widget.updateCurrentSubject(subject);
-                widget.function(subject);
-              }),
-            });
+      this.setState(() {
+        this.docs = data.docs;
+        this.currentSubject = subject;
+        widget.updateCurrentSubject(subject);
+        widget.function(subject);
+      }),
+    });
   }
 
   @override
@@ -104,7 +104,7 @@ class MyCustomCardState extends State<MyCustomCard> {
                         child: Text((index + 1).toString(),
                             textAlign: TextAlign.center,
                             style:
-                                TextStyle(color: Colors.orange, fontSize: 25)),
+                            TextStyle(color: Colors.orange, fontSize: 25)),
                       ),
                     ),
                     title: Text(

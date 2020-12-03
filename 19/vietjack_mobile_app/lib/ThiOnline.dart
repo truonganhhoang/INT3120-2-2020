@@ -124,7 +124,7 @@ class _ThiOnlineState extends State<ThiOnline> {
         MyCustomCard(
           key: _key,
           currentSubject:
-              this.currentSubject == null ? 'Ngữ văn' : this.currentSubject,
+          this.currentSubject == null ? 'Ngữ văn' : this.currentSubject,
           function: this.updateSubject,
         ),
       ],
@@ -138,15 +138,15 @@ class _ThiOnlineState extends State<ThiOnline> {
     return Scaffold(
         appBar: _showAppbar
             ? AppBar(
-                backgroundColor: Colors.white,
-                centerTitle: true,
-                title:
-                    Text("Thi Online", style: TextStyle(color: Colors.black)),
-              )
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title:
+          Text("Thi Online", style: TextStyle(color: Colors.black)),
+        )
             : PreferredSize(
-                child: Container(),
-                preferredSize: Size(0.0, 0.0),
-              ),
+          child: Container(),
+          preferredSize: Size(0.0, 0.0),
+        ),
         body: body(width, height),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

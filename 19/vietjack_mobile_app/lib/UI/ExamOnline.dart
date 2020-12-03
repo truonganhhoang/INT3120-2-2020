@@ -143,7 +143,7 @@ class _ExamOnlineState extends State<ExamOnline> with TickerProviderStateMixin {
           ),
           elevation: 0,
           actions: <Widget>[
-            TextButton(
+            RaisedButton(
                 onPressed: () {
                   int totalQuestions = 0;
                   int correctAnswer = 0;
