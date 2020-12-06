@@ -25,14 +25,14 @@ class LearnBox extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           new Container(
-              width: 70 * SizeConfig.widthMultiplier,
+              width: 80 * SizeConfig.widthMultiplier,
               height: 66 * SizeConfig.heightMultiplier,
               padding: EdgeInsets.only(left: 6, right: 6),
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                        left: 6, right: 0, top: SizeConfig.textMultiplier),
+                        left: 2*SizeConfig.textMultiplier, right: 0, top: SizeConfig.textMultiplier),
                     height: 6 * SizeConfig.textMultiplier,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +66,7 @@ class LearnBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 45 * SizeConfig.widthMultiplier,
+                        width: 50 * SizeConfig.widthMultiplier,
                         height: 4.6 * SizeConfig.textMultiplier,
                         margin: EdgeInsets.only(
                             left: 5 * SizeConfig.widthMultiplier),
@@ -105,7 +105,7 @@ class LearnBox extends StatelessWidget {
                   ),
                   Container(
                     margin:
-                        EdgeInsets.only(top: 0.8 * SizeConfig.widthMultiplier),
+                        EdgeInsets.only(top: 0.8 * SizeConfig.widthMultiplier, left: 0.2*SizeConfig.textMultiplier, right: 0.2*SizeConfig.textMultiplier),
                     child: Text(
                       word.definition.toString(),
                       textAlign: TextAlign.center,
@@ -117,7 +117,7 @@ class LearnBox extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: 62 * SizeConfig.widthMultiplier,
+                    width: 65 * SizeConfig.widthMultiplier,
                     margin:
                         EdgeInsets.only(top: 1 * SizeConfig.heightMultiplier),
                     child: Column(

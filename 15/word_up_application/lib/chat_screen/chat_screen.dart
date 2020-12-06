@@ -135,10 +135,10 @@ class ChatMessage extends StatelessWidget {
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
         child: new CircleAvatar(
-          radius: 4 * SizeConfig.textMultiplier,
+          radius: 3.2 * SizeConfig.textMultiplier,
           child: new Text('B',
               style: TextStyle(
-                  fontSize: 4 * SizeConfig.textMultiplier,
+                  fontSize: 3.2 * SizeConfig.textMultiplier,
                   fontWeight: FontWeight.bold)),
         ),
       ),
@@ -215,16 +215,16 @@ class ChatMessage extends StatelessWidget {
             ? CircleAvatar(
           backgroundImage: NetworkImage(
               user.userPrivateInformation.avatarUrl),
-          radius: 4 * SizeConfig.textMultiplier,
+          radius: 3.2 * SizeConfig.textMultiplier,
           backgroundColor: Colors.white,
         )
             : CircleAvatar(
-          radius: 4 * SizeConfig.textMultiplier,
+          radius: 3.2 * SizeConfig.textMultiplier,
           child: Text(
             user.userPrivateInformation.userName[0],
             style: new TextStyle(
               color: Colors.white,
-              fontSize: 4 * SizeConfig.textMultiplier,
+              fontSize: 3.2 * SizeConfig.textMultiplier,
               fontWeight: FontWeight.bold),
           ),
         ),
