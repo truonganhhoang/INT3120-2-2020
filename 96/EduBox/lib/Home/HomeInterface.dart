@@ -1,37 +1,50 @@
-import 'dart:ui';
-
-import 'package:EduBox/Authenticate/LoginScreen.dart';
-import 'package:clay_containers/clay_containers.dart';
+import 'package:EduBox/NewPost/FindTeacherOrStudent.dart';
+import 'package:EduBox/PostManagement/ClassList.dart';
+import 'package:EduBox/PostManagement/ClassPageRoute.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../package/widget.dart';
-
-Color _color = Color(0xff00854c);
+import 'BackgroundColor.dart';
+import 'Button.dart';
+import 'HamburgerMenu.dart';
 
 class HomeInterface extends StatelessWidget {
-  final appbar = AppBar(
-    backgroundColor: _color,
-    title: Text(
-      'Edubox',
-      style: TextStyle(
-        fontSize: 20,
-        color: Colors.white,
-        fontWeight: FontWeight.w300,
-      ),
-    ),
-  );
+  final int background;
+
+  const HomeInterface({Key key, this.background}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    final appbar = AppBar(
+      title: Text(
+        'Waiting Wisdom',
+        style: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+          fontWeight: FontWeight.w300,
+        ),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (_) => BackgroundColor(
+                color: background,
+              ),
+              barrierDismissible: true,
+            );
+          },
+        )
+      ],
+    );
     return SafeArea(
       child: Scaffold(
         appBar: appbar,
-        drawer: HamburgerMenu(
-          name: 'Vu Huy',
-          email: 'halloffame2979@gmail.com',
-        ),
+        drawer: HamburgerMenu(),
         body: ListView(
           children: [
             Container(
@@ -51,79 +64,26 @@ class HomeInterface extends StatelessWidget {
               children: [
                 Button(
                   name: 'Đăng bài',
-                  icondata: Icon(Icons.class_, size: 55),
-                  navigatePage: SafeArea(
-                    child: Scaffold(
-                      appBar: AppBar(
-                        title: Text('Thêm yêu cầu mới'),
-                      ),
-                      body: Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewOrder(
-                                          type: classType.findStudent,
-                                        )));
-                              },
-                              child: ClayContainer(
-                                height: 60,
-                                width: 300,
-                                child: Center(
-                                    child: Text(
-                                  'Tìm học sinh',
-                                  style: TextStyle(fontSize: 30),
-                                )),
-                              ),
-                            ),
-                            Divider(
-                              height: 10,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => NewOrder(
-                                          type: classType.findTeacher,
-                                        )));
-                              },
-                              child: ClayContainer(
-                                height: 60,
-                                width: 300,
-                                child: Center(
-                                    child: Text(
-                                  'Tìm gia sư',
-                                  style: TextStyle(fontSize: 30),
-                                )),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  iconData: Icon(Icons.class_, size: 55),
+                  navigatePage: FindTeacherOrStudent(),
                 ),
                 Button(
-                  name: 'Yêu cầu gần đây',
-                  icondata: Icon(Icons.near_me, size: 55),
-                  navigatePage: ClassList(),
-                ),
+                    name: 'Yêu cầu gần đây',
+                    iconData: Icon(Icons.near_me, size: 55),
+                    navigatePage: OtherUnacceptedClassPage()),
                 Button(
                   name: 'Bản đồ',
-                  icondata: Icon(Icons.map, size: 55),
+                  iconData: Icon(Icons.map, size: 55),
                 ),
                 Button(
                   name: 'Bài đăng của bạn',
-                  icondata: Icon(Icons.library_books, size: 55),
-                  navigatePage: OrderTeacher(),
+                  iconData: Icon(Icons.library_books, size: 55),
+                  navigatePage: AllMyClassPage(),
                 ),
                 Button(
                   name: 'Lịch học',
-                  icondata: Icon(Icons.schedule, size: 55),
+                  iconData: Icon(Icons.schedule, size: 55),
+                  navigatePage: MyOnScheduleClassPage(),
                 ),
               ],
             ),
@@ -148,8 +108,8 @@ class HomeInterface extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ClassList()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OtherUnacceptedClassPage()));
                   },
                   child: Container(
                     width: 150,
@@ -181,99 +141,10 @@ class HomeInterface extends StatelessWidget {
             ),
             Container(
               height: 400,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: ListOfClass.list().sublist(0, 3),
-              ),
+              child: OtherUnacceptedClassList(scrollDirection: Axis.horizontal),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class HamburgerMenu extends StatelessWidget {
-  final String name;
-  final String email;
-
-  const HamburgerMenu({Key key, this.name, this.email})
-      : assert(name != null),
-        assert(email != null),
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Drawer(
-      child: ListView(
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            decoration: BoxDecoration(color: _color),
-            accountName: Text(name),
-            accountEmail: Text(email),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                name[0],
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 40,
-                ),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.do_not_disturb),
-            title: Text("Logout"),
-            enabled: true,
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) =>
-                    AlertDialog(
-                      title: Text('Đăng xuất?'),
-                      actions: [
-                        FlatButton(
-                          child: Container(
-                            child: Text('Có'),
-                            height: 20,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ));
-                          },
-                        ),
-                        FlatButton(
-                          child: Container(
-                            child: Text('Không'),
-                            height: 20,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                barrierDismissible: true,
-
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.done),
-            title: Text("Close"),
-            trailing: Icon(Icons.cancel),
-            enabled: true,
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       ),
     );
   }

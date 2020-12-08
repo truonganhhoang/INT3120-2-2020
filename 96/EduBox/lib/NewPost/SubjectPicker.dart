@@ -1,21 +1,28 @@
-import '../package/widget.dart';
+import 'package:EduBox/Models/NewPostTemplate.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-Color _color = Color(0xff00854c);
-
-class ADropDownMenu extends StatefulWidget {
-  final List<String> listOfItems;
-
-  const ADropDownMenu({Key key, this.listOfItems}) : super(key: key);
-
+class SubjectPicker extends StatefulWidget {
   @override
-  _ADropDownMenuState createState() => _ADropDownMenuState();
+  _SubjectPickerState createState() => _SubjectPickerState();
 }
 
-class _ADropDownMenuState extends State<ADropDownMenu> {
+class _SubjectPickerState extends State<SubjectPicker> {
+  final List<String> listOfItems = [
+    'Toán',
+    'Lý',
+    'Hóa',
+    'Văn',
+    'Sinh',
+    'Anh',
+    'Tin'
+  ];
   int _value = 0;
 
   @override
   Widget build(BuildContext context) {
+    var _color = Theme.of(context).primaryColor;
+    var submitForm = Provider.of<SubmitForm>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
@@ -27,10 +34,10 @@ class _ADropDownMenuState extends State<ADropDownMenu> {
             isExpanded: true,
             value: _value,
             items: List.generate(
-              widget.listOfItems.length,
+              listOfItems.length,
               (index) => DropdownMenuItem(
                 child: Text(
-                  widget.listOfItems[index],
+                  listOfItems[index],
                   style: TextStyle(
                     color: _value == index ? null : _color,
                   ),
@@ -42,6 +49,7 @@ class _ADropDownMenuState extends State<ADropDownMenu> {
               setState(() {
                 _value = value;
               });
+              submitForm.subject = listOfItems[value];
             }),
       ),
     );
