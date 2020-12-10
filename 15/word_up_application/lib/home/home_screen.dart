@@ -1,23 +1,25 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:word_up_application/home/account_page.dart';
 import 'package:word_up_application/favorite_screen/favorite_words_screen.dart';
-import 'package:word_up_application/play_game_screen.dart';
-import 'package:word_up_application/search_word_screen.dart';
+import 'package:word_up_application/game_screen/play_game_screen.dart';
+import 'package:word_up_application/search_screen/search_word_screen.dart';
+import 'package:word_up_application/size_config.dart';
 import 'package:word_up_application/study_home_screen/study_home_screen.dart';
 import 'package:word_up_application/user_profile_screen/user_profile_screen.dart';
-
 import '../chat_screen/chat_screen.dart';
 
 class Home extends StatefulWidget {
+  static TitleHome titleHome;
   @override
-  Home(Key key):super(key : key);
+  // Home(Key key):super(key : key);
   State<StatefulWidget> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   int _currentTab = 0;
-  String _screenTitle = 'Learning';
   final String iconLookUpPath = 'assets/sprites/LookUpIcon.png';
 
   final List<Widget> screens = [
@@ -30,28 +32,38 @@ class _HomeState extends State<Home> {
   Widget _currentScreen = StudyHomeScreen();
   final PageStorageBucket _bucket = PageStorageBucket();
 
-  void openSearchScreen() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => SearchWordScreen()),
-    );
-  }
-
   void openProfileUserScreen() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => UserProfileScreen(),
-    ));
+    Navigator.push(
+        context,
+        PageTransition(
+            type: PageTransitionType.rightToLeft, child: UserProfileScreen()));
   }
 
+  void openChatScreen() {
+    Navigator.push(
+        context,
+        PageTransition(
+            type: PageTransitionType.bottomToTop, child: ChatScreen()));
+  }
+
+  @override initState(){
+    super.initState();
+    if(_currentTab == 0) Home.titleHome = new TitleHome(title: 'Learning');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBody: true,
       appBar: AppBar(
         centerTitle: true,
-        title: new Text(_screenTitle),
+        title: Home.titleHome,
         actions: <Widget>[
           MaterialButton(
             minWidth: 50,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
             child: Icon(
               Icons.person,
               color: Colors.white,
@@ -63,10 +75,20 @@ class _HomeState extends State<Home> {
         ],
       ),
       drawer: AccountPage(),
-      body: Container(
-        child: PageStorage(
-          child: _currentScreen,
-          bucket: _bucket,
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
+          elevation: 10,
+          duration: Duration(milliseconds: 1000),
+          content: Text(
+            'To exit, tap BACK again!',
+            textAlign: TextAlign.center,
+          ),
+        ),
+        child: Container(
+          child: PageStorage(
+            child: _currentScreen,
+            bucket: _bucket,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -79,11 +101,15 @@ class _HomeState extends State<Home> {
                 AssetImage(iconLookUpPath),
                 color: Colors.white,
               ),
-              Text('Search'),
+              Text('Search', style: TextStyle(fontSize: 15)),
             ],
           ),
           onPressed: () {
-            openSearchScreen();
+            Home.titleHome.changeHomeTitle('Search');
+            setState(() {
+              _currentScreen = SearchWordScreen();
+              _currentTab = 4;
+            });
           },
           tooltip: 'Look up',
           elevation: 2.0,
@@ -117,29 +143,30 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     // Study Icon
                     MaterialButton(
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
+                        Home.titleHome.changeHomeTitle('Learning');
                         setState(() {
                           _currentScreen = StudyHomeScreen();
                           _currentTab = 0;
-                          _screenTitle = 'Learning';
                         });
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(
-                            Icons.book,
+                          ImageIcon(
+                            AssetImage('assets/sprites/learnIcon.png'),
                             color: _currentTab == 0 ? Colors.blue : Colors.grey,
                           ),
                           Text(
                             'Study',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
-                              _currentTab == 0 ? Colors.blue : Colors.grey,
+                                  _currentTab == 0 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -148,15 +175,15 @@ class _HomeState extends State<Home> {
 
                     // Play Icon
                     MaterialButton(
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
+                        Home.titleHome.changeHomeTitle('Play');
                         setState(() {
                           _currentScreen = PlayGameScreen();
                           _currentTab = 1;
-                          _screenTitle = 'Play';
                         });
                       },
                       child: Column(
@@ -169,8 +196,9 @@ class _HomeState extends State<Home> {
                           Text(
                             'Play',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
-                              _currentTab == 1 ? Colors.blue : Colors.grey,
+                                  _currentTab == 1 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -185,16 +213,16 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     // Favorite icon
                     MaterialButton(
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
+                        Home.titleHome.changeHomeTitle('Favorite');
                         setState(() {
                           _currentScreen =
                               FavoriteWordsScreen(); // if user taps on this dashboard tab will be active
                           _currentTab = 2;
-                          _screenTitle = 'Favorite words';
                         });
                       },
                       child: Column(
@@ -207,8 +235,9 @@ class _HomeState extends State<Home> {
                           Text(
                             'Favorite',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
-                              _currentTab == 2 ? Colors.blue : Colors.grey,
+                                  _currentTab == 2 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -217,19 +246,17 @@ class _HomeState extends State<Home> {
                     //Chat icon
                     MaterialButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(50.0),
                       ),
-                      minWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5,
+                      minWidth: MediaQuery.of(context).size.width / 5,
                       onPressed: () {
-                        setState(() {
+                        /*setState(() {
                           _currentScreen =
                               ChatScreen(); // if user taps on this dashboard tab will be active
                           _currentTab = 3;
                           _screenTitle = 'Chat';
-                        });
+                        });*/
+                        openChatScreen();
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -241,8 +268,9 @@ class _HomeState extends State<Home> {
                           Text(
                             'Chat',
                             style: TextStyle(
+                              fontSize: 1.9 * SizeConfig.heightMultiplier,
                               color:
-                              _currentTab == 3 ? Colors.blue : Colors.grey,
+                                  _currentTab == 3 ? Colors.blue : Colors.grey,
                             ),
                           ),
                         ],
@@ -252,5 +280,36 @@ class _HomeState extends State<Home> {
                 )
               ]),
         ));
+  }
+}
+
+// ignore: must_be_immutable
+class TitleHome extends StatefulWidget {
+  String title;
+
+  TitleHome({
+    @required this.title,
+  });
+
+  _TitleHome _titleHome = new _TitleHome();
+
+  @override
+  State<StatefulWidget> createState() => _titleHome;
+
+  void changeHomeTitle(String title) {
+    this.title = title;
+    _titleHome.setState(() { });
+  }
+}
+
+class _TitleHome extends State<TitleHome> {
+  @override
+  void setState(fn) {
+    super.setState(fn);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(widget.title);
   }
 }

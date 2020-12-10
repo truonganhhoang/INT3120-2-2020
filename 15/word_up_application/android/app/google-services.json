@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "501986905987",
+    "firebase_url": "https://worduptest-af6ce.firebaseio.com",
+    "project_id": "worduptest-af6ce",
+    "storage_bucket": "worduptest-af6ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501986905987:android:9bf68ef9462f38185e30b6",
+        "android_client_info": {
+          "package_name": "com.JLTA.WordUpEnglish.word_up_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501986905987-d7d7mltvo917ijvlbs9j0hcfdqb80gft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.JLTA.WordUpEnglish.word_up_application",
+            "certificate_hash": "f333864be07be601ab78d0d499788fdf0d0fecfb"
+          }
+        },
+        {
+          "client_id": "501986905987-eclof4prnlouu09iom0rcsih96tc1s5u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb57VTw_JsEjMcCg0D857e0i4vux0Ue-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501986905987-eclof4prnlouu09iom0rcsih96tc1s5u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

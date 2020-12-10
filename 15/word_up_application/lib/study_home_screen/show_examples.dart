@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:word_up_application/size_config.dart';
 
 class ShowExamples extends StatefulWidget {
   final List<String> listExamples;
@@ -31,7 +32,6 @@ class _ShowExamplesState extends State<ShowExamples>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _controller.dispose();
     super.dispose();
   }
@@ -40,11 +40,38 @@ class _ShowExamplesState extends State<ShowExamples>
   Widget build(BuildContext context) {
     _controller.forward(from: 0);
     return FadeTransition(
-      opacity: _animation,
-      child: Text(
-        widget.listExamples[0],
-        style: TextStyle(fontSize: 20),
-      ),
-    );
+        opacity: _animation,
+        child: Container(
+          child: Swiper(
+            index: 0,
+            itemWidth: SizeConfig.screenWidth - 2 * 64,
+            layout: SwiperLayout.DEFAULT,
+            itemCount: widget.listExamples.length,
+            itemBuilder: (context, index) {
+              return Container(
+                child: Center(
+                  child: Text(
+                    widget.listExamples[index],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 2.5 * SizeConfig.heightMultiplier,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w300,
+                        fontStyle: FontStyle.italic),
+                  ),
+                ),
+              );
+            },
+            pagination: SwiperPagination(
+              margin: EdgeInsets.only(bottom: 0 * SizeConfig.heightMultiplier),
+              builder: DotSwiperPaginationBuilder(
+                activeColor: Colors.blue,
+                size: 0.8 * SizeConfig.heightMultiplier,
+                activeSize: 1* SizeConfig.heightMultiplier,
+              ),
+            ),
+          ),
+          height: 16 * SizeConfig.heightMultiplier,
+        ));
   }
 }
