@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bucha_app/widgets/sentence/sentenceDetail.dart';
-// import 'package:bucha_app/widgets/sentence/sentenceGame.dart';
+import 'package:bucha_app/widgets/sentence/sentenceGame.dart';
 import 'package:bucha_app/widgets/sentence/sentenceList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class _SentenceState extends State<Sentence> {
   // List<String> topic = [];
   bool popup;
   String currentTopic;
-
+  String nextTopic;
   @override
   void initState() {
     super.initState();
@@ -34,17 +34,18 @@ class _SentenceState extends State<Sentence> {
     });
   }
 
-  void setCurrentTopic(String newTopic) {
+  void setCurrentTopic(String newTopic, String nexTopic) {
     setState(() {
       currentTopic = newTopic;
+      nextTopic = nexTopic;
     });
   }
 
-  void setCurrentSentence(String newSentence) {
-    setState(() {
-      currentTopic = newSentence;
-    });
-  }
+  // void setCurrentSentence(String newSentence) {
+  //   setState(() {
+  //     currentTopic = newSentence;
+  //   });
+  // }
 
   void dispose() {
     super.dispose();
@@ -128,9 +129,12 @@ class _SentenceState extends State<Sentence> {
                                         children: [
                                           GestureDetector(
                                             onTap: () {
-                                              setCurrentTopic(snapshot
-                                                      .data.documents[index * 2]
-                                                  ["name"]);
+                                              setCurrentTopic(
+                                                  snapshot.data
+                                                          .documents[index * 2]
+                                                      ["name"],
+                                                  snapshot.data.documents[
+                                                      index * 2 + 1]["name"]);
                                               setPopup();
                                             },
                                             child: Container(
@@ -167,7 +171,9 @@ class _SentenceState extends State<Sentence> {
                                               onTap: () {
                                                 setCurrentTopic(
                                                     snapshot.data.documents[
-                                                        index * 2 + 1]["name"]);
+                                                        index * 2 + 1]["name"],
+                                                    snapshot.data.documents[
+                                                        index * 2 + 2]["name"]);
                                                 setPopup();
                                               },
                                               child: Container(
@@ -366,12 +372,12 @@ class _SentenceState extends State<Sentence> {
                                   Center(
                                     child: GestureDetector(
                                       onTap: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //       // builder: (context) => sentenceGame(topic: currentTopic),
-                                        //       ),
-                                        // );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => sentenceGame(topic: currentTopic, nextTopic: nextTopic),
+                                          ),
+                                        );
                                       },
                                       child: Container(
                                         margin: EdgeInsets.only(
