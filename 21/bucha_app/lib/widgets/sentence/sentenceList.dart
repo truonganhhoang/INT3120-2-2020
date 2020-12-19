@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../Database.dart';
 
+// ignore: must_be_immutable
 class sentenceList extends StatefulWidget {
   String topic;
 
@@ -27,14 +28,14 @@ class _sentenceList extends State<sentenceList> {
   }
 
   void handleTap(int index) {
-      setState(() {
-        if(currentSentence == index){
-          isShowDetail = !isShowDetail;
-        }else{
-          currentSentence = index;
-          isShowDetail = true;
-        }
-      });
+    setState(() {
+      if (currentSentence == index) {
+        isShowDetail = !isShowDetail;
+      } else {
+        currentSentence = index;
+        isShowDetail = true;
+      }
+    });
   }
 
   @override
@@ -111,67 +112,97 @@ class _sentenceList extends State<sentenceList> {
                                 child: ListView.builder(
                                     itemCount: snapshot.data.documents.length,
                                     itemBuilder: (context, index) {
-                                      if( currentSentence == index && isShowDetail ){
+                                      if (currentSentence == index &&
+                                          isShowDetail) {
                                         return GestureDetector(
                                           key: Key('expandedItem'),
-                                          onTap: (){handleTap(index);},
+                                          onTap: () {
+                                            handleTap(index);
+                                          },
                                           child: Container(
-                                          height: MediaQuery.of(context).size.height * 0.18,
-                                          margin: EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff893080),
-                                            borderRadius:
-                                            BorderRadius.circular(6),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Center(
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(10.0),
-                                                    child: Text(
-                                                      snapshot.data.documents[index]
-                                                      ["english"],
-                                                      style: TextStyle(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.18,
+                                            margin: EdgeInsets.only(
+                                                left: 30,
+                                                right: 30,
+                                                top: 5,
+                                                bottom: 5),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff893080),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Center(
+                                                    child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Text(
+                                                    snapshot.data
+                                                            .documents[index]
+                                                        ["english"],
+                                                    style: TextStyle(
                                                         color: Colors.white,
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: 18,
-                                                          fontStyle: FontStyle.italic),
-                                                          textAlign: TextAlign.center,
-                                                    ),
-                                                  )),
-                                              Center(
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(10.0),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Color(0xffC4C4C4),
-                                                        borderRadius: BorderRadius.circular(6)
-                                                      ),
-                                                      child: Padding(
-                                                          padding: EdgeInsets.only(top: 15, bottom: 15, left: 50, right: 50),
-                                                          child: Text(
-                                                            snapshot.data.documents[index]
-                                                            ["vietnamese"],
-                                                            style: TextStyle(
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: 18,
-                                                                fontStyle: FontStyle.italic,
-                                                            ),
-                                                            textAlign: TextAlign.center,
-                                                          )
-                                                      ),
-                                                    ),
-                                                  )),
-                                            ],
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 18,
+                                                        fontStyle:
+                                                            FontStyle.italic),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                )),
+                                                Center(
+                                                    child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xffC4C4C4),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6)),
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 15,
+                                                                bottom: 15,
+                                                                left: 50,
+                                                                right: 50),
+                                                        child: Text(
+                                                          snapshot.data
+                                                                      .documents[
+                                                                  index]
+                                                              ["vietnamese"],
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18,
+                                                            fontStyle: FontStyle
+                                                                .italic,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        )),
+                                                  ),
+                                                )),
+                                              ],
+                                            ),
                                           ),
-                                      ),
-                                        );}
+                                        );
+                                      }
                                       return GestureDetector(
                                           key: Key('initialItem'),
-                                          onTap: (){handleTap(index);},
-                                        child:Container(
-                                            height:
-                                            MediaQuery.of(context).size.height *
+                                          onTap: () {
+                                            handleTap(index);
+                                          },
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
                                                 0.08,
                                             margin: EdgeInsets.only(
                                                 left: 30,
@@ -181,20 +212,20 @@ class _sentenceList extends State<sentenceList> {
                                             decoration: BoxDecoration(
                                               color: Color(0xffC6F2F4),
                                               borderRadius:
-                                              BorderRadius.circular(6),
+                                                  BorderRadius.circular(6),
                                             ),
                                             child: Center(
                                                 child: Text(
-                                                  snapshot.data.documents[index]
+                                              snapshot.data.documents[index]
                                                   ["vietnamese"],
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 24,
-                                                      fontStyle: FontStyle.italic),
-                                                  textAlign: TextAlign.center,
-                                                )),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 24,
+                                                  fontStyle: FontStyle.italic),
+                                              textAlign: TextAlign.center,
+                                            )),
                                           ));
-                                      }),
+                                    }),
                               ),
                             ],
                           )

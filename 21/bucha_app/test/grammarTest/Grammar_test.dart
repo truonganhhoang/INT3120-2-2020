@@ -7,8 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:bucha_app/main.dart';
-
 void main() {
   Widget makeTestableWidget({Widget child}) {
     return MaterialApp(
@@ -17,9 +15,12 @@ void main() {
   }
 
   Example example = new Example(name: 'Example', meaning: 'vi du');
-  Information information = new Information(name: 'information', example: [example], note: ['note']);
-  Subtitle subtitle = new Subtitle(name: 'subtitle', information: [information]);
-  InformationTitle title = new InformationTitle(name: 'title', subtitle: [subtitle]);
+  Information information =
+      new Information(name: 'information', example: [example], note: ['note']);
+  Subtitle subtitle =
+      new Subtitle(name: 'subtitle', information: [information]);
+  InformationTitle title =
+      new InformationTitle(name: 'title', subtitle: [subtitle]);
 
   testWidgets('Example Widget', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget(child: example));

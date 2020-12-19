@@ -2,7 +2,6 @@ import 'package:bucha_app/widgets/Vocabulary/SceneChoice.dart';
 import 'package:flutter/material.dart';
 
 import '../animation route/BouncyPageRoute.dart';
-import '../../main.dart';
 
 class Option extends StatelessWidget {
   final String title;

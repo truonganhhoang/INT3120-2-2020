@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../Database.dart';
 
+// ignore: must_be_immutable
 class sentenceDetail extends StatefulWidget {
   String topic;
 
@@ -127,8 +128,8 @@ class _sentenceDetail extends State<sentenceDetail> {
                                           fontSize: 30,
                                           fontStyle: FontStyle.italic,
                                           fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ))),
+                                      textAlign: TextAlign.center,
+                                    ))),
                               ),
                               Visibility(
                                 visible: isVietNameseShowing,
@@ -190,8 +191,8 @@ class _sentenceDetail extends State<sentenceDetail> {
                                                 fontSize: 30,
                                                 fontStyle: FontStyle.italic,
                                                 fontWeight: FontWeight.bold),
-                                                textAlign: TextAlign.center,
-                                              ))),
+                                            textAlign: TextAlign.center,
+                                          ))),
                                     ),
                                   ],
                                 ),
@@ -214,18 +215,24 @@ class _sentenceDetail extends State<sentenceDetail> {
                                       color: Colors.red,
                                       onPressed: () {
                                         Navigator.pop(context);
-                                  })),
+                                      })),
                               SizedBox(
                                   width: 40.0,
                                   height: 40.0,
                                   child: RaisedButton(
-                                      child: Icon(Icons.arrow_forward,size: 20,),
+                                      child: Icon(
+                                        Icons.arrow_forward,
+                                        size: 20,
+                                      ),
                                       color: Colors.yellow,
                                       onPressed: () {
-                                    if (currentSentence < snapshot.data.documents.length-1 || !isVietNameseShowing) {
-                                      handleNext();
-                                    }
-                                  })),
+                                        if (currentSentence <
+                                                snapshot.data.documents.length -
+                                                    1 ||
+                                            !isVietNameseShowing) {
+                                          handleNext();
+                                        }
+                                      })),
                             ],
                           ),
                         ),
@@ -241,4 +248,3 @@ class _sentenceDetail extends State<sentenceDetail> {
     );
   }
 }
-

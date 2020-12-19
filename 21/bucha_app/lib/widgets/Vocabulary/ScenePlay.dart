@@ -1,19 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
 
+import 'package:bucha_app/Database.dart';
 import 'package:bucha_app/widgets/Vocabulary/VocabularyGame.dart';
 import 'package:bucha_app/widgets/Vocabulary/VocabularyStudy.dart';
-import 'package:bucha_app/widgets/options/OptionClass.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../animation route/BouncyPageRoute.dart';
-import 'SceneChoice.dart';
 import '../../Database.dart';
+import '../animation route/BouncyPageRoute.dart';
 import 'Vocabulary.dart';
-import '../../main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bucha_app/Database.dart';
 
 
 class ScenePlay extends StatefulWidget {

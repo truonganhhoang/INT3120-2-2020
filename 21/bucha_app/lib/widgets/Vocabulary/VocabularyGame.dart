@@ -6,6 +6,7 @@ import 'ScorePage.dart';
 import '../../constants.dart';
 import 'package:bucha_app/Database.dart';
 
+// ignore: camel_case_types
 class vocabulary_game extends StatefulWidget {
     final String level;
     final String scene;
@@ -16,6 +17,7 @@ class vocabulary_game extends StatefulWidget {
   _vocabulary_gameState createState() => _vocabulary_gameState();
 }
 
+// ignore: camel_case_types
 class _vocabulary_gameState extends State<vocabulary_game> {
   var currentQuestion;
 
@@ -165,16 +167,16 @@ class _vocabulary_gameState extends State<vocabulary_game> {
                             decoration: BoxDecoration(
                                 color: Color(0xffC6375E),
                                 borderRadius: BorderRadius.circular(10.0)),
-                            child: MaterialButton(
-                              child: Text(
-                                "ĐIỂM : "+score.toString(),
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 25),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "ĐIỂM : "+score.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 25),
+                                ),
                               ),
-                              minWidth: 200,
+                              width: 200,
                               height: 60,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)),
                             ),
                           ),
                           SizedBox(
@@ -186,17 +188,17 @@ class _vocabulary_gameState extends State<vocabulary_game> {
                             decoration: BoxDecoration(
                                 color: Color(0xffC6375E),
                                 borderRadius: BorderRadius.circular(10.0)),
-                            child: MaterialButton(
-                              child: Text(
-                                snapshot.data.documents[currentQuestion]
-                                    ["question"],
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 25),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  snapshot.data.documents[currentQuestion]
+                                      ["question"],
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 25),
+                                ),
                               ),
-                              minWidth: 200,
+                              width: 200,
                               height: 60,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)),
                             ),
                           ),
                           SizedBox(

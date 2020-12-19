@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../animation route/BouncyPageRoute.dart';
 import '../Vocabulary/SceneChoice.dart';
 import '../../constants.dart';
-import '../../main.dart';
 
 class Class extends StatelessWidget {
   final String name;

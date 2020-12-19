@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../Database.dart';
 
+// ignore: camel_case_types
 class vocabularyStudy extends StatefulWidget {
   final String level;
   final String scene;
@@ -13,6 +14,7 @@ class vocabularyStudy extends StatefulWidget {
   _vocabularyStudyState createState() => _vocabularyStudyState();
 }
 
+// ignore: camel_case_types
 class _vocabularyStudyState extends State<vocabularyStudy> {
   int currentVocabulary;
 

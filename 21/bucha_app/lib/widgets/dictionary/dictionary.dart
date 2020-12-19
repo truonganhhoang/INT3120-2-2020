@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bucha_app/Database.dart';
-import '../../main.dart';
 
 class Dictionary extends StatefulWidget {
   @override
@@ -23,6 +22,7 @@ class _DictionaryState extends State<Dictionary> {
   bool showResult = false;
 
   @override
+  // ignore: must_call_super
   initState() {
     getVocabulary();
     searchController.addListener(() {
@@ -280,7 +280,9 @@ class _DictionaryState extends State<Dictionary> {
 }
 
 class Vocabulary {
+  // ignore: non_constant_identifier_names
   final String English;
+  // ignore: non_constant_identifier_names
   final String VietNamese;
   final String pronunciation;
   const Vocabulary(this.English, this.VietNamese, this.pronunciation);

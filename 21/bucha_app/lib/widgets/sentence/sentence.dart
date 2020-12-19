@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bucha_app/widgets/sentence/sentenceDetail.dart';
+// import 'package:bucha_app/widgets/sentence/sentenceGame.dart';
 import 'package:bucha_app/widgets/sentence/sentenceList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +34,6 @@ class _SentenceState extends State<Sentence> {
     });
   }
 
-
-
   void setCurrentTopic(String newTopic) {
     setState(() {
       currentTopic = newTopic;
@@ -64,7 +63,7 @@ class _SentenceState extends State<Sentence> {
               ),
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0 , right: 20.0),
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Container(
                     child: Column(
                       children: [
@@ -80,20 +79,14 @@ class _SentenceState extends State<Sentence> {
                                     color: Color(0xffC437C7), width: 20.0),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.85,
+                              height: MediaQuery.of(context).size.height * 0.85,
                             ),
                             Container(
                               decoration: BoxDecoration(
                                 color: Color(0xff801183),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.12,
+                              height: MediaQuery.of(context).size.height * 0.12,
                               child: Center(
                                 child: Text(
                                   "CHỦ ĐỀ",
@@ -111,32 +104,33 @@ class _SentenceState extends State<Sentence> {
                               child: Container(
                                 // padding: EdgeInsetsGeometry,
                                 decoration: BoxDecoration(),
-                                height: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.69,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.69,
                                 child: StreamBuilder(
-                                  stream: database.collection('topic')
-                                      .snapshots(),
+                                  stream:
+                                      database.collection('topic').snapshots(),
                                   builder: (context, snapshot) {
                                     if (!snapshot.hasData)
-                                      return Center(child: Text('LOADING . . .',
-                                        style: TextStyle(color: Colors.white,
+                                      return Center(
+                                          child: Text(
+                                        'LOADING . . .',
+                                        style: TextStyle(
+                                            color: Colors.white,
                                             fontSize: 20,
-                                            fontWeight: FontWeight.bold),));
+                                            fontWeight: FontWeight.bold),
+                                      ));
                                     return ListView.builder(
                                       itemCount:
-                                      snapshot.data.documents.length ~/ 2,
-                                      itemBuilder: (context, index) =>
-                                      new Row(
+                                          snapshot.data.documents.length ~/ 2,
+                                      itemBuilder: (context, index) => new Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           GestureDetector(
                                             onTap: () {
-                                              setCurrentTopic(snapshot.data
-                                                  .documents[index *
-                                                  2]["name"]);
+                                              setCurrentTopic(snapshot
+                                                      .data.documents[index * 2]
+                                                  ["name"]);
                                               setPopup();
                                             },
                                             child: Container(
@@ -155,14 +149,14 @@ class _SentenceState extends State<Sentence> {
                                               child: Center(
                                                 child: Text(
                                                   snapshot.data
-                                                      .documents[index *
-                                                      2]["name"],
+                                                          .documents[index * 2]
+                                                      ["name"],
                                                   style: TextStyle(
                                                       color: Colors.white,
-                                                      fontStyle: FontStyle
-                                                          .italic,
-                                                      fontWeight: FontWeight
-                                                          .bold,
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: 16.0),
                                                 ),
                                               ),
@@ -171,25 +165,32 @@ class _SentenceState extends State<Sentence> {
                                           Expanded(
                                             child: GestureDetector(
                                               onTap: () {
-                                                setCurrentTopic(snapshot.data.documents[index * 2 + 1]["name"]);
+                                                setCurrentTopic(
+                                                    snapshot.data.documents[
+                                                        index * 2 + 1]["name"]);
                                                 setPopup();
                                               },
                                               child: Container(
                                                 decoration: ItemDecoration(),
                                                 margin: EdgeInsets.all(5.0),
                                                 // padding: EdgeInsets.all(20.0),
-                                                padding: EdgeInsets.only(left: 10.0,right: 10.0,bottom: 30.0,top: 30.0),
+                                                padding: EdgeInsets.only(
+                                                    left: 10.0,
+                                                    right: 10.0,
+                                                    bottom: 30.0,
+                                                    top: 30.0),
                                                 child: Center(
                                                   child: Center(
                                                     child: Text(
                                                       snapshot.data.documents[
-                                                      index * 2 + 1]["name"],
+                                                              index * 2 + 1]
+                                                          ["name"],
                                                       style: TextStyle(
                                                           color: Colors.white,
-                                                          fontStyle: FontStyle
-                                                              .italic,
-                                                          fontWeight: FontWeight
-                                                              .bold,
+                                                          fontStyle:
+                                                              FontStyle.italic,
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                           fontSize: 16.0),
                                                     ),
                                                   ),
@@ -211,11 +212,11 @@ class _SentenceState extends State<Sentence> {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8.0, bottom: 8.0),
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
                                     width: 30.0,
@@ -243,17 +244,11 @@ class _SentenceState extends State<Sentence> {
                 child: Stack(
                   children: [
                     Container(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         // color: Colors.deepPurple,
-                        color: Color.fromRGBO(51,0,102,150),
+                        color: Color.fromRGBO(51, 0, 102, 150),
                         // backgroundBlendMode: BlendMode.modulate,
                       ),
                       child: Padding(
@@ -270,10 +265,7 @@ class _SentenceState extends State<Sentence> {
                               ),
                             ),
                             Container(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.1,
+                              height: MediaQuery.of(context).size.height * 0.1,
                               decoration: BoxDecoration(
                                 color: Color(0xff801183),
                                 // border: Border.all(color: Colors.green, width: 15.0),
@@ -291,10 +283,9 @@ class _SentenceState extends State<Sentence> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.001),
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.001),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -304,23 +295,23 @@ class _SentenceState extends State<Sentence> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => sentenceDetail(topic: currentTopic),
+                                            builder: (context) =>
+                                                sentenceDetail(
+                                                    topic: currentTopic),
                                           ),
                                         );
                                       },
                                       child: Container(
-                                        height: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .height * 0.08,
-                                        width: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .width * 0.5,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.08,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         decoration: BoxDecoration(
                                           color: Colors.lightBlueAccent,
-                                          borderRadius: BorderRadius.circular(
-                                              10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Center(
                                           child: Text("HỌC BÀI",
@@ -328,37 +319,38 @@ class _SentenceState extends State<Sentence> {
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
                                                   fontSize: 26,
-                                                  fontStyle: FontStyle.italic)
-                                          ),
+                                                  fontStyle: FontStyle.italic)),
                                         ),
                                       ),
                                     ),
                                   ),
                                   Center(
                                     child: GestureDetector(
-                                      onTap: (){Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => sentenceList(topic: currentTopic),
-                                        ),
-                                      );},
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => sentenceList(
+                                                topic: currentTopic),
+                                          ),
+                                        );
+                                      },
                                       child: Container(
-                                        margin: EdgeInsets.only(top: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .height * 0.02),
-                                        height: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .height * 0.08,
-                                        width: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .width * 0.5,
+                                        margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02),
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.08,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         decoration: BoxDecoration(
                                           color: Colors.purpleAccent,
-                                          borderRadius: BorderRadius.circular(
-                                              10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Center(
                                           child: Text("DANH SÁCH",
@@ -366,25 +358,45 @@ class _SentenceState extends State<Sentence> {
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
                                                   fontSize: 26,
-                                                  fontStyle: FontStyle.italic)
-                                          ),
+                                                  fontStyle: FontStyle.italic)),
                                         ),
                                       ),
                                     ),
                                   ),
                                   Center(
                                     child: GestureDetector(
+                                      onTap: () {
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //       // builder: (context) => sentenceGame(topic: currentTopic),
+                                        //       ),
+                                        // );
+                                      },
                                       child: Container(
-                                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
-                                        height: MediaQuery.of(context).size.height * 0.08,
-                                        width: MediaQuery.of(context).size.width * 0.5,
+                                        margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02),
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.08,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         decoration: BoxDecoration(
                                           color: Colors.red,
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Center(
-                                          child: Text("CHƠI GAME", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 26, fontStyle: FontStyle.italic)
-                                          ),
+                                          child: Text("CHƠI GAME",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontSize: 26,
+                                                  fontStyle: FontStyle.italic)),
                                         ),
                                       ),
                                     ),
@@ -392,7 +404,6 @@ class _SentenceState extends State<Sentence> {
                                 ],
                               ),
                             ),
-
                           ],
                         ),
                       ),
@@ -415,14 +426,14 @@ class _SentenceState extends State<Sentence> {
                       ),
                     )
                   ],
-                )
-            )
+                ))
           ],
         ),
       ),
     );
   }
 
+  // ignore: non_constant_identifier_names
   BoxDecoration ItemDecoration() {
     Random random = Random();
     int red = random.nextInt(256);
@@ -432,7 +443,8 @@ class _SentenceState extends State<Sentence> {
       color: Color.fromARGB(220, red, green, blue),
       borderRadius: BorderRadius.circular(10.0),
       boxShadow: [
-        BoxShadow(color: Color.fromARGB(100, red, green, blue),
+        BoxShadow(
+            color: Color.fromARGB(100, red, green, blue),
             offset: Offset(0, 10),
             blurRadius: 0.0,
             spreadRadius: 0.0)
@@ -440,5 +452,3 @@ class _SentenceState extends State<Sentence> {
     );
   }
 }
-
-

@@ -57,9 +57,11 @@ class OptionButton extends StatelessWidget {
 
 class SmailOntionButton extends StatelessWidget {
   final int imageBackground;
+  // ignore: non_constant_identifier_names
   final String image_caption;
   final StatefulWidget linkPage;
 
+  // ignore: non_constant_identifier_names
   SmailOntionButton({this.imageBackground, this.image_caption, this.linkPage});
 
   @override

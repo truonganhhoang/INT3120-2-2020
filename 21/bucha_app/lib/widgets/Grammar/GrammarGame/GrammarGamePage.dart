@@ -21,6 +21,7 @@ class _GrammarGamePageState extends State<GrammarGamePage> {
     Firebase.initializeApp();
   }
 
+  // ignore: non_constant_identifier_names
   Widget Choice(String name, bool isTrue, bool isChosen, BuildContext context) {
     ColorSwatch colors = ColorSwatch(0xFFFFFFFF, {
       'gradient': Color(0xFF9E9E9E)
@@ -44,7 +45,7 @@ class _GrammarGamePageState extends State<GrammarGamePage> {
                 content: Text("Sai !"),
               );
               Scaffold.of(context).showSnackBar(snackbar);
-            };
+            }
             currentQuestion++;
           });
         },

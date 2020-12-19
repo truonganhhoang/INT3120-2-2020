@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bucha_app/Database.dart';
 import 'package:bucha_app/ButtonBack.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/InformationTitle.dart';
 import 'package:bucha_app/widgets/Grammar/GrammarData/Information.dart';
